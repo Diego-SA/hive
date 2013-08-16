@@ -12,6 +12,8 @@
 *.sql    text
 *.q      text
 *.sh     text eol=lf
+#test files, use lf so that size is same on windows as well
+data/files/*.dat    text eol=lf
 *.bat    text eol=crlf
 *.csproj text merge=union eol=crlf
 *.sln    text merge=union eol=crlf
