@@ -31,22 +31,22 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PrivilegeBag implements org.apache.thrift.TBase<PrivilegeBag, PrivilegeBag._Fields>, java.io.Serializable, Cloneable {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("PrivilegeBag");
+public class GetPrincipalsInRoleResponse implements org.apache.thrift.TBase<GetPrincipalsInRoleResponse, GetPrincipalsInRoleResponse._Fields>, java.io.Serializable, Cloneable {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("GetPrincipalsInRoleResponse");
 
-  private static final org.apache.thrift.protocol.TField PRIVILEGES_FIELD_DESC = new org.apache.thrift.protocol.TField("privileges", org.apache.thrift.protocol.TType.LIST, (short)1);
+  private static final org.apache.thrift.protocol.TField PRINCIPAL_GRANTS_FIELD_DESC = new org.apache.thrift.protocol.TField("principalGrants", org.apache.thrift.protocol.TType.LIST, (short)1);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
-    schemes.put(StandardScheme.class, new PrivilegeBagStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new PrivilegeBagTupleSchemeFactory());
+    schemes.put(StandardScheme.class, new GetPrincipalsInRoleResponseStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new GetPrincipalsInRoleResponseTupleSchemeFactory());
   }
 
-  private List<HiveObjectPrivilege> privileges; // required
+  private List<RolePrincipalGrant> principalGrants; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    PRIVILEGES((short)1, "privileges");
+    PRINCIPAL_GRANTS((short)1, "principalGrants");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -61,8 +61,8 @@ public class PrivilegeBag implements org.apache.thrift.TBase<PrivilegeBag, Privi
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // PRIVILEGES
-          return PRIVILEGES;
+        case 1: // PRINCIPAL_GRANTS
+          return PRINCIPAL_GRANTS;
         default:
           return null;
       }
@@ -106,90 +106,90 @@ public class PrivilegeBag implements org.apache.thrift.TBase<PrivilegeBag, Privi
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.PRIVILEGES, new org.apache.thrift.meta_data.FieldMetaData("privileges", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.PRINCIPAL_GRANTS, new org.apache.thrift.meta_data.FieldMetaData("principalGrants", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
-            new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, HiveObjectPrivilege.class))));
+            new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, RolePrincipalGrant.class))));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(PrivilegeBag.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(GetPrincipalsInRoleResponse.class, metaDataMap);
   }
 
-  public PrivilegeBag() {
+  public GetPrincipalsInRoleResponse() {
   }
 
-  public PrivilegeBag(
-    List<HiveObjectPrivilege> privileges)
+  public GetPrincipalsInRoleResponse(
+    List<RolePrincipalGrant> principalGrants)
   {
     this();
-    this.privileges = privileges;
+    this.principalGrants = principalGrants;
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public PrivilegeBag(PrivilegeBag other) {
-    if (other.isSetPrivileges()) {
-      List<HiveObjectPrivilege> __this__privileges = new ArrayList<HiveObjectPrivilege>();
-      for (HiveObjectPrivilege other_element : other.privileges) {
-        __this__privileges.add(new HiveObjectPrivilege(other_element));
+  public GetPrincipalsInRoleResponse(GetPrincipalsInRoleResponse other) {
+    if (other.isSetPrincipalGrants()) {
+      List<RolePrincipalGrant> __this__principalGrants = new ArrayList<RolePrincipalGrant>();
+      for (RolePrincipalGrant other_element : other.principalGrants) {
+        __this__principalGrants.add(new RolePrincipalGrant(other_element));
       }
-      this.privileges = __this__privileges;
+      this.principalGrants = __this__principalGrants;
     }
   }
 
-  public PrivilegeBag deepCopy() {
-    return new PrivilegeBag(this);
+  public GetPrincipalsInRoleResponse deepCopy() {
+    return new GetPrincipalsInRoleResponse(this);
   }
 
   @Override
   public void clear() {
-    this.privileges = null;
+    this.principalGrants = null;
   }
 
-  public int getPrivilegesSize() {
-    return (this.privileges == null) ? 0 : this.privileges.size();
+  public int getPrincipalGrantsSize() {
+    return (this.principalGrants == null) ? 0 : this.principalGrants.size();
   }
 
-  public java.util.Iterator<HiveObjectPrivilege> getPrivilegesIterator() {
-    return (this.privileges == null) ? null : this.privileges.iterator();
+  public java.util.Iterator<RolePrincipalGrant> getPrincipalGrantsIterator() {
+    return (this.principalGrants == null) ? null : this.principalGrants.iterator();
   }
 
-  public void addToPrivileges(HiveObjectPrivilege elem) {
-    if (this.privileges == null) {
-      this.privileges = new ArrayList<HiveObjectPrivilege>();
+  public void addToPrincipalGrants(RolePrincipalGrant elem) {
+    if (this.principalGrants == null) {
+      this.principalGrants = new ArrayList<RolePrincipalGrant>();
     }
-    this.privileges.add(elem);
+    this.principalGrants.add(elem);
   }
 
-  public List<HiveObjectPrivilege> getPrivileges() {
-    return this.privileges;
+  public List<RolePrincipalGrant> getPrincipalGrants() {
+    return this.principalGrants;
   }
 
-  public void setPrivileges(List<HiveObjectPrivilege> privileges) {
-    this.privileges = privileges;
+  public void setPrincipalGrants(List<RolePrincipalGrant> principalGrants) {
+    this.principalGrants = principalGrants;
   }
 
-  public void unsetPrivileges() {
-    this.privileges = null;
+  public void unsetPrincipalGrants() {
+    this.principalGrants = null;
   }
 
-  /** Returns true if field privileges is set (has been assigned a value) and false otherwise */
-  public boolean isSetPrivileges() {
-    return this.privileges != null;
+  /** Returns true if field principalGrants is set (has been assigned a value) and false otherwise */
+  public boolean isSetPrincipalGrants() {
+    return this.principalGrants != null;
   }
 
-  public void setPrivilegesIsSet(boolean value) {
+  public void setPrincipalGrantsIsSet(boolean value) {
     if (!value) {
-      this.privileges = null;
+      this.principalGrants = null;
     }
   }
 
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
-    case PRIVILEGES:
+    case PRINCIPAL_GRANTS:
       if (value == null) {
-        unsetPrivileges();
+        unsetPrincipalGrants();
       } else {
-        setPrivileges((List<HiveObjectPrivilege>)value);
+        setPrincipalGrants((List<RolePrincipalGrant>)value);
       }
       break;
 
@@ -198,8 +198,8 @@ public class PrivilegeBag implements org.apache.thrift.TBase<PrivilegeBag, Privi
 
   public Object getFieldValue(_Fields field) {
     switch (field) {
-    case PRIVILEGES:
-      return getPrivileges();
+    case PRINCIPAL_GRANTS:
+      return getPrincipalGrants();
 
     }
     throw new IllegalStateException();
@@ -212,8 +212,8 @@ public class PrivilegeBag implements org.apache.thrift.TBase<PrivilegeBag, Privi
     }
 
     switch (field) {
-    case PRIVILEGES:
-      return isSetPrivileges();
+    case PRINCIPAL_GRANTS:
+      return isSetPrincipalGrants();
     }
     throw new IllegalStateException();
   }
@@ -222,21 +222,21 @@ public class PrivilegeBag implements org.apache.thrift.TBase<PrivilegeBag, Privi
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof PrivilegeBag)
-      return this.equals((PrivilegeBag)that);
+    if (that instanceof GetPrincipalsInRoleResponse)
+      return this.equals((GetPrincipalsInRoleResponse)that);
     return false;
   }
 
-  public boolean equals(PrivilegeBag that) {
+  public boolean equals(GetPrincipalsInRoleResponse that) {
     if (that == null)
       return false;
 
-    boolean this_present_privileges = true && this.isSetPrivileges();
-    boolean that_present_privileges = true && that.isSetPrivileges();
-    if (this_present_privileges || that_present_privileges) {
-      if (!(this_present_privileges && that_present_privileges))
+    boolean this_present_principalGrants = true && this.isSetPrincipalGrants();
+    boolean that_present_principalGrants = true && that.isSetPrincipalGrants();
+    if (this_present_principalGrants || that_present_principalGrants) {
+      if (!(this_present_principalGrants && that_present_principalGrants))
         return false;
-      if (!this.privileges.equals(that.privileges))
+      if (!this.principalGrants.equals(that.principalGrants))
         return false;
     }
 
@@ -247,28 +247,28 @@ public class PrivilegeBag implements org.apache.thrift.TBase<PrivilegeBag, Privi
   public int hashCode() {
     HashCodeBuilder builder = new HashCodeBuilder();
 
-    boolean present_privileges = true && (isSetPrivileges());
-    builder.append(present_privileges);
-    if (present_privileges)
-      builder.append(privileges);
+    boolean present_principalGrants = true && (isSetPrincipalGrants());
+    builder.append(present_principalGrants);
+    if (present_principalGrants)
+      builder.append(principalGrants);
 
     return builder.toHashCode();
   }
 
-  public int compareTo(PrivilegeBag other) {
+  public int compareTo(GetPrincipalsInRoleResponse other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
-    PrivilegeBag typedOther = (PrivilegeBag)other;
+    GetPrincipalsInRoleResponse typedOther = (GetPrincipalsInRoleResponse)other;
 
-    lastComparison = Boolean.valueOf(isSetPrivileges()).compareTo(typedOther.isSetPrivileges());
+    lastComparison = Boolean.valueOf(isSetPrincipalGrants()).compareTo(typedOther.isSetPrincipalGrants());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetPrivileges()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.privileges, typedOther.privileges);
+    if (isSetPrincipalGrants()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.principalGrants, typedOther.principalGrants);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -290,14 +290,14 @@ public class PrivilegeBag implements org.apache.thrift.TBase<PrivilegeBag, Privi
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("PrivilegeBag(");
+    StringBuilder sb = new StringBuilder("GetPrincipalsInRoleResponse(");
     boolean first = true;
 
-    sb.append("privileges:");
-    if (this.privileges == null) {
+    sb.append("principalGrants:");
+    if (this.principalGrants == null) {
       sb.append("null");
     } else {
-      sb.append(this.privileges);
+      sb.append(this.principalGrants);
     }
     first = false;
     sb.append(")");
@@ -325,15 +325,15 @@ public class PrivilegeBag implements org.apache.thrift.TBase<PrivilegeBag, Privi
     }
   }
 
-  private static class PrivilegeBagStandardSchemeFactory implements SchemeFactory {
-    public PrivilegeBagStandardScheme getScheme() {
-      return new PrivilegeBagStandardScheme();
+  private static class GetPrincipalsInRoleResponseStandardSchemeFactory implements SchemeFactory {
+    public GetPrincipalsInRoleResponseStandardScheme getScheme() {
+      return new GetPrincipalsInRoleResponseStandardScheme();
     }
   }
 
-  private static class PrivilegeBagStandardScheme extends StandardScheme<PrivilegeBag> {
+  private static class GetPrincipalsInRoleResponseStandardScheme extends StandardScheme<GetPrincipalsInRoleResponse> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, PrivilegeBag struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, GetPrincipalsInRoleResponse struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -343,21 +343,21 @@ public class PrivilegeBag implements org.apache.thrift.TBase<PrivilegeBag, Privi
           break;
         }
         switch (schemeField.id) {
-          case 1: // PRIVILEGES
+          case 1: // PRINCIPAL_GRANTS
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
-                org.apache.thrift.protocol.TList _list16 = iprot.readListBegin();
-                struct.privileges = new ArrayList<HiveObjectPrivilege>(_list16.size);
-                for (int _i17 = 0; _i17 < _list16.size; ++_i17)
+                org.apache.thrift.protocol.TList _list78 = iprot.readListBegin();
+                struct.principalGrants = new ArrayList<RolePrincipalGrant>(_list78.size);
+                for (int _i79 = 0; _i79 < _list78.size; ++_i79)
                 {
-                  HiveObjectPrivilege _elem18; // optional
-                  _elem18 = new HiveObjectPrivilege();
-                  _elem18.read(iprot);
-                  struct.privileges.add(_elem18);
+                  RolePrincipalGrant _elem80; // optional
+                  _elem80 = new RolePrincipalGrant();
+                  _elem80.read(iprot);
+                  struct.principalGrants.add(_elem80);
                 }
                 iprot.readListEnd();
               }
-              struct.setPrivilegesIsSet(true);
+              struct.setPrincipalGrantsIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -371,17 +371,17 @@ public class PrivilegeBag implements org.apache.thrift.TBase<PrivilegeBag, Privi
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, PrivilegeBag struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, GetPrincipalsInRoleResponse struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
-      if (struct.privileges != null) {
-        oprot.writeFieldBegin(PRIVILEGES_FIELD_DESC);
+      if (struct.principalGrants != null) {
+        oprot.writeFieldBegin(PRINCIPAL_GRANTS_FIELD_DESC);
         {
-          oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.privileges.size()));
-          for (HiveObjectPrivilege _iter19 : struct.privileges)
+          oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.principalGrants.size()));
+          for (RolePrincipalGrant _iter81 : struct.principalGrants)
           {
-            _iter19.write(oprot);
+            _iter81.write(oprot);
           }
           oprot.writeListEnd();
         }
@@ -393,50 +393,50 @@ public class PrivilegeBag implements org.apache.thrift.TBase<PrivilegeBag, Privi
 
   }
 
-  private static class PrivilegeBagTupleSchemeFactory implements SchemeFactory {
-    public PrivilegeBagTupleScheme getScheme() {
-      return new PrivilegeBagTupleScheme();
+  private static class GetPrincipalsInRoleResponseTupleSchemeFactory implements SchemeFactory {
+    public GetPrincipalsInRoleResponseTupleScheme getScheme() {
+      return new GetPrincipalsInRoleResponseTupleScheme();
     }
   }
 
-  private static class PrivilegeBagTupleScheme extends TupleScheme<PrivilegeBag> {
+  private static class GetPrincipalsInRoleResponseTupleScheme extends TupleScheme<GetPrincipalsInRoleResponse> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, PrivilegeBag struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, GetPrincipalsInRoleResponse struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
       BitSet optionals = new BitSet();
-      if (struct.isSetPrivileges()) {
+      if (struct.isSetPrincipalGrants()) {
         optionals.set(0);
       }
       oprot.writeBitSet(optionals, 1);
-      if (struct.isSetPrivileges()) {
+      if (struct.isSetPrincipalGrants()) {
         {
-          oprot.writeI32(struct.privileges.size());
-          for (HiveObjectPrivilege _iter20 : struct.privileges)
+          oprot.writeI32(struct.principalGrants.size());
+          for (RolePrincipalGrant _iter82 : struct.principalGrants)
           {
-            _iter20.write(oprot);
+            _iter82.write(oprot);
           }
         }
       }
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, PrivilegeBag struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, GetPrincipalsInRoleResponse struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       BitSet incoming = iprot.readBitSet(1);
       if (incoming.get(0)) {
         {
-          org.apache.thrift.protocol.TList _list21 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-          struct.privileges = new ArrayList<HiveObjectPrivilege>(_list21.size);
-          for (int _i22 = 0; _i22 < _list21.size; ++_i22)
+          org.apache.thrift.protocol.TList _list83 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+          struct.principalGrants = new ArrayList<RolePrincipalGrant>(_list83.size);
+          for (int _i84 = 0; _i84 < _list83.size; ++_i84)
           {
-            HiveObjectPrivilege _elem23; // optional
-            _elem23 = new HiveObjectPrivilege();
-            _elem23.read(iprot);
-            struct.privileges.add(_elem23);
+            RolePrincipalGrant _elem85; // optional
+            _elem85 = new RolePrincipalGrant();
+            _elem85.read(iprot);
+            struct.principalGrants.add(_elem85);
           }
         }
-        struct.setPrivilegesIsSet(true);
+        struct.setPrincipalGrantsIsSet(true);
       }
     }
   }
