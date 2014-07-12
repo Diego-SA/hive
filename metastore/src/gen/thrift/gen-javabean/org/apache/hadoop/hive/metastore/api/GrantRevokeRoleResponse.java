@@ -31,22 +31,22 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class OpenTxnsResponse implements org.apache.thrift.TBase<OpenTxnsResponse, OpenTxnsResponse._Fields>, java.io.Serializable, Cloneable {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("OpenTxnsResponse");
+public class GrantRevokeRoleResponse implements org.apache.thrift.TBase<GrantRevokeRoleResponse, GrantRevokeRoleResponse._Fields>, java.io.Serializable, Cloneable {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("GrantRevokeRoleResponse");
 
-  private static final org.apache.thrift.protocol.TField TXN_IDS_FIELD_DESC = new org.apache.thrift.protocol.TField("txn_ids", org.apache.thrift.protocol.TType.LIST, (short)1);
+  private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.BOOL, (short)1);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
-    schemes.put(StandardScheme.class, new OpenTxnsResponseStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new OpenTxnsResponseTupleSchemeFactory());
+    schemes.put(StandardScheme.class, new GrantRevokeRoleResponseStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new GrantRevokeRoleResponseTupleSchemeFactory());
   }
 
-  private List<Long> txn_ids; // required
+  private boolean success; // optional
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    TXN_IDS((short)1, "txn_ids");
+    SUCCESS((short)1, "success");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -61,8 +61,8 @@ public class OpenTxnsResponse implements org.apache.thrift.TBase<OpenTxnsRespons
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // TXN_IDS
-          return TXN_IDS;
+        case 1: // SUCCESS
+          return SUCCESS;
         default:
           return null;
       }
@@ -103,93 +103,68 @@ public class OpenTxnsResponse implements org.apache.thrift.TBase<OpenTxnsRespons
   }
 
   // isset id assignments
+  private static final int __SUCCESS_ISSET_ID = 0;
+  private byte __isset_bitfield = 0;
+  private _Fields optionals[] = {_Fields.SUCCESS};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.TXN_IDS, new org.apache.thrift.meta_data.FieldMetaData("txn_ids", org.apache.thrift.TFieldRequirementType.REQUIRED, 
-        new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
-            new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64))));
+    tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.BOOL)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(OpenTxnsResponse.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(GrantRevokeRoleResponse.class, metaDataMap);
   }
 
-  public OpenTxnsResponse() {
-  }
-
-  public OpenTxnsResponse(
-    List<Long> txn_ids)
-  {
-    this();
-    this.txn_ids = txn_ids;
+  public GrantRevokeRoleResponse() {
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public OpenTxnsResponse(OpenTxnsResponse other) {
-    if (other.isSetTxn_ids()) {
-      List<Long> __this__txn_ids = new ArrayList<Long>();
-      for (Long other_element : other.txn_ids) {
-        __this__txn_ids.add(other_element);
-      }
-      this.txn_ids = __this__txn_ids;
-    }
+  public GrantRevokeRoleResponse(GrantRevokeRoleResponse other) {
+    __isset_bitfield = other.__isset_bitfield;
+    this.success = other.success;
   }
 
-  public OpenTxnsResponse deepCopy() {
-    return new OpenTxnsResponse(this);
+  public GrantRevokeRoleResponse deepCopy() {
+    return new GrantRevokeRoleResponse(this);
   }
 
   @Override
   public void clear() {
-    this.txn_ids = null;
+    setSuccessIsSet(false);
+    this.success = false;
   }
 
-  public int getTxn_idsSize() {
-    return (this.txn_ids == null) ? 0 : this.txn_ids.size();
+  public boolean isSuccess() {
+    return this.success;
   }
 
-  public java.util.Iterator<Long> getTxn_idsIterator() {
-    return (this.txn_ids == null) ? null : this.txn_ids.iterator();
+  public void setSuccess(boolean success) {
+    this.success = success;
+    setSuccessIsSet(true);
   }
 
-  public void addToTxn_ids(long elem) {
-    if (this.txn_ids == null) {
-      this.txn_ids = new ArrayList<Long>();
-    }
-    this.txn_ids.add(elem);
+  public void unsetSuccess() {
+    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
   }
 
-  public List<Long> getTxn_ids() {
-    return this.txn_ids;
+  /** Returns true if field success is set (has been assigned a value) and false otherwise */
+  public boolean isSetSuccess() {
+    return EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
   }
 
-  public void setTxn_ids(List<Long> txn_ids) {
-    this.txn_ids = txn_ids;
-  }
-
-  public void unsetTxn_ids() {
-    this.txn_ids = null;
-  }
-
-  /** Returns true if field txn_ids is set (has been assigned a value) and false otherwise */
-  public boolean isSetTxn_ids() {
-    return this.txn_ids != null;
-  }
-
-  public void setTxn_idsIsSet(boolean value) {
-    if (!value) {
-      this.txn_ids = null;
-    }
+  public void setSuccessIsSet(boolean value) {
+    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __SUCCESS_ISSET_ID, value);
   }
 
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
-    case TXN_IDS:
+    case SUCCESS:
       if (value == null) {
-        unsetTxn_ids();
+        unsetSuccess();
       } else {
-        setTxn_ids((List<Long>)value);
+        setSuccess((Boolean)value);
       }
       break;
 
@@ -198,8 +173,8 @@ public class OpenTxnsResponse implements org.apache.thrift.TBase<OpenTxnsRespons
 
   public Object getFieldValue(_Fields field) {
     switch (field) {
-    case TXN_IDS:
-      return getTxn_ids();
+    case SUCCESS:
+      return Boolean.valueOf(isSuccess());
 
     }
     throw new IllegalStateException();
@@ -212,8 +187,8 @@ public class OpenTxnsResponse implements org.apache.thrift.TBase<OpenTxnsRespons
     }
 
     switch (field) {
-    case TXN_IDS:
-      return isSetTxn_ids();
+    case SUCCESS:
+      return isSetSuccess();
     }
     throw new IllegalStateException();
   }
@@ -222,21 +197,21 @@ public class OpenTxnsResponse implements org.apache.thrift.TBase<OpenTxnsRespons
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof OpenTxnsResponse)
-      return this.equals((OpenTxnsResponse)that);
+    if (that instanceof GrantRevokeRoleResponse)
+      return this.equals((GrantRevokeRoleResponse)that);
     return false;
   }
 
-  public boolean equals(OpenTxnsResponse that) {
+  public boolean equals(GrantRevokeRoleResponse that) {
     if (that == null)
       return false;
 
-    boolean this_present_txn_ids = true && this.isSetTxn_ids();
-    boolean that_present_txn_ids = true && that.isSetTxn_ids();
-    if (this_present_txn_ids || that_present_txn_ids) {
-      if (!(this_present_txn_ids && that_present_txn_ids))
+    boolean this_present_success = true && this.isSetSuccess();
+    boolean that_present_success = true && that.isSetSuccess();
+    if (this_present_success || that_present_success) {
+      if (!(this_present_success && that_present_success))
         return false;
-      if (!this.txn_ids.equals(that.txn_ids))
+      if (this.success != that.success)
         return false;
     }
 
@@ -247,28 +222,28 @@ public class OpenTxnsResponse implements org.apache.thrift.TBase<OpenTxnsRespons
   public int hashCode() {
     HashCodeBuilder builder = new HashCodeBuilder();
 
-    boolean present_txn_ids = true && (isSetTxn_ids());
-    builder.append(present_txn_ids);
-    if (present_txn_ids)
-      builder.append(txn_ids);
+    boolean present_success = true && (isSetSuccess());
+    builder.append(present_success);
+    if (present_success)
+      builder.append(success);
 
     return builder.toHashCode();
   }
 
-  public int compareTo(OpenTxnsResponse other) {
+  public int compareTo(GrantRevokeRoleResponse other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
-    OpenTxnsResponse typedOther = (OpenTxnsResponse)other;
+    GrantRevokeRoleResponse typedOther = (GrantRevokeRoleResponse)other;
 
-    lastComparison = Boolean.valueOf(isSetTxn_ids()).compareTo(typedOther.isSetTxn_ids());
+    lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetTxn_ids()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.txn_ids, typedOther.txn_ids);
+    if (isSetSuccess()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, typedOther.success);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -290,26 +265,20 @@ public class OpenTxnsResponse implements org.apache.thrift.TBase<OpenTxnsRespons
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("OpenTxnsResponse(");
+    StringBuilder sb = new StringBuilder("GrantRevokeRoleResponse(");
     boolean first = true;
 
-    sb.append("txn_ids:");
-    if (this.txn_ids == null) {
-      sb.append("null");
-    } else {
-      sb.append(this.txn_ids);
+    if (isSetSuccess()) {
+      sb.append("success:");
+      sb.append(this.success);
+      first = false;
     }
-    first = false;
     sb.append(")");
     return sb.toString();
   }
 
   public void validate() throws org.apache.thrift.TException {
     // check for required fields
-    if (!isSetTxn_ids()) {
-      throw new org.apache.thrift.protocol.TProtocolException("Required field 'txn_ids' is unset! Struct:" + toString());
-    }
-
     // check for sub-struct validity
   }
 
@@ -323,21 +292,23 @@ public class OpenTxnsResponse implements org.apache.thrift.TBase<OpenTxnsRespons
 
   private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
     try {
+      // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+      __isset_bitfield = 0;
       read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
     } catch (org.apache.thrift.TException te) {
       throw new java.io.IOException(te);
     }
   }
 
-  private static class OpenTxnsResponseStandardSchemeFactory implements SchemeFactory {
-    public OpenTxnsResponseStandardScheme getScheme() {
-      return new OpenTxnsResponseStandardScheme();
+  private static class GrantRevokeRoleResponseStandardSchemeFactory implements SchemeFactory {
+    public GrantRevokeRoleResponseStandardScheme getScheme() {
+      return new GrantRevokeRoleResponseStandardScheme();
     }
   }
 
-  private static class OpenTxnsResponseStandardScheme extends StandardScheme<OpenTxnsResponse> {
+  private static class GrantRevokeRoleResponseStandardScheme extends StandardScheme<GrantRevokeRoleResponse> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, OpenTxnsResponse struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, GrantRevokeRoleResponse struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -347,20 +318,10 @@ public class OpenTxnsResponse implements org.apache.thrift.TBase<OpenTxnsRespons
           break;
         }
         switch (schemeField.id) {
-          case 1: // TXN_IDS
-            if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
-              {
-                org.apache.thrift.protocol.TList _list394 = iprot.readListBegin();
-                struct.txn_ids = new ArrayList<Long>(_list394.size);
-                for (int _i395 = 0; _i395 < _list394.size; ++_i395)
-                {
-                  long _elem396; // optional
-                  _elem396 = iprot.readI64();
-                  struct.txn_ids.add(_elem396);
-                }
-                iprot.readListEnd();
-              }
-              struct.setTxn_idsIsSet(true);
+          case 1: // SUCCESS
+            if (schemeField.type == org.apache.thrift.protocol.TType.BOOL) {
+              struct.success = iprot.readBool();
+              struct.setSuccessIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -374,20 +335,13 @@ public class OpenTxnsResponse implements org.apache.thrift.TBase<OpenTxnsRespons
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, OpenTxnsResponse struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, GrantRevokeRoleResponse struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
-      if (struct.txn_ids != null) {
-        oprot.writeFieldBegin(TXN_IDS_FIELD_DESC);
-        {
-          oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, struct.txn_ids.size()));
-          for (long _iter397 : struct.txn_ids)
-          {
-            oprot.writeI64(_iter397);
-          }
-          oprot.writeListEnd();
-        }
+      if (struct.isSetSuccess()) {
+        oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+        oprot.writeBool(struct.success);
         oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
@@ -396,40 +350,35 @@ public class OpenTxnsResponse implements org.apache.thrift.TBase<OpenTxnsRespons
 
   }
 
-  private static class OpenTxnsResponseTupleSchemeFactory implements SchemeFactory {
-    public OpenTxnsResponseTupleScheme getScheme() {
-      return new OpenTxnsResponseTupleScheme();
+  private static class GrantRevokeRoleResponseTupleSchemeFactory implements SchemeFactory {
+    public GrantRevokeRoleResponseTupleScheme getScheme() {
+      return new GrantRevokeRoleResponseTupleScheme();
     }
   }
 
-  private static class OpenTxnsResponseTupleScheme extends TupleScheme<OpenTxnsResponse> {
+  private static class GrantRevokeRoleResponseTupleScheme extends TupleScheme<GrantRevokeRoleResponse> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, OpenTxnsResponse struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, GrantRevokeRoleResponse struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
-      {
-        oprot.writeI32(struct.txn_ids.size());
-        for (long _iter398 : struct.txn_ids)
-        {
-          oprot.writeI64(_iter398);
-        }
+      BitSet optionals = new BitSet();
+      if (struct.isSetSuccess()) {
+        optionals.set(0);
+      }
+      oprot.writeBitSet(optionals, 1);
+      if (struct.isSetSuccess()) {
+        oprot.writeBool(struct.success);
       }
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, OpenTxnsResponse struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, GrantRevokeRoleResponse struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      {
-        org.apache.thrift.protocol.TList _list399 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, iprot.readI32());
-        struct.txn_ids = new ArrayList<Long>(_list399.size);
-        for (int _i400 = 0; _i400 < _list399.size; ++_i400)
-        {
-          long _elem401; // optional
-          _elem401 = iprot.readI64();
-          struct.txn_ids.add(_elem401);
-        }
+      BitSet incoming = iprot.readBitSet(1);
+      if (incoming.get(0)) {
+        struct.success = iprot.readBool();
+        struct.setSuccessIsSet(true);
       }
-      struct.setTxn_idsIsSet(true);
     }
   }
 
