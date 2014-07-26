@@ -206,6 +206,8 @@ public class ThriftHiveMetastore {
 
     public List<Role> list_roles(String principal_name, PrincipalType principal_type) throws MetaException, org.apache.thrift.TException;
 
+    public GrantRevokeRoleResponse grant_revoke_role(GrantRevokeRoleRequest request) throws MetaException, org.apache.thrift.TException;
+
     public GetPrincipalsInRoleResponse get_principals_in_role(GetPrincipalsInRoleRequest request) throws MetaException, org.apache.thrift.TException;
 
     public GetRoleGrantsForPrincipalResponse get_role_grants_for_principal(GetRoleGrantsForPrincipalRequest request) throws MetaException, org.apache.thrift.TException;
@@ -217,6 +219,8 @@ public class ThriftHiveMetastore {
     public boolean grant_privileges(PrivilegeBag privileges) throws MetaException, org.apache.thrift.TException;
 
     public boolean revoke_privileges(PrivilegeBag privileges) throws MetaException, org.apache.thrift.TException;
+
+    public GrantRevokePrivilegeResponse grant_revoke_privileges(GrantRevokePrivilegeRequest request) throws MetaException, org.apache.thrift.TException;
 
     public List<String> set_ugi(String user_name, List<String> group_names) throws MetaException, org.apache.thrift.TException;
 
@@ -424,6 +428,8 @@ public class ThriftHiveMetastore {
 
     public void list_roles(String principal_name, PrincipalType principal_type, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.list_roles_call> resultHandler) throws org.apache.thrift.TException;
 
+    public void grant_revoke_role(GrantRevokeRoleRequest request, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.grant_revoke_role_call> resultHandler) throws org.apache.thrift.TException;
+
     public void get_principals_in_role(GetPrincipalsInRoleRequest request, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.get_principals_in_role_call> resultHandler) throws org.apache.thrift.TException;
 
     public void get_role_grants_for_principal(GetRoleGrantsForPrincipalRequest request, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.get_role_grants_for_principal_call> resultHandler) throws org.apache.thrift.TException;
@@ -435,6 +441,8 @@ public class ThriftHiveMetastore {
     public void grant_privileges(PrivilegeBag privileges, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.grant_privileges_call> resultHandler) throws org.apache.thrift.TException;
 
     public void revoke_privileges(PrivilegeBag privileges, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.revoke_privileges_call> resultHandler) throws org.apache.thrift.TException;
+
+    public void grant_revoke_privileges(GrantRevokePrivilegeRequest request, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.grant_revoke_privileges_call> resultHandler) throws org.apache.thrift.TException;
 
     public void set_ugi(String user_name, List<String> group_names, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.set_ugi_call> resultHandler) throws org.apache.thrift.TException;
 
@@ -3086,6 +3094,32 @@ public class ThriftHiveMetastore {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "list_roles failed: unknown result");
     }
 
+    public GrantRevokeRoleResponse grant_revoke_role(GrantRevokeRoleRequest request) throws MetaException, org.apache.thrift.TException
+    {
+      send_grant_revoke_role(request);
+      return recv_grant_revoke_role();
+    }
+
+    public void send_grant_revoke_role(GrantRevokeRoleRequest request) throws org.apache.thrift.TException
+    {
+      grant_revoke_role_args args = new grant_revoke_role_args();
+      args.setRequest(request);
+      sendBase("grant_revoke_role", args);
+    }
+
+    public GrantRevokeRoleResponse recv_grant_revoke_role() throws MetaException, org.apache.thrift.TException
+    {
+      grant_revoke_role_result result = new grant_revoke_role_result();
+      receiveBase(result, "grant_revoke_role");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      if (result.o1 != null) {
+        throw result.o1;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "grant_revoke_role failed: unknown result");
+    }
+
     public GetPrincipalsInRoleResponse get_principals_in_role(GetPrincipalsInRoleRequest request) throws MetaException, org.apache.thrift.TException
     {
       send_get_principals_in_role(request);
@@ -3244,6 +3278,32 @@ public class ThriftHiveMetastore {
         throw result.o1;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "revoke_privileges failed: unknown result");
+    }
+
+    public GrantRevokePrivilegeResponse grant_revoke_privileges(GrantRevokePrivilegeRequest request) throws MetaException, org.apache.thrift.TException
+    {
+      send_grant_revoke_privileges(request);
+      return recv_grant_revoke_privileges();
+    }
+
+    public void send_grant_revoke_privileges(GrantRevokePrivilegeRequest request) throws org.apache.thrift.TException
+    {
+      grant_revoke_privileges_args args = new grant_revoke_privileges_args();
+      args.setRequest(request);
+      sendBase("grant_revoke_privileges", args);
+    }
+
+    public GrantRevokePrivilegeResponse recv_grant_revoke_privileges() throws MetaException, org.apache.thrift.TException
+    {
+      grant_revoke_privileges_result result = new grant_revoke_privileges_result();
+      receiveBase(result, "grant_revoke_privileges");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      if (result.o1 != null) {
+        throw result.o1;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "grant_revoke_privileges failed: unknown result");
     }
 
     public List<String> set_ugi(String user_name, List<String> group_names) throws MetaException, org.apache.thrift.TException
@@ -6778,6 +6838,38 @@ public class ThriftHiveMetastore {
       }
     }
 
+    public void grant_revoke_role(GrantRevokeRoleRequest request, org.apache.thrift.async.AsyncMethodCallback<grant_revoke_role_call> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      grant_revoke_role_call method_call = new grant_revoke_role_call(request, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class grant_revoke_role_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private GrantRevokeRoleRequest request;
+      public grant_revoke_role_call(GrantRevokeRoleRequest request, org.apache.thrift.async.AsyncMethodCallback<grant_revoke_role_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.request = request;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("grant_revoke_role", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        grant_revoke_role_args args = new grant_revoke_role_args();
+        args.setRequest(request);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public GrantRevokeRoleResponse getResult() throws MetaException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_grant_revoke_role();
+      }
+    }
+
     public void get_principals_in_role(GetPrincipalsInRoleRequest request, org.apache.thrift.async.AsyncMethodCallback<get_principals_in_role_call> resultHandler) throws org.apache.thrift.TException {
       checkReady();
       get_principals_in_role_call method_call = new get_principals_in_role_call(request, resultHandler, this, ___protocolFactory, ___transport);
@@ -6979,6 +7071,38 @@ public class ThriftHiveMetastore {
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
         return (new Client(prot)).recv_revoke_privileges();
+      }
+    }
+
+    public void grant_revoke_privileges(GrantRevokePrivilegeRequest request, org.apache.thrift.async.AsyncMethodCallback<grant_revoke_privileges_call> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      grant_revoke_privileges_call method_call = new grant_revoke_privileges_call(request, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class grant_revoke_privileges_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private GrantRevokePrivilegeRequest request;
+      public grant_revoke_privileges_call(GrantRevokePrivilegeRequest request, org.apache.thrift.async.AsyncMethodCallback<grant_revoke_privileges_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.request = request;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("grant_revoke_privileges", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        grant_revoke_privileges_args args = new grant_revoke_privileges_args();
+        args.setRequest(request);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public GrantRevokePrivilegeResponse getResult() throws MetaException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_grant_revoke_privileges();
       }
     }
 
@@ -7623,12 +7747,14 @@ public class ThriftHiveMetastore {
       processMap.put("grant_role", new grant_role());
       processMap.put("revoke_role", new revoke_role());
       processMap.put("list_roles", new list_roles());
+      processMap.put("grant_revoke_role", new grant_revoke_role());
       processMap.put("get_principals_in_role", new get_principals_in_role());
       processMap.put("get_role_grants_for_principal", new get_role_grants_for_principal());
       processMap.put("get_privilege_set", new get_privilege_set());
       processMap.put("list_privileges", new list_privileges());
       processMap.put("grant_privileges", new grant_privileges());
       processMap.put("revoke_privileges", new revoke_privileges());
+      processMap.put("grant_revoke_privileges", new grant_revoke_privileges());
       processMap.put("set_ugi", new set_ugi());
       processMap.put("get_delegation_token", new get_delegation_token());
       processMap.put("renew_delegation_token", new renew_delegation_token());
@@ -9903,6 +10029,30 @@ public class ThriftHiveMetastore {
       }
     }
 
+    public static class grant_revoke_role<I extends Iface> extends org.apache.thrift.ProcessFunction<I, grant_revoke_role_args> {
+      public grant_revoke_role() {
+        super("grant_revoke_role");
+      }
+
+      public grant_revoke_role_args getEmptyArgsInstance() {
+        return new grant_revoke_role_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public grant_revoke_role_result getResult(I iface, grant_revoke_role_args args) throws org.apache.thrift.TException {
+        grant_revoke_role_result result = new grant_revoke_role_result();
+        try {
+          result.success = iface.grant_revoke_role(args.request);
+        } catch (MetaException o1) {
+          result.o1 = o1;
+        }
+        return result;
+      }
+    }
+
     public static class get_principals_in_role<I extends Iface> extends org.apache.thrift.ProcessFunction<I, get_principals_in_role_args> {
       public get_principals_in_role() {
         super("get_principals_in_role");
@@ -10042,6 +10192,30 @@ public class ThriftHiveMetastore {
         try {
           result.success = iface.revoke_privileges(args.privileges);
           result.setSuccessIsSet(true);
+        } catch (MetaException o1) {
+          result.o1 = o1;
+        }
+        return result;
+      }
+    }
+
+    public static class grant_revoke_privileges<I extends Iface> extends org.apache.thrift.ProcessFunction<I, grant_revoke_privileges_args> {
+      public grant_revoke_privileges() {
+        super("grant_revoke_privileges");
+      }
+
+      public grant_revoke_privileges_args getEmptyArgsInstance() {
+        return new grant_revoke_privileges_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public grant_revoke_privileges_result getResult(I iface, grant_revoke_privileges_args args) throws org.apache.thrift.TException {
+        grant_revoke_privileges_result result = new grant_revoke_privileges_result();
+        try {
+          result.success = iface.grant_revoke_privileges(args.request);
         } catch (MetaException o1) {
           result.o1 = o1;
         }
@@ -14202,7 +14376,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list442.size);
                   for (int _i443 = 0; _i443 < _list442.size; ++_i443)
                   {
-                    String _elem444; // required
+                    String _elem444; // optional
                     _elem444 = iprot.readString();
                     struct.success.add(_elem444);
                   }
@@ -14301,7 +14475,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list447.size);
             for (int _i448 = 0; _i448 < _list447.size; ++_i448)
             {
-              String _elem449; // required
+              String _elem449; // optional
               _elem449 = iprot.readString();
               struct.success.add(_elem449);
             }
@@ -14964,7 +15138,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list450.size);
                   for (int _i451 = 0; _i451 < _list450.size; ++_i451)
                   {
-                    String _elem452; // required
+                    String _elem452; // optional
                     _elem452 = iprot.readString();
                     struct.success.add(_elem452);
                   }
@@ -15063,7 +15237,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list455.size);
             for (int _i456 = 0; _i456 < _list455.size; ++_i456)
             {
-              String _elem457; // required
+              String _elem457; // optional
               _elem457 = iprot.readString();
               struct.success.add(_elem457);
             }
@@ -20824,7 +20998,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<FieldSchema>(_list468.size);
                   for (int _i469 = 0; _i469 < _list468.size; ++_i469)
                   {
-                    FieldSchema _elem470; // required
+                    FieldSchema _elem470; // optional
                     _elem470 = new FieldSchema();
                     _elem470.read(iprot);
                     struct.success.add(_elem470);
@@ -20964,7 +21138,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<FieldSchema>(_list473.size);
             for (int _i474 = 0; _i474 < _list473.size; ++_i474)
             {
-              FieldSchema _elem475; // required
+              FieldSchema _elem475; // optional
               _elem475 = new FieldSchema();
               _elem475.read(iprot);
               struct.success.add(_elem475);
@@ -22016,7 +22190,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<FieldSchema>(_list476.size);
                   for (int _i477 = 0; _i477 < _list476.size; ++_i477)
                   {
-                    FieldSchema _elem478; // required
+                    FieldSchema _elem478; // optional
                     _elem478 = new FieldSchema();
                     _elem478.read(iprot);
                     struct.success.add(_elem478);
@@ -22156,7 +22330,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<FieldSchema>(_list481.size);
             for (int _i482 = 0; _i482 < _list481.size; ++_i482)
             {
-              FieldSchema _elem483; // required
+              FieldSchema _elem483; // optional
               _elem483 = new FieldSchema();
               _elem483.read(iprot);
               struct.success.add(_elem483);
@@ -27406,7 +27580,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list484.size);
                   for (int _i485 = 0; _i485 < _list484.size; ++_i485)
                   {
-                    String _elem486; // required
+                    String _elem486; // optional
                     _elem486 = iprot.readString();
                     struct.success.add(_elem486);
                   }
@@ -27505,7 +27679,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list489.size);
             for (int _i490 = 0; _i490 < _list489.size; ++_i490)
             {
-              String _elem491; // required
+              String _elem491; // optional
               _elem491 = iprot.readString();
               struct.success.add(_elem491);
             }
@@ -28280,7 +28454,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list492.size);
                   for (int _i493 = 0; _i493 < _list492.size; ++_i493)
                   {
-                    String _elem494; // required
+                    String _elem494; // optional
                     _elem494 = iprot.readString();
                     struct.success.add(_elem494);
                   }
@@ -28379,7 +28553,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list497.size);
             for (int _i498 = 0; _i498 < _list497.size; ++_i498)
             {
-              String _elem499; // required
+              String _elem499; // optional
               _elem499 = iprot.readString();
               struct.success.add(_elem499);
             }
@@ -29841,7 +30015,7 @@ public class ThriftHiveMetastore {
                   struct.tbl_names = new ArrayList<String>(_list500.size);
                   for (int _i501 = 0; _i501 < _list500.size; ++_i501)
                   {
-                    String _elem502; // required
+                    String _elem502; // optional
                     _elem502 = iprot.readString();
                     struct.tbl_names.add(_elem502);
                   }
@@ -29935,7 +30109,7 @@ public class ThriftHiveMetastore {
             struct.tbl_names = new ArrayList<String>(_list505.size);
             for (int _i506 = 0; _i506 < _list505.size; ++_i506)
             {
-              String _elem507; // required
+              String _elem507; // optional
               _elem507 = iprot.readString();
               struct.tbl_names.add(_elem507);
             }
@@ -30509,7 +30683,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<Table>(_list508.size);
                   for (int _i509 = 0; _i509 < _list508.size; ++_i509)
                   {
-                    Table _elem510; // required
+                    Table _elem510; // optional
                     _elem510 = new Table();
                     _elem510.read(iprot);
                     struct.success.add(_elem510);
@@ -30649,7 +30823,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<Table>(_list513.size);
             for (int _i514 = 0; _i514 < _list513.size; ++_i514)
             {
-              Table _elem515; // required
+              Table _elem515; // optional
               _elem515 = new Table();
               _elem515.read(iprot);
               struct.success.add(_elem515);
@@ -31805,7 +31979,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list516.size);
                   for (int _i517 = 0; _i517 < _list516.size; ++_i517)
                   {
-                    String _elem518; // required
+                    String _elem518; // optional
                     _elem518 = iprot.readString();
                     struct.success.add(_elem518);
                   }
@@ -31944,7 +32118,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list521.size);
             for (int _i522 = 0; _i522 < _list521.size; ++_i522)
             {
-              String _elem523; // required
+              String _elem523; // optional
               _elem523 = iprot.readString();
               struct.success.add(_elem523);
             }
@@ -36670,7 +36844,7 @@ public class ThriftHiveMetastore {
                   struct.new_parts = new ArrayList<Partition>(_list524.size);
                   for (int _i525 = 0; _i525 < _list524.size; ++_i525)
                   {
-                    Partition _elem526; // required
+                    Partition _elem526; // optional
                     _elem526 = new Partition();
                     _elem526.read(iprot);
                     struct.new_parts.add(_elem526);
@@ -36750,7 +36924,7 @@ public class ThriftHiveMetastore {
             struct.new_parts = new ArrayList<Partition>(_list529.size);
             for (int _i530 = 0; _i530 < _list529.size; ++_i530)
             {
-              Partition _elem531; // required
+              Partition _elem531; // optional
               _elem531 = new Partition();
               _elem531.read(iprot);
               struct.new_parts.add(_elem531);
@@ -37936,7 +38110,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list532.size);
                   for (int _i533 = 0; _i533 < _list532.size; ++_i533)
                   {
-                    String _elem534; // required
+                    String _elem534; // optional
                     _elem534 = iprot.readString();
                     struct.part_vals.add(_elem534);
                   }
@@ -38045,7 +38219,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list537.size);
             for (int _i538 = 0; _i538 < _list537.size; ++_i538)
             {
-              String _elem539; // required
+              String _elem539; // optional
               _elem539 = iprot.readString();
               struct.part_vals.add(_elem539);
             }
@@ -40363,7 +40537,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list540.size);
                   for (int _i541 = 0; _i541 < _list540.size; ++_i541)
                   {
-                    String _elem542; // required
+                    String _elem542; // optional
                     _elem542 = iprot.readString();
                     struct.part_vals.add(_elem542);
                   }
@@ -40492,7 +40666,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list545.size);
             for (int _i546 = 0; _i546 < _list545.size; ++_i546)
             {
-              String _elem547; // required
+              String _elem547; // optional
               _elem547 = iprot.readString();
               struct.part_vals.add(_elem547);
             }
@@ -44371,7 +44545,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list548.size);
                   for (int _i549 = 0; _i549 < _list548.size; ++_i549)
                   {
-                    String _elem550; // required
+                    String _elem550; // optional
                     _elem550 = iprot.readString();
                     struct.part_vals.add(_elem550);
                   }
@@ -44497,7 +44671,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list553.size);
             for (int _i554 = 0; _i554 < _list553.size; ++_i554)
             {
-              String _elem555; // required
+              String _elem555; // optional
               _elem555 = iprot.readString();
               struct.part_vals.add(_elem555);
             }
@@ -45745,7 +45919,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list556.size);
                   for (int _i557 = 0; _i557 < _list556.size; ++_i557)
                   {
-                    String _elem558; // required
+                    String _elem558; // optional
                     _elem558 = iprot.readString();
                     struct.part_vals.add(_elem558);
                   }
@@ -45891,7 +46065,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list561.size);
             for (int _i562 = 0; _i562 < _list561.size; ++_i562)
             {
-              String _elem563; // required
+              String _elem563; // optional
               _elem563 = iprot.readString();
               struct.part_vals.add(_elem563);
             }
@@ -50502,7 +50676,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list564.size);
                   for (int _i565 = 0; _i565 < _list564.size; ++_i565)
                   {
-                    String _elem566; // required
+                    String _elem566; // optional
                     _elem566 = iprot.readString();
                     struct.part_vals.add(_elem566);
                   }
@@ -50611,7 +50785,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list569.size);
             for (int _i570 = 0; _i570 < _list569.size; ++_i570)
             {
-              String _elem571; // required
+              String _elem571; // optional
               _elem571 = iprot.readString();
               struct.part_vals.add(_elem571);
             }
@@ -53501,7 +53675,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list582.size);
                   for (int _i583 = 0; _i583 < _list582.size; ++_i583)
                   {
-                    String _elem584; // required
+                    String _elem584; // optional
                     _elem584 = iprot.readString();
                     struct.part_vals.add(_elem584);
                   }
@@ -53527,7 +53701,7 @@ public class ThriftHiveMetastore {
                   struct.group_names = new ArrayList<String>(_list585.size);
                   for (int _i586 = 0; _i586 < _list585.size; ++_i586)
                   {
-                    String _elem587; // required
+                    String _elem587; // optional
                     _elem587 = iprot.readString();
                     struct.group_names.add(_elem587);
                   }
@@ -53671,7 +53845,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list592.size);
             for (int _i593 = 0; _i593 < _list592.size; ++_i593)
             {
-              String _elem594; // required
+              String _elem594; // optional
               _elem594 = iprot.readString();
               struct.part_vals.add(_elem594);
             }
@@ -53688,7 +53862,7 @@ public class ThriftHiveMetastore {
             struct.group_names = new ArrayList<String>(_list595.size);
             for (int _i596 = 0; _i596 < _list595.size; ++_i596)
             {
-              String _elem597; // required
+              String _elem597; // optional
               _elem597 = iprot.readString();
               struct.group_names.add(_elem597);
             }
@@ -56463,7 +56637,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<Partition>(_list598.size);
                   for (int _i599 = 0; _i599 < _list598.size; ++_i599)
                   {
-                    Partition _elem600; // required
+                    Partition _elem600; // optional
                     _elem600 = new Partition();
                     _elem600.read(iprot);
                     struct.success.add(_elem600);
@@ -56583,7 +56757,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<Partition>(_list603.size);
             for (int _i604 = 0; _i604 < _list603.size; ++_i604)
             {
-              Partition _elem605; // required
+              Partition _elem605; // optional
               _elem605 = new Partition();
               _elem605.read(iprot);
               struct.success.add(_elem605);
@@ -57283,7 +57457,7 @@ public class ThriftHiveMetastore {
                   struct.group_names = new ArrayList<String>(_list606.size);
                   for (int _i607 = 0; _i607 < _list606.size; ++_i607)
                   {
-                    String _elem608; // required
+                    String _elem608; // optional
                     _elem608 = iprot.readString();
                     struct.group_names.add(_elem608);
                   }
@@ -57420,7 +57594,7 @@ public class ThriftHiveMetastore {
             struct.group_names = new ArrayList<String>(_list611.size);
             for (int _i612 = 0; _i612 < _list611.size; ++_i612)
             {
-              String _elem613; // required
+              String _elem613; // optional
               _elem613 = iprot.readString();
               struct.group_names.add(_elem613);
             }
@@ -57913,7 +58087,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<Partition>(_list614.size);
                   for (int _i615 = 0; _i615 < _list614.size; ++_i615)
                   {
-                    Partition _elem616; // required
+                    Partition _elem616; // optional
                     _elem616 = new Partition();
                     _elem616.read(iprot);
                     struct.success.add(_elem616);
@@ -58033,7 +58207,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<Partition>(_list619.size);
             for (int _i620 = 0; _i620 < _list619.size; ++_i620)
             {
-              Partition _elem621; // required
+              Partition _elem621; // optional
               _elem621 = new Partition();
               _elem621.read(iprot);
               struct.success.add(_elem621);
@@ -59022,7 +59196,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list622.size);
                   for (int _i623 = 0; _i623 < _list622.size; ++_i623)
                   {
-                    String _elem624; // required
+                    String _elem624; // optional
                     _elem624 = iprot.readString();
                     struct.success.add(_elem624);
                   }
@@ -59121,7 +59295,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list627.size);
             for (int _i628 = 0; _i628 < _list627.size; ++_i628)
             {
-              String _elem629; // required
+              String _elem629; // optional
               _elem629 = iprot.readString();
               struct.success.add(_elem629);
             }
@@ -59718,7 +59892,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list630.size);
                   for (int _i631 = 0; _i631 < _list630.size; ++_i631)
                   {
-                    String _elem632; // required
+                    String _elem632; // optional
                     _elem632 = iprot.readString();
                     struct.part_vals.add(_elem632);
                   }
@@ -59844,7 +60018,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list635.size);
             for (int _i636 = 0; _i636 < _list635.size; ++_i636)
             {
-              String _elem637; // required
+              String _elem637; // optional
               _elem637 = iprot.readString();
               struct.part_vals.add(_elem637);
             }
@@ -60341,7 +60515,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<Partition>(_list638.size);
                   for (int _i639 = 0; _i639 < _list638.size; ++_i639)
                   {
-                    Partition _elem640; // required
+                    Partition _elem640; // optional
                     _elem640 = new Partition();
                     _elem640.read(iprot);
                     struct.success.add(_elem640);
@@ -60461,7 +60635,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<Partition>(_list643.size);
             for (int _i644 = 0; _i644 < _list643.size; ++_i644)
             {
-              Partition _elem645; // required
+              Partition _elem645; // optional
               _elem645 = new Partition();
               _elem645.read(iprot);
               struct.success.add(_elem645);
@@ -61246,7 +61420,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list646.size);
                   for (int _i647 = 0; _i647 < _list646.size; ++_i647)
                   {
-                    String _elem648; // required
+                    String _elem648; // optional
                     _elem648 = iprot.readString();
                     struct.part_vals.add(_elem648);
                   }
@@ -61280,7 +61454,7 @@ public class ThriftHiveMetastore {
                   struct.group_names = new ArrayList<String>(_list649.size);
                   for (int _i650 = 0; _i650 < _list649.size; ++_i650)
                   {
-                    String _elem651; // required
+                    String _elem651; // optional
                     _elem651 = iprot.readString();
                     struct.group_names.add(_elem651);
                   }
@@ -61433,7 +61607,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list656.size);
             for (int _i657 = 0; _i657 < _list656.size; ++_i657)
             {
-              String _elem658; // required
+              String _elem658; // optional
               _elem658 = iprot.readString();
               struct.part_vals.add(_elem658);
             }
@@ -61454,7 +61628,7 @@ public class ThriftHiveMetastore {
             struct.group_names = new ArrayList<String>(_list659.size);
             for (int _i660 = 0; _i660 < _list659.size; ++_i660)
             {
-              String _elem661; // required
+              String _elem661; // optional
               _elem661 = iprot.readString();
               struct.group_names.add(_elem661);
             }
@@ -61947,7 +62121,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<Partition>(_list662.size);
                   for (int _i663 = 0; _i663 < _list662.size; ++_i663)
                   {
-                    Partition _elem664; // required
+                    Partition _elem664; // optional
                     _elem664 = new Partition();
                     _elem664.read(iprot);
                     struct.success.add(_elem664);
@@ -62067,7 +62241,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<Partition>(_list667.size);
             for (int _i668 = 0; _i668 < _list667.size; ++_i668)
             {
-              Partition _elem669; // required
+              Partition _elem669; // optional
               _elem669 = new Partition();
               _elem669.read(iprot);
               struct.success.add(_elem669);
@@ -62670,7 +62844,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list670.size);
                   for (int _i671 = 0; _i671 < _list670.size; ++_i671)
                   {
-                    String _elem672; // required
+                    String _elem672; // optional
                     _elem672 = iprot.readString();
                     struct.part_vals.add(_elem672);
                   }
@@ -62796,7 +62970,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list675.size);
             for (int _i676 = 0; _i676 < _list675.size; ++_i676)
             {
-              String _elem677; // required
+              String _elem677; // optional
               _elem677 = iprot.readString();
               struct.part_vals.add(_elem677);
             }
@@ -63293,7 +63467,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list678.size);
                   for (int _i679 = 0; _i679 < _list678.size; ++_i679)
                   {
-                    String _elem680; // required
+                    String _elem680; // optional
                     _elem680 = iprot.readString();
                     struct.success.add(_elem680);
                   }
@@ -63412,7 +63586,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list683.size);
             for (int _i684 = 0; _i684 < _list683.size; ++_i684)
             {
-              String _elem685; // required
+              String _elem685; // optional
               _elem685 = iprot.readString();
               struct.success.add(_elem685);
             }
@@ -64585,7 +64759,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<Partition>(_list686.size);
                   for (int _i687 = 0; _i687 < _list686.size; ++_i687)
                   {
-                    Partition _elem688; // required
+                    Partition _elem688; // optional
                     _elem688 = new Partition();
                     _elem688.read(iprot);
                     struct.success.add(_elem688);
@@ -64705,7 +64879,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<Partition>(_list691.size);
             for (int _i692 = 0; _i692 < _list691.size; ++_i692)
             {
-              Partition _elem693; // required
+              Partition _elem693; // optional
               _elem693 = new Partition();
               _elem693.read(iprot);
               struct.success.add(_elem693);
@@ -66163,7 +66337,7 @@ public class ThriftHiveMetastore {
                   struct.names = new ArrayList<String>(_list694.size);
                   for (int _i695 = 0; _i695 < _list694.size; ++_i695)
                   {
-                    String _elem696; // required
+                    String _elem696; // optional
                     _elem696 = iprot.readString();
                     struct.names.add(_elem696);
                   }
@@ -66272,7 +66446,7 @@ public class ThriftHiveMetastore {
             struct.names = new ArrayList<String>(_list699.size);
             for (int _i700 = 0; _i700 < _list699.size; ++_i700)
             {
-              String _elem701; // required
+              String _elem701; // optional
               _elem701 = iprot.readString();
               struct.names.add(_elem701);
             }
@@ -66765,7 +66939,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<Partition>(_list702.size);
                   for (int _i703 = 0; _i703 < _list702.size; ++_i703)
                   {
-                    Partition _elem704; // required
+                    Partition _elem704; // optional
                     _elem704 = new Partition();
                     _elem704.read(iprot);
                     struct.success.add(_elem704);
@@ -66885,7 +67059,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<Partition>(_list707.size);
             for (int _i708 = 0; _i708 < _list707.size; ++_i708)
             {
-              Partition _elem709; // required
+              Partition _elem709; // optional
               _elem709 = new Partition();
               _elem709.read(iprot);
               struct.success.add(_elem709);
@@ -68442,7 +68616,7 @@ public class ThriftHiveMetastore {
                   struct.new_parts = new ArrayList<Partition>(_list710.size);
                   for (int _i711 = 0; _i711 < _list710.size; ++_i711)
                   {
-                    Partition _elem712; // required
+                    Partition _elem712; // optional
                     _elem712 = new Partition();
                     _elem712.read(iprot);
                     struct.new_parts.add(_elem712);
@@ -68552,7 +68726,7 @@ public class ThriftHiveMetastore {
             struct.new_parts = new ArrayList<Partition>(_list715.size);
             for (int _i716 = 0; _i716 < _list715.size; ++_i716)
             {
-              Partition _elem717; // required
+              Partition _elem717; // optional
               _elem717 = new Partition();
               _elem717.read(iprot);
               struct.new_parts.add(_elem717);
@@ -70758,7 +70932,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list718.size);
                   for (int _i719 = 0; _i719 < _list718.size; ++_i719)
                   {
-                    String _elem720; // required
+                    String _elem720; // optional
                     _elem720 = iprot.readString();
                     struct.part_vals.add(_elem720);
                   }
@@ -70887,7 +71061,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list723.size);
             for (int _i724 = 0; _i724 < _list723.size; ++_i724)
             {
-              String _elem725; // required
+              String _elem725; // optional
               _elem725 = iprot.readString();
               struct.part_vals.add(_elem725);
             }
@@ -71770,7 +71944,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list726.size);
                   for (int _i727 = 0; _i727 < _list726.size; ++_i727)
                   {
-                    String _elem728; // required
+                    String _elem728; // optional
                     _elem728 = iprot.readString();
                     struct.part_vals.add(_elem728);
                   }
@@ -71866,7 +72040,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list731.size);
             for (int _i732 = 0; _i732 < _list731.size; ++_i732)
             {
-              String _elem733; // required
+              String _elem733; // optional
               _elem733 = iprot.readString();
               struct.part_vals.add(_elem733);
             }
@@ -74030,7 +74204,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list734.size);
                   for (int _i735 = 0; _i735 < _list734.size; ++_i735)
                   {
-                    String _elem736; // required
+                    String _elem736; // optional
                     _elem736 = iprot.readString();
                     struct.success.add(_elem736);
                   }
@@ -74129,7 +74303,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list739.size);
             for (int _i740 = 0; _i740 < _list739.size; ++_i740)
             {
-              String _elem741; // required
+              String _elem741; // optional
               _elem741 = iprot.readString();
               struct.success.add(_elem741);
             }
@@ -84125,7 +84299,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<Index>(_list772.size);
                   for (int _i773 = 0; _i773 < _list772.size; ++_i773)
                   {
-                    Index _elem774; // required
+                    Index _elem774; // optional
                     _elem774 = new Index();
                     _elem774.read(iprot);
                     struct.success.add(_elem774);
@@ -84245,7 +84419,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<Index>(_list777.size);
             for (int _i778 = 0; _i778 < _list777.size; ++_i778)
             {
-              Index _elem779; // required
+              Index _elem779; // optional
               _elem779 = new Index();
               _elem779.read(iprot);
               struct.success.add(_elem779);
@@ -85234,7 +85408,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list780.size);
                   for (int _i781 = 0; _i781 < _list780.size; ++_i781)
                   {
-                    String _elem782; // required
+                    String _elem782; // optional
                     _elem782 = iprot.readString();
                     struct.success.add(_elem782);
                   }
@@ -85333,7 +85507,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list785.size);
             for (int _i786 = 0; _i786 < _list785.size; ++_i786)
             {
-              String _elem787; // required
+              String _elem787; // optional
               _elem787 = iprot.readString();
               struct.success.add(_elem787);
             }
@@ -98994,7 +99168,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list788.size);
                   for (int _i789 = 0; _i789 < _list788.size; ++_i789)
                   {
-                    String _elem790; // required
+                    String _elem790; // optional
                     _elem790 = iprot.readString();
                     struct.success.add(_elem790);
                   }
@@ -99093,7 +99267,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list793.size);
             for (int _i794 = 0; _i794 < _list793.size; ++_i794)
             {
-              String _elem795; // required
+              String _elem795; // optional
               _elem795 = iprot.readString();
               struct.success.add(_elem795);
             }
@@ -102442,7 +102616,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list796.size);
                   for (int _i797 = 0; _i797 < _list796.size; ++_i797)
                   {
-                    String _elem798; // required
+                    String _elem798; // optional
                     _elem798 = iprot.readString();
                     struct.success.add(_elem798);
                   }
@@ -102541,7 +102715,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list801.size);
             for (int _i802 = 0; _i802 < _list801.size; ++_i802)
             {
-              String _elem803; // required
+              String _elem803; // optional
               _elem803 = iprot.readString();
               struct.success.add(_elem803);
             }
@@ -105838,7 +106012,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<Role>(_list804.size);
                   for (int _i805 = 0; _i805 < _list804.size; ++_i805)
                   {
-                    Role _elem806; // required
+                    Role _elem806; // optional
                     _elem806 = new Role();
                     _elem806.read(iprot);
                     struct.success.add(_elem806);
@@ -105938,12 +106112,844 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<Role>(_list809.size);
             for (int _i810 = 0; _i810 < _list809.size; ++_i810)
             {
-              Role _elem811; // required
+              Role _elem811; // optional
               _elem811 = new Role();
               _elem811.read(iprot);
               struct.success.add(_elem811);
             }
           }
+          struct.setSuccessIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.o1 = new MetaException();
+          struct.o1.read(iprot);
+          struct.setO1IsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class grant_revoke_role_args implements org.apache.thrift.TBase<grant_revoke_role_args, grant_revoke_role_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("grant_revoke_role_args");
+
+    private static final org.apache.thrift.protocol.TField REQUEST_FIELD_DESC = new org.apache.thrift.protocol.TField("request", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new grant_revoke_role_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new grant_revoke_role_argsTupleSchemeFactory());
+    }
+
+    private GrantRevokeRoleRequest request; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      REQUEST((short)1, "request");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // REQUEST
+            return REQUEST;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.REQUEST, new org.apache.thrift.meta_data.FieldMetaData("request", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, GrantRevokeRoleRequest.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(grant_revoke_role_args.class, metaDataMap);
+    }
+
+    public grant_revoke_role_args() {
+    }
+
+    public grant_revoke_role_args(
+      GrantRevokeRoleRequest request)
+    {
+      this();
+      this.request = request;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public grant_revoke_role_args(grant_revoke_role_args other) {
+      if (other.isSetRequest()) {
+        this.request = new GrantRevokeRoleRequest(other.request);
+      }
+    }
+
+    public grant_revoke_role_args deepCopy() {
+      return new grant_revoke_role_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.request = null;
+    }
+
+    public GrantRevokeRoleRequest getRequest() {
+      return this.request;
+    }
+
+    public void setRequest(GrantRevokeRoleRequest request) {
+      this.request = request;
+    }
+
+    public void unsetRequest() {
+      this.request = null;
+    }
+
+    /** Returns true if field request is set (has been assigned a value) and false otherwise */
+    public boolean isSetRequest() {
+      return this.request != null;
+    }
+
+    public void setRequestIsSet(boolean value) {
+      if (!value) {
+        this.request = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case REQUEST:
+        if (value == null) {
+          unsetRequest();
+        } else {
+          setRequest((GrantRevokeRoleRequest)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case REQUEST:
+        return getRequest();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case REQUEST:
+        return isSetRequest();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof grant_revoke_role_args)
+        return this.equals((grant_revoke_role_args)that);
+      return false;
+    }
+
+    public boolean equals(grant_revoke_role_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_request = true && this.isSetRequest();
+      boolean that_present_request = true && that.isSetRequest();
+      if (this_present_request || that_present_request) {
+        if (!(this_present_request && that_present_request))
+          return false;
+        if (!this.request.equals(that.request))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      HashCodeBuilder builder = new HashCodeBuilder();
+
+      boolean present_request = true && (isSetRequest());
+      builder.append(present_request);
+      if (present_request)
+        builder.append(request);
+
+      return builder.toHashCode();
+    }
+
+    public int compareTo(grant_revoke_role_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      grant_revoke_role_args typedOther = (grant_revoke_role_args)other;
+
+      lastComparison = Boolean.valueOf(isSetRequest()).compareTo(typedOther.isSetRequest());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetRequest()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.request, typedOther.request);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("grant_revoke_role_args(");
+      boolean first = true;
+
+      sb.append("request:");
+      if (this.request == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.request);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (request != null) {
+        request.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class grant_revoke_role_argsStandardSchemeFactory implements SchemeFactory {
+      public grant_revoke_role_argsStandardScheme getScheme() {
+        return new grant_revoke_role_argsStandardScheme();
+      }
+    }
+
+    private static class grant_revoke_role_argsStandardScheme extends StandardScheme<grant_revoke_role_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, grant_revoke_role_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // REQUEST
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.request = new GrantRevokeRoleRequest();
+                struct.request.read(iprot);
+                struct.setRequestIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, grant_revoke_role_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.request != null) {
+          oprot.writeFieldBegin(REQUEST_FIELD_DESC);
+          struct.request.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class grant_revoke_role_argsTupleSchemeFactory implements SchemeFactory {
+      public grant_revoke_role_argsTupleScheme getScheme() {
+        return new grant_revoke_role_argsTupleScheme();
+      }
+    }
+
+    private static class grant_revoke_role_argsTupleScheme extends TupleScheme<grant_revoke_role_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, grant_revoke_role_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetRequest()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetRequest()) {
+          struct.request.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, grant_revoke_role_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.request = new GrantRevokeRoleRequest();
+          struct.request.read(iprot);
+          struct.setRequestIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class grant_revoke_role_result implements org.apache.thrift.TBase<grant_revoke_role_result, grant_revoke_role_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("grant_revoke_role_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
+    private static final org.apache.thrift.protocol.TField O1_FIELD_DESC = new org.apache.thrift.protocol.TField("o1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new grant_revoke_role_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new grant_revoke_role_resultTupleSchemeFactory());
+    }
+
+    private GrantRevokeRoleResponse success; // required
+    private MetaException o1; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success"),
+      O1((short)1, "o1");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          case 1: // O1
+            return O1;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, GrantRevokeRoleResponse.class)));
+      tmpMap.put(_Fields.O1, new org.apache.thrift.meta_data.FieldMetaData("o1", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(grant_revoke_role_result.class, metaDataMap);
+    }
+
+    public grant_revoke_role_result() {
+    }
+
+    public grant_revoke_role_result(
+      GrantRevokeRoleResponse success,
+      MetaException o1)
+    {
+      this();
+      this.success = success;
+      this.o1 = o1;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public grant_revoke_role_result(grant_revoke_role_result other) {
+      if (other.isSetSuccess()) {
+        this.success = new GrantRevokeRoleResponse(other.success);
+      }
+      if (other.isSetO1()) {
+        this.o1 = new MetaException(other.o1);
+      }
+    }
+
+    public grant_revoke_role_result deepCopy() {
+      return new grant_revoke_role_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+      this.o1 = null;
+    }
+
+    public GrantRevokeRoleResponse getSuccess() {
+      return this.success;
+    }
+
+    public void setSuccess(GrantRevokeRoleResponse success) {
+      this.success = success;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public MetaException getO1() {
+      return this.o1;
+    }
+
+    public void setO1(MetaException o1) {
+      this.o1 = o1;
+    }
+
+    public void unsetO1() {
+      this.o1 = null;
+    }
+
+    /** Returns true if field o1 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO1() {
+      return this.o1 != null;
+    }
+
+    public void setO1IsSet(boolean value) {
+      if (!value) {
+        this.o1 = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((GrantRevokeRoleResponse)value);
+        }
+        break;
+
+      case O1:
+        if (value == null) {
+          unsetO1();
+        } else {
+          setO1((MetaException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      case O1:
+        return getO1();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      case O1:
+        return isSetO1();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof grant_revoke_role_result)
+        return this.equals((grant_revoke_role_result)that);
+      return false;
+    }
+
+    public boolean equals(grant_revoke_role_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      boolean this_present_o1 = true && this.isSetO1();
+      boolean that_present_o1 = true && that.isSetO1();
+      if (this_present_o1 || that_present_o1) {
+        if (!(this_present_o1 && that_present_o1))
+          return false;
+        if (!this.o1.equals(that.o1))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      HashCodeBuilder builder = new HashCodeBuilder();
+
+      boolean present_success = true && (isSetSuccess());
+      builder.append(present_success);
+      if (present_success)
+        builder.append(success);
+
+      boolean present_o1 = true && (isSetO1());
+      builder.append(present_o1);
+      if (present_o1)
+        builder.append(o1);
+
+      return builder.toHashCode();
+    }
+
+    public int compareTo(grant_revoke_role_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      grant_revoke_role_result typedOther = (grant_revoke_role_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetO1()).compareTo(typedOther.isSetO1());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO1()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o1, typedOther.o1);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("grant_revoke_role_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("o1:");
+      if (this.o1 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o1);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (success != null) {
+        success.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class grant_revoke_role_resultStandardSchemeFactory implements SchemeFactory {
+      public grant_revoke_role_resultStandardScheme getScheme() {
+        return new grant_revoke_role_resultStandardScheme();
+      }
+    }
+
+    private static class grant_revoke_role_resultStandardScheme extends StandardScheme<grant_revoke_role_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, grant_revoke_role_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.success = new GrantRevokeRoleResponse();
+                struct.success.read(iprot);
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 1: // O1
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o1 = new MetaException();
+                struct.o1.read(iprot);
+                struct.setO1IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, grant_revoke_role_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.success != null) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          struct.success.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.o1 != null) {
+          oprot.writeFieldBegin(O1_FIELD_DESC);
+          struct.o1.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class grant_revoke_role_resultTupleSchemeFactory implements SchemeFactory {
+      public grant_revoke_role_resultTupleScheme getScheme() {
+        return new grant_revoke_role_resultTupleScheme();
+      }
+    }
+
+    private static class grant_revoke_role_resultTupleScheme extends TupleScheme<grant_revoke_role_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, grant_revoke_role_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        if (struct.isSetO1()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetSuccess()) {
+          struct.success.write(oprot);
+        }
+        if (struct.isSetO1()) {
+          struct.o1.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, grant_revoke_role_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.success = new GrantRevokeRoleResponse();
+          struct.success.read(iprot);
           struct.setSuccessIsSet(true);
         }
         if (incoming.get(1)) {
@@ -108121,7 +109127,7 @@ public class ThriftHiveMetastore {
                   struct.group_names = new ArrayList<String>(_list812.size);
                   for (int _i813 = 0; _i813 < _list812.size; ++_i813)
                   {
-                    String _elem814; // required
+                    String _elem814; // optional
                     _elem814 = iprot.readString();
                     struct.group_names.add(_elem814);
                   }
@@ -108231,7 +109237,7 @@ public class ThriftHiveMetastore {
             struct.group_names = new ArrayList<String>(_list817.size);
             for (int _i818 = 0; _i818 < _list817.size; ++_i818)
             {
-              String _elem819; // required
+              String _elem819; // optional
               _elem819 = iprot.readString();
               struct.group_names.add(_elem819);
             }
@@ -109695,7 +110701,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<HiveObjectPrivilege>(_list820.size);
                   for (int _i821 = 0; _i821 < _list820.size; ++_i821)
                   {
-                    HiveObjectPrivilege _elem822; // required
+                    HiveObjectPrivilege _elem822; // optional
                     _elem822 = new HiveObjectPrivilege();
                     _elem822.read(iprot);
                     struct.success.add(_elem822);
@@ -109795,7 +110801,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<HiveObjectPrivilege>(_list825.size);
             for (int _i826 = 0; _i826 < _list825.size; ++_i826)
             {
-              HiveObjectPrivilege _elem827; // required
+              HiveObjectPrivilege _elem827; // optional
               _elem827 = new HiveObjectPrivilege();
               _elem827.read(iprot);
               struct.success.add(_elem827);
@@ -111467,6 +112473,838 @@ public class ThriftHiveMetastore {
 
   }
 
+  public static class grant_revoke_privileges_args implements org.apache.thrift.TBase<grant_revoke_privileges_args, grant_revoke_privileges_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("grant_revoke_privileges_args");
+
+    private static final org.apache.thrift.protocol.TField REQUEST_FIELD_DESC = new org.apache.thrift.protocol.TField("request", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new grant_revoke_privileges_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new grant_revoke_privileges_argsTupleSchemeFactory());
+    }
+
+    private GrantRevokePrivilegeRequest request; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      REQUEST((short)1, "request");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // REQUEST
+            return REQUEST;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.REQUEST, new org.apache.thrift.meta_data.FieldMetaData("request", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, GrantRevokePrivilegeRequest.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(grant_revoke_privileges_args.class, metaDataMap);
+    }
+
+    public grant_revoke_privileges_args() {
+    }
+
+    public grant_revoke_privileges_args(
+      GrantRevokePrivilegeRequest request)
+    {
+      this();
+      this.request = request;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public grant_revoke_privileges_args(grant_revoke_privileges_args other) {
+      if (other.isSetRequest()) {
+        this.request = new GrantRevokePrivilegeRequest(other.request);
+      }
+    }
+
+    public grant_revoke_privileges_args deepCopy() {
+      return new grant_revoke_privileges_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.request = null;
+    }
+
+    public GrantRevokePrivilegeRequest getRequest() {
+      return this.request;
+    }
+
+    public void setRequest(GrantRevokePrivilegeRequest request) {
+      this.request = request;
+    }
+
+    public void unsetRequest() {
+      this.request = null;
+    }
+
+    /** Returns true if field request is set (has been assigned a value) and false otherwise */
+    public boolean isSetRequest() {
+      return this.request != null;
+    }
+
+    public void setRequestIsSet(boolean value) {
+      if (!value) {
+        this.request = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case REQUEST:
+        if (value == null) {
+          unsetRequest();
+        } else {
+          setRequest((GrantRevokePrivilegeRequest)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case REQUEST:
+        return getRequest();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case REQUEST:
+        return isSetRequest();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof grant_revoke_privileges_args)
+        return this.equals((grant_revoke_privileges_args)that);
+      return false;
+    }
+
+    public boolean equals(grant_revoke_privileges_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_request = true && this.isSetRequest();
+      boolean that_present_request = true && that.isSetRequest();
+      if (this_present_request || that_present_request) {
+        if (!(this_present_request && that_present_request))
+          return false;
+        if (!this.request.equals(that.request))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      HashCodeBuilder builder = new HashCodeBuilder();
+
+      boolean present_request = true && (isSetRequest());
+      builder.append(present_request);
+      if (present_request)
+        builder.append(request);
+
+      return builder.toHashCode();
+    }
+
+    public int compareTo(grant_revoke_privileges_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      grant_revoke_privileges_args typedOther = (grant_revoke_privileges_args)other;
+
+      lastComparison = Boolean.valueOf(isSetRequest()).compareTo(typedOther.isSetRequest());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetRequest()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.request, typedOther.request);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("grant_revoke_privileges_args(");
+      boolean first = true;
+
+      sb.append("request:");
+      if (this.request == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.request);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (request != null) {
+        request.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class grant_revoke_privileges_argsStandardSchemeFactory implements SchemeFactory {
+      public grant_revoke_privileges_argsStandardScheme getScheme() {
+        return new grant_revoke_privileges_argsStandardScheme();
+      }
+    }
+
+    private static class grant_revoke_privileges_argsStandardScheme extends StandardScheme<grant_revoke_privileges_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, grant_revoke_privileges_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // REQUEST
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.request = new GrantRevokePrivilegeRequest();
+                struct.request.read(iprot);
+                struct.setRequestIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, grant_revoke_privileges_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.request != null) {
+          oprot.writeFieldBegin(REQUEST_FIELD_DESC);
+          struct.request.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class grant_revoke_privileges_argsTupleSchemeFactory implements SchemeFactory {
+      public grant_revoke_privileges_argsTupleScheme getScheme() {
+        return new grant_revoke_privileges_argsTupleScheme();
+      }
+    }
+
+    private static class grant_revoke_privileges_argsTupleScheme extends TupleScheme<grant_revoke_privileges_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, grant_revoke_privileges_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetRequest()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetRequest()) {
+          struct.request.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, grant_revoke_privileges_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.request = new GrantRevokePrivilegeRequest();
+          struct.request.read(iprot);
+          struct.setRequestIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class grant_revoke_privileges_result implements org.apache.thrift.TBase<grant_revoke_privileges_result, grant_revoke_privileges_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("grant_revoke_privileges_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
+    private static final org.apache.thrift.protocol.TField O1_FIELD_DESC = new org.apache.thrift.protocol.TField("o1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new grant_revoke_privileges_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new grant_revoke_privileges_resultTupleSchemeFactory());
+    }
+
+    private GrantRevokePrivilegeResponse success; // required
+    private MetaException o1; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success"),
+      O1((short)1, "o1");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          case 1: // O1
+            return O1;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, GrantRevokePrivilegeResponse.class)));
+      tmpMap.put(_Fields.O1, new org.apache.thrift.meta_data.FieldMetaData("o1", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(grant_revoke_privileges_result.class, metaDataMap);
+    }
+
+    public grant_revoke_privileges_result() {
+    }
+
+    public grant_revoke_privileges_result(
+      GrantRevokePrivilegeResponse success,
+      MetaException o1)
+    {
+      this();
+      this.success = success;
+      this.o1 = o1;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public grant_revoke_privileges_result(grant_revoke_privileges_result other) {
+      if (other.isSetSuccess()) {
+        this.success = new GrantRevokePrivilegeResponse(other.success);
+      }
+      if (other.isSetO1()) {
+        this.o1 = new MetaException(other.o1);
+      }
+    }
+
+    public grant_revoke_privileges_result deepCopy() {
+      return new grant_revoke_privileges_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+      this.o1 = null;
+    }
+
+    public GrantRevokePrivilegeResponse getSuccess() {
+      return this.success;
+    }
+
+    public void setSuccess(GrantRevokePrivilegeResponse success) {
+      this.success = success;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public MetaException getO1() {
+      return this.o1;
+    }
+
+    public void setO1(MetaException o1) {
+      this.o1 = o1;
+    }
+
+    public void unsetO1() {
+      this.o1 = null;
+    }
+
+    /** Returns true if field o1 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO1() {
+      return this.o1 != null;
+    }
+
+    public void setO1IsSet(boolean value) {
+      if (!value) {
+        this.o1 = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((GrantRevokePrivilegeResponse)value);
+        }
+        break;
+
+      case O1:
+        if (value == null) {
+          unsetO1();
+        } else {
+          setO1((MetaException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      case O1:
+        return getO1();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      case O1:
+        return isSetO1();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof grant_revoke_privileges_result)
+        return this.equals((grant_revoke_privileges_result)that);
+      return false;
+    }
+
+    public boolean equals(grant_revoke_privileges_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      boolean this_present_o1 = true && this.isSetO1();
+      boolean that_present_o1 = true && that.isSetO1();
+      if (this_present_o1 || that_present_o1) {
+        if (!(this_present_o1 && that_present_o1))
+          return false;
+        if (!this.o1.equals(that.o1))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      HashCodeBuilder builder = new HashCodeBuilder();
+
+      boolean present_success = true && (isSetSuccess());
+      builder.append(present_success);
+      if (present_success)
+        builder.append(success);
+
+      boolean present_o1 = true && (isSetO1());
+      builder.append(present_o1);
+      if (present_o1)
+        builder.append(o1);
+
+      return builder.toHashCode();
+    }
+
+    public int compareTo(grant_revoke_privileges_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      grant_revoke_privileges_result typedOther = (grant_revoke_privileges_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetO1()).compareTo(typedOther.isSetO1());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO1()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o1, typedOther.o1);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("grant_revoke_privileges_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("o1:");
+      if (this.o1 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o1);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (success != null) {
+        success.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class grant_revoke_privileges_resultStandardSchemeFactory implements SchemeFactory {
+      public grant_revoke_privileges_resultStandardScheme getScheme() {
+        return new grant_revoke_privileges_resultStandardScheme();
+      }
+    }
+
+    private static class grant_revoke_privileges_resultStandardScheme extends StandardScheme<grant_revoke_privileges_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, grant_revoke_privileges_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.success = new GrantRevokePrivilegeResponse();
+                struct.success.read(iprot);
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 1: // O1
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o1 = new MetaException();
+                struct.o1.read(iprot);
+                struct.setO1IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, grant_revoke_privileges_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.success != null) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          struct.success.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.o1 != null) {
+          oprot.writeFieldBegin(O1_FIELD_DESC);
+          struct.o1.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class grant_revoke_privileges_resultTupleSchemeFactory implements SchemeFactory {
+      public grant_revoke_privileges_resultTupleScheme getScheme() {
+        return new grant_revoke_privileges_resultTupleScheme();
+      }
+    }
+
+    private static class grant_revoke_privileges_resultTupleScheme extends TupleScheme<grant_revoke_privileges_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, grant_revoke_privileges_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        if (struct.isSetO1()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetSuccess()) {
+          struct.success.write(oprot);
+        }
+        if (struct.isSetO1()) {
+          struct.o1.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, grant_revoke_privileges_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.success = new GrantRevokePrivilegeResponse();
+          struct.success.read(iprot);
+          struct.setSuccessIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.o1 = new MetaException();
+          struct.o1.read(iprot);
+          struct.setO1IsSet(true);
+        }
+      }
+    }
+
+  }
+
   public static class set_ugi_args implements org.apache.thrift.TBase<set_ugi_args, set_ugi_args._Fields>, java.io.Serializable, Cloneable   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("set_ugi_args");
 
@@ -111875,7 +113713,7 @@ public class ThriftHiveMetastore {
                   struct.group_names = new ArrayList<String>(_list828.size);
                   for (int _i829 = 0; _i829 < _list828.size; ++_i829)
                   {
-                    String _elem830; // required
+                    String _elem830; // optional
                     _elem830 = iprot.readString();
                     struct.group_names.add(_elem830);
                   }
@@ -111969,7 +113807,7 @@ public class ThriftHiveMetastore {
             struct.group_names = new ArrayList<String>(_list833.size);
             for (int _i834 = 0; _i834 < _list833.size; ++_i834)
             {
-              String _elem835; // required
+              String _elem835; // optional
               _elem835 = iprot.readString();
               struct.group_names.add(_elem835);
             }
@@ -112381,7 +114219,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list836.size);
                   for (int _i837 = 0; _i837 < _list836.size; ++_i837)
                   {
-                    String _elem838; // required
+                    String _elem838; // optional
                     _elem838 = iprot.readString();
                     struct.success.add(_elem838);
                   }
@@ -112480,7 +114318,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list841.size);
             for (int _i842 = 0; _i842 < _list841.size; ++_i842)
             {
-              String _elem843; // required
+              String _elem843; // optional
               _elem843 = iprot.readString();
               struct.success.add(_elem843);
             }
