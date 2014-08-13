@@ -16,13 +16,33 @@
  * limitations under the License.
  */
 
-package org.apache.hadoop.hive.metastore;
+package org.apache.hadoop.hive.metastore.events;
 
-import org.apache.hadoop.conf.Configurable;
-import org.apache.hadoop.hive.metastore.api.MetaException;
-import org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore;
+import org.apache.hadoop.hive.metastore.HiveMetaStore;
 
-public interface IHMSHandler extends ThriftHiveMetastore.Iface, Configurable {
+public class ConfigChangeEvent extends ListenerEvent {
 
-  void init() throws MetaException;
+  private final String key;
+  private final String oldValue;
+  private final String newValue;
+
+  public ConfigChangeEvent(HiveMetaStore.HMSHandler handler, String key,
+      String oldValue, String newValue) {
+    super(true, handler);
+    this.key = key;
+    this.oldValue = oldValue;
+    this.newValue = newValue;
+  }
+
+  public String getKey() {
+    return key;
+  }
+
+  public String getOldValue() {
+    return oldValue;
+  }
+
+  public String getNewValue() {
+    return newValue;
+  }
 }
