@@ -31,22 +31,22 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AddPartitionsResult implements org.apache.thrift.TBase<AddPartitionsResult, AddPartitionsResult._Fields>, java.io.Serializable, Cloneable {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("AddPartitionsResult");
+public class SetPartitionsStatsRequest implements org.apache.thrift.TBase<SetPartitionsStatsRequest, SetPartitionsStatsRequest._Fields>, java.io.Serializable, Cloneable {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("SetPartitionsStatsRequest");
 
-  private static final org.apache.thrift.protocol.TField PARTITIONS_FIELD_DESC = new org.apache.thrift.protocol.TField("partitions", org.apache.thrift.protocol.TType.LIST, (short)1);
+  private static final org.apache.thrift.protocol.TField COL_STATS_FIELD_DESC = new org.apache.thrift.protocol.TField("colStats", org.apache.thrift.protocol.TType.LIST, (short)1);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
-    schemes.put(StandardScheme.class, new AddPartitionsResultStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new AddPartitionsResultTupleSchemeFactory());
+    schemes.put(StandardScheme.class, new SetPartitionsStatsRequestStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new SetPartitionsStatsRequestTupleSchemeFactory());
   }
 
-  private List<Partition> partitions; // optional
+  private List<ColumnStatistics> colStats; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    PARTITIONS((short)1, "partitions");
+    COL_STATS((short)1, "colStats");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -61,8 +61,8 @@ public class AddPartitionsResult implements org.apache.thrift.TBase<AddPartition
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // PARTITIONS
-          return PARTITIONS;
+        case 1: // COL_STATS
+          return COL_STATS;
         default:
           return null;
       }
@@ -103,87 +103,93 @@ public class AddPartitionsResult implements org.apache.thrift.TBase<AddPartition
   }
 
   // isset id assignments
-  private _Fields optionals[] = {_Fields.PARTITIONS};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.PARTITIONS, new org.apache.thrift.meta_data.FieldMetaData("partitions", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.COL_STATS, new org.apache.thrift.meta_data.FieldMetaData("colStats", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
-            new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Partition.class))));
+            new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, ColumnStatistics.class))));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(AddPartitionsResult.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(SetPartitionsStatsRequest.class, metaDataMap);
   }
 
-  public AddPartitionsResult() {
+  public SetPartitionsStatsRequest() {
+  }
+
+  public SetPartitionsStatsRequest(
+    List<ColumnStatistics> colStats)
+  {
+    this();
+    this.colStats = colStats;
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public AddPartitionsResult(AddPartitionsResult other) {
-    if (other.isSetPartitions()) {
-      List<Partition> __this__partitions = new ArrayList<Partition>();
-      for (Partition other_element : other.partitions) {
-        __this__partitions.add(new Partition(other_element));
+  public SetPartitionsStatsRequest(SetPartitionsStatsRequest other) {
+    if (other.isSetColStats()) {
+      List<ColumnStatistics> __this__colStats = new ArrayList<ColumnStatistics>();
+      for (ColumnStatistics other_element : other.colStats) {
+        __this__colStats.add(new ColumnStatistics(other_element));
       }
-      this.partitions = __this__partitions;
+      this.colStats = __this__colStats;
     }
   }
 
-  public AddPartitionsResult deepCopy() {
-    return new AddPartitionsResult(this);
+  public SetPartitionsStatsRequest deepCopy() {
+    return new SetPartitionsStatsRequest(this);
   }
 
   @Override
   public void clear() {
-    this.partitions = null;
+    this.colStats = null;
   }
 
-  public int getPartitionsSize() {
-    return (this.partitions == null) ? 0 : this.partitions.size();
+  public int getColStatsSize() {
+    return (this.colStats == null) ? 0 : this.colStats.size();
   }
 
-  public java.util.Iterator<Partition> getPartitionsIterator() {
-    return (this.partitions == null) ? null : this.partitions.iterator();
+  public java.util.Iterator<ColumnStatistics> getColStatsIterator() {
+    return (this.colStats == null) ? null : this.colStats.iterator();
   }
 
-  public void addToPartitions(Partition elem) {
-    if (this.partitions == null) {
-      this.partitions = new ArrayList<Partition>();
+  public void addToColStats(ColumnStatistics elem) {
+    if (this.colStats == null) {
+      this.colStats = new ArrayList<ColumnStatistics>();
     }
-    this.partitions.add(elem);
+    this.colStats.add(elem);
   }
 
-  public List<Partition> getPartitions() {
-    return this.partitions;
+  public List<ColumnStatistics> getColStats() {
+    return this.colStats;
   }
 
-  public void setPartitions(List<Partition> partitions) {
-    this.partitions = partitions;
+  public void setColStats(List<ColumnStatistics> colStats) {
+    this.colStats = colStats;
   }
 
-  public void unsetPartitions() {
-    this.partitions = null;
+  public void unsetColStats() {
+    this.colStats = null;
   }
 
-  /** Returns true if field partitions is set (has been assigned a value) and false otherwise */
-  public boolean isSetPartitions() {
-    return this.partitions != null;
+  /** Returns true if field colStats is set (has been assigned a value) and false otherwise */
+  public boolean isSetColStats() {
+    return this.colStats != null;
   }
 
-  public void setPartitionsIsSet(boolean value) {
+  public void setColStatsIsSet(boolean value) {
     if (!value) {
-      this.partitions = null;
+      this.colStats = null;
     }
   }
 
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
-    case PARTITIONS:
+    case COL_STATS:
       if (value == null) {
-        unsetPartitions();
+        unsetColStats();
       } else {
-        setPartitions((List<Partition>)value);
+        setColStats((List<ColumnStatistics>)value);
       }
       break;
 
@@ -192,8 +198,8 @@ public class AddPartitionsResult implements org.apache.thrift.TBase<AddPartition
 
   public Object getFieldValue(_Fields field) {
     switch (field) {
-    case PARTITIONS:
-      return getPartitions();
+    case COL_STATS:
+      return getColStats();
 
     }
     throw new IllegalStateException();
@@ -206,8 +212,8 @@ public class AddPartitionsResult implements org.apache.thrift.TBase<AddPartition
     }
 
     switch (field) {
-    case PARTITIONS:
-      return isSetPartitions();
+    case COL_STATS:
+      return isSetColStats();
     }
     throw new IllegalStateException();
   }
@@ -216,21 +222,21 @@ public class AddPartitionsResult implements org.apache.thrift.TBase<AddPartition
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof AddPartitionsResult)
-      return this.equals((AddPartitionsResult)that);
+    if (that instanceof SetPartitionsStatsRequest)
+      return this.equals((SetPartitionsStatsRequest)that);
     return false;
   }
 
-  public boolean equals(AddPartitionsResult that) {
+  public boolean equals(SetPartitionsStatsRequest that) {
     if (that == null)
       return false;
 
-    boolean this_present_partitions = true && this.isSetPartitions();
-    boolean that_present_partitions = true && that.isSetPartitions();
-    if (this_present_partitions || that_present_partitions) {
-      if (!(this_present_partitions && that_present_partitions))
+    boolean this_present_colStats = true && this.isSetColStats();
+    boolean that_present_colStats = true && that.isSetColStats();
+    if (this_present_colStats || that_present_colStats) {
+      if (!(this_present_colStats && that_present_colStats))
         return false;
-      if (!this.partitions.equals(that.partitions))
+      if (!this.colStats.equals(that.colStats))
         return false;
     }
 
@@ -241,28 +247,28 @@ public class AddPartitionsResult implements org.apache.thrift.TBase<AddPartition
   public int hashCode() {
     HashCodeBuilder builder = new HashCodeBuilder();
 
-    boolean present_partitions = true && (isSetPartitions());
-    builder.append(present_partitions);
-    if (present_partitions)
-      builder.append(partitions);
+    boolean present_colStats = true && (isSetColStats());
+    builder.append(present_colStats);
+    if (present_colStats)
+      builder.append(colStats);
 
     return builder.toHashCode();
   }
 
-  public int compareTo(AddPartitionsResult other) {
+  public int compareTo(SetPartitionsStatsRequest other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
-    AddPartitionsResult typedOther = (AddPartitionsResult)other;
+    SetPartitionsStatsRequest typedOther = (SetPartitionsStatsRequest)other;
 
-    lastComparison = Boolean.valueOf(isSetPartitions()).compareTo(typedOther.isSetPartitions());
+    lastComparison = Boolean.valueOf(isSetColStats()).compareTo(typedOther.isSetColStats());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetPartitions()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.partitions, typedOther.partitions);
+    if (isSetColStats()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.colStats, typedOther.colStats);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -284,24 +290,26 @@ public class AddPartitionsResult implements org.apache.thrift.TBase<AddPartition
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("AddPartitionsResult(");
+    StringBuilder sb = new StringBuilder("SetPartitionsStatsRequest(");
     boolean first = true;
 
-    if (isSetPartitions()) {
-      sb.append("partitions:");
-      if (this.partitions == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.partitions);
-      }
-      first = false;
+    sb.append("colStats:");
+    if (this.colStats == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.colStats);
     }
+    first = false;
     sb.append(")");
     return sb.toString();
   }
 
   public void validate() throws org.apache.thrift.TException {
     // check for required fields
+    if (!isSetColStats()) {
+      throw new org.apache.thrift.protocol.TProtocolException("Required field 'colStats' is unset! Struct:" + toString());
+    }
+
     // check for sub-struct validity
   }
 
@@ -321,15 +329,15 @@ public class AddPartitionsResult implements org.apache.thrift.TBase<AddPartition
     }
   }
 
-  private static class AddPartitionsResultStandardSchemeFactory implements SchemeFactory {
-    public AddPartitionsResultStandardScheme getScheme() {
-      return new AddPartitionsResultStandardScheme();
+  private static class SetPartitionsStatsRequestStandardSchemeFactory implements SchemeFactory {
+    public SetPartitionsStatsRequestStandardScheme getScheme() {
+      return new SetPartitionsStatsRequestStandardScheme();
     }
   }
 
-  private static class AddPartitionsResultStandardScheme extends StandardScheme<AddPartitionsResult> {
+  private static class SetPartitionsStatsRequestStandardScheme extends StandardScheme<SetPartitionsStatsRequest> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, AddPartitionsResult struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, SetPartitionsStatsRequest struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -339,21 +347,21 @@ public class AddPartitionsResult implements org.apache.thrift.TBase<AddPartition
           break;
         }
         switch (schemeField.id) {
-          case 1: // PARTITIONS
+          case 1: // COL_STATS
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
-                org.apache.thrift.protocol.TList _list346 = iprot.readListBegin();
-                struct.partitions = new ArrayList<Partition>(_list346.size);
-                for (int _i347 = 0; _i347 < _list346.size; ++_i347)
+                org.apache.thrift.protocol.TList _list252 = iprot.readListBegin();
+                struct.colStats = new ArrayList<ColumnStatistics>(_list252.size);
+                for (int _i253 = 0; _i253 < _list252.size; ++_i253)
                 {
-                  Partition _elem348; // required
-                  _elem348 = new Partition();
-                  _elem348.read(iprot);
-                  struct.partitions.add(_elem348);
+                  ColumnStatistics _elem254; // required
+                  _elem254 = new ColumnStatistics();
+                  _elem254.read(iprot);
+                  struct.colStats.add(_elem254);
                 }
                 iprot.readListEnd();
               }
-              struct.setPartitionsIsSet(true);
+              struct.setColStatsIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -367,23 +375,21 @@ public class AddPartitionsResult implements org.apache.thrift.TBase<AddPartition
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, AddPartitionsResult struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, SetPartitionsStatsRequest struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
-      if (struct.partitions != null) {
-        if (struct.isSetPartitions()) {
-          oprot.writeFieldBegin(PARTITIONS_FIELD_DESC);
+      if (struct.colStats != null) {
+        oprot.writeFieldBegin(COL_STATS_FIELD_DESC);
+        {
+          oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.colStats.size()));
+          for (ColumnStatistics _iter255 : struct.colStats)
           {
-            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.partitions.size()));
-            for (Partition _iter349 : struct.partitions)
-            {
-              _iter349.write(oprot);
-            }
-            oprot.writeListEnd();
+            _iter255.write(oprot);
           }
-          oprot.writeFieldEnd();
+          oprot.writeListEnd();
         }
+        oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
@@ -391,51 +397,41 @@ public class AddPartitionsResult implements org.apache.thrift.TBase<AddPartition
 
   }
 
-  private static class AddPartitionsResultTupleSchemeFactory implements SchemeFactory {
-    public AddPartitionsResultTupleScheme getScheme() {
-      return new AddPartitionsResultTupleScheme();
+  private static class SetPartitionsStatsRequestTupleSchemeFactory implements SchemeFactory {
+    public SetPartitionsStatsRequestTupleScheme getScheme() {
+      return new SetPartitionsStatsRequestTupleScheme();
     }
   }
 
-  private static class AddPartitionsResultTupleScheme extends TupleScheme<AddPartitionsResult> {
+  private static class SetPartitionsStatsRequestTupleScheme extends TupleScheme<SetPartitionsStatsRequest> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, AddPartitionsResult struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, SetPartitionsStatsRequest struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
-      BitSet optionals = new BitSet();
-      if (struct.isSetPartitions()) {
-        optionals.set(0);
-      }
-      oprot.writeBitSet(optionals, 1);
-      if (struct.isSetPartitions()) {
+      {
+        oprot.writeI32(struct.colStats.size());
+        for (ColumnStatistics _iter256 : struct.colStats)
         {
-          oprot.writeI32(struct.partitions.size());
-          for (Partition _iter350 : struct.partitions)
-          {
-            _iter350.write(oprot);
-          }
+          _iter256.write(oprot);
         }
       }
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, AddPartitionsResult struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, SetPartitionsStatsRequest struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(1);
-      if (incoming.get(0)) {
+      {
+        org.apache.thrift.protocol.TList _list257 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+        struct.colStats = new ArrayList<ColumnStatistics>(_list257.size);
+        for (int _i258 = 0; _i258 < _list257.size; ++_i258)
         {
-          org.apache.thrift.protocol.TList _list351 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-          struct.partitions = new ArrayList<Partition>(_list351.size);
-          for (int _i352 = 0; _i352 < _list351.size; ++_i352)
-          {
-            Partition _elem353; // required
-            _elem353 = new Partition();
-            _elem353.read(iprot);
-            struct.partitions.add(_elem353);
-          }
+          ColumnStatistics _elem259; // required
+          _elem259 = new ColumnStatistics();
+          _elem259.read(iprot);
+          struct.colStats.add(_elem259);
         }
-        struct.setPartitionsIsSet(true);
       }
+      struct.setColStatsIsSet(true);
     }
   }
 
