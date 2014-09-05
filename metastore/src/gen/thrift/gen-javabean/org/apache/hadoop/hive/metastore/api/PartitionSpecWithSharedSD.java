@@ -31,22 +31,25 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartitionsResult, DropPartitionsResult._Fields>, java.io.Serializable, Cloneable {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("DropPartitionsResult");
+public class PartitionSpecWithSharedSD implements org.apache.thrift.TBase<PartitionSpecWithSharedSD, PartitionSpecWithSharedSD._Fields>, java.io.Serializable, Cloneable {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("PartitionSpecWithSharedSD");
 
   private static final org.apache.thrift.protocol.TField PARTITIONS_FIELD_DESC = new org.apache.thrift.protocol.TField("partitions", org.apache.thrift.protocol.TType.LIST, (short)1);
+  private static final org.apache.thrift.protocol.TField SD_FIELD_DESC = new org.apache.thrift.protocol.TField("sd", org.apache.thrift.protocol.TType.STRUCT, (short)2);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
-    schemes.put(StandardScheme.class, new DropPartitionsResultStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new DropPartitionsResultTupleSchemeFactory());
+    schemes.put(StandardScheme.class, new PartitionSpecWithSharedSDStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new PartitionSpecWithSharedSDTupleSchemeFactory());
   }
 
-  private List<Partition> partitions; // optional
+  private List<PartitionWithoutSD> partitions; // required
+  private StorageDescriptor sd; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    PARTITIONS((short)1, "partitions");
+    PARTITIONS((short)1, "partitions"),
+    SD((short)2, "sd");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -63,6 +66,8 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
       switch(fieldId) {
         case 1: // PARTITIONS
           return PARTITIONS;
+        case 2: // SD
+          return SD;
         default:
           return null;
       }
@@ -103,62 +108,76 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
   }
 
   // isset id assignments
-  private _Fields optionals[] = {_Fields.PARTITIONS};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.PARTITIONS, new org.apache.thrift.meta_data.FieldMetaData("partitions", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.PARTITIONS, new org.apache.thrift.meta_data.FieldMetaData("partitions", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
-            new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Partition.class))));
+            new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, PartitionWithoutSD.class))));
+    tmpMap.put(_Fields.SD, new org.apache.thrift.meta_data.FieldMetaData("sd", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, StorageDescriptor.class)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(DropPartitionsResult.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(PartitionSpecWithSharedSD.class, metaDataMap);
   }
 
-  public DropPartitionsResult() {
+  public PartitionSpecWithSharedSD() {
+  }
+
+  public PartitionSpecWithSharedSD(
+    List<PartitionWithoutSD> partitions,
+    StorageDescriptor sd)
+  {
+    this();
+    this.partitions = partitions;
+    this.sd = sd;
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public DropPartitionsResult(DropPartitionsResult other) {
+  public PartitionSpecWithSharedSD(PartitionSpecWithSharedSD other) {
     if (other.isSetPartitions()) {
-      List<Partition> __this__partitions = new ArrayList<Partition>();
-      for (Partition other_element : other.partitions) {
-        __this__partitions.add(new Partition(other_element));
+      List<PartitionWithoutSD> __this__partitions = new ArrayList<PartitionWithoutSD>();
+      for (PartitionWithoutSD other_element : other.partitions) {
+        __this__partitions.add(new PartitionWithoutSD(other_element));
       }
       this.partitions = __this__partitions;
     }
+    if (other.isSetSd()) {
+      this.sd = new StorageDescriptor(other.sd);
+    }
   }
 
-  public DropPartitionsResult deepCopy() {
-    return new DropPartitionsResult(this);
+  public PartitionSpecWithSharedSD deepCopy() {
+    return new PartitionSpecWithSharedSD(this);
   }
 
   @Override
   public void clear() {
     this.partitions = null;
+    this.sd = null;
   }
 
   public int getPartitionsSize() {
     return (this.partitions == null) ? 0 : this.partitions.size();
   }
 
-  public java.util.Iterator<Partition> getPartitionsIterator() {
+  public java.util.Iterator<PartitionWithoutSD> getPartitionsIterator() {
     return (this.partitions == null) ? null : this.partitions.iterator();
   }
 
-  public void addToPartitions(Partition elem) {
+  public void addToPartitions(PartitionWithoutSD elem) {
     if (this.partitions == null) {
-      this.partitions = new ArrayList<Partition>();
+      this.partitions = new ArrayList<PartitionWithoutSD>();
     }
     this.partitions.add(elem);
   }
 
-  public List<Partition> getPartitions() {
+  public List<PartitionWithoutSD> getPartitions() {
     return this.partitions;
   }
 
-  public void setPartitions(List<Partition> partitions) {
+  public void setPartitions(List<PartitionWithoutSD> partitions) {
     this.partitions = partitions;
   }
 
@@ -177,13 +196,44 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
     }
   }
 
+  public StorageDescriptor getSd() {
+    return this.sd;
+  }
+
+  public void setSd(StorageDescriptor sd) {
+    this.sd = sd;
+  }
+
+  public void unsetSd() {
+    this.sd = null;
+  }
+
+  /** Returns true if field sd is set (has been assigned a value) and false otherwise */
+  public boolean isSetSd() {
+    return this.sd != null;
+  }
+
+  public void setSdIsSet(boolean value) {
+    if (!value) {
+      this.sd = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case PARTITIONS:
       if (value == null) {
         unsetPartitions();
       } else {
-        setPartitions((List<Partition>)value);
+        setPartitions((List<PartitionWithoutSD>)value);
+      }
+      break;
+
+    case SD:
+      if (value == null) {
+        unsetSd();
+      } else {
+        setSd((StorageDescriptor)value);
       }
       break;
 
@@ -194,6 +244,9 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
     switch (field) {
     case PARTITIONS:
       return getPartitions();
+
+    case SD:
+      return getSd();
 
     }
     throw new IllegalStateException();
@@ -208,6 +261,8 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
     switch (field) {
     case PARTITIONS:
       return isSetPartitions();
+    case SD:
+      return isSetSd();
     }
     throw new IllegalStateException();
   }
@@ -216,12 +271,12 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof DropPartitionsResult)
-      return this.equals((DropPartitionsResult)that);
+    if (that instanceof PartitionSpecWithSharedSD)
+      return this.equals((PartitionSpecWithSharedSD)that);
     return false;
   }
 
-  public boolean equals(DropPartitionsResult that) {
+  public boolean equals(PartitionSpecWithSharedSD that) {
     if (that == null)
       return false;
 
@@ -231,6 +286,15 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
       if (!(this_present_partitions && that_present_partitions))
         return false;
       if (!this.partitions.equals(that.partitions))
+        return false;
+    }
+
+    boolean this_present_sd = true && this.isSetSd();
+    boolean that_present_sd = true && that.isSetSd();
+    if (this_present_sd || that_present_sd) {
+      if (!(this_present_sd && that_present_sd))
+        return false;
+      if (!this.sd.equals(that.sd))
         return false;
     }
 
@@ -246,16 +310,21 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
     if (present_partitions)
       builder.append(partitions);
 
+    boolean present_sd = true && (isSetSd());
+    builder.append(present_sd);
+    if (present_sd)
+      builder.append(sd);
+
     return builder.toHashCode();
   }
 
-  public int compareTo(DropPartitionsResult other) {
+  public int compareTo(PartitionSpecWithSharedSD other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
-    DropPartitionsResult typedOther = (DropPartitionsResult)other;
+    PartitionSpecWithSharedSD typedOther = (PartitionSpecWithSharedSD)other;
 
     lastComparison = Boolean.valueOf(isSetPartitions()).compareTo(typedOther.isSetPartitions());
     if (lastComparison != 0) {
@@ -263,6 +332,16 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
     }
     if (isSetPartitions()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.partitions, typedOther.partitions);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetSd()).compareTo(typedOther.isSetSd());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetSd()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.sd, typedOther.sd);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -284,18 +363,24 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("DropPartitionsResult(");
+    StringBuilder sb = new StringBuilder("PartitionSpecWithSharedSD(");
     boolean first = true;
 
-    if (isSetPartitions()) {
-      sb.append("partitions:");
-      if (this.partitions == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.partitions);
-      }
-      first = false;
+    sb.append("partitions:");
+    if (this.partitions == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.partitions);
     }
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("sd:");
+    if (this.sd == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.sd);
+    }
+    first = false;
     sb.append(")");
     return sb.toString();
   }
@@ -303,6 +388,9 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
   public void validate() throws org.apache.thrift.TException {
     // check for required fields
     // check for sub-struct validity
+    if (sd != null) {
+      sd.validate();
+    }
   }
 
   private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
@@ -321,15 +409,15 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
     }
   }
 
-  private static class DropPartitionsResultStandardSchemeFactory implements SchemeFactory {
-    public DropPartitionsResultStandardScheme getScheme() {
-      return new DropPartitionsResultStandardScheme();
+  private static class PartitionSpecWithSharedSDStandardSchemeFactory implements SchemeFactory {
+    public PartitionSpecWithSharedSDStandardScheme getScheme() {
+      return new PartitionSpecWithSharedSDStandardScheme();
     }
   }
 
-  private static class DropPartitionsResultStandardScheme extends StandardScheme<DropPartitionsResult> {
+  private static class PartitionSpecWithSharedSDStandardScheme extends StandardScheme<PartitionSpecWithSharedSD> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, DropPartitionsResult struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, PartitionSpecWithSharedSD struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -342,18 +430,27 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
           case 1: // PARTITIONS
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
-                org.apache.thrift.protocol.TList _list396 = iprot.readListBegin();
-                struct.partitions = new ArrayList<Partition>(_list396.size);
-                for (int _i397 = 0; _i397 < _list396.size; ++_i397)
+                org.apache.thrift.protocol.TList _list244 = iprot.readListBegin();
+                struct.partitions = new ArrayList<PartitionWithoutSD>(_list244.size);
+                for (int _i245 = 0; _i245 < _list244.size; ++_i245)
                 {
-                  Partition _elem398; // required
-                  _elem398 = new Partition();
-                  _elem398.read(iprot);
-                  struct.partitions.add(_elem398);
+                  PartitionWithoutSD _elem246; // required
+                  _elem246 = new PartitionWithoutSD();
+                  _elem246.read(iprot);
+                  struct.partitions.add(_elem246);
                 }
                 iprot.readListEnd();
               }
               struct.setPartitionsIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 2: // SD
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+              struct.sd = new StorageDescriptor();
+              struct.sd.read(iprot);
+              struct.setSdIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -367,23 +464,26 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, DropPartitionsResult struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, PartitionSpecWithSharedSD struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
       if (struct.partitions != null) {
-        if (struct.isSetPartitions()) {
-          oprot.writeFieldBegin(PARTITIONS_FIELD_DESC);
+        oprot.writeFieldBegin(PARTITIONS_FIELD_DESC);
+        {
+          oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.partitions.size()));
+          for (PartitionWithoutSD _iter247 : struct.partitions)
           {
-            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.partitions.size()));
-            for (Partition _iter399 : struct.partitions)
-            {
-              _iter399.write(oprot);
-            }
-            oprot.writeListEnd();
+            _iter247.write(oprot);
           }
-          oprot.writeFieldEnd();
+          oprot.writeListEnd();
         }
+        oprot.writeFieldEnd();
+      }
+      if (struct.sd != null) {
+        oprot.writeFieldBegin(SD_FIELD_DESC);
+        struct.sd.write(oprot);
+        oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
@@ -391,50 +491,61 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
 
   }
 
-  private static class DropPartitionsResultTupleSchemeFactory implements SchemeFactory {
-    public DropPartitionsResultTupleScheme getScheme() {
-      return new DropPartitionsResultTupleScheme();
+  private static class PartitionSpecWithSharedSDTupleSchemeFactory implements SchemeFactory {
+    public PartitionSpecWithSharedSDTupleScheme getScheme() {
+      return new PartitionSpecWithSharedSDTupleScheme();
     }
   }
 
-  private static class DropPartitionsResultTupleScheme extends TupleScheme<DropPartitionsResult> {
+  private static class PartitionSpecWithSharedSDTupleScheme extends TupleScheme<PartitionSpecWithSharedSD> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, DropPartitionsResult struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, PartitionSpecWithSharedSD struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
       BitSet optionals = new BitSet();
       if (struct.isSetPartitions()) {
         optionals.set(0);
       }
-      oprot.writeBitSet(optionals, 1);
+      if (struct.isSetSd()) {
+        optionals.set(1);
+      }
+      oprot.writeBitSet(optionals, 2);
       if (struct.isSetPartitions()) {
         {
           oprot.writeI32(struct.partitions.size());
-          for (Partition _iter400 : struct.partitions)
+          for (PartitionWithoutSD _iter248 : struct.partitions)
           {
-            _iter400.write(oprot);
+            _iter248.write(oprot);
           }
         }
+      }
+      if (struct.isSetSd()) {
+        struct.sd.write(oprot);
       }
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, DropPartitionsResult struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, PartitionSpecWithSharedSD struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(1);
+      BitSet incoming = iprot.readBitSet(2);
       if (incoming.get(0)) {
         {
-          org.apache.thrift.protocol.TList _list401 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-          struct.partitions = new ArrayList<Partition>(_list401.size);
-          for (int _i402 = 0; _i402 < _list401.size; ++_i402)
+          org.apache.thrift.protocol.TList _list249 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+          struct.partitions = new ArrayList<PartitionWithoutSD>(_list249.size);
+          for (int _i250 = 0; _i250 < _list249.size; ++_i250)
           {
-            Partition _elem403; // required
-            _elem403 = new Partition();
-            _elem403.read(iprot);
-            struct.partitions.add(_elem403);
+            PartitionWithoutSD _elem251; // required
+            _elem251 = new PartitionWithoutSD();
+            _elem251.read(iprot);
+            struct.partitions.add(_elem251);
           }
         }
         struct.setPartitionsIsSet(true);
+      }
+      if (incoming.get(1)) {
+        struct.sd = new StorageDescriptor();
+        struct.sd.read(iprot);
+        struct.setSdIsSet(true);
       }
     }
   }

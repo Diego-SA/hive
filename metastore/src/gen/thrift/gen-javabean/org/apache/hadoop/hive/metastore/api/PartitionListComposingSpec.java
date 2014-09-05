@@ -31,18 +31,18 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartitionsResult, DropPartitionsResult._Fields>, java.io.Serializable, Cloneable {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("DropPartitionsResult");
+public class PartitionListComposingSpec implements org.apache.thrift.TBase<PartitionListComposingSpec, PartitionListComposingSpec._Fields>, java.io.Serializable, Cloneable {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("PartitionListComposingSpec");
 
   private static final org.apache.thrift.protocol.TField PARTITIONS_FIELD_DESC = new org.apache.thrift.protocol.TField("partitions", org.apache.thrift.protocol.TType.LIST, (short)1);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
-    schemes.put(StandardScheme.class, new DropPartitionsResultStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new DropPartitionsResultTupleSchemeFactory());
+    schemes.put(StandardScheme.class, new PartitionListComposingSpecStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new PartitionListComposingSpecTupleSchemeFactory());
   }
 
-  private List<Partition> partitions; // optional
+  private List<Partition> partitions; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -103,24 +103,30 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
   }
 
   // isset id assignments
-  private _Fields optionals[] = {_Fields.PARTITIONS};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.PARTITIONS, new org.apache.thrift.meta_data.FieldMetaData("partitions", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.PARTITIONS, new org.apache.thrift.meta_data.FieldMetaData("partitions", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
             new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Partition.class))));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(DropPartitionsResult.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(PartitionListComposingSpec.class, metaDataMap);
   }
 
-  public DropPartitionsResult() {
+  public PartitionListComposingSpec() {
+  }
+
+  public PartitionListComposingSpec(
+    List<Partition> partitions)
+  {
+    this();
+    this.partitions = partitions;
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public DropPartitionsResult(DropPartitionsResult other) {
+  public PartitionListComposingSpec(PartitionListComposingSpec other) {
     if (other.isSetPartitions()) {
       List<Partition> __this__partitions = new ArrayList<Partition>();
       for (Partition other_element : other.partitions) {
@@ -130,8 +136,8 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
     }
   }
 
-  public DropPartitionsResult deepCopy() {
-    return new DropPartitionsResult(this);
+  public PartitionListComposingSpec deepCopy() {
+    return new PartitionListComposingSpec(this);
   }
 
   @Override
@@ -216,12 +222,12 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof DropPartitionsResult)
-      return this.equals((DropPartitionsResult)that);
+    if (that instanceof PartitionListComposingSpec)
+      return this.equals((PartitionListComposingSpec)that);
     return false;
   }
 
-  public boolean equals(DropPartitionsResult that) {
+  public boolean equals(PartitionListComposingSpec that) {
     if (that == null)
       return false;
 
@@ -249,13 +255,13 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
     return builder.toHashCode();
   }
 
-  public int compareTo(DropPartitionsResult other) {
+  public int compareTo(PartitionListComposingSpec other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
-    DropPartitionsResult typedOther = (DropPartitionsResult)other;
+    PartitionListComposingSpec typedOther = (PartitionListComposingSpec)other;
 
     lastComparison = Boolean.valueOf(isSetPartitions()).compareTo(typedOther.isSetPartitions());
     if (lastComparison != 0) {
@@ -284,18 +290,16 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("DropPartitionsResult(");
+    StringBuilder sb = new StringBuilder("PartitionListComposingSpec(");
     boolean first = true;
 
-    if (isSetPartitions()) {
-      sb.append("partitions:");
-      if (this.partitions == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.partitions);
-      }
-      first = false;
+    sb.append("partitions:");
+    if (this.partitions == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.partitions);
     }
+    first = false;
     sb.append(")");
     return sb.toString();
   }
@@ -321,15 +325,15 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
     }
   }
 
-  private static class DropPartitionsResultStandardSchemeFactory implements SchemeFactory {
-    public DropPartitionsResultStandardScheme getScheme() {
-      return new DropPartitionsResultStandardScheme();
+  private static class PartitionListComposingSpecStandardSchemeFactory implements SchemeFactory {
+    public PartitionListComposingSpecStandardScheme getScheme() {
+      return new PartitionListComposingSpecStandardScheme();
     }
   }
 
-  private static class DropPartitionsResultStandardScheme extends StandardScheme<DropPartitionsResult> {
+  private static class PartitionListComposingSpecStandardScheme extends StandardScheme<PartitionListComposingSpec> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, DropPartitionsResult struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, PartitionListComposingSpec struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -342,14 +346,14 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
           case 1: // PARTITIONS
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
-                org.apache.thrift.protocol.TList _list396 = iprot.readListBegin();
-                struct.partitions = new ArrayList<Partition>(_list396.size);
-                for (int _i397 = 0; _i397 < _list396.size; ++_i397)
+                org.apache.thrift.protocol.TList _list252 = iprot.readListBegin();
+                struct.partitions = new ArrayList<Partition>(_list252.size);
+                for (int _i253 = 0; _i253 < _list252.size; ++_i253)
                 {
-                  Partition _elem398; // required
-                  _elem398 = new Partition();
-                  _elem398.read(iprot);
-                  struct.partitions.add(_elem398);
+                  Partition _elem254; // required
+                  _elem254 = new Partition();
+                  _elem254.read(iprot);
+                  struct.partitions.add(_elem254);
                 }
                 iprot.readListEnd();
               }
@@ -367,23 +371,21 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, DropPartitionsResult struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, PartitionListComposingSpec struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
       if (struct.partitions != null) {
-        if (struct.isSetPartitions()) {
-          oprot.writeFieldBegin(PARTITIONS_FIELD_DESC);
+        oprot.writeFieldBegin(PARTITIONS_FIELD_DESC);
+        {
+          oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.partitions.size()));
+          for (Partition _iter255 : struct.partitions)
           {
-            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.partitions.size()));
-            for (Partition _iter399 : struct.partitions)
-            {
-              _iter399.write(oprot);
-            }
-            oprot.writeListEnd();
+            _iter255.write(oprot);
           }
-          oprot.writeFieldEnd();
+          oprot.writeListEnd();
         }
+        oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
@@ -391,16 +393,16 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
 
   }
 
-  private static class DropPartitionsResultTupleSchemeFactory implements SchemeFactory {
-    public DropPartitionsResultTupleScheme getScheme() {
-      return new DropPartitionsResultTupleScheme();
+  private static class PartitionListComposingSpecTupleSchemeFactory implements SchemeFactory {
+    public PartitionListComposingSpecTupleScheme getScheme() {
+      return new PartitionListComposingSpecTupleScheme();
     }
   }
 
-  private static class DropPartitionsResultTupleScheme extends TupleScheme<DropPartitionsResult> {
+  private static class PartitionListComposingSpecTupleScheme extends TupleScheme<PartitionListComposingSpec> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, DropPartitionsResult struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, PartitionListComposingSpec struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
       BitSet optionals = new BitSet();
       if (struct.isSetPartitions()) {
@@ -410,28 +412,28 @@ public class DropPartitionsResult implements org.apache.thrift.TBase<DropPartiti
       if (struct.isSetPartitions()) {
         {
           oprot.writeI32(struct.partitions.size());
-          for (Partition _iter400 : struct.partitions)
+          for (Partition _iter256 : struct.partitions)
           {
-            _iter400.write(oprot);
+            _iter256.write(oprot);
           }
         }
       }
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, DropPartitionsResult struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, PartitionListComposingSpec struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       BitSet incoming = iprot.readBitSet(1);
       if (incoming.get(0)) {
         {
-          org.apache.thrift.protocol.TList _list401 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-          struct.partitions = new ArrayList<Partition>(_list401.size);
-          for (int _i402 = 0; _i402 < _list401.size; ++_i402)
+          org.apache.thrift.protocol.TList _list257 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+          struct.partitions = new ArrayList<Partition>(_list257.size);
+          for (int _i258 = 0; _i258 < _list257.size; ++_i258)
           {
-            Partition _elem403; // required
-            _elem403 = new Partition();
-            _elem403.read(iprot);
-            struct.partitions.add(_elem403);
+            Partition _elem259; // required
+            _elem259 = new Partition();
+            _elem259.read(iprot);
+            struct.partitions.add(_elem259);
           }
         }
         struct.setPartitionsIsSet(true);
