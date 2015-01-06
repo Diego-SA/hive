@@ -88,6 +88,8 @@ public class ThriftHiveMetastore {
 
     public void alter_table_with_environment_context(String dbname, String tbl_name, Table new_tbl, EnvironmentContext environment_context) throws InvalidOperationException, MetaException, org.apache.thrift.TException;
 
+    public void alter_table_with_cascade(String dbname, String tbl_name, Table new_tbl, boolean cascade) throws InvalidOperationException, MetaException, org.apache.thrift.TException;
+
     public Partition add_partition(Partition new_part) throws InvalidObjectException, AlreadyExistsException, MetaException, org.apache.thrift.TException;
 
     public Partition add_partition_with_environment_context(Partition new_part, EnvironmentContext environment_context) throws InvalidObjectException, AlreadyExistsException, MetaException, org.apache.thrift.TException;
@@ -323,6 +325,8 @@ public class ThriftHiveMetastore {
     public void alter_table(String dbname, String tbl_name, Table new_tbl, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.alter_table_call> resultHandler) throws org.apache.thrift.TException;
 
     public void alter_table_with_environment_context(String dbname, String tbl_name, Table new_tbl, EnvironmentContext environment_context, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.alter_table_with_environment_context_call> resultHandler) throws org.apache.thrift.TException;
+
+    public void alter_table_with_cascade(String dbname, String tbl_name, Table new_tbl, boolean cascade, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.alter_table_with_cascade_call> resultHandler) throws org.apache.thrift.TException;
 
     public void add_partition(Partition new_part, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.add_partition_call> resultHandler) throws org.apache.thrift.TException;
 
@@ -1247,6 +1251,35 @@ public class ThriftHiveMetastore {
     {
       alter_table_with_environment_context_result result = new alter_table_with_environment_context_result();
       receiveBase(result, "alter_table_with_environment_context");
+      if (result.o1 != null) {
+        throw result.o1;
+      }
+      if (result.o2 != null) {
+        throw result.o2;
+      }
+      return;
+    }
+
+    public void alter_table_with_cascade(String dbname, String tbl_name, Table new_tbl, boolean cascade) throws InvalidOperationException, MetaException, org.apache.thrift.TException
+    {
+      send_alter_table_with_cascade(dbname, tbl_name, new_tbl, cascade);
+      recv_alter_table_with_cascade();
+    }
+
+    public void send_alter_table_with_cascade(String dbname, String tbl_name, Table new_tbl, boolean cascade) throws org.apache.thrift.TException
+    {
+      alter_table_with_cascade_args args = new alter_table_with_cascade_args();
+      args.setDbname(dbname);
+      args.setTbl_name(tbl_name);
+      args.setNew_tbl(new_tbl);
+      args.setCascade(cascade);
+      sendBase("alter_table_with_cascade", args);
+    }
+
+    public void recv_alter_table_with_cascade() throws InvalidOperationException, MetaException, org.apache.thrift.TException
+    {
+      alter_table_with_cascade_result result = new alter_table_with_cascade_result();
+      receiveBase(result, "alter_table_with_cascade");
       if (result.o1 != null) {
         throw result.o1;
       }
@@ -4848,6 +4881,47 @@ public class ThriftHiveMetastore {
       }
     }
 
+    public void alter_table_with_cascade(String dbname, String tbl_name, Table new_tbl, boolean cascade, org.apache.thrift.async.AsyncMethodCallback<alter_table_with_cascade_call> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      alter_table_with_cascade_call method_call = new alter_table_with_cascade_call(dbname, tbl_name, new_tbl, cascade, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class alter_table_with_cascade_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String dbname;
+      private String tbl_name;
+      private Table new_tbl;
+      private boolean cascade;
+      public alter_table_with_cascade_call(String dbname, String tbl_name, Table new_tbl, boolean cascade, org.apache.thrift.async.AsyncMethodCallback<alter_table_with_cascade_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.dbname = dbname;
+        this.tbl_name = tbl_name;
+        this.new_tbl = new_tbl;
+        this.cascade = cascade;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("alter_table_with_cascade", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        alter_table_with_cascade_args args = new alter_table_with_cascade_args();
+        args.setDbname(dbname);
+        args.setTbl_name(tbl_name);
+        args.setNew_tbl(new_tbl);
+        args.setCascade(cascade);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws InvalidOperationException, MetaException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_alter_table_with_cascade();
+      }
+    }
+
     public void add_partition(Partition new_part, org.apache.thrift.async.AsyncMethodCallback<add_partition_call> resultHandler) throws org.apache.thrift.TException {
       checkReady();
       add_partition_call method_call = new add_partition_call(new_part, resultHandler, this, ___protocolFactory, ___transport);
@@ -8167,6 +8241,7 @@ public class ThriftHiveMetastore {
       processMap.put("get_table_names_by_filter", new get_table_names_by_filter());
       processMap.put("alter_table", new alter_table());
       processMap.put("alter_table_with_environment_context", new alter_table_with_environment_context());
+      processMap.put("alter_table_with_cascade", new alter_table_with_cascade());
       processMap.put("add_partition", new add_partition());
       processMap.put("add_partition_with_environment_context", new add_partition_with_environment_context());
       processMap.put("add_partitions", new add_partitions());
@@ -8912,6 +8987,32 @@ public class ThriftHiveMetastore {
         alter_table_with_environment_context_result result = new alter_table_with_environment_context_result();
         try {
           iface.alter_table_with_environment_context(args.dbname, args.tbl_name, args.new_tbl, args.environment_context);
+        } catch (InvalidOperationException o1) {
+          result.o1 = o1;
+        } catch (MetaException o2) {
+          result.o2 = o2;
+        }
+        return result;
+      }
+    }
+
+    public static class alter_table_with_cascade<I extends Iface> extends org.apache.thrift.ProcessFunction<I, alter_table_with_cascade_args> {
+      public alter_table_with_cascade() {
+        super("alter_table_with_cascade");
+      }
+
+      public alter_table_with_cascade_args getEmptyArgsInstance() {
+        return new alter_table_with_cascade_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public alter_table_with_cascade_result getResult(I iface, alter_table_with_cascade_args args) throws org.apache.thrift.TException {
+        alter_table_with_cascade_result result = new alter_table_with_cascade_result();
+        try {
+          iface.alter_table_with_cascade(args.dbname, args.tbl_name, args.new_tbl, args.cascade);
         } catch (InvalidOperationException o1) {
           result.o1 = o1;
         } catch (MetaException o2) {
@@ -36627,6 +36728,1145 @@ public class ThriftHiveMetastore {
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, alter_table_with_environment_context_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.o1 = new InvalidOperationException();
+          struct.o1.read(iprot);
+          struct.setO1IsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.o2 = new MetaException();
+          struct.o2.read(iprot);
+          struct.setO2IsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class alter_table_with_cascade_args implements org.apache.thrift.TBase<alter_table_with_cascade_args, alter_table_with_cascade_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("alter_table_with_cascade_args");
+
+    private static final org.apache.thrift.protocol.TField DBNAME_FIELD_DESC = new org.apache.thrift.protocol.TField("dbname", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField TBL_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("tbl_name", org.apache.thrift.protocol.TType.STRING, (short)2);
+    private static final org.apache.thrift.protocol.TField NEW_TBL_FIELD_DESC = new org.apache.thrift.protocol.TField("new_tbl", org.apache.thrift.protocol.TType.STRUCT, (short)3);
+    private static final org.apache.thrift.protocol.TField CASCADE_FIELD_DESC = new org.apache.thrift.protocol.TField("cascade", org.apache.thrift.protocol.TType.BOOL, (short)4);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new alter_table_with_cascade_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new alter_table_with_cascade_argsTupleSchemeFactory());
+    }
+
+    private String dbname; // required
+    private String tbl_name; // required
+    private Table new_tbl; // required
+    private boolean cascade; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      DBNAME((short)1, "dbname"),
+      TBL_NAME((short)2, "tbl_name"),
+      NEW_TBL((short)3, "new_tbl"),
+      CASCADE((short)4, "cascade");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // DBNAME
+            return DBNAME;
+          case 2: // TBL_NAME
+            return TBL_NAME;
+          case 3: // NEW_TBL
+            return NEW_TBL;
+          case 4: // CASCADE
+            return CASCADE;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    private static final int __CASCADE_ISSET_ID = 0;
+    private byte __isset_bitfield = 0;
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.DBNAME, new org.apache.thrift.meta_data.FieldMetaData("dbname", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.TBL_NAME, new org.apache.thrift.meta_data.FieldMetaData("tbl_name", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.NEW_TBL, new org.apache.thrift.meta_data.FieldMetaData("new_tbl", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Table.class)));
+      tmpMap.put(_Fields.CASCADE, new org.apache.thrift.meta_data.FieldMetaData("cascade", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.BOOL)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(alter_table_with_cascade_args.class, metaDataMap);
+    }
+
+    public alter_table_with_cascade_args() {
+    }
+
+    public alter_table_with_cascade_args(
+      String dbname,
+      String tbl_name,
+      Table new_tbl,
+      boolean cascade)
+    {
+      this();
+      this.dbname = dbname;
+      this.tbl_name = tbl_name;
+      this.new_tbl = new_tbl;
+      this.cascade = cascade;
+      setCascadeIsSet(true);
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public alter_table_with_cascade_args(alter_table_with_cascade_args other) {
+      __isset_bitfield = other.__isset_bitfield;
+      if (other.isSetDbname()) {
+        this.dbname = other.dbname;
+      }
+      if (other.isSetTbl_name()) {
+        this.tbl_name = other.tbl_name;
+      }
+      if (other.isSetNew_tbl()) {
+        this.new_tbl = new Table(other.new_tbl);
+      }
+      this.cascade = other.cascade;
+    }
+
+    public alter_table_with_cascade_args deepCopy() {
+      return new alter_table_with_cascade_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.dbname = null;
+      this.tbl_name = null;
+      this.new_tbl = null;
+      setCascadeIsSet(false);
+      this.cascade = false;
+    }
+
+    public String getDbname() {
+      return this.dbname;
+    }
+
+    public void setDbname(String dbname) {
+      this.dbname = dbname;
+    }
+
+    public void unsetDbname() {
+      this.dbname = null;
+    }
+
+    /** Returns true if field dbname is set (has been assigned a value) and false otherwise */
+    public boolean isSetDbname() {
+      return this.dbname != null;
+    }
+
+    public void setDbnameIsSet(boolean value) {
+      if (!value) {
+        this.dbname = null;
+      }
+    }
+
+    public String getTbl_name() {
+      return this.tbl_name;
+    }
+
+    public void setTbl_name(String tbl_name) {
+      this.tbl_name = tbl_name;
+    }
+
+    public void unsetTbl_name() {
+      this.tbl_name = null;
+    }
+
+    /** Returns true if field tbl_name is set (has been assigned a value) and false otherwise */
+    public boolean isSetTbl_name() {
+      return this.tbl_name != null;
+    }
+
+    public void setTbl_nameIsSet(boolean value) {
+      if (!value) {
+        this.tbl_name = null;
+      }
+    }
+
+    public Table getNew_tbl() {
+      return this.new_tbl;
+    }
+
+    public void setNew_tbl(Table new_tbl) {
+      this.new_tbl = new_tbl;
+    }
+
+    public void unsetNew_tbl() {
+      this.new_tbl = null;
+    }
+
+    /** Returns true if field new_tbl is set (has been assigned a value) and false otherwise */
+    public boolean isSetNew_tbl() {
+      return this.new_tbl != null;
+    }
+
+    public void setNew_tblIsSet(boolean value) {
+      if (!value) {
+        this.new_tbl = null;
+      }
+    }
+
+    public boolean isCascade() {
+      return this.cascade;
+    }
+
+    public void setCascade(boolean cascade) {
+      this.cascade = cascade;
+      setCascadeIsSet(true);
+    }
+
+    public void unsetCascade() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __CASCADE_ISSET_ID);
+    }
+
+    /** Returns true if field cascade is set (has been assigned a value) and false otherwise */
+    public boolean isSetCascade() {
+      return EncodingUtils.testBit(__isset_bitfield, __CASCADE_ISSET_ID);
+    }
+
+    public void setCascadeIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __CASCADE_ISSET_ID, value);
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case DBNAME:
+        if (value == null) {
+          unsetDbname();
+        } else {
+          setDbname((String)value);
+        }
+        break;
+
+      case TBL_NAME:
+        if (value == null) {
+          unsetTbl_name();
+        } else {
+          setTbl_name((String)value);
+        }
+        break;
+
+      case NEW_TBL:
+        if (value == null) {
+          unsetNew_tbl();
+        } else {
+          setNew_tbl((Table)value);
+        }
+        break;
+
+      case CASCADE:
+        if (value == null) {
+          unsetCascade();
+        } else {
+          setCascade((Boolean)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case DBNAME:
+        return getDbname();
+
+      case TBL_NAME:
+        return getTbl_name();
+
+      case NEW_TBL:
+        return getNew_tbl();
+
+      case CASCADE:
+        return Boolean.valueOf(isCascade());
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case DBNAME:
+        return isSetDbname();
+      case TBL_NAME:
+        return isSetTbl_name();
+      case NEW_TBL:
+        return isSetNew_tbl();
+      case CASCADE:
+        return isSetCascade();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof alter_table_with_cascade_args)
+        return this.equals((alter_table_with_cascade_args)that);
+      return false;
+    }
+
+    public boolean equals(alter_table_with_cascade_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_dbname = true && this.isSetDbname();
+      boolean that_present_dbname = true && that.isSetDbname();
+      if (this_present_dbname || that_present_dbname) {
+        if (!(this_present_dbname && that_present_dbname))
+          return false;
+        if (!this.dbname.equals(that.dbname))
+          return false;
+      }
+
+      boolean this_present_tbl_name = true && this.isSetTbl_name();
+      boolean that_present_tbl_name = true && that.isSetTbl_name();
+      if (this_present_tbl_name || that_present_tbl_name) {
+        if (!(this_present_tbl_name && that_present_tbl_name))
+          return false;
+        if (!this.tbl_name.equals(that.tbl_name))
+          return false;
+      }
+
+      boolean this_present_new_tbl = true && this.isSetNew_tbl();
+      boolean that_present_new_tbl = true && that.isSetNew_tbl();
+      if (this_present_new_tbl || that_present_new_tbl) {
+        if (!(this_present_new_tbl && that_present_new_tbl))
+          return false;
+        if (!this.new_tbl.equals(that.new_tbl))
+          return false;
+      }
+
+      boolean this_present_cascade = true;
+      boolean that_present_cascade = true;
+      if (this_present_cascade || that_present_cascade) {
+        if (!(this_present_cascade && that_present_cascade))
+          return false;
+        if (this.cascade != that.cascade)
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      HashCodeBuilder builder = new HashCodeBuilder();
+
+      boolean present_dbname = true && (isSetDbname());
+      builder.append(present_dbname);
+      if (present_dbname)
+        builder.append(dbname);
+
+      boolean present_tbl_name = true && (isSetTbl_name());
+      builder.append(present_tbl_name);
+      if (present_tbl_name)
+        builder.append(tbl_name);
+
+      boolean present_new_tbl = true && (isSetNew_tbl());
+      builder.append(present_new_tbl);
+      if (present_new_tbl)
+        builder.append(new_tbl);
+
+      boolean present_cascade = true;
+      builder.append(present_cascade);
+      if (present_cascade)
+        builder.append(cascade);
+
+      return builder.toHashCode();
+    }
+
+    public int compareTo(alter_table_with_cascade_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      alter_table_with_cascade_args typedOther = (alter_table_with_cascade_args)other;
+
+      lastComparison = Boolean.valueOf(isSetDbname()).compareTo(typedOther.isSetDbname());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetDbname()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.dbname, typedOther.dbname);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetTbl_name()).compareTo(typedOther.isSetTbl_name());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetTbl_name()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.tbl_name, typedOther.tbl_name);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetNew_tbl()).compareTo(typedOther.isSetNew_tbl());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetNew_tbl()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.new_tbl, typedOther.new_tbl);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetCascade()).compareTo(typedOther.isSetCascade());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetCascade()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.cascade, typedOther.cascade);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("alter_table_with_cascade_args(");
+      boolean first = true;
+
+      sb.append("dbname:");
+      if (this.dbname == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.dbname);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("tbl_name:");
+      if (this.tbl_name == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.tbl_name);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("new_tbl:");
+      if (this.new_tbl == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.new_tbl);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("cascade:");
+      sb.append(this.cascade);
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (new_tbl != null) {
+        new_tbl.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+        __isset_bitfield = 0;
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class alter_table_with_cascade_argsStandardSchemeFactory implements SchemeFactory {
+      public alter_table_with_cascade_argsStandardScheme getScheme() {
+        return new alter_table_with_cascade_argsStandardScheme();
+      }
+    }
+
+    private static class alter_table_with_cascade_argsStandardScheme extends StandardScheme<alter_table_with_cascade_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, alter_table_with_cascade_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // DBNAME
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.dbname = iprot.readString();
+                struct.setDbnameIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // TBL_NAME
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.tbl_name = iprot.readString();
+                struct.setTbl_nameIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 3: // NEW_TBL
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.new_tbl = new Table();
+                struct.new_tbl.read(iprot);
+                struct.setNew_tblIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 4: // CASCADE
+              if (schemeField.type == org.apache.thrift.protocol.TType.BOOL) {
+                struct.cascade = iprot.readBool();
+                struct.setCascadeIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, alter_table_with_cascade_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.dbname != null) {
+          oprot.writeFieldBegin(DBNAME_FIELD_DESC);
+          oprot.writeString(struct.dbname);
+          oprot.writeFieldEnd();
+        }
+        if (struct.tbl_name != null) {
+          oprot.writeFieldBegin(TBL_NAME_FIELD_DESC);
+          oprot.writeString(struct.tbl_name);
+          oprot.writeFieldEnd();
+        }
+        if (struct.new_tbl != null) {
+          oprot.writeFieldBegin(NEW_TBL_FIELD_DESC);
+          struct.new_tbl.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldBegin(CASCADE_FIELD_DESC);
+        oprot.writeBool(struct.cascade);
+        oprot.writeFieldEnd();
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class alter_table_with_cascade_argsTupleSchemeFactory implements SchemeFactory {
+      public alter_table_with_cascade_argsTupleScheme getScheme() {
+        return new alter_table_with_cascade_argsTupleScheme();
+      }
+    }
+
+    private static class alter_table_with_cascade_argsTupleScheme extends TupleScheme<alter_table_with_cascade_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, alter_table_with_cascade_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetDbname()) {
+          optionals.set(0);
+        }
+        if (struct.isSetTbl_name()) {
+          optionals.set(1);
+        }
+        if (struct.isSetNew_tbl()) {
+          optionals.set(2);
+        }
+        if (struct.isSetCascade()) {
+          optionals.set(3);
+        }
+        oprot.writeBitSet(optionals, 4);
+        if (struct.isSetDbname()) {
+          oprot.writeString(struct.dbname);
+        }
+        if (struct.isSetTbl_name()) {
+          oprot.writeString(struct.tbl_name);
+        }
+        if (struct.isSetNew_tbl()) {
+          struct.new_tbl.write(oprot);
+        }
+        if (struct.isSetCascade()) {
+          oprot.writeBool(struct.cascade);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, alter_table_with_cascade_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(4);
+        if (incoming.get(0)) {
+          struct.dbname = iprot.readString();
+          struct.setDbnameIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.tbl_name = iprot.readString();
+          struct.setTbl_nameIsSet(true);
+        }
+        if (incoming.get(2)) {
+          struct.new_tbl = new Table();
+          struct.new_tbl.read(iprot);
+          struct.setNew_tblIsSet(true);
+        }
+        if (incoming.get(3)) {
+          struct.cascade = iprot.readBool();
+          struct.setCascadeIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class alter_table_with_cascade_result implements org.apache.thrift.TBase<alter_table_with_cascade_result, alter_table_with_cascade_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("alter_table_with_cascade_result");
+
+    private static final org.apache.thrift.protocol.TField O1_FIELD_DESC = new org.apache.thrift.protocol.TField("o1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+    private static final org.apache.thrift.protocol.TField O2_FIELD_DESC = new org.apache.thrift.protocol.TField("o2", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new alter_table_with_cascade_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new alter_table_with_cascade_resultTupleSchemeFactory());
+    }
+
+    private InvalidOperationException o1; // required
+    private MetaException o2; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      O1((short)1, "o1"),
+      O2((short)2, "o2");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // O1
+            return O1;
+          case 2: // O2
+            return O2;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.O1, new org.apache.thrift.meta_data.FieldMetaData("o1", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      tmpMap.put(_Fields.O2, new org.apache.thrift.meta_data.FieldMetaData("o2", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(alter_table_with_cascade_result.class, metaDataMap);
+    }
+
+    public alter_table_with_cascade_result() {
+    }
+
+    public alter_table_with_cascade_result(
+      InvalidOperationException o1,
+      MetaException o2)
+    {
+      this();
+      this.o1 = o1;
+      this.o2 = o2;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public alter_table_with_cascade_result(alter_table_with_cascade_result other) {
+      if (other.isSetO1()) {
+        this.o1 = new InvalidOperationException(other.o1);
+      }
+      if (other.isSetO2()) {
+        this.o2 = new MetaException(other.o2);
+      }
+    }
+
+    public alter_table_with_cascade_result deepCopy() {
+      return new alter_table_with_cascade_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.o1 = null;
+      this.o2 = null;
+    }
+
+    public InvalidOperationException getO1() {
+      return this.o1;
+    }
+
+    public void setO1(InvalidOperationException o1) {
+      this.o1 = o1;
+    }
+
+    public void unsetO1() {
+      this.o1 = null;
+    }
+
+    /** Returns true if field o1 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO1() {
+      return this.o1 != null;
+    }
+
+    public void setO1IsSet(boolean value) {
+      if (!value) {
+        this.o1 = null;
+      }
+    }
+
+    public MetaException getO2() {
+      return this.o2;
+    }
+
+    public void setO2(MetaException o2) {
+      this.o2 = o2;
+    }
+
+    public void unsetO2() {
+      this.o2 = null;
+    }
+
+    /** Returns true if field o2 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO2() {
+      return this.o2 != null;
+    }
+
+    public void setO2IsSet(boolean value) {
+      if (!value) {
+        this.o2 = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case O1:
+        if (value == null) {
+          unsetO1();
+        } else {
+          setO1((InvalidOperationException)value);
+        }
+        break;
+
+      case O2:
+        if (value == null) {
+          unsetO2();
+        } else {
+          setO2((MetaException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case O1:
+        return getO1();
+
+      case O2:
+        return getO2();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case O1:
+        return isSetO1();
+      case O2:
+        return isSetO2();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof alter_table_with_cascade_result)
+        return this.equals((alter_table_with_cascade_result)that);
+      return false;
+    }
+
+    public boolean equals(alter_table_with_cascade_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_o1 = true && this.isSetO1();
+      boolean that_present_o1 = true && that.isSetO1();
+      if (this_present_o1 || that_present_o1) {
+        if (!(this_present_o1 && that_present_o1))
+          return false;
+        if (!this.o1.equals(that.o1))
+          return false;
+      }
+
+      boolean this_present_o2 = true && this.isSetO2();
+      boolean that_present_o2 = true && that.isSetO2();
+      if (this_present_o2 || that_present_o2) {
+        if (!(this_present_o2 && that_present_o2))
+          return false;
+        if (!this.o2.equals(that.o2))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      HashCodeBuilder builder = new HashCodeBuilder();
+
+      boolean present_o1 = true && (isSetO1());
+      builder.append(present_o1);
+      if (present_o1)
+        builder.append(o1);
+
+      boolean present_o2 = true && (isSetO2());
+      builder.append(present_o2);
+      if (present_o2)
+        builder.append(o2);
+
+      return builder.toHashCode();
+    }
+
+    public int compareTo(alter_table_with_cascade_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      alter_table_with_cascade_result typedOther = (alter_table_with_cascade_result)other;
+
+      lastComparison = Boolean.valueOf(isSetO1()).compareTo(typedOther.isSetO1());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO1()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o1, typedOther.o1);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetO2()).compareTo(typedOther.isSetO2());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO2()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o2, typedOther.o2);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("alter_table_with_cascade_result(");
+      boolean first = true;
+
+      sb.append("o1:");
+      if (this.o1 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o1);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("o2:");
+      if (this.o2 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o2);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class alter_table_with_cascade_resultStandardSchemeFactory implements SchemeFactory {
+      public alter_table_with_cascade_resultStandardScheme getScheme() {
+        return new alter_table_with_cascade_resultStandardScheme();
+      }
+    }
+
+    private static class alter_table_with_cascade_resultStandardScheme extends StandardScheme<alter_table_with_cascade_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, alter_table_with_cascade_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // O1
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o1 = new InvalidOperationException();
+                struct.o1.read(iprot);
+                struct.setO1IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // O2
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o2 = new MetaException();
+                struct.o2.read(iprot);
+                struct.setO2IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, alter_table_with_cascade_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.o1 != null) {
+          oprot.writeFieldBegin(O1_FIELD_DESC);
+          struct.o1.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.o2 != null) {
+          oprot.writeFieldBegin(O2_FIELD_DESC);
+          struct.o2.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class alter_table_with_cascade_resultTupleSchemeFactory implements SchemeFactory {
+      public alter_table_with_cascade_resultTupleScheme getScheme() {
+        return new alter_table_with_cascade_resultTupleScheme();
+      }
+    }
+
+    private static class alter_table_with_cascade_resultTupleScheme extends TupleScheme<alter_table_with_cascade_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, alter_table_with_cascade_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetO1()) {
+          optionals.set(0);
+        }
+        if (struct.isSetO2()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetO1()) {
+          struct.o1.write(oprot);
+        }
+        if (struct.isSetO2()) {
+          struct.o2.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, alter_table_with_cascade_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
