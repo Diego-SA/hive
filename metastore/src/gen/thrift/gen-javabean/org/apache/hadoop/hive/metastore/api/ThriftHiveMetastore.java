@@ -272,9 +272,9 @@ public class ThriftHiveMetastore {
 
     public ShowCompactResponse show_compact(ShowCompactRequest rqst) throws org.apache.thrift.TException;
 
-    public NotificationEventResponse getNextNotification(NotificationEventRequest rqst) throws org.apache.thrift.TException;
+    public NotificationEventResponse get_next_notification(NotificationEventRequest rqst) throws org.apache.thrift.TException;
 
-    public CurrentNotificationEventId getCurrentNotificationEventId() throws org.apache.thrift.TException;
+    public CurrentNotificationEventId get_current_notificationEventId() throws org.apache.thrift.TException;
 
   }
 
@@ -514,9 +514,9 @@ public class ThriftHiveMetastore {
 
     public void show_compact(ShowCompactRequest rqst, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.show_compact_call> resultHandler) throws org.apache.thrift.TException;
 
-    public void getNextNotification(NotificationEventRequest rqst, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getNextNotification_call> resultHandler) throws org.apache.thrift.TException;
+    public void get_next_notification(NotificationEventRequest rqst, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.get_next_notification_call> resultHandler) throws org.apache.thrift.TException;
 
-    public void getCurrentNotificationEventId(org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getCurrentNotificationEventId_call> resultHandler) throws org.apache.thrift.TException;
+    public void get_current_notificationEventId(org.apache.thrift.async.AsyncMethodCallback<AsyncClient.get_current_notificationEventId_call> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -4008,49 +4008,49 @@ public class ThriftHiveMetastore {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "show_compact failed: unknown result");
     }
 
-    public NotificationEventResponse getNextNotification(NotificationEventRequest rqst) throws org.apache.thrift.TException
+    public NotificationEventResponse get_next_notification(NotificationEventRequest rqst) throws org.apache.thrift.TException
     {
-      send_getNextNotification(rqst);
-      return recv_getNextNotification();
+      send_get_next_notification(rqst);
+      return recv_get_next_notification();
     }
 
-    public void send_getNextNotification(NotificationEventRequest rqst) throws org.apache.thrift.TException
+    public void send_get_next_notification(NotificationEventRequest rqst) throws org.apache.thrift.TException
     {
-      getNextNotification_args args = new getNextNotification_args();
+      get_next_notification_args args = new get_next_notification_args();
       args.setRqst(rqst);
-      sendBase("getNextNotification", args);
+      sendBase("get_next_notification", args);
     }
 
-    public NotificationEventResponse recv_getNextNotification() throws org.apache.thrift.TException
+    public NotificationEventResponse recv_get_next_notification() throws org.apache.thrift.TException
     {
-      getNextNotification_result result = new getNextNotification_result();
-      receiveBase(result, "getNextNotification");
+      get_next_notification_result result = new get_next_notification_result();
+      receiveBase(result, "get_next_notification");
       if (result.isSetSuccess()) {
         return result.success;
       }
-      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getNextNotification failed: unknown result");
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "get_next_notification failed: unknown result");
     }
 
-    public CurrentNotificationEventId getCurrentNotificationEventId() throws org.apache.thrift.TException
+    public CurrentNotificationEventId get_current_notificationEventId() throws org.apache.thrift.TException
     {
-      send_getCurrentNotificationEventId();
-      return recv_getCurrentNotificationEventId();
+      send_get_current_notificationEventId();
+      return recv_get_current_notificationEventId();
     }
 
-    public void send_getCurrentNotificationEventId() throws org.apache.thrift.TException
+    public void send_get_current_notificationEventId() throws org.apache.thrift.TException
     {
-      getCurrentNotificationEventId_args args = new getCurrentNotificationEventId_args();
-      sendBase("getCurrentNotificationEventId", args);
+      get_current_notificationEventId_args args = new get_current_notificationEventId_args();
+      sendBase("get_current_notificationEventId", args);
     }
 
-    public CurrentNotificationEventId recv_getCurrentNotificationEventId() throws org.apache.thrift.TException
+    public CurrentNotificationEventId recv_get_current_notificationEventId() throws org.apache.thrift.TException
     {
-      getCurrentNotificationEventId_result result = new getCurrentNotificationEventId_result();
-      receiveBase(result, "getCurrentNotificationEventId");
+      get_current_notificationEventId_result result = new get_current_notificationEventId_result();
+      receiveBase(result, "get_current_notificationEventId");
       if (result.isSetSuccess()) {
         return result.success;
       }
-      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getCurrentNotificationEventId failed: unknown result");
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "get_current_notificationEventId failed: unknown result");
     }
 
   }
@@ -8256,23 +8256,23 @@ public class ThriftHiveMetastore {
       }
     }
 
-    public void getNextNotification(NotificationEventRequest rqst, org.apache.thrift.async.AsyncMethodCallback<getNextNotification_call> resultHandler) throws org.apache.thrift.TException {
+    public void get_next_notification(NotificationEventRequest rqst, org.apache.thrift.async.AsyncMethodCallback<get_next_notification_call> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      getNextNotification_call method_call = new getNextNotification_call(rqst, resultHandler, this, ___protocolFactory, ___transport);
+      get_next_notification_call method_call = new get_next_notification_call(rqst, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
-    public static class getNextNotification_call extends org.apache.thrift.async.TAsyncMethodCall {
+    public static class get_next_notification_call extends org.apache.thrift.async.TAsyncMethodCall {
       private NotificationEventRequest rqst;
-      public getNextNotification_call(NotificationEventRequest rqst, org.apache.thrift.async.AsyncMethodCallback<getNextNotification_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      public get_next_notification_call(NotificationEventRequest rqst, org.apache.thrift.async.AsyncMethodCallback<get_next_notification_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.rqst = rqst;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
-        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getNextNotification", org.apache.thrift.protocol.TMessageType.CALL, 0));
-        getNextNotification_args args = new getNextNotification_args();
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("get_next_notification", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        get_next_notification_args args = new get_next_notification_args();
         args.setRqst(rqst);
         args.write(prot);
         prot.writeMessageEnd();
@@ -8284,25 +8284,25 @@ public class ThriftHiveMetastore {
         }
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_getNextNotification();
+        return (new Client(prot)).recv_get_next_notification();
       }
     }
 
-    public void getCurrentNotificationEventId(org.apache.thrift.async.AsyncMethodCallback<getCurrentNotificationEventId_call> resultHandler) throws org.apache.thrift.TException {
+    public void get_current_notificationEventId(org.apache.thrift.async.AsyncMethodCallback<get_current_notificationEventId_call> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      getCurrentNotificationEventId_call method_call = new getCurrentNotificationEventId_call(resultHandler, this, ___protocolFactory, ___transport);
+      get_current_notificationEventId_call method_call = new get_current_notificationEventId_call(resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
-    public static class getCurrentNotificationEventId_call extends org.apache.thrift.async.TAsyncMethodCall {
-      public getCurrentNotificationEventId_call(org.apache.thrift.async.AsyncMethodCallback<getCurrentNotificationEventId_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+    public static class get_current_notificationEventId_call extends org.apache.thrift.async.TAsyncMethodCall {
+      public get_current_notificationEventId_call(org.apache.thrift.async.AsyncMethodCallback<get_current_notificationEventId_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
-        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getCurrentNotificationEventId", org.apache.thrift.protocol.TMessageType.CALL, 0));
-        getCurrentNotificationEventId_args args = new getCurrentNotificationEventId_args();
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("get_current_notificationEventId", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        get_current_notificationEventId_args args = new get_current_notificationEventId_args();
         args.write(prot);
         prot.writeMessageEnd();
       }
@@ -8313,7 +8313,7 @@ public class ThriftHiveMetastore {
         }
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_getCurrentNotificationEventId();
+        return (new Client(prot)).recv_get_current_notificationEventId();
       }
     }
 
@@ -8447,8 +8447,8 @@ public class ThriftHiveMetastore {
       processMap.put("heartbeat_txn_range", new heartbeat_txn_range());
       processMap.put("compact", new compact());
       processMap.put("show_compact", new show_compact());
-      processMap.put("getNextNotification", new getNextNotification());
-      processMap.put("getCurrentNotificationEventId", new getCurrentNotificationEventId());
+      processMap.put("get_next_notification", new get_next_notification());
+      processMap.put("get_current_notificationEventId", new get_current_notificationEventId());
       return processMap;
     }
 
@@ -11507,42 +11507,42 @@ public class ThriftHiveMetastore {
       }
     }
 
-    public static class getNextNotification<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getNextNotification_args> {
-      public getNextNotification() {
-        super("getNextNotification");
+    public static class get_next_notification<I extends Iface> extends org.apache.thrift.ProcessFunction<I, get_next_notification_args> {
+      public get_next_notification() {
+        super("get_next_notification");
       }
 
-      public getNextNotification_args getEmptyArgsInstance() {
-        return new getNextNotification_args();
+      public get_next_notification_args getEmptyArgsInstance() {
+        return new get_next_notification_args();
       }
 
       protected boolean isOneway() {
         return false;
       }
 
-      public getNextNotification_result getResult(I iface, getNextNotification_args args) throws org.apache.thrift.TException {
-        getNextNotification_result result = new getNextNotification_result();
-        result.success = iface.getNextNotification(args.rqst);
+      public get_next_notification_result getResult(I iface, get_next_notification_args args) throws org.apache.thrift.TException {
+        get_next_notification_result result = new get_next_notification_result();
+        result.success = iface.get_next_notification(args.rqst);
         return result;
       }
     }
 
-    public static class getCurrentNotificationEventId<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getCurrentNotificationEventId_args> {
-      public getCurrentNotificationEventId() {
-        super("getCurrentNotificationEventId");
+    public static class get_current_notificationEventId<I extends Iface> extends org.apache.thrift.ProcessFunction<I, get_current_notificationEventId_args> {
+      public get_current_notificationEventId() {
+        super("get_current_notificationEventId");
       }
 
-      public getCurrentNotificationEventId_args getEmptyArgsInstance() {
-        return new getCurrentNotificationEventId_args();
+      public get_current_notificationEventId_args getEmptyArgsInstance() {
+        return new get_current_notificationEventId_args();
       }
 
       protected boolean isOneway() {
         return false;
       }
 
-      public getCurrentNotificationEventId_result getResult(I iface, getCurrentNotificationEventId_args args) throws org.apache.thrift.TException {
-        getCurrentNotificationEventId_result result = new getCurrentNotificationEventId_result();
-        result.success = iface.getCurrentNotificationEventId();
+      public get_current_notificationEventId_result getResult(I iface, get_current_notificationEventId_args args) throws org.apache.thrift.TException {
+        get_current_notificationEventId_result result = new get_current_notificationEventId_result();
+        result.success = iface.get_current_notificationEventId();
         return result;
       }
     }
@@ -136197,15 +136197,15 @@ public class ThriftHiveMetastore {
 
   }
 
-  public static class getNextNotification_args implements org.apache.thrift.TBase<getNextNotification_args, getNextNotification_args._Fields>, java.io.Serializable, Cloneable   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getNextNotification_args");
+  public static class get_next_notification_args implements org.apache.thrift.TBase<get_next_notification_args, get_next_notification_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("get_next_notification_args");
 
     private static final org.apache.thrift.protocol.TField RQST_FIELD_DESC = new org.apache.thrift.protocol.TField("rqst", org.apache.thrift.protocol.TType.STRUCT, (short)1);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new getNextNotification_argsStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new getNextNotification_argsTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new get_next_notification_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new get_next_notification_argsTupleSchemeFactory());
     }
 
     private NotificationEventRequest rqst; // required
@@ -136275,13 +136275,13 @@ public class ThriftHiveMetastore {
       tmpMap.put(_Fields.RQST, new org.apache.thrift.meta_data.FieldMetaData("rqst", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, NotificationEventRequest.class)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getNextNotification_args.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(get_next_notification_args.class, metaDataMap);
     }
 
-    public getNextNotification_args() {
+    public get_next_notification_args() {
     }
 
-    public getNextNotification_args(
+    public get_next_notification_args(
       NotificationEventRequest rqst)
     {
       this();
@@ -136291,14 +136291,14 @@ public class ThriftHiveMetastore {
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public getNextNotification_args(getNextNotification_args other) {
+    public get_next_notification_args(get_next_notification_args other) {
       if (other.isSetRqst()) {
         this.rqst = new NotificationEventRequest(other.rqst);
       }
     }
 
-    public getNextNotification_args deepCopy() {
-      return new getNextNotification_args(this);
+    public get_next_notification_args deepCopy() {
+      return new get_next_notification_args(this);
     }
 
     @Override
@@ -136368,12 +136368,12 @@ public class ThriftHiveMetastore {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof getNextNotification_args)
-        return this.equals((getNextNotification_args)that);
+      if (that instanceof get_next_notification_args)
+        return this.equals((get_next_notification_args)that);
       return false;
     }
 
-    public boolean equals(getNextNotification_args that) {
+    public boolean equals(get_next_notification_args that) {
       if (that == null)
         return false;
 
@@ -136401,13 +136401,13 @@ public class ThriftHiveMetastore {
       return builder.toHashCode();
     }
 
-    public int compareTo(getNextNotification_args other) {
+    public int compareTo(get_next_notification_args other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
 
       int lastComparison = 0;
-      getNextNotification_args typedOther = (getNextNotification_args)other;
+      get_next_notification_args typedOther = (get_next_notification_args)other;
 
       lastComparison = Boolean.valueOf(isSetRqst()).compareTo(typedOther.isSetRqst());
       if (lastComparison != 0) {
@@ -136436,7 +136436,7 @@ public class ThriftHiveMetastore {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("getNextNotification_args(");
+      StringBuilder sb = new StringBuilder("get_next_notification_args(");
       boolean first = true;
 
       sb.append("rqst:");
@@ -136474,15 +136474,15 @@ public class ThriftHiveMetastore {
       }
     }
 
-    private static class getNextNotification_argsStandardSchemeFactory implements SchemeFactory {
-      public getNextNotification_argsStandardScheme getScheme() {
-        return new getNextNotification_argsStandardScheme();
+    private static class get_next_notification_argsStandardSchemeFactory implements SchemeFactory {
+      public get_next_notification_argsStandardScheme getScheme() {
+        return new get_next_notification_argsStandardScheme();
       }
     }
 
-    private static class getNextNotification_argsStandardScheme extends StandardScheme<getNextNotification_args> {
+    private static class get_next_notification_argsStandardScheme extends StandardScheme<get_next_notification_args> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, getNextNotification_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, get_next_notification_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -136510,7 +136510,7 @@ public class ThriftHiveMetastore {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, getNextNotification_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, get_next_notification_args struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -136525,16 +136525,16 @@ public class ThriftHiveMetastore {
 
     }
 
-    private static class getNextNotification_argsTupleSchemeFactory implements SchemeFactory {
-      public getNextNotification_argsTupleScheme getScheme() {
-        return new getNextNotification_argsTupleScheme();
+    private static class get_next_notification_argsTupleSchemeFactory implements SchemeFactory {
+      public get_next_notification_argsTupleScheme getScheme() {
+        return new get_next_notification_argsTupleScheme();
       }
     }
 
-    private static class getNextNotification_argsTupleScheme extends TupleScheme<getNextNotification_args> {
+    private static class get_next_notification_argsTupleScheme extends TupleScheme<get_next_notification_args> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, getNextNotification_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, get_next_notification_args struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
         if (struct.isSetRqst()) {
@@ -136547,7 +136547,7 @@ public class ThriftHiveMetastore {
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, getNextNotification_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, get_next_notification_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
@@ -136560,15 +136560,15 @@ public class ThriftHiveMetastore {
 
   }
 
-  public static class getNextNotification_result implements org.apache.thrift.TBase<getNextNotification_result, getNextNotification_result._Fields>, java.io.Serializable, Cloneable   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getNextNotification_result");
+  public static class get_next_notification_result implements org.apache.thrift.TBase<get_next_notification_result, get_next_notification_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("get_next_notification_result");
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new getNextNotification_resultStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new getNextNotification_resultTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new get_next_notification_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new get_next_notification_resultTupleSchemeFactory());
     }
 
     private NotificationEventResponse success; // required
@@ -136638,13 +136638,13 @@ public class ThriftHiveMetastore {
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, NotificationEventResponse.class)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getNextNotification_result.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(get_next_notification_result.class, metaDataMap);
     }
 
-    public getNextNotification_result() {
+    public get_next_notification_result() {
     }
 
-    public getNextNotification_result(
+    public get_next_notification_result(
       NotificationEventResponse success)
     {
       this();
@@ -136654,14 +136654,14 @@ public class ThriftHiveMetastore {
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public getNextNotification_result(getNextNotification_result other) {
+    public get_next_notification_result(get_next_notification_result other) {
       if (other.isSetSuccess()) {
         this.success = new NotificationEventResponse(other.success);
       }
     }
 
-    public getNextNotification_result deepCopy() {
-      return new getNextNotification_result(this);
+    public get_next_notification_result deepCopy() {
+      return new get_next_notification_result(this);
     }
 
     @Override
@@ -136731,12 +136731,12 @@ public class ThriftHiveMetastore {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof getNextNotification_result)
-        return this.equals((getNextNotification_result)that);
+      if (that instanceof get_next_notification_result)
+        return this.equals((get_next_notification_result)that);
       return false;
     }
 
-    public boolean equals(getNextNotification_result that) {
+    public boolean equals(get_next_notification_result that) {
       if (that == null)
         return false;
 
@@ -136764,13 +136764,13 @@ public class ThriftHiveMetastore {
       return builder.toHashCode();
     }
 
-    public int compareTo(getNextNotification_result other) {
+    public int compareTo(get_next_notification_result other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
 
       int lastComparison = 0;
-      getNextNotification_result typedOther = (getNextNotification_result)other;
+      get_next_notification_result typedOther = (get_next_notification_result)other;
 
       lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
       if (lastComparison != 0) {
@@ -136799,7 +136799,7 @@ public class ThriftHiveMetastore {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("getNextNotification_result(");
+      StringBuilder sb = new StringBuilder("get_next_notification_result(");
       boolean first = true;
 
       sb.append("success:");
@@ -136837,15 +136837,15 @@ public class ThriftHiveMetastore {
       }
     }
 
-    private static class getNextNotification_resultStandardSchemeFactory implements SchemeFactory {
-      public getNextNotification_resultStandardScheme getScheme() {
-        return new getNextNotification_resultStandardScheme();
+    private static class get_next_notification_resultStandardSchemeFactory implements SchemeFactory {
+      public get_next_notification_resultStandardScheme getScheme() {
+        return new get_next_notification_resultStandardScheme();
       }
     }
 
-    private static class getNextNotification_resultStandardScheme extends StandardScheme<getNextNotification_result> {
+    private static class get_next_notification_resultStandardScheme extends StandardScheme<get_next_notification_result> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, getNextNotification_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, get_next_notification_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -136873,7 +136873,7 @@ public class ThriftHiveMetastore {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, getNextNotification_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, get_next_notification_result struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -136888,16 +136888,16 @@ public class ThriftHiveMetastore {
 
     }
 
-    private static class getNextNotification_resultTupleSchemeFactory implements SchemeFactory {
-      public getNextNotification_resultTupleScheme getScheme() {
-        return new getNextNotification_resultTupleScheme();
+    private static class get_next_notification_resultTupleSchemeFactory implements SchemeFactory {
+      public get_next_notification_resultTupleScheme getScheme() {
+        return new get_next_notification_resultTupleScheme();
       }
     }
 
-    private static class getNextNotification_resultTupleScheme extends TupleScheme<getNextNotification_result> {
+    private static class get_next_notification_resultTupleScheme extends TupleScheme<get_next_notification_result> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, getNextNotification_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, get_next_notification_result struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
         if (struct.isSetSuccess()) {
@@ -136910,7 +136910,7 @@ public class ThriftHiveMetastore {
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, getNextNotification_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, get_next_notification_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
@@ -136923,14 +136923,14 @@ public class ThriftHiveMetastore {
 
   }
 
-  public static class getCurrentNotificationEventId_args implements org.apache.thrift.TBase<getCurrentNotificationEventId_args, getCurrentNotificationEventId_args._Fields>, java.io.Serializable, Cloneable   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getCurrentNotificationEventId_args");
+  public static class get_current_notificationEventId_args implements org.apache.thrift.TBase<get_current_notificationEventId_args, get_current_notificationEventId_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("get_current_notificationEventId_args");
 
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new getCurrentNotificationEventId_argsStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new getCurrentNotificationEventId_argsTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new get_current_notificationEventId_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new get_current_notificationEventId_argsTupleSchemeFactory());
     }
 
 
@@ -136993,20 +136993,20 @@ public class ThriftHiveMetastore {
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getCurrentNotificationEventId_args.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(get_current_notificationEventId_args.class, metaDataMap);
     }
 
-    public getCurrentNotificationEventId_args() {
+    public get_current_notificationEventId_args() {
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public getCurrentNotificationEventId_args(getCurrentNotificationEventId_args other) {
+    public get_current_notificationEventId_args(get_current_notificationEventId_args other) {
     }
 
-    public getCurrentNotificationEventId_args deepCopy() {
-      return new getCurrentNotificationEventId_args(this);
+    public get_current_notificationEventId_args deepCopy() {
+      return new get_current_notificationEventId_args(this);
     }
 
     @Override
@@ -137039,12 +137039,12 @@ public class ThriftHiveMetastore {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof getCurrentNotificationEventId_args)
-        return this.equals((getCurrentNotificationEventId_args)that);
+      if (that instanceof get_current_notificationEventId_args)
+        return this.equals((get_current_notificationEventId_args)that);
       return false;
     }
 
-    public boolean equals(getCurrentNotificationEventId_args that) {
+    public boolean equals(get_current_notificationEventId_args that) {
       if (that == null)
         return false;
 
@@ -137058,13 +137058,13 @@ public class ThriftHiveMetastore {
       return builder.toHashCode();
     }
 
-    public int compareTo(getCurrentNotificationEventId_args other) {
+    public int compareTo(get_current_notificationEventId_args other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
 
       int lastComparison = 0;
-      getCurrentNotificationEventId_args typedOther = (getCurrentNotificationEventId_args)other;
+      get_current_notificationEventId_args typedOther = (get_current_notificationEventId_args)other;
 
       return 0;
     }
@@ -137083,7 +137083,7 @@ public class ThriftHiveMetastore {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("getCurrentNotificationEventId_args(");
+      StringBuilder sb = new StringBuilder("get_current_notificationEventId_args(");
       boolean first = true;
 
       sb.append(")");
@@ -137111,15 +137111,15 @@ public class ThriftHiveMetastore {
       }
     }
 
-    private static class getCurrentNotificationEventId_argsStandardSchemeFactory implements SchemeFactory {
-      public getCurrentNotificationEventId_argsStandardScheme getScheme() {
-        return new getCurrentNotificationEventId_argsStandardScheme();
+    private static class get_current_notificationEventId_argsStandardSchemeFactory implements SchemeFactory {
+      public get_current_notificationEventId_argsStandardScheme getScheme() {
+        return new get_current_notificationEventId_argsStandardScheme();
       }
     }
 
-    private static class getCurrentNotificationEventId_argsStandardScheme extends StandardScheme<getCurrentNotificationEventId_args> {
+    private static class get_current_notificationEventId_argsStandardScheme extends StandardScheme<get_current_notificationEventId_args> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, getCurrentNotificationEventId_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, get_current_notificationEventId_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -137138,7 +137138,7 @@ public class ThriftHiveMetastore {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, getCurrentNotificationEventId_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, get_current_notificationEventId_args struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -137148,36 +137148,36 @@ public class ThriftHiveMetastore {
 
     }
 
-    private static class getCurrentNotificationEventId_argsTupleSchemeFactory implements SchemeFactory {
-      public getCurrentNotificationEventId_argsTupleScheme getScheme() {
-        return new getCurrentNotificationEventId_argsTupleScheme();
+    private static class get_current_notificationEventId_argsTupleSchemeFactory implements SchemeFactory {
+      public get_current_notificationEventId_argsTupleScheme getScheme() {
+        return new get_current_notificationEventId_argsTupleScheme();
       }
     }
 
-    private static class getCurrentNotificationEventId_argsTupleScheme extends TupleScheme<getCurrentNotificationEventId_args> {
+    private static class get_current_notificationEventId_argsTupleScheme extends TupleScheme<get_current_notificationEventId_args> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, getCurrentNotificationEventId_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, get_current_notificationEventId_args struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, getCurrentNotificationEventId_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, get_current_notificationEventId_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
       }
     }
 
   }
 
-  public static class getCurrentNotificationEventId_result implements org.apache.thrift.TBase<getCurrentNotificationEventId_result, getCurrentNotificationEventId_result._Fields>, java.io.Serializable, Cloneable   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getCurrentNotificationEventId_result");
+  public static class get_current_notificationEventId_result implements org.apache.thrift.TBase<get_current_notificationEventId_result, get_current_notificationEventId_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("get_current_notificationEventId_result");
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new getCurrentNotificationEventId_resultStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new getCurrentNotificationEventId_resultTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new get_current_notificationEventId_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new get_current_notificationEventId_resultTupleSchemeFactory());
     }
 
     private CurrentNotificationEventId success; // required
@@ -137247,13 +137247,13 @@ public class ThriftHiveMetastore {
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, CurrentNotificationEventId.class)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getCurrentNotificationEventId_result.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(get_current_notificationEventId_result.class, metaDataMap);
     }
 
-    public getCurrentNotificationEventId_result() {
+    public get_current_notificationEventId_result() {
     }
 
-    public getCurrentNotificationEventId_result(
+    public get_current_notificationEventId_result(
       CurrentNotificationEventId success)
     {
       this();
@@ -137263,14 +137263,14 @@ public class ThriftHiveMetastore {
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public getCurrentNotificationEventId_result(getCurrentNotificationEventId_result other) {
+    public get_current_notificationEventId_result(get_current_notificationEventId_result other) {
       if (other.isSetSuccess()) {
         this.success = new CurrentNotificationEventId(other.success);
       }
     }
 
-    public getCurrentNotificationEventId_result deepCopy() {
-      return new getCurrentNotificationEventId_result(this);
+    public get_current_notificationEventId_result deepCopy() {
+      return new get_current_notificationEventId_result(this);
     }
 
     @Override
@@ -137340,12 +137340,12 @@ public class ThriftHiveMetastore {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof getCurrentNotificationEventId_result)
-        return this.equals((getCurrentNotificationEventId_result)that);
+      if (that instanceof get_current_notificationEventId_result)
+        return this.equals((get_current_notificationEventId_result)that);
       return false;
     }
 
-    public boolean equals(getCurrentNotificationEventId_result that) {
+    public boolean equals(get_current_notificationEventId_result that) {
       if (that == null)
         return false;
 
@@ -137373,13 +137373,13 @@ public class ThriftHiveMetastore {
       return builder.toHashCode();
     }
 
-    public int compareTo(getCurrentNotificationEventId_result other) {
+    public int compareTo(get_current_notificationEventId_result other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
 
       int lastComparison = 0;
-      getCurrentNotificationEventId_result typedOther = (getCurrentNotificationEventId_result)other;
+      get_current_notificationEventId_result typedOther = (get_current_notificationEventId_result)other;
 
       lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
       if (lastComparison != 0) {
@@ -137408,7 +137408,7 @@ public class ThriftHiveMetastore {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("getCurrentNotificationEventId_result(");
+      StringBuilder sb = new StringBuilder("get_current_notificationEventId_result(");
       boolean first = true;
 
       sb.append("success:");
@@ -137446,15 +137446,15 @@ public class ThriftHiveMetastore {
       }
     }
 
-    private static class getCurrentNotificationEventId_resultStandardSchemeFactory implements SchemeFactory {
-      public getCurrentNotificationEventId_resultStandardScheme getScheme() {
-        return new getCurrentNotificationEventId_resultStandardScheme();
+    private static class get_current_notificationEventId_resultStandardSchemeFactory implements SchemeFactory {
+      public get_current_notificationEventId_resultStandardScheme getScheme() {
+        return new get_current_notificationEventId_resultStandardScheme();
       }
     }
 
-    private static class getCurrentNotificationEventId_resultStandardScheme extends StandardScheme<getCurrentNotificationEventId_result> {
+    private static class get_current_notificationEventId_resultStandardScheme extends StandardScheme<get_current_notificationEventId_result> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, getCurrentNotificationEventId_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, get_current_notificationEventId_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -137482,7 +137482,7 @@ public class ThriftHiveMetastore {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, getCurrentNotificationEventId_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, get_current_notificationEventId_result struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -137497,16 +137497,16 @@ public class ThriftHiveMetastore {
 
     }
 
-    private static class getCurrentNotificationEventId_resultTupleSchemeFactory implements SchemeFactory {
-      public getCurrentNotificationEventId_resultTupleScheme getScheme() {
-        return new getCurrentNotificationEventId_resultTupleScheme();
+    private static class get_current_notificationEventId_resultTupleSchemeFactory implements SchemeFactory {
+      public get_current_notificationEventId_resultTupleScheme getScheme() {
+        return new get_current_notificationEventId_resultTupleScheme();
       }
     }
 
-    private static class getCurrentNotificationEventId_resultTupleScheme extends TupleScheme<getCurrentNotificationEventId_result> {
+    private static class get_current_notificationEventId_resultTupleScheme extends TupleScheme<get_current_notificationEventId_result> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, getCurrentNotificationEventId_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, get_current_notificationEventId_result struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
         if (struct.isSetSuccess()) {
@@ -137519,7 +137519,7 @@ public class ThriftHiveMetastore {
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, getCurrentNotificationEventId_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, get_current_notificationEventId_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
