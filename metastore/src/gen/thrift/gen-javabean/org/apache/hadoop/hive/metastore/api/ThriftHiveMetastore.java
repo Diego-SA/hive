@@ -276,6 +276,8 @@ public class ThriftHiveMetastore {
 
     public ShowCompactResponse show_compact(ShowCompactRequest rqst) throws org.apache.thrift.TException;
 
+    public void add_dynamic_partitions(AddDynamicPartitions rqst) throws NoSuchTxnException, TxnAbortedException, org.apache.thrift.TException;
+
     public NotificationEventResponse get_next_notification(NotificationEventRequest rqst) throws org.apache.thrift.TException;
 
     public CurrentNotificationEventId get_current_notificationEventId() throws org.apache.thrift.TException;
@@ -523,6 +525,8 @@ public class ThriftHiveMetastore {
     public void compact(CompactionRequest rqst, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.compact_call> resultHandler) throws org.apache.thrift.TException;
 
     public void show_compact(ShowCompactRequest rqst, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.show_compact_call> resultHandler) throws org.apache.thrift.TException;
+
+    public void add_dynamic_partitions(AddDynamicPartitions rqst, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.add_dynamic_partitions_call> resultHandler) throws org.apache.thrift.TException;
 
     public void get_next_notification(NotificationEventRequest rqst, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.get_next_notification_call> resultHandler) throws org.apache.thrift.TException;
 
@@ -4086,6 +4090,32 @@ public class ThriftHiveMetastore {
         return result.success;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "show_compact failed: unknown result");
+    }
+
+    public void add_dynamic_partitions(AddDynamicPartitions rqst) throws NoSuchTxnException, TxnAbortedException, org.apache.thrift.TException
+    {
+      send_add_dynamic_partitions(rqst);
+      recv_add_dynamic_partitions();
+    }
+
+    public void send_add_dynamic_partitions(AddDynamicPartitions rqst) throws org.apache.thrift.TException
+    {
+      add_dynamic_partitions_args args = new add_dynamic_partitions_args();
+      args.setRqst(rqst);
+      sendBase("add_dynamic_partitions", args);
+    }
+
+    public void recv_add_dynamic_partitions() throws NoSuchTxnException, TxnAbortedException, org.apache.thrift.TException
+    {
+      add_dynamic_partitions_result result = new add_dynamic_partitions_result();
+      receiveBase(result, "add_dynamic_partitions");
+      if (result.o1 != null) {
+        throw result.o1;
+      }
+      if (result.o2 != null) {
+        throw result.o2;
+      }
+      return;
     }
 
     public NotificationEventResponse get_next_notification(NotificationEventRequest rqst) throws org.apache.thrift.TException
@@ -8435,6 +8465,38 @@ public class ThriftHiveMetastore {
       }
     }
 
+    public void add_dynamic_partitions(AddDynamicPartitions rqst, org.apache.thrift.async.AsyncMethodCallback<add_dynamic_partitions_call> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      add_dynamic_partitions_call method_call = new add_dynamic_partitions_call(rqst, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class add_dynamic_partitions_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private AddDynamicPartitions rqst;
+      public add_dynamic_partitions_call(AddDynamicPartitions rqst, org.apache.thrift.async.AsyncMethodCallback<add_dynamic_partitions_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.rqst = rqst;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("add_dynamic_partitions", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        add_dynamic_partitions_args args = new add_dynamic_partitions_args();
+        args.setRqst(rqst);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws NoSuchTxnException, TxnAbortedException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_add_dynamic_partitions();
+      }
+    }
+
     public void get_next_notification(NotificationEventRequest rqst, org.apache.thrift.async.AsyncMethodCallback<get_next_notification_call> resultHandler) throws org.apache.thrift.TException {
       checkReady();
       get_next_notification_call method_call = new get_next_notification_call(rqst, resultHandler, this, ___protocolFactory, ___transport);
@@ -8660,6 +8722,7 @@ public class ThriftHiveMetastore {
       processMap.put("heartbeat_txn_range", new heartbeat_txn_range());
       processMap.put("compact", new compact());
       processMap.put("show_compact", new show_compact());
+      processMap.put("add_dynamic_partitions", new add_dynamic_partitions());
       processMap.put("get_next_notification", new get_next_notification());
       processMap.put("get_current_notificationEventId", new get_current_notificationEventId());
       processMap.put("fire_listener_event", new fire_listener_event());
@@ -11773,6 +11836,32 @@ public class ThriftHiveMetastore {
       public show_compact_result getResult(I iface, show_compact_args args) throws org.apache.thrift.TException {
         show_compact_result result = new show_compact_result();
         result.success = iface.show_compact(args.rqst);
+        return result;
+      }
+    }
+
+    public static class add_dynamic_partitions<I extends Iface> extends org.apache.thrift.ProcessFunction<I, add_dynamic_partitions_args> {
+      public add_dynamic_partitions() {
+        super("add_dynamic_partitions");
+      }
+
+      public add_dynamic_partitions_args getEmptyArgsInstance() {
+        return new add_dynamic_partitions_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public add_dynamic_partitions_result getResult(I iface, add_dynamic_partitions_args args) throws org.apache.thrift.TException {
+        add_dynamic_partitions_result result = new add_dynamic_partitions_result();
+        try {
+          iface.add_dynamic_partitions(args.rqst);
+        } catch (NoSuchTxnException o1) {
+          result.o1 = o1;
+        } catch (TxnAbortedException o2) {
+          result.o2 = o2;
+        }
         return result;
       }
     }
@@ -17235,13 +17324,13 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list516 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list516.size);
-                  for (int _i517 = 0; _i517 < _list516.size; ++_i517)
+                  org.apache.thrift.protocol.TList _list524 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list524.size);
+                  for (int _i525 = 0; _i525 < _list524.size; ++_i525)
                   {
-                    String _elem518; // required
-                    _elem518 = iprot.readString();
-                    struct.success.add(_elem518);
+                    String _elem526; // required
+                    _elem526 = iprot.readString();
+                    struct.success.add(_elem526);
                   }
                   iprot.readListEnd();
                 }
@@ -17276,9 +17365,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter519 : struct.success)
+            for (String _iter527 : struct.success)
             {
-              oprot.writeString(_iter519);
+              oprot.writeString(_iter527);
             }
             oprot.writeListEnd();
           }
@@ -17317,9 +17406,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter520 : struct.success)
+            for (String _iter528 : struct.success)
             {
-              oprot.writeString(_iter520);
+              oprot.writeString(_iter528);
             }
           }
         }
@@ -17334,13 +17423,13 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list521 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list521.size);
-            for (int _i522 = 0; _i522 < _list521.size; ++_i522)
+            org.apache.thrift.protocol.TList _list529 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list529.size);
+            for (int _i530 = 0; _i530 < _list529.size; ++_i530)
             {
-              String _elem523; // required
-              _elem523 = iprot.readString();
-              struct.success.add(_elem523);
+              String _elem531; // required
+              _elem531 = iprot.readString();
+              struct.success.add(_elem531);
             }
           }
           struct.setSuccessIsSet(true);
@@ -17997,13 +18086,13 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list524 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list524.size);
-                  for (int _i525 = 0; _i525 < _list524.size; ++_i525)
+                  org.apache.thrift.protocol.TList _list532 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list532.size);
+                  for (int _i533 = 0; _i533 < _list532.size; ++_i533)
                   {
-                    String _elem526; // required
-                    _elem526 = iprot.readString();
-                    struct.success.add(_elem526);
+                    String _elem534; // required
+                    _elem534 = iprot.readString();
+                    struct.success.add(_elem534);
                   }
                   iprot.readListEnd();
                 }
@@ -18038,9 +18127,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter527 : struct.success)
+            for (String _iter535 : struct.success)
             {
-              oprot.writeString(_iter527);
+              oprot.writeString(_iter535);
             }
             oprot.writeListEnd();
           }
@@ -18079,9 +18168,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter528 : struct.success)
+            for (String _iter536 : struct.success)
             {
-              oprot.writeString(_iter528);
+              oprot.writeString(_iter536);
             }
           }
         }
@@ -18096,13 +18185,13 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list529 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list529.size);
-            for (int _i530 = 0; _i530 < _list529.size; ++_i530)
+            org.apache.thrift.protocol.TList _list537 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list537.size);
+            for (int _i538 = 0; _i538 < _list537.size; ++_i538)
             {
-              String _elem531; // required
-              _elem531 = iprot.readString();
-              struct.success.add(_elem531);
+              String _elem539; // required
+              _elem539 = iprot.readString();
+              struct.success.add(_elem539);
             }
           }
           struct.setSuccessIsSet(true);
@@ -22709,16 +22798,16 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
                 {
-                  org.apache.thrift.protocol.TMap _map532 = iprot.readMapBegin();
-                  struct.success = new HashMap<String,Type>(2*_map532.size);
-                  for (int _i533 = 0; _i533 < _map532.size; ++_i533)
+                  org.apache.thrift.protocol.TMap _map540 = iprot.readMapBegin();
+                  struct.success = new HashMap<String,Type>(2*_map540.size);
+                  for (int _i541 = 0; _i541 < _map540.size; ++_i541)
                   {
-                    String _key534; // required
-                    Type _val535; // required
-                    _key534 = iprot.readString();
-                    _val535 = new Type();
-                    _val535.read(iprot);
-                    struct.success.put(_key534, _val535);
+                    String _key542; // required
+                    Type _val543; // required
+                    _key542 = iprot.readString();
+                    _val543 = new Type();
+                    _val543.read(iprot);
+                    struct.success.put(_key542, _val543);
                   }
                   iprot.readMapEnd();
                 }
@@ -22753,10 +22842,10 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Map.Entry<String, Type> _iter536 : struct.success.entrySet())
+            for (Map.Entry<String, Type> _iter544 : struct.success.entrySet())
             {
-              oprot.writeString(_iter536.getKey());
-              _iter536.getValue().write(oprot);
+              oprot.writeString(_iter544.getKey());
+              _iter544.getValue().write(oprot);
             }
             oprot.writeMapEnd();
           }
@@ -22795,10 +22884,10 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Map.Entry<String, Type> _iter537 : struct.success.entrySet())
+            for (Map.Entry<String, Type> _iter545 : struct.success.entrySet())
             {
-              oprot.writeString(_iter537.getKey());
-              _iter537.getValue().write(oprot);
+              oprot.writeString(_iter545.getKey());
+              _iter545.getValue().write(oprot);
             }
           }
         }
@@ -22813,16 +22902,16 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TMap _map538 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new HashMap<String,Type>(2*_map538.size);
-            for (int _i539 = 0; _i539 < _map538.size; ++_i539)
+            org.apache.thrift.protocol.TMap _map546 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new HashMap<String,Type>(2*_map546.size);
+            for (int _i547 = 0; _i547 < _map546.size; ++_i547)
             {
-              String _key540; // required
-              Type _val541; // required
-              _key540 = iprot.readString();
-              _val541 = new Type();
-              _val541.read(iprot);
-              struct.success.put(_key540, _val541);
+              String _key548; // required
+              Type _val549; // required
+              _key548 = iprot.readString();
+              _val549 = new Type();
+              _val549.read(iprot);
+              struct.success.put(_key548, _val549);
             }
           }
           struct.setSuccessIsSet(true);
@@ -23857,14 +23946,14 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list542 = iprot.readListBegin();
-                  struct.success = new ArrayList<FieldSchema>(_list542.size);
-                  for (int _i543 = 0; _i543 < _list542.size; ++_i543)
+                  org.apache.thrift.protocol.TList _list550 = iprot.readListBegin();
+                  struct.success = new ArrayList<FieldSchema>(_list550.size);
+                  for (int _i551 = 0; _i551 < _list550.size; ++_i551)
                   {
-                    FieldSchema _elem544; // required
-                    _elem544 = new FieldSchema();
-                    _elem544.read(iprot);
-                    struct.success.add(_elem544);
+                    FieldSchema _elem552; // required
+                    _elem552 = new FieldSchema();
+                    _elem552.read(iprot);
+                    struct.success.add(_elem552);
                   }
                   iprot.readListEnd();
                 }
@@ -23917,9 +24006,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (FieldSchema _iter545 : struct.success)
+            for (FieldSchema _iter553 : struct.success)
             {
-              _iter545.write(oprot);
+              _iter553.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -23974,9 +24063,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (FieldSchema _iter546 : struct.success)
+            for (FieldSchema _iter554 : struct.success)
             {
-              _iter546.write(oprot);
+              _iter554.write(oprot);
             }
           }
         }
@@ -23997,14 +24086,14 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(4);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list547 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<FieldSchema>(_list547.size);
-            for (int _i548 = 0; _i548 < _list547.size; ++_i548)
+            org.apache.thrift.protocol.TList _list555 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<FieldSchema>(_list555.size);
+            for (int _i556 = 0; _i556 < _list555.size; ++_i556)
             {
-              FieldSchema _elem549; // required
-              _elem549 = new FieldSchema();
-              _elem549.read(iprot);
-              struct.success.add(_elem549);
+              FieldSchema _elem557; // required
+              _elem557 = new FieldSchema();
+              _elem557.read(iprot);
+              struct.success.add(_elem557);
             }
           }
           struct.setSuccessIsSet(true);
@@ -25158,14 +25247,14 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list550 = iprot.readListBegin();
-                  struct.success = new ArrayList<FieldSchema>(_list550.size);
-                  for (int _i551 = 0; _i551 < _list550.size; ++_i551)
+                  org.apache.thrift.protocol.TList _list558 = iprot.readListBegin();
+                  struct.success = new ArrayList<FieldSchema>(_list558.size);
+                  for (int _i559 = 0; _i559 < _list558.size; ++_i559)
                   {
-                    FieldSchema _elem552; // required
-                    _elem552 = new FieldSchema();
-                    _elem552.read(iprot);
-                    struct.success.add(_elem552);
+                    FieldSchema _elem560; // required
+                    _elem560 = new FieldSchema();
+                    _elem560.read(iprot);
+                    struct.success.add(_elem560);
                   }
                   iprot.readListEnd();
                 }
@@ -25218,9 +25307,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (FieldSchema _iter553 : struct.success)
+            for (FieldSchema _iter561 : struct.success)
             {
-              _iter553.write(oprot);
+              _iter561.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -25275,9 +25364,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (FieldSchema _iter554 : struct.success)
+            for (FieldSchema _iter562 : struct.success)
             {
-              _iter554.write(oprot);
+              _iter562.write(oprot);
             }
           }
         }
@@ -25298,14 +25387,14 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(4);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list555 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<FieldSchema>(_list555.size);
-            for (int _i556 = 0; _i556 < _list555.size; ++_i556)
+            org.apache.thrift.protocol.TList _list563 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<FieldSchema>(_list563.size);
+            for (int _i564 = 0; _i564 < _list563.size; ++_i564)
             {
-              FieldSchema _elem557; // required
-              _elem557 = new FieldSchema();
-              _elem557.read(iprot);
-              struct.success.add(_elem557);
+              FieldSchema _elem565; // required
+              _elem565 = new FieldSchema();
+              _elem565.read(iprot);
+              struct.success.add(_elem565);
             }
           }
           struct.setSuccessIsSet(true);
@@ -26350,14 +26439,14 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list558 = iprot.readListBegin();
-                  struct.success = new ArrayList<FieldSchema>(_list558.size);
-                  for (int _i559 = 0; _i559 < _list558.size; ++_i559)
+                  org.apache.thrift.protocol.TList _list566 = iprot.readListBegin();
+                  struct.success = new ArrayList<FieldSchema>(_list566.size);
+                  for (int _i567 = 0; _i567 < _list566.size; ++_i567)
                   {
-                    FieldSchema _elem560; // required
-                    _elem560 = new FieldSchema();
-                    _elem560.read(iprot);
-                    struct.success.add(_elem560);
+                    FieldSchema _elem568; // required
+                    _elem568 = new FieldSchema();
+                    _elem568.read(iprot);
+                    struct.success.add(_elem568);
                   }
                   iprot.readListEnd();
                 }
@@ -26410,9 +26499,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (FieldSchema _iter561 : struct.success)
+            for (FieldSchema _iter569 : struct.success)
             {
-              _iter561.write(oprot);
+              _iter569.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -26467,9 +26556,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (FieldSchema _iter562 : struct.success)
+            for (FieldSchema _iter570 : struct.success)
             {
-              _iter562.write(oprot);
+              _iter570.write(oprot);
             }
           }
         }
@@ -26490,14 +26579,14 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(4);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list563 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<FieldSchema>(_list563.size);
-            for (int _i564 = 0; _i564 < _list563.size; ++_i564)
+            org.apache.thrift.protocol.TList _list571 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<FieldSchema>(_list571.size);
+            for (int _i572 = 0; _i572 < _list571.size; ++_i572)
             {
-              FieldSchema _elem565; // required
-              _elem565 = new FieldSchema();
-              _elem565.read(iprot);
-              struct.success.add(_elem565);
+              FieldSchema _elem573; // required
+              _elem573 = new FieldSchema();
+              _elem573.read(iprot);
+              struct.success.add(_elem573);
             }
           }
           struct.setSuccessIsSet(true);
@@ -27651,14 +27740,14 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list566 = iprot.readListBegin();
-                  struct.success = new ArrayList<FieldSchema>(_list566.size);
-                  for (int _i567 = 0; _i567 < _list566.size; ++_i567)
+                  org.apache.thrift.protocol.TList _list574 = iprot.readListBegin();
+                  struct.success = new ArrayList<FieldSchema>(_list574.size);
+                  for (int _i575 = 0; _i575 < _list574.size; ++_i575)
                   {
-                    FieldSchema _elem568; // required
-                    _elem568 = new FieldSchema();
-                    _elem568.read(iprot);
-                    struct.success.add(_elem568);
+                    FieldSchema _elem576; // required
+                    _elem576 = new FieldSchema();
+                    _elem576.read(iprot);
+                    struct.success.add(_elem576);
                   }
                   iprot.readListEnd();
                 }
@@ -27711,9 +27800,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (FieldSchema _iter569 : struct.success)
+            for (FieldSchema _iter577 : struct.success)
             {
-              _iter569.write(oprot);
+              _iter577.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -27768,9 +27857,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (FieldSchema _iter570 : struct.success)
+            for (FieldSchema _iter578 : struct.success)
             {
-              _iter570.write(oprot);
+              _iter578.write(oprot);
             }
           }
         }
@@ -27791,14 +27880,14 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(4);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list571 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<FieldSchema>(_list571.size);
-            for (int _i572 = 0; _i572 < _list571.size; ++_i572)
+            org.apache.thrift.protocol.TList _list579 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<FieldSchema>(_list579.size);
+            for (int _i580 = 0; _i580 < _list579.size; ++_i580)
             {
-              FieldSchema _elem573; // required
-              _elem573 = new FieldSchema();
-              _elem573.read(iprot);
-              struct.success.add(_elem573);
+              FieldSchema _elem581; // required
+              _elem581 = new FieldSchema();
+              _elem581.read(iprot);
+              struct.success.add(_elem581);
             }
           }
           struct.setSuccessIsSet(true);
@@ -33041,13 +33130,13 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list574 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list574.size);
-                  for (int _i575 = 0; _i575 < _list574.size; ++_i575)
+                  org.apache.thrift.protocol.TList _list582 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list582.size);
+                  for (int _i583 = 0; _i583 < _list582.size; ++_i583)
                   {
-                    String _elem576; // required
-                    _elem576 = iprot.readString();
-                    struct.success.add(_elem576);
+                    String _elem584; // required
+                    _elem584 = iprot.readString();
+                    struct.success.add(_elem584);
                   }
                   iprot.readListEnd();
                 }
@@ -33082,9 +33171,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter577 : struct.success)
+            for (String _iter585 : struct.success)
             {
-              oprot.writeString(_iter577);
+              oprot.writeString(_iter585);
             }
             oprot.writeListEnd();
           }
@@ -33123,9 +33212,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter578 : struct.success)
+            for (String _iter586 : struct.success)
             {
-              oprot.writeString(_iter578);
+              oprot.writeString(_iter586);
             }
           }
         }
@@ -33140,13 +33229,13 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list579 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list579.size);
-            for (int _i580 = 0; _i580 < _list579.size; ++_i580)
+            org.apache.thrift.protocol.TList _list587 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list587.size);
+            for (int _i588 = 0; _i588 < _list587.size; ++_i588)
             {
-              String _elem581; // required
-              _elem581 = iprot.readString();
-              struct.success.add(_elem581);
+              String _elem589; // required
+              _elem589 = iprot.readString();
+              struct.success.add(_elem589);
             }
           }
           struct.setSuccessIsSet(true);
@@ -33915,13 +34004,13 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list582 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list582.size);
-                  for (int _i583 = 0; _i583 < _list582.size; ++_i583)
+                  org.apache.thrift.protocol.TList _list590 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list590.size);
+                  for (int _i591 = 0; _i591 < _list590.size; ++_i591)
                   {
-                    String _elem584; // required
-                    _elem584 = iprot.readString();
-                    struct.success.add(_elem584);
+                    String _elem592; // required
+                    _elem592 = iprot.readString();
+                    struct.success.add(_elem592);
                   }
                   iprot.readListEnd();
                 }
@@ -33956,9 +34045,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter585 : struct.success)
+            for (String _iter593 : struct.success)
             {
-              oprot.writeString(_iter585);
+              oprot.writeString(_iter593);
             }
             oprot.writeListEnd();
           }
@@ -33997,9 +34086,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter586 : struct.success)
+            for (String _iter594 : struct.success)
             {
-              oprot.writeString(_iter586);
+              oprot.writeString(_iter594);
             }
           }
         }
@@ -34014,13 +34103,13 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list587 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list587.size);
-            for (int _i588 = 0; _i588 < _list587.size; ++_i588)
+            org.apache.thrift.protocol.TList _list595 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list595.size);
+            for (int _i596 = 0; _i596 < _list595.size; ++_i596)
             {
-              String _elem589; // required
-              _elem589 = iprot.readString();
-              struct.success.add(_elem589);
+              String _elem597; // required
+              _elem597 = iprot.readString();
+              struct.success.add(_elem597);
             }
           }
           struct.setSuccessIsSet(true);
@@ -35476,13 +35565,13 @@ public class ThriftHiveMetastore {
             case 2: // TBL_NAMES
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list590 = iprot.readListBegin();
-                  struct.tbl_names = new ArrayList<String>(_list590.size);
-                  for (int _i591 = 0; _i591 < _list590.size; ++_i591)
+                  org.apache.thrift.protocol.TList _list598 = iprot.readListBegin();
+                  struct.tbl_names = new ArrayList<String>(_list598.size);
+                  for (int _i599 = 0; _i599 < _list598.size; ++_i599)
                   {
-                    String _elem592; // required
-                    _elem592 = iprot.readString();
-                    struct.tbl_names.add(_elem592);
+                    String _elem600; // required
+                    _elem600 = iprot.readString();
+                    struct.tbl_names.add(_elem600);
                   }
                   iprot.readListEnd();
                 }
@@ -35513,9 +35602,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(TBL_NAMES_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.tbl_names.size()));
-            for (String _iter593 : struct.tbl_names)
+            for (String _iter601 : struct.tbl_names)
             {
-              oprot.writeString(_iter593);
+              oprot.writeString(_iter601);
             }
             oprot.writeListEnd();
           }
@@ -35552,9 +35641,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetTbl_names()) {
           {
             oprot.writeI32(struct.tbl_names.size());
-            for (String _iter594 : struct.tbl_names)
+            for (String _iter602 : struct.tbl_names)
             {
-              oprot.writeString(_iter594);
+              oprot.writeString(_iter602);
             }
           }
         }
@@ -35570,13 +35659,13 @@ public class ThriftHiveMetastore {
         }
         if (incoming.get(1)) {
           {
-            org.apache.thrift.protocol.TList _list595 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.tbl_names = new ArrayList<String>(_list595.size);
-            for (int _i596 = 0; _i596 < _list595.size; ++_i596)
+            org.apache.thrift.protocol.TList _list603 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.tbl_names = new ArrayList<String>(_list603.size);
+            for (int _i604 = 0; _i604 < _list603.size; ++_i604)
             {
-              String _elem597; // required
-              _elem597 = iprot.readString();
-              struct.tbl_names.add(_elem597);
+              String _elem605; // required
+              _elem605 = iprot.readString();
+              struct.tbl_names.add(_elem605);
             }
           }
           struct.setTbl_namesIsSet(true);
@@ -36144,14 +36233,14 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list598 = iprot.readListBegin();
-                  struct.success = new ArrayList<Table>(_list598.size);
-                  for (int _i599 = 0; _i599 < _list598.size; ++_i599)
+                  org.apache.thrift.protocol.TList _list606 = iprot.readListBegin();
+                  struct.success = new ArrayList<Table>(_list606.size);
+                  for (int _i607 = 0; _i607 < _list606.size; ++_i607)
                   {
-                    Table _elem600; // required
-                    _elem600 = new Table();
-                    _elem600.read(iprot);
-                    struct.success.add(_elem600);
+                    Table _elem608; // required
+                    _elem608 = new Table();
+                    _elem608.read(iprot);
+                    struct.success.add(_elem608);
                   }
                   iprot.readListEnd();
                 }
@@ -36204,9 +36293,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Table _iter601 : struct.success)
+            for (Table _iter609 : struct.success)
             {
-              _iter601.write(oprot);
+              _iter609.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -36261,9 +36350,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Table _iter602 : struct.success)
+            for (Table _iter610 : struct.success)
             {
-              _iter602.write(oprot);
+              _iter610.write(oprot);
             }
           }
         }
@@ -36284,14 +36373,14 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(4);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list603 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Table>(_list603.size);
-            for (int _i604 = 0; _i604 < _list603.size; ++_i604)
+            org.apache.thrift.protocol.TList _list611 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Table>(_list611.size);
+            for (int _i612 = 0; _i612 < _list611.size; ++_i612)
             {
-              Table _elem605; // required
-              _elem605 = new Table();
-              _elem605.read(iprot);
-              struct.success.add(_elem605);
+              Table _elem613; // required
+              _elem613 = new Table();
+              _elem613.read(iprot);
+              struct.success.add(_elem613);
             }
           }
           struct.setSuccessIsSet(true);
@@ -37440,13 +37529,13 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list606 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list606.size);
-                  for (int _i607 = 0; _i607 < _list606.size; ++_i607)
+                  org.apache.thrift.protocol.TList _list614 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list614.size);
+                  for (int _i615 = 0; _i615 < _list614.size; ++_i615)
                   {
-                    String _elem608; // required
-                    _elem608 = iprot.readString();
-                    struct.success.add(_elem608);
+                    String _elem616; // required
+                    _elem616 = iprot.readString();
+                    struct.success.add(_elem616);
                   }
                   iprot.readListEnd();
                 }
@@ -37499,9 +37588,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter609 : struct.success)
+            for (String _iter617 : struct.success)
             {
-              oprot.writeString(_iter609);
+              oprot.writeString(_iter617);
             }
             oprot.writeListEnd();
           }
@@ -37556,9 +37645,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter610 : struct.success)
+            for (String _iter618 : struct.success)
             {
-              oprot.writeString(_iter610);
+              oprot.writeString(_iter618);
             }
           }
         }
@@ -37579,13 +37668,13 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(4);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list611 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list611.size);
-            for (int _i612 = 0; _i612 < _list611.size; ++_i612)
+            org.apache.thrift.protocol.TList _list619 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list619.size);
+            for (int _i620 = 0; _i620 < _list619.size; ++_i620)
             {
-              String _elem613; // required
-              _elem613 = iprot.readString();
-              struct.success.add(_elem613);
+              String _elem621; // required
+              _elem621 = iprot.readString();
+              struct.success.add(_elem621);
             }
           }
           struct.setSuccessIsSet(true);
@@ -43444,14 +43533,14 @@ public class ThriftHiveMetastore {
             case 1: // NEW_PARTS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list614 = iprot.readListBegin();
-                  struct.new_parts = new ArrayList<Partition>(_list614.size);
-                  for (int _i615 = 0; _i615 < _list614.size; ++_i615)
+                  org.apache.thrift.protocol.TList _list622 = iprot.readListBegin();
+                  struct.new_parts = new ArrayList<Partition>(_list622.size);
+                  for (int _i623 = 0; _i623 < _list622.size; ++_i623)
                   {
-                    Partition _elem616; // required
-                    _elem616 = new Partition();
-                    _elem616.read(iprot);
-                    struct.new_parts.add(_elem616);
+                    Partition _elem624; // required
+                    _elem624 = new Partition();
+                    _elem624.read(iprot);
+                    struct.new_parts.add(_elem624);
                   }
                   iprot.readListEnd();
                 }
@@ -43477,9 +43566,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(NEW_PARTS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.new_parts.size()));
-            for (Partition _iter617 : struct.new_parts)
+            for (Partition _iter625 : struct.new_parts)
             {
-              _iter617.write(oprot);
+              _iter625.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -43510,9 +43599,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetNew_parts()) {
           {
             oprot.writeI32(struct.new_parts.size());
-            for (Partition _iter618 : struct.new_parts)
+            for (Partition _iter626 : struct.new_parts)
             {
-              _iter618.write(oprot);
+              _iter626.write(oprot);
             }
           }
         }
@@ -43524,14 +43613,14 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list619 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.new_parts = new ArrayList<Partition>(_list619.size);
-            for (int _i620 = 0; _i620 < _list619.size; ++_i620)
+            org.apache.thrift.protocol.TList _list627 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.new_parts = new ArrayList<Partition>(_list627.size);
+            for (int _i628 = 0; _i628 < _list627.size; ++_i628)
             {
-              Partition _elem621; // required
-              _elem621 = new Partition();
-              _elem621.read(iprot);
-              struct.new_parts.add(_elem621);
+              Partition _elem629; // required
+              _elem629 = new Partition();
+              _elem629.read(iprot);
+              struct.new_parts.add(_elem629);
             }
           }
           struct.setNew_partsIsSet(true);
@@ -44532,14 +44621,14 @@ public class ThriftHiveMetastore {
             case 1: // NEW_PARTS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list622 = iprot.readListBegin();
-                  struct.new_parts = new ArrayList<PartitionSpec>(_list622.size);
-                  for (int _i623 = 0; _i623 < _list622.size; ++_i623)
+                  org.apache.thrift.protocol.TList _list630 = iprot.readListBegin();
+                  struct.new_parts = new ArrayList<PartitionSpec>(_list630.size);
+                  for (int _i631 = 0; _i631 < _list630.size; ++_i631)
                   {
-                    PartitionSpec _elem624; // required
-                    _elem624 = new PartitionSpec();
-                    _elem624.read(iprot);
-                    struct.new_parts.add(_elem624);
+                    PartitionSpec _elem632; // required
+                    _elem632 = new PartitionSpec();
+                    _elem632.read(iprot);
+                    struct.new_parts.add(_elem632);
                   }
                   iprot.readListEnd();
                 }
@@ -44565,9 +44654,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(NEW_PARTS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.new_parts.size()));
-            for (PartitionSpec _iter625 : struct.new_parts)
+            for (PartitionSpec _iter633 : struct.new_parts)
             {
-              _iter625.write(oprot);
+              _iter633.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -44598,9 +44687,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetNew_parts()) {
           {
             oprot.writeI32(struct.new_parts.size());
-            for (PartitionSpec _iter626 : struct.new_parts)
+            for (PartitionSpec _iter634 : struct.new_parts)
             {
-              _iter626.write(oprot);
+              _iter634.write(oprot);
             }
           }
         }
@@ -44612,14 +44701,14 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list627 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.new_parts = new ArrayList<PartitionSpec>(_list627.size);
-            for (int _i628 = 0; _i628 < _list627.size; ++_i628)
+            org.apache.thrift.protocol.TList _list635 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.new_parts = new ArrayList<PartitionSpec>(_list635.size);
+            for (int _i636 = 0; _i636 < _list635.size; ++_i636)
             {
-              PartitionSpec _elem629; // required
-              _elem629 = new PartitionSpec();
-              _elem629.read(iprot);
-              struct.new_parts.add(_elem629);
+              PartitionSpec _elem637; // required
+              _elem637 = new PartitionSpec();
+              _elem637.read(iprot);
+              struct.new_parts.add(_elem637);
             }
           }
           struct.setNew_partsIsSet(true);
@@ -45798,13 +45887,13 @@ public class ThriftHiveMetastore {
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list630 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list630.size);
-                  for (int _i631 = 0; _i631 < _list630.size; ++_i631)
+                  org.apache.thrift.protocol.TList _list638 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list638.size);
+                  for (int _i639 = 0; _i639 < _list638.size; ++_i639)
                   {
-                    String _elem632; // required
-                    _elem632 = iprot.readString();
-                    struct.part_vals.add(_elem632);
+                    String _elem640; // required
+                    _elem640 = iprot.readString();
+                    struct.part_vals.add(_elem640);
                   }
                   iprot.readListEnd();
                 }
@@ -45840,9 +45929,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter633 : struct.part_vals)
+            for (String _iter641 : struct.part_vals)
             {
-              oprot.writeString(_iter633);
+              oprot.writeString(_iter641);
             }
             oprot.writeListEnd();
           }
@@ -45885,9 +45974,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter634 : struct.part_vals)
+            for (String _iter642 : struct.part_vals)
             {
-              oprot.writeString(_iter634);
+              oprot.writeString(_iter642);
             }
           }
         }
@@ -45907,13 +45996,13 @@ public class ThriftHiveMetastore {
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list635 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list635.size);
-            for (int _i636 = 0; _i636 < _list635.size; ++_i636)
+            org.apache.thrift.protocol.TList _list643 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list643.size);
+            for (int _i644 = 0; _i644 < _list643.size; ++_i644)
             {
-              String _elem637; // required
-              _elem637 = iprot.readString();
-              struct.part_vals.add(_elem637);
+              String _elem645; // required
+              _elem645 = iprot.readString();
+              struct.part_vals.add(_elem645);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -48225,13 +48314,13 @@ public class ThriftHiveMetastore {
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list638 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list638.size);
-                  for (int _i639 = 0; _i639 < _list638.size; ++_i639)
+                  org.apache.thrift.protocol.TList _list646 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list646.size);
+                  for (int _i647 = 0; _i647 < _list646.size; ++_i647)
                   {
-                    String _elem640; // required
-                    _elem640 = iprot.readString();
-                    struct.part_vals.add(_elem640);
+                    String _elem648; // required
+                    _elem648 = iprot.readString();
+                    struct.part_vals.add(_elem648);
                   }
                   iprot.readListEnd();
                 }
@@ -48276,9 +48365,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter641 : struct.part_vals)
+            for (String _iter649 : struct.part_vals)
             {
-              oprot.writeString(_iter641);
+              oprot.writeString(_iter649);
             }
             oprot.writeListEnd();
           }
@@ -48329,9 +48418,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter642 : struct.part_vals)
+            for (String _iter650 : struct.part_vals)
             {
-              oprot.writeString(_iter642);
+              oprot.writeString(_iter650);
             }
           }
         }
@@ -48354,13 +48443,13 @@ public class ThriftHiveMetastore {
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list643 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list643.size);
-            for (int _i644 = 0; _i644 < _list643.size; ++_i644)
+            org.apache.thrift.protocol.TList _list651 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list651.size);
+            for (int _i652 = 0; _i652 < _list651.size; ++_i652)
             {
-              String _elem645; // required
-              _elem645 = iprot.readString();
-              struct.part_vals.add(_elem645);
+              String _elem653; // required
+              _elem653 = iprot.readString();
+              struct.part_vals.add(_elem653);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -52233,13 +52322,13 @@ public class ThriftHiveMetastore {
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list646 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list646.size);
-                  for (int _i647 = 0; _i647 < _list646.size; ++_i647)
+                  org.apache.thrift.protocol.TList _list654 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list654.size);
+                  for (int _i655 = 0; _i655 < _list654.size; ++_i655)
                   {
-                    String _elem648; // required
-                    _elem648 = iprot.readString();
-                    struct.part_vals.add(_elem648);
+                    String _elem656; // required
+                    _elem656 = iprot.readString();
+                    struct.part_vals.add(_elem656);
                   }
                   iprot.readListEnd();
                 }
@@ -52283,9 +52372,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter649 : struct.part_vals)
+            for (String _iter657 : struct.part_vals)
             {
-              oprot.writeString(_iter649);
+              oprot.writeString(_iter657);
             }
             oprot.writeListEnd();
           }
@@ -52334,9 +52423,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter650 : struct.part_vals)
+            for (String _iter658 : struct.part_vals)
             {
-              oprot.writeString(_iter650);
+              oprot.writeString(_iter658);
             }
           }
         }
@@ -52359,13 +52448,13 @@ public class ThriftHiveMetastore {
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list651 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list651.size);
-            for (int _i652 = 0; _i652 < _list651.size; ++_i652)
+            org.apache.thrift.protocol.TList _list659 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list659.size);
+            for (int _i660 = 0; _i660 < _list659.size; ++_i660)
             {
-              String _elem653; // required
-              _elem653 = iprot.readString();
-              struct.part_vals.add(_elem653);
+              String _elem661; // required
+              _elem661 = iprot.readString();
+              struct.part_vals.add(_elem661);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -53607,13 +53696,13 @@ public class ThriftHiveMetastore {
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list654 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list654.size);
-                  for (int _i655 = 0; _i655 < _list654.size; ++_i655)
+                  org.apache.thrift.protocol.TList _list662 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list662.size);
+                  for (int _i663 = 0; _i663 < _list662.size; ++_i663)
                   {
-                    String _elem656; // required
-                    _elem656 = iprot.readString();
-                    struct.part_vals.add(_elem656);
+                    String _elem664; // required
+                    _elem664 = iprot.readString();
+                    struct.part_vals.add(_elem664);
                   }
                   iprot.readListEnd();
                 }
@@ -53666,9 +53755,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter657 : struct.part_vals)
+            for (String _iter665 : struct.part_vals)
             {
-              oprot.writeString(_iter657);
+              oprot.writeString(_iter665);
             }
             oprot.writeListEnd();
           }
@@ -53725,9 +53814,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter658 : struct.part_vals)
+            for (String _iter666 : struct.part_vals)
             {
-              oprot.writeString(_iter658);
+              oprot.writeString(_iter666);
             }
           }
         }
@@ -53753,13 +53842,13 @@ public class ThriftHiveMetastore {
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list659 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list659.size);
-            for (int _i660 = 0; _i660 < _list659.size; ++_i660)
+            org.apache.thrift.protocol.TList _list667 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list667.size);
+            for (int _i668 = 0; _i668 < _list667.size; ++_i668)
             {
-              String _elem661; // required
-              _elem661 = iprot.readString();
-              struct.part_vals.add(_elem661);
+              String _elem669; // required
+              _elem669 = iprot.readString();
+              struct.part_vals.add(_elem669);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -58364,13 +58453,13 @@ public class ThriftHiveMetastore {
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list662 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list662.size);
-                  for (int _i663 = 0; _i663 < _list662.size; ++_i663)
+                  org.apache.thrift.protocol.TList _list670 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list670.size);
+                  for (int _i671 = 0; _i671 < _list670.size; ++_i671)
                   {
-                    String _elem664; // required
-                    _elem664 = iprot.readString();
-                    struct.part_vals.add(_elem664);
+                    String _elem672; // required
+                    _elem672 = iprot.readString();
+                    struct.part_vals.add(_elem672);
                   }
                   iprot.readListEnd();
                 }
@@ -58406,9 +58495,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter665 : struct.part_vals)
+            for (String _iter673 : struct.part_vals)
             {
-              oprot.writeString(_iter665);
+              oprot.writeString(_iter673);
             }
             oprot.writeListEnd();
           }
@@ -58451,9 +58540,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter666 : struct.part_vals)
+            for (String _iter674 : struct.part_vals)
             {
-              oprot.writeString(_iter666);
+              oprot.writeString(_iter674);
             }
           }
         }
@@ -58473,13 +58562,13 @@ public class ThriftHiveMetastore {
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list667 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list667.size);
-            for (int _i668 = 0; _i668 < _list667.size; ++_i668)
+            org.apache.thrift.protocol.TList _list675 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list675.size);
+            for (int _i676 = 0; _i676 < _list675.size; ++_i676)
             {
-              String _elem669; // required
-              _elem669 = iprot.readString();
-              struct.part_vals.add(_elem669);
+              String _elem677; // required
+              _elem677 = iprot.readString();
+              struct.part_vals.add(_elem677);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -59708,15 +59797,15 @@ public class ThriftHiveMetastore {
             case 1: // PARTITION_SPECS
               if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
                 {
-                  org.apache.thrift.protocol.TMap _map670 = iprot.readMapBegin();
-                  struct.partitionSpecs = new HashMap<String,String>(2*_map670.size);
-                  for (int _i671 = 0; _i671 < _map670.size; ++_i671)
+                  org.apache.thrift.protocol.TMap _map678 = iprot.readMapBegin();
+                  struct.partitionSpecs = new HashMap<String,String>(2*_map678.size);
+                  for (int _i679 = 0; _i679 < _map678.size; ++_i679)
                   {
-                    String _key672; // required
-                    String _val673; // required
-                    _key672 = iprot.readString();
-                    _val673 = iprot.readString();
-                    struct.partitionSpecs.put(_key672, _val673);
+                    String _key680; // required
+                    String _val681; // required
+                    _key680 = iprot.readString();
+                    _val681 = iprot.readString();
+                    struct.partitionSpecs.put(_key680, _val681);
                   }
                   iprot.readMapEnd();
                 }
@@ -59774,10 +59863,10 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(PARTITION_SPECS_FIELD_DESC);
           {
             oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, struct.partitionSpecs.size()));
-            for (Map.Entry<String, String> _iter674 : struct.partitionSpecs.entrySet())
+            for (Map.Entry<String, String> _iter682 : struct.partitionSpecs.entrySet())
             {
-              oprot.writeString(_iter674.getKey());
-              oprot.writeString(_iter674.getValue());
+              oprot.writeString(_iter682.getKey());
+              oprot.writeString(_iter682.getValue());
             }
             oprot.writeMapEnd();
           }
@@ -59840,10 +59929,10 @@ public class ThriftHiveMetastore {
         if (struct.isSetPartitionSpecs()) {
           {
             oprot.writeI32(struct.partitionSpecs.size());
-            for (Map.Entry<String, String> _iter675 : struct.partitionSpecs.entrySet())
+            for (Map.Entry<String, String> _iter683 : struct.partitionSpecs.entrySet())
             {
-              oprot.writeString(_iter675.getKey());
-              oprot.writeString(_iter675.getValue());
+              oprot.writeString(_iter683.getKey());
+              oprot.writeString(_iter683.getValue());
             }
           }
         }
@@ -59867,15 +59956,15 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(5);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TMap _map676 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.partitionSpecs = new HashMap<String,String>(2*_map676.size);
-            for (int _i677 = 0; _i677 < _map676.size; ++_i677)
+            org.apache.thrift.protocol.TMap _map684 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.partitionSpecs = new HashMap<String,String>(2*_map684.size);
+            for (int _i685 = 0; _i685 < _map684.size; ++_i685)
             {
-              String _key678; // required
-              String _val679; // required
-              _key678 = iprot.readString();
-              _val679 = iprot.readString();
-              struct.partitionSpecs.put(_key678, _val679);
+              String _key686; // required
+              String _val687; // required
+              _key686 = iprot.readString();
+              _val687 = iprot.readString();
+              struct.partitionSpecs.put(_key686, _val687);
             }
           }
           struct.setPartitionSpecsIsSet(true);
@@ -61363,13 +61452,13 @@ public class ThriftHiveMetastore {
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list680 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list680.size);
-                  for (int _i681 = 0; _i681 < _list680.size; ++_i681)
+                  org.apache.thrift.protocol.TList _list688 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list688.size);
+                  for (int _i689 = 0; _i689 < _list688.size; ++_i689)
                   {
-                    String _elem682; // required
-                    _elem682 = iprot.readString();
-                    struct.part_vals.add(_elem682);
+                    String _elem690; // required
+                    _elem690 = iprot.readString();
+                    struct.part_vals.add(_elem690);
                   }
                   iprot.readListEnd();
                 }
@@ -61389,13 +61478,13 @@ public class ThriftHiveMetastore {
             case 5: // GROUP_NAMES
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list683 = iprot.readListBegin();
-                  struct.group_names = new ArrayList<String>(_list683.size);
-                  for (int _i684 = 0; _i684 < _list683.size; ++_i684)
+                  org.apache.thrift.protocol.TList _list691 = iprot.readListBegin();
+                  struct.group_names = new ArrayList<String>(_list691.size);
+                  for (int _i692 = 0; _i692 < _list691.size; ++_i692)
                   {
-                    String _elem685; // required
-                    _elem685 = iprot.readString();
-                    struct.group_names.add(_elem685);
+                    String _elem693; // required
+                    _elem693 = iprot.readString();
+                    struct.group_names.add(_elem693);
                   }
                   iprot.readListEnd();
                 }
@@ -61431,9 +61520,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter686 : struct.part_vals)
+            for (String _iter694 : struct.part_vals)
             {
-              oprot.writeString(_iter686);
+              oprot.writeString(_iter694);
             }
             oprot.writeListEnd();
           }
@@ -61448,9 +61537,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(GROUP_NAMES_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.group_names.size()));
-            for (String _iter687 : struct.group_names)
+            for (String _iter695 : struct.group_names)
             {
-              oprot.writeString(_iter687);
+              oprot.writeString(_iter695);
             }
             oprot.writeListEnd();
           }
@@ -61499,9 +61588,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter688 : struct.part_vals)
+            for (String _iter696 : struct.part_vals)
             {
-              oprot.writeString(_iter688);
+              oprot.writeString(_iter696);
             }
           }
         }
@@ -61511,9 +61600,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetGroup_names()) {
           {
             oprot.writeI32(struct.group_names.size());
-            for (String _iter689 : struct.group_names)
+            for (String _iter697 : struct.group_names)
             {
-              oprot.writeString(_iter689);
+              oprot.writeString(_iter697);
             }
           }
         }
@@ -61533,13 +61622,13 @@ public class ThriftHiveMetastore {
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list690 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list690.size);
-            for (int _i691 = 0; _i691 < _list690.size; ++_i691)
+            org.apache.thrift.protocol.TList _list698 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list698.size);
+            for (int _i699 = 0; _i699 < _list698.size; ++_i699)
             {
-              String _elem692; // required
-              _elem692 = iprot.readString();
-              struct.part_vals.add(_elem692);
+              String _elem700; // required
+              _elem700 = iprot.readString();
+              struct.part_vals.add(_elem700);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -61550,13 +61639,13 @@ public class ThriftHiveMetastore {
         }
         if (incoming.get(4)) {
           {
-            org.apache.thrift.protocol.TList _list693 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.group_names = new ArrayList<String>(_list693.size);
-            for (int _i694 = 0; _i694 < _list693.size; ++_i694)
+            org.apache.thrift.protocol.TList _list701 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.group_names = new ArrayList<String>(_list701.size);
+            for (int _i702 = 0; _i702 < _list701.size; ++_i702)
             {
-              String _elem695; // required
-              _elem695 = iprot.readString();
-              struct.group_names.add(_elem695);
+              String _elem703; // required
+              _elem703 = iprot.readString();
+              struct.group_names.add(_elem703);
             }
           }
           struct.setGroup_namesIsSet(true);
@@ -64325,14 +64414,14 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list696 = iprot.readListBegin();
-                  struct.success = new ArrayList<Partition>(_list696.size);
-                  for (int _i697 = 0; _i697 < _list696.size; ++_i697)
+                  org.apache.thrift.protocol.TList _list704 = iprot.readListBegin();
+                  struct.success = new ArrayList<Partition>(_list704.size);
+                  for (int _i705 = 0; _i705 < _list704.size; ++_i705)
                   {
-                    Partition _elem698; // required
-                    _elem698 = new Partition();
-                    _elem698.read(iprot);
-                    struct.success.add(_elem698);
+                    Partition _elem706; // required
+                    _elem706 = new Partition();
+                    _elem706.read(iprot);
+                    struct.success.add(_elem706);
                   }
                   iprot.readListEnd();
                 }
@@ -64376,9 +64465,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Partition _iter699 : struct.success)
+            for (Partition _iter707 : struct.success)
             {
-              _iter699.write(oprot);
+              _iter707.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -64425,9 +64514,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Partition _iter700 : struct.success)
+            for (Partition _iter708 : struct.success)
             {
-              _iter700.write(oprot);
+              _iter708.write(oprot);
             }
           }
         }
@@ -64445,14 +64534,14 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list701 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Partition>(_list701.size);
-            for (int _i702 = 0; _i702 < _list701.size; ++_i702)
+            org.apache.thrift.protocol.TList _list709 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Partition>(_list709.size);
+            for (int _i710 = 0; _i710 < _list709.size; ++_i710)
             {
-              Partition _elem703; // required
-              _elem703 = new Partition();
-              _elem703.read(iprot);
-              struct.success.add(_elem703);
+              Partition _elem711; // required
+              _elem711 = new Partition();
+              _elem711.read(iprot);
+              struct.success.add(_elem711);
             }
           }
           struct.setSuccessIsSet(true);
@@ -65145,13 +65234,13 @@ public class ThriftHiveMetastore {
             case 5: // GROUP_NAMES
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list704 = iprot.readListBegin();
-                  struct.group_names = new ArrayList<String>(_list704.size);
-                  for (int _i705 = 0; _i705 < _list704.size; ++_i705)
+                  org.apache.thrift.protocol.TList _list712 = iprot.readListBegin();
+                  struct.group_names = new ArrayList<String>(_list712.size);
+                  for (int _i713 = 0; _i713 < _list712.size; ++_i713)
                   {
-                    String _elem706; // required
-                    _elem706 = iprot.readString();
-                    struct.group_names.add(_elem706);
+                    String _elem714; // required
+                    _elem714 = iprot.readString();
+                    struct.group_names.add(_elem714);
                   }
                   iprot.readListEnd();
                 }
@@ -65195,9 +65284,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(GROUP_NAMES_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.group_names.size()));
-            for (String _iter707 : struct.group_names)
+            for (String _iter715 : struct.group_names)
             {
-              oprot.writeString(_iter707);
+              oprot.writeString(_iter715);
             }
             oprot.writeListEnd();
           }
@@ -65252,9 +65341,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetGroup_names()) {
           {
             oprot.writeI32(struct.group_names.size());
-            for (String _iter708 : struct.group_names)
+            for (String _iter716 : struct.group_names)
             {
-              oprot.writeString(_iter708);
+              oprot.writeString(_iter716);
             }
           }
         }
@@ -65282,13 +65371,13 @@ public class ThriftHiveMetastore {
         }
         if (incoming.get(4)) {
           {
-            org.apache.thrift.protocol.TList _list709 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.group_names = new ArrayList<String>(_list709.size);
-            for (int _i710 = 0; _i710 < _list709.size; ++_i710)
+            org.apache.thrift.protocol.TList _list717 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.group_names = new ArrayList<String>(_list717.size);
+            for (int _i718 = 0; _i718 < _list717.size; ++_i718)
             {
-              String _elem711; // required
-              _elem711 = iprot.readString();
-              struct.group_names.add(_elem711);
+              String _elem719; // required
+              _elem719 = iprot.readString();
+              struct.group_names.add(_elem719);
             }
           }
           struct.setGroup_namesIsSet(true);
@@ -65775,14 +65864,14 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list712 = iprot.readListBegin();
-                  struct.success = new ArrayList<Partition>(_list712.size);
-                  for (int _i713 = 0; _i713 < _list712.size; ++_i713)
+                  org.apache.thrift.protocol.TList _list720 = iprot.readListBegin();
+                  struct.success = new ArrayList<Partition>(_list720.size);
+                  for (int _i721 = 0; _i721 < _list720.size; ++_i721)
                   {
-                    Partition _elem714; // required
-                    _elem714 = new Partition();
-                    _elem714.read(iprot);
-                    struct.success.add(_elem714);
+                    Partition _elem722; // required
+                    _elem722 = new Partition();
+                    _elem722.read(iprot);
+                    struct.success.add(_elem722);
                   }
                   iprot.readListEnd();
                 }
@@ -65826,9 +65915,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Partition _iter715 : struct.success)
+            for (Partition _iter723 : struct.success)
             {
-              _iter715.write(oprot);
+              _iter723.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -65875,9 +65964,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Partition _iter716 : struct.success)
+            for (Partition _iter724 : struct.success)
             {
-              _iter716.write(oprot);
+              _iter724.write(oprot);
             }
           }
         }
@@ -65895,14 +65984,14 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list717 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Partition>(_list717.size);
-            for (int _i718 = 0; _i718 < _list717.size; ++_i718)
+            org.apache.thrift.protocol.TList _list725 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Partition>(_list725.size);
+            for (int _i726 = 0; _i726 < _list725.size; ++_i726)
             {
-              Partition _elem719; // required
-              _elem719 = new Partition();
-              _elem719.read(iprot);
-              struct.success.add(_elem719);
+              Partition _elem727; // required
+              _elem727 = new Partition();
+              _elem727.read(iprot);
+              struct.success.add(_elem727);
             }
           }
           struct.setSuccessIsSet(true);
@@ -66965,14 +67054,14 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list720 = iprot.readListBegin();
-                  struct.success = new ArrayList<PartitionSpec>(_list720.size);
-                  for (int _i721 = 0; _i721 < _list720.size; ++_i721)
+                  org.apache.thrift.protocol.TList _list728 = iprot.readListBegin();
+                  struct.success = new ArrayList<PartitionSpec>(_list728.size);
+                  for (int _i729 = 0; _i729 < _list728.size; ++_i729)
                   {
-                    PartitionSpec _elem722; // required
-                    _elem722 = new PartitionSpec();
-                    _elem722.read(iprot);
-                    struct.success.add(_elem722);
+                    PartitionSpec _elem730; // required
+                    _elem730 = new PartitionSpec();
+                    _elem730.read(iprot);
+                    struct.success.add(_elem730);
                   }
                   iprot.readListEnd();
                 }
@@ -67016,9 +67105,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (PartitionSpec _iter723 : struct.success)
+            for (PartitionSpec _iter731 : struct.success)
             {
-              _iter723.write(oprot);
+              _iter731.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -67065,9 +67154,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (PartitionSpec _iter724 : struct.success)
+            for (PartitionSpec _iter732 : struct.success)
             {
-              _iter724.write(oprot);
+              _iter732.write(oprot);
             }
           }
         }
@@ -67085,14 +67174,14 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list725 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<PartitionSpec>(_list725.size);
-            for (int _i726 = 0; _i726 < _list725.size; ++_i726)
+            org.apache.thrift.protocol.TList _list733 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<PartitionSpec>(_list733.size);
+            for (int _i734 = 0; _i734 < _list733.size; ++_i734)
             {
-              PartitionSpec _elem727; // required
-              _elem727 = new PartitionSpec();
-              _elem727.read(iprot);
-              struct.success.add(_elem727);
+              PartitionSpec _elem735; // required
+              _elem735 = new PartitionSpec();
+              _elem735.read(iprot);
+              struct.success.add(_elem735);
             }
           }
           struct.setSuccessIsSet(true);
@@ -68074,13 +68163,13 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list728 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list728.size);
-                  for (int _i729 = 0; _i729 < _list728.size; ++_i729)
+                  org.apache.thrift.protocol.TList _list736 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list736.size);
+                  for (int _i737 = 0; _i737 < _list736.size; ++_i737)
                   {
-                    String _elem730; // required
-                    _elem730 = iprot.readString();
-                    struct.success.add(_elem730);
+                    String _elem738; // required
+                    _elem738 = iprot.readString();
+                    struct.success.add(_elem738);
                   }
                   iprot.readListEnd();
                 }
@@ -68115,9 +68204,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter731 : struct.success)
+            for (String _iter739 : struct.success)
             {
-              oprot.writeString(_iter731);
+              oprot.writeString(_iter739);
             }
             oprot.writeListEnd();
           }
@@ -68156,9 +68245,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter732 : struct.success)
+            for (String _iter740 : struct.success)
             {
-              oprot.writeString(_iter732);
+              oprot.writeString(_iter740);
             }
           }
         }
@@ -68173,13 +68262,13 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list733 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list733.size);
-            for (int _i734 = 0; _i734 < _list733.size; ++_i734)
+            org.apache.thrift.protocol.TList _list741 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list741.size);
+            for (int _i742 = 0; _i742 < _list741.size; ++_i742)
             {
-              String _elem735; // required
-              _elem735 = iprot.readString();
-              struct.success.add(_elem735);
+              String _elem743; // required
+              _elem743 = iprot.readString();
+              struct.success.add(_elem743);
             }
           }
           struct.setSuccessIsSet(true);
@@ -68770,13 +68859,13 @@ public class ThriftHiveMetastore {
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list736 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list736.size);
-                  for (int _i737 = 0; _i737 < _list736.size; ++_i737)
+                  org.apache.thrift.protocol.TList _list744 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list744.size);
+                  for (int _i745 = 0; _i745 < _list744.size; ++_i745)
                   {
-                    String _elem738; // required
-                    _elem738 = iprot.readString();
-                    struct.part_vals.add(_elem738);
+                    String _elem746; // required
+                    _elem746 = iprot.readString();
+                    struct.part_vals.add(_elem746);
                   }
                   iprot.readListEnd();
                 }
@@ -68820,9 +68909,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter739 : struct.part_vals)
+            for (String _iter747 : struct.part_vals)
             {
-              oprot.writeString(_iter739);
+              oprot.writeString(_iter747);
             }
             oprot.writeListEnd();
           }
@@ -68871,9 +68960,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter740 : struct.part_vals)
+            for (String _iter748 : struct.part_vals)
             {
-              oprot.writeString(_iter740);
+              oprot.writeString(_iter748);
             }
           }
         }
@@ -68896,13 +68985,13 @@ public class ThriftHiveMetastore {
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list741 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list741.size);
-            for (int _i742 = 0; _i742 < _list741.size; ++_i742)
+            org.apache.thrift.protocol.TList _list749 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list749.size);
+            for (int _i750 = 0; _i750 < _list749.size; ++_i750)
             {
-              String _elem743; // required
-              _elem743 = iprot.readString();
-              struct.part_vals.add(_elem743);
+              String _elem751; // required
+              _elem751 = iprot.readString();
+              struct.part_vals.add(_elem751);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -69393,14 +69482,14 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list744 = iprot.readListBegin();
-                  struct.success = new ArrayList<Partition>(_list744.size);
-                  for (int _i745 = 0; _i745 < _list744.size; ++_i745)
+                  org.apache.thrift.protocol.TList _list752 = iprot.readListBegin();
+                  struct.success = new ArrayList<Partition>(_list752.size);
+                  for (int _i753 = 0; _i753 < _list752.size; ++_i753)
                   {
-                    Partition _elem746; // required
-                    _elem746 = new Partition();
-                    _elem746.read(iprot);
-                    struct.success.add(_elem746);
+                    Partition _elem754; // required
+                    _elem754 = new Partition();
+                    _elem754.read(iprot);
+                    struct.success.add(_elem754);
                   }
                   iprot.readListEnd();
                 }
@@ -69444,9 +69533,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Partition _iter747 : struct.success)
+            for (Partition _iter755 : struct.success)
             {
-              _iter747.write(oprot);
+              _iter755.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -69493,9 +69582,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Partition _iter748 : struct.success)
+            for (Partition _iter756 : struct.success)
             {
-              _iter748.write(oprot);
+              _iter756.write(oprot);
             }
           }
         }
@@ -69513,14 +69602,14 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list749 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Partition>(_list749.size);
-            for (int _i750 = 0; _i750 < _list749.size; ++_i750)
+            org.apache.thrift.protocol.TList _list757 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Partition>(_list757.size);
+            for (int _i758 = 0; _i758 < _list757.size; ++_i758)
             {
-              Partition _elem751; // required
-              _elem751 = new Partition();
-              _elem751.read(iprot);
-              struct.success.add(_elem751);
+              Partition _elem759; // required
+              _elem759 = new Partition();
+              _elem759.read(iprot);
+              struct.success.add(_elem759);
             }
           }
           struct.setSuccessIsSet(true);
@@ -70298,13 +70387,13 @@ public class ThriftHiveMetastore {
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list752 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list752.size);
-                  for (int _i753 = 0; _i753 < _list752.size; ++_i753)
+                  org.apache.thrift.protocol.TList _list760 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list760.size);
+                  for (int _i761 = 0; _i761 < _list760.size; ++_i761)
                   {
-                    String _elem754; // required
-                    _elem754 = iprot.readString();
-                    struct.part_vals.add(_elem754);
+                    String _elem762; // required
+                    _elem762 = iprot.readString();
+                    struct.part_vals.add(_elem762);
                   }
                   iprot.readListEnd();
                 }
@@ -70332,13 +70421,13 @@ public class ThriftHiveMetastore {
             case 6: // GROUP_NAMES
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list755 = iprot.readListBegin();
-                  struct.group_names = new ArrayList<String>(_list755.size);
-                  for (int _i756 = 0; _i756 < _list755.size; ++_i756)
+                  org.apache.thrift.protocol.TList _list763 = iprot.readListBegin();
+                  struct.group_names = new ArrayList<String>(_list763.size);
+                  for (int _i764 = 0; _i764 < _list763.size; ++_i764)
                   {
-                    String _elem757; // required
-                    _elem757 = iprot.readString();
-                    struct.group_names.add(_elem757);
+                    String _elem765; // required
+                    _elem765 = iprot.readString();
+                    struct.group_names.add(_elem765);
                   }
                   iprot.readListEnd();
                 }
@@ -70374,9 +70463,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter758 : struct.part_vals)
+            for (String _iter766 : struct.part_vals)
             {
-              oprot.writeString(_iter758);
+              oprot.writeString(_iter766);
             }
             oprot.writeListEnd();
           }
@@ -70394,9 +70483,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(GROUP_NAMES_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.group_names.size()));
-            for (String _iter759 : struct.group_names)
+            for (String _iter767 : struct.group_names)
             {
-              oprot.writeString(_iter759);
+              oprot.writeString(_iter767);
             }
             oprot.writeListEnd();
           }
@@ -70448,9 +70537,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter760 : struct.part_vals)
+            for (String _iter768 : struct.part_vals)
             {
-              oprot.writeString(_iter760);
+              oprot.writeString(_iter768);
             }
           }
         }
@@ -70463,9 +70552,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetGroup_names()) {
           {
             oprot.writeI32(struct.group_names.size());
-            for (String _iter761 : struct.group_names)
+            for (String _iter769 : struct.group_names)
             {
-              oprot.writeString(_iter761);
+              oprot.writeString(_iter769);
             }
           }
         }
@@ -70485,13 +70574,13 @@ public class ThriftHiveMetastore {
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list762 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list762.size);
-            for (int _i763 = 0; _i763 < _list762.size; ++_i763)
+            org.apache.thrift.protocol.TList _list770 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list770.size);
+            for (int _i771 = 0; _i771 < _list770.size; ++_i771)
             {
-              String _elem764; // required
-              _elem764 = iprot.readString();
-              struct.part_vals.add(_elem764);
+              String _elem772; // required
+              _elem772 = iprot.readString();
+              struct.part_vals.add(_elem772);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -70506,13 +70595,13 @@ public class ThriftHiveMetastore {
         }
         if (incoming.get(5)) {
           {
-            org.apache.thrift.protocol.TList _list765 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.group_names = new ArrayList<String>(_list765.size);
-            for (int _i766 = 0; _i766 < _list765.size; ++_i766)
+            org.apache.thrift.protocol.TList _list773 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.group_names = new ArrayList<String>(_list773.size);
+            for (int _i774 = 0; _i774 < _list773.size; ++_i774)
             {
-              String _elem767; // required
-              _elem767 = iprot.readString();
-              struct.group_names.add(_elem767);
+              String _elem775; // required
+              _elem775 = iprot.readString();
+              struct.group_names.add(_elem775);
             }
           }
           struct.setGroup_namesIsSet(true);
@@ -70999,14 +71088,14 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list768 = iprot.readListBegin();
-                  struct.success = new ArrayList<Partition>(_list768.size);
-                  for (int _i769 = 0; _i769 < _list768.size; ++_i769)
+                  org.apache.thrift.protocol.TList _list776 = iprot.readListBegin();
+                  struct.success = new ArrayList<Partition>(_list776.size);
+                  for (int _i777 = 0; _i777 < _list776.size; ++_i777)
                   {
-                    Partition _elem770; // required
-                    _elem770 = new Partition();
-                    _elem770.read(iprot);
-                    struct.success.add(_elem770);
+                    Partition _elem778; // required
+                    _elem778 = new Partition();
+                    _elem778.read(iprot);
+                    struct.success.add(_elem778);
                   }
                   iprot.readListEnd();
                 }
@@ -71050,9 +71139,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Partition _iter771 : struct.success)
+            for (Partition _iter779 : struct.success)
             {
-              _iter771.write(oprot);
+              _iter779.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -71099,9 +71188,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Partition _iter772 : struct.success)
+            for (Partition _iter780 : struct.success)
             {
-              _iter772.write(oprot);
+              _iter780.write(oprot);
             }
           }
         }
@@ -71119,14 +71208,14 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list773 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Partition>(_list773.size);
-            for (int _i774 = 0; _i774 < _list773.size; ++_i774)
+            org.apache.thrift.protocol.TList _list781 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Partition>(_list781.size);
+            for (int _i782 = 0; _i782 < _list781.size; ++_i782)
             {
-              Partition _elem775; // required
-              _elem775 = new Partition();
-              _elem775.read(iprot);
-              struct.success.add(_elem775);
+              Partition _elem783; // required
+              _elem783 = new Partition();
+              _elem783.read(iprot);
+              struct.success.add(_elem783);
             }
           }
           struct.setSuccessIsSet(true);
@@ -71722,13 +71811,13 @@ public class ThriftHiveMetastore {
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list776 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list776.size);
-                  for (int _i777 = 0; _i777 < _list776.size; ++_i777)
+                  org.apache.thrift.protocol.TList _list784 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list784.size);
+                  for (int _i785 = 0; _i785 < _list784.size; ++_i785)
                   {
-                    String _elem778; // required
-                    _elem778 = iprot.readString();
-                    struct.part_vals.add(_elem778);
+                    String _elem786; // required
+                    _elem786 = iprot.readString();
+                    struct.part_vals.add(_elem786);
                   }
                   iprot.readListEnd();
                 }
@@ -71772,9 +71861,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter779 : struct.part_vals)
+            for (String _iter787 : struct.part_vals)
             {
-              oprot.writeString(_iter779);
+              oprot.writeString(_iter787);
             }
             oprot.writeListEnd();
           }
@@ -71823,9 +71912,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter780 : struct.part_vals)
+            for (String _iter788 : struct.part_vals)
             {
-              oprot.writeString(_iter780);
+              oprot.writeString(_iter788);
             }
           }
         }
@@ -71848,13 +71937,13 @@ public class ThriftHiveMetastore {
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list781 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list781.size);
-            for (int _i782 = 0; _i782 < _list781.size; ++_i782)
+            org.apache.thrift.protocol.TList _list789 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list789.size);
+            for (int _i790 = 0; _i790 < _list789.size; ++_i790)
             {
-              String _elem783; // required
-              _elem783 = iprot.readString();
-              struct.part_vals.add(_elem783);
+              String _elem791; // required
+              _elem791 = iprot.readString();
+              struct.part_vals.add(_elem791);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -72345,13 +72434,13 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list784 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list784.size);
-                  for (int _i785 = 0; _i785 < _list784.size; ++_i785)
+                  org.apache.thrift.protocol.TList _list792 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list792.size);
+                  for (int _i793 = 0; _i793 < _list792.size; ++_i793)
                   {
-                    String _elem786; // required
-                    _elem786 = iprot.readString();
-                    struct.success.add(_elem786);
+                    String _elem794; // required
+                    _elem794 = iprot.readString();
+                    struct.success.add(_elem794);
                   }
                   iprot.readListEnd();
                 }
@@ -72395,9 +72484,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter787 : struct.success)
+            for (String _iter795 : struct.success)
             {
-              oprot.writeString(_iter787);
+              oprot.writeString(_iter795);
             }
             oprot.writeListEnd();
           }
@@ -72444,9 +72533,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter788 : struct.success)
+            for (String _iter796 : struct.success)
             {
-              oprot.writeString(_iter788);
+              oprot.writeString(_iter796);
             }
           }
         }
@@ -72464,13 +72553,13 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list789 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list789.size);
-            for (int _i790 = 0; _i790 < _list789.size; ++_i790)
+            org.apache.thrift.protocol.TList _list797 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list797.size);
+            for (int _i798 = 0; _i798 < _list797.size; ++_i798)
             {
-              String _elem791; // required
-              _elem791 = iprot.readString();
-              struct.success.add(_elem791);
+              String _elem799; // required
+              _elem799 = iprot.readString();
+              struct.success.add(_elem799);
             }
           }
           struct.setSuccessIsSet(true);
@@ -73637,14 +73726,14 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list792 = iprot.readListBegin();
-                  struct.success = new ArrayList<Partition>(_list792.size);
-                  for (int _i793 = 0; _i793 < _list792.size; ++_i793)
+                  org.apache.thrift.protocol.TList _list800 = iprot.readListBegin();
+                  struct.success = new ArrayList<Partition>(_list800.size);
+                  for (int _i801 = 0; _i801 < _list800.size; ++_i801)
                   {
-                    Partition _elem794; // required
-                    _elem794 = new Partition();
-                    _elem794.read(iprot);
-                    struct.success.add(_elem794);
+                    Partition _elem802; // required
+                    _elem802 = new Partition();
+                    _elem802.read(iprot);
+                    struct.success.add(_elem802);
                   }
                   iprot.readListEnd();
                 }
@@ -73688,9 +73777,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Partition _iter795 : struct.success)
+            for (Partition _iter803 : struct.success)
             {
-              _iter795.write(oprot);
+              _iter803.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -73737,9 +73826,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Partition _iter796 : struct.success)
+            for (Partition _iter804 : struct.success)
             {
-              _iter796.write(oprot);
+              _iter804.write(oprot);
             }
           }
         }
@@ -73757,14 +73846,14 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list797 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Partition>(_list797.size);
-            for (int _i798 = 0; _i798 < _list797.size; ++_i798)
+            org.apache.thrift.protocol.TList _list805 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Partition>(_list805.size);
+            for (int _i806 = 0; _i806 < _list805.size; ++_i806)
             {
-              Partition _elem799; // required
-              _elem799 = new Partition();
-              _elem799.read(iprot);
-              struct.success.add(_elem799);
+              Partition _elem807; // required
+              _elem807 = new Partition();
+              _elem807.read(iprot);
+              struct.success.add(_elem807);
             }
           }
           struct.setSuccessIsSet(true);
@@ -74931,14 +75020,14 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list800 = iprot.readListBegin();
-                  struct.success = new ArrayList<PartitionSpec>(_list800.size);
-                  for (int _i801 = 0; _i801 < _list800.size; ++_i801)
+                  org.apache.thrift.protocol.TList _list808 = iprot.readListBegin();
+                  struct.success = new ArrayList<PartitionSpec>(_list808.size);
+                  for (int _i809 = 0; _i809 < _list808.size; ++_i809)
                   {
-                    PartitionSpec _elem802; // required
-                    _elem802 = new PartitionSpec();
-                    _elem802.read(iprot);
-                    struct.success.add(_elem802);
+                    PartitionSpec _elem810; // required
+                    _elem810 = new PartitionSpec();
+                    _elem810.read(iprot);
+                    struct.success.add(_elem810);
                   }
                   iprot.readListEnd();
                 }
@@ -74982,9 +75071,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (PartitionSpec _iter803 : struct.success)
+            for (PartitionSpec _iter811 : struct.success)
             {
-              _iter803.write(oprot);
+              _iter811.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -75031,9 +75120,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (PartitionSpec _iter804 : struct.success)
+            for (PartitionSpec _iter812 : struct.success)
             {
-              _iter804.write(oprot);
+              _iter812.write(oprot);
             }
           }
         }
@@ -75051,14 +75140,14 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list805 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<PartitionSpec>(_list805.size);
-            for (int _i806 = 0; _i806 < _list805.size; ++_i806)
+            org.apache.thrift.protocol.TList _list813 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<PartitionSpec>(_list813.size);
+            for (int _i814 = 0; _i814 < _list813.size; ++_i814)
             {
-              PartitionSpec _elem807; // required
-              _elem807 = new PartitionSpec();
-              _elem807.read(iprot);
-              struct.success.add(_elem807);
+              PartitionSpec _elem815; // required
+              _elem815 = new PartitionSpec();
+              _elem815.read(iprot);
+              struct.success.add(_elem815);
             }
           }
           struct.setSuccessIsSet(true);
@@ -76509,13 +76598,13 @@ public class ThriftHiveMetastore {
             case 3: // NAMES
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list808 = iprot.readListBegin();
-                  struct.names = new ArrayList<String>(_list808.size);
-                  for (int _i809 = 0; _i809 < _list808.size; ++_i809)
+                  org.apache.thrift.protocol.TList _list816 = iprot.readListBegin();
+                  struct.names = new ArrayList<String>(_list816.size);
+                  for (int _i817 = 0; _i817 < _list816.size; ++_i817)
                   {
-                    String _elem810; // required
-                    _elem810 = iprot.readString();
-                    struct.names.add(_elem810);
+                    String _elem818; // required
+                    _elem818 = iprot.readString();
+                    struct.names.add(_elem818);
                   }
                   iprot.readListEnd();
                 }
@@ -76551,9 +76640,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(NAMES_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.names.size()));
-            for (String _iter811 : struct.names)
+            for (String _iter819 : struct.names)
             {
-              oprot.writeString(_iter811);
+              oprot.writeString(_iter819);
             }
             oprot.writeListEnd();
           }
@@ -76596,9 +76685,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetNames()) {
           {
             oprot.writeI32(struct.names.size());
-            for (String _iter812 : struct.names)
+            for (String _iter820 : struct.names)
             {
-              oprot.writeString(_iter812);
+              oprot.writeString(_iter820);
             }
           }
         }
@@ -76618,13 +76707,13 @@ public class ThriftHiveMetastore {
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list813 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.names = new ArrayList<String>(_list813.size);
-            for (int _i814 = 0; _i814 < _list813.size; ++_i814)
+            org.apache.thrift.protocol.TList _list821 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.names = new ArrayList<String>(_list821.size);
+            for (int _i822 = 0; _i822 < _list821.size; ++_i822)
             {
-              String _elem815; // required
-              _elem815 = iprot.readString();
-              struct.names.add(_elem815);
+              String _elem823; // required
+              _elem823 = iprot.readString();
+              struct.names.add(_elem823);
             }
           }
           struct.setNamesIsSet(true);
@@ -77111,14 +77200,14 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list816 = iprot.readListBegin();
-                  struct.success = new ArrayList<Partition>(_list816.size);
-                  for (int _i817 = 0; _i817 < _list816.size; ++_i817)
+                  org.apache.thrift.protocol.TList _list824 = iprot.readListBegin();
+                  struct.success = new ArrayList<Partition>(_list824.size);
+                  for (int _i825 = 0; _i825 < _list824.size; ++_i825)
                   {
-                    Partition _elem818; // required
-                    _elem818 = new Partition();
-                    _elem818.read(iprot);
-                    struct.success.add(_elem818);
+                    Partition _elem826; // required
+                    _elem826 = new Partition();
+                    _elem826.read(iprot);
+                    struct.success.add(_elem826);
                   }
                   iprot.readListEnd();
                 }
@@ -77162,9 +77251,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Partition _iter819 : struct.success)
+            for (Partition _iter827 : struct.success)
             {
-              _iter819.write(oprot);
+              _iter827.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -77211,9 +77300,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Partition _iter820 : struct.success)
+            for (Partition _iter828 : struct.success)
             {
-              _iter820.write(oprot);
+              _iter828.write(oprot);
             }
           }
         }
@@ -77231,14 +77320,14 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list821 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Partition>(_list821.size);
-            for (int _i822 = 0; _i822 < _list821.size; ++_i822)
+            org.apache.thrift.protocol.TList _list829 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Partition>(_list829.size);
+            for (int _i830 = 0; _i830 < _list829.size; ++_i830)
             {
-              Partition _elem823; // required
-              _elem823 = new Partition();
-              _elem823.read(iprot);
-              struct.success.add(_elem823);
+              Partition _elem831; // required
+              _elem831 = new Partition();
+              _elem831.read(iprot);
+              struct.success.add(_elem831);
             }
           }
           struct.setSuccessIsSet(true);
@@ -78788,14 +78877,14 @@ public class ThriftHiveMetastore {
             case 3: // NEW_PARTS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list824 = iprot.readListBegin();
-                  struct.new_parts = new ArrayList<Partition>(_list824.size);
-                  for (int _i825 = 0; _i825 < _list824.size; ++_i825)
+                  org.apache.thrift.protocol.TList _list832 = iprot.readListBegin();
+                  struct.new_parts = new ArrayList<Partition>(_list832.size);
+                  for (int _i833 = 0; _i833 < _list832.size; ++_i833)
                   {
-                    Partition _elem826; // required
-                    _elem826 = new Partition();
-                    _elem826.read(iprot);
-                    struct.new_parts.add(_elem826);
+                    Partition _elem834; // required
+                    _elem834 = new Partition();
+                    _elem834.read(iprot);
+                    struct.new_parts.add(_elem834);
                   }
                   iprot.readListEnd();
                 }
@@ -78831,9 +78920,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(NEW_PARTS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.new_parts.size()));
-            for (Partition _iter827 : struct.new_parts)
+            for (Partition _iter835 : struct.new_parts)
             {
-              _iter827.write(oprot);
+              _iter835.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -78876,9 +78965,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetNew_parts()) {
           {
             oprot.writeI32(struct.new_parts.size());
-            for (Partition _iter828 : struct.new_parts)
+            for (Partition _iter836 : struct.new_parts)
             {
-              _iter828.write(oprot);
+              _iter836.write(oprot);
             }
           }
         }
@@ -78898,14 +78987,14 @@ public class ThriftHiveMetastore {
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list829 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.new_parts = new ArrayList<Partition>(_list829.size);
-            for (int _i830 = 0; _i830 < _list829.size; ++_i830)
+            org.apache.thrift.protocol.TList _list837 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.new_parts = new ArrayList<Partition>(_list837.size);
+            for (int _i838 = 0; _i838 < _list837.size; ++_i838)
             {
-              Partition _elem831; // required
-              _elem831 = new Partition();
-              _elem831.read(iprot);
-              struct.new_parts.add(_elem831);
+              Partition _elem839; // required
+              _elem839 = new Partition();
+              _elem839.read(iprot);
+              struct.new_parts.add(_elem839);
             }
           }
           struct.setNew_partsIsSet(true);
@@ -81104,13 +81193,13 @@ public class ThriftHiveMetastore {
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list832 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list832.size);
-                  for (int _i833 = 0; _i833 < _list832.size; ++_i833)
+                  org.apache.thrift.protocol.TList _list840 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list840.size);
+                  for (int _i841 = 0; _i841 < _list840.size; ++_i841)
                   {
-                    String _elem834; // required
-                    _elem834 = iprot.readString();
-                    struct.part_vals.add(_elem834);
+                    String _elem842; // required
+                    _elem842 = iprot.readString();
+                    struct.part_vals.add(_elem842);
                   }
                   iprot.readListEnd();
                 }
@@ -81155,9 +81244,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter835 : struct.part_vals)
+            for (String _iter843 : struct.part_vals)
             {
-              oprot.writeString(_iter835);
+              oprot.writeString(_iter843);
             }
             oprot.writeListEnd();
           }
@@ -81208,9 +81297,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter836 : struct.part_vals)
+            for (String _iter844 : struct.part_vals)
             {
-              oprot.writeString(_iter836);
+              oprot.writeString(_iter844);
             }
           }
         }
@@ -81233,13 +81322,13 @@ public class ThriftHiveMetastore {
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list837 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list837.size);
-            for (int _i838 = 0; _i838 < _list837.size; ++_i838)
+            org.apache.thrift.protocol.TList _list845 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list845.size);
+            for (int _i846 = 0; _i846 < _list845.size; ++_i846)
             {
-              String _elem839; // required
-              _elem839 = iprot.readString();
-              struct.part_vals.add(_elem839);
+              String _elem847; // required
+              _elem847 = iprot.readString();
+              struct.part_vals.add(_elem847);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -82116,13 +82205,13 @@ public class ThriftHiveMetastore {
             case 1: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list840 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list840.size);
-                  for (int _i841 = 0; _i841 < _list840.size; ++_i841)
+                  org.apache.thrift.protocol.TList _list848 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list848.size);
+                  for (int _i849 = 0; _i849 < _list848.size; ++_i849)
                   {
-                    String _elem842; // required
-                    _elem842 = iprot.readString();
-                    struct.part_vals.add(_elem842);
+                    String _elem850; // required
+                    _elem850 = iprot.readString();
+                    struct.part_vals.add(_elem850);
                   }
                   iprot.readListEnd();
                 }
@@ -82156,9 +82245,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter843 : struct.part_vals)
+            for (String _iter851 : struct.part_vals)
             {
-              oprot.writeString(_iter843);
+              oprot.writeString(_iter851);
             }
             oprot.writeListEnd();
           }
@@ -82195,9 +82284,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter844 : struct.part_vals)
+            for (String _iter852 : struct.part_vals)
             {
-              oprot.writeString(_iter844);
+              oprot.writeString(_iter852);
             }
           }
         }
@@ -82212,13 +82301,13 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list845 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list845.size);
-            for (int _i846 = 0; _i846 < _list845.size; ++_i846)
+            org.apache.thrift.protocol.TList _list853 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list853.size);
+            for (int _i854 = 0; _i854 < _list853.size; ++_i854)
             {
-              String _elem847; // required
-              _elem847 = iprot.readString();
-              struct.part_vals.add(_elem847);
+              String _elem855; // required
+              _elem855 = iprot.readString();
+              struct.part_vals.add(_elem855);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -84376,13 +84465,13 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list848 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list848.size);
-                  for (int _i849 = 0; _i849 < _list848.size; ++_i849)
+                  org.apache.thrift.protocol.TList _list856 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list856.size);
+                  for (int _i857 = 0; _i857 < _list856.size; ++_i857)
                   {
-                    String _elem850; // required
-                    _elem850 = iprot.readString();
-                    struct.success.add(_elem850);
+                    String _elem858; // required
+                    _elem858 = iprot.readString();
+                    struct.success.add(_elem858);
                   }
                   iprot.readListEnd();
                 }
@@ -84417,9 +84506,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter851 : struct.success)
+            for (String _iter859 : struct.success)
             {
-              oprot.writeString(_iter851);
+              oprot.writeString(_iter859);
             }
             oprot.writeListEnd();
           }
@@ -84458,9 +84547,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter852 : struct.success)
+            for (String _iter860 : struct.success)
             {
-              oprot.writeString(_iter852);
+              oprot.writeString(_iter860);
             }
           }
         }
@@ -84475,13 +84564,13 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list853 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list853.size);
-            for (int _i854 = 0; _i854 < _list853.size; ++_i854)
+            org.apache.thrift.protocol.TList _list861 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list861.size);
+            for (int _i862 = 0; _i862 < _list861.size; ++_i862)
             {
-              String _elem855; // required
-              _elem855 = iprot.readString();
-              struct.success.add(_elem855);
+              String _elem863; // required
+              _elem863 = iprot.readString();
+              struct.success.add(_elem863);
             }
           }
           struct.setSuccessIsSet(true);
@@ -85255,15 +85344,15 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
                 {
-                  org.apache.thrift.protocol.TMap _map856 = iprot.readMapBegin();
-                  struct.success = new HashMap<String,String>(2*_map856.size);
-                  for (int _i857 = 0; _i857 < _map856.size; ++_i857)
+                  org.apache.thrift.protocol.TMap _map864 = iprot.readMapBegin();
+                  struct.success = new HashMap<String,String>(2*_map864.size);
+                  for (int _i865 = 0; _i865 < _map864.size; ++_i865)
                   {
-                    String _key858; // required
-                    String _val859; // required
-                    _key858 = iprot.readString();
-                    _val859 = iprot.readString();
-                    struct.success.put(_key858, _val859);
+                    String _key866; // required
+                    String _val867; // required
+                    _key866 = iprot.readString();
+                    _val867 = iprot.readString();
+                    struct.success.put(_key866, _val867);
                   }
                   iprot.readMapEnd();
                 }
@@ -85298,10 +85387,10 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (Map.Entry<String, String> _iter860 : struct.success.entrySet())
+            for (Map.Entry<String, String> _iter868 : struct.success.entrySet())
             {
-              oprot.writeString(_iter860.getKey());
-              oprot.writeString(_iter860.getValue());
+              oprot.writeString(_iter868.getKey());
+              oprot.writeString(_iter868.getValue());
             }
             oprot.writeMapEnd();
           }
@@ -85340,10 +85429,10 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Map.Entry<String, String> _iter861 : struct.success.entrySet())
+            for (Map.Entry<String, String> _iter869 : struct.success.entrySet())
             {
-              oprot.writeString(_iter861.getKey());
-              oprot.writeString(_iter861.getValue());
+              oprot.writeString(_iter869.getKey());
+              oprot.writeString(_iter869.getValue());
             }
           }
         }
@@ -85358,15 +85447,15 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TMap _map862 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new HashMap<String,String>(2*_map862.size);
-            for (int _i863 = 0; _i863 < _map862.size; ++_i863)
+            org.apache.thrift.protocol.TMap _map870 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new HashMap<String,String>(2*_map870.size);
+            for (int _i871 = 0; _i871 < _map870.size; ++_i871)
             {
-              String _key864; // required
-              String _val865; // required
-              _key864 = iprot.readString();
-              _val865 = iprot.readString();
-              struct.success.put(_key864, _val865);
+              String _key872; // required
+              String _val873; // required
+              _key872 = iprot.readString();
+              _val873 = iprot.readString();
+              struct.success.put(_key872, _val873);
             }
           }
           struct.setSuccessIsSet(true);
@@ -85972,15 +86061,15 @@ public class ThriftHiveMetastore {
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
                 {
-                  org.apache.thrift.protocol.TMap _map866 = iprot.readMapBegin();
-                  struct.part_vals = new HashMap<String,String>(2*_map866.size);
-                  for (int _i867 = 0; _i867 < _map866.size; ++_i867)
+                  org.apache.thrift.protocol.TMap _map874 = iprot.readMapBegin();
+                  struct.part_vals = new HashMap<String,String>(2*_map874.size);
+                  for (int _i875 = 0; _i875 < _map874.size; ++_i875)
                   {
-                    String _key868; // required
-                    String _val869; // required
-                    _key868 = iprot.readString();
-                    _val869 = iprot.readString();
-                    struct.part_vals.put(_key868, _val869);
+                    String _key876; // required
+                    String _val877; // required
+                    _key876 = iprot.readString();
+                    _val877 = iprot.readString();
+                    struct.part_vals.put(_key876, _val877);
                   }
                   iprot.readMapEnd();
                 }
@@ -86024,10 +86113,10 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (Map.Entry<String, String> _iter870 : struct.part_vals.entrySet())
+            for (Map.Entry<String, String> _iter878 : struct.part_vals.entrySet())
             {
-              oprot.writeString(_iter870.getKey());
-              oprot.writeString(_iter870.getValue());
+              oprot.writeString(_iter878.getKey());
+              oprot.writeString(_iter878.getValue());
             }
             oprot.writeMapEnd();
           }
@@ -86078,10 +86167,10 @@ public class ThriftHiveMetastore {
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (Map.Entry<String, String> _iter871 : struct.part_vals.entrySet())
+            for (Map.Entry<String, String> _iter879 : struct.part_vals.entrySet())
             {
-              oprot.writeString(_iter871.getKey());
-              oprot.writeString(_iter871.getValue());
+              oprot.writeString(_iter879.getKey());
+              oprot.writeString(_iter879.getValue());
             }
           }
         }
@@ -86104,15 +86193,15 @@ public class ThriftHiveMetastore {
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TMap _map872 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new HashMap<String,String>(2*_map872.size);
-            for (int _i873 = 0; _i873 < _map872.size; ++_i873)
+            org.apache.thrift.protocol.TMap _map880 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new HashMap<String,String>(2*_map880.size);
+            for (int _i881 = 0; _i881 < _map880.size; ++_i881)
             {
-              String _key874; // required
-              String _val875; // required
-              _key874 = iprot.readString();
-              _val875 = iprot.readString();
-              struct.part_vals.put(_key874, _val875);
+              String _key882; // required
+              String _val883; // required
+              _key882 = iprot.readString();
+              _val883 = iprot.readString();
+              struct.part_vals.put(_key882, _val883);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -87607,15 +87696,15 @@ public class ThriftHiveMetastore {
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
                 {
-                  org.apache.thrift.protocol.TMap _map876 = iprot.readMapBegin();
-                  struct.part_vals = new HashMap<String,String>(2*_map876.size);
-                  for (int _i877 = 0; _i877 < _map876.size; ++_i877)
+                  org.apache.thrift.protocol.TMap _map884 = iprot.readMapBegin();
+                  struct.part_vals = new HashMap<String,String>(2*_map884.size);
+                  for (int _i885 = 0; _i885 < _map884.size; ++_i885)
                   {
-                    String _key878; // required
-                    String _val879; // required
-                    _key878 = iprot.readString();
-                    _val879 = iprot.readString();
-                    struct.part_vals.put(_key878, _val879);
+                    String _key886; // required
+                    String _val887; // required
+                    _key886 = iprot.readString();
+                    _val887 = iprot.readString();
+                    struct.part_vals.put(_key886, _val887);
                   }
                   iprot.readMapEnd();
                 }
@@ -87659,10 +87748,10 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (Map.Entry<String, String> _iter880 : struct.part_vals.entrySet())
+            for (Map.Entry<String, String> _iter888 : struct.part_vals.entrySet())
             {
-              oprot.writeString(_iter880.getKey());
-              oprot.writeString(_iter880.getValue());
+              oprot.writeString(_iter888.getKey());
+              oprot.writeString(_iter888.getValue());
             }
             oprot.writeMapEnd();
           }
@@ -87713,10 +87802,10 @@ public class ThriftHiveMetastore {
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (Map.Entry<String, String> _iter881 : struct.part_vals.entrySet())
+            for (Map.Entry<String, String> _iter889 : struct.part_vals.entrySet())
             {
-              oprot.writeString(_iter881.getKey());
-              oprot.writeString(_iter881.getValue());
+              oprot.writeString(_iter889.getKey());
+              oprot.writeString(_iter889.getValue());
             }
           }
         }
@@ -87739,15 +87828,15 @@ public class ThriftHiveMetastore {
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TMap _map882 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new HashMap<String,String>(2*_map882.size);
-            for (int _i883 = 0; _i883 < _map882.size; ++_i883)
+            org.apache.thrift.protocol.TMap _map890 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new HashMap<String,String>(2*_map890.size);
+            for (int _i891 = 0; _i891 < _map890.size; ++_i891)
             {
-              String _key884; // required
-              String _val885; // required
-              _key884 = iprot.readString();
-              _val885 = iprot.readString();
-              struct.part_vals.put(_key884, _val885);
+              String _key892; // required
+              String _val893; // required
+              _key892 = iprot.readString();
+              _val893 = iprot.readString();
+              struct.part_vals.put(_key892, _val893);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -94471,14 +94560,14 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list886 = iprot.readListBegin();
-                  struct.success = new ArrayList<Index>(_list886.size);
-                  for (int _i887 = 0; _i887 < _list886.size; ++_i887)
+                  org.apache.thrift.protocol.TList _list894 = iprot.readListBegin();
+                  struct.success = new ArrayList<Index>(_list894.size);
+                  for (int _i895 = 0; _i895 < _list894.size; ++_i895)
                   {
-                    Index _elem888; // required
-                    _elem888 = new Index();
-                    _elem888.read(iprot);
-                    struct.success.add(_elem888);
+                    Index _elem896; // required
+                    _elem896 = new Index();
+                    _elem896.read(iprot);
+                    struct.success.add(_elem896);
                   }
                   iprot.readListEnd();
                 }
@@ -94522,9 +94611,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Index _iter889 : struct.success)
+            for (Index _iter897 : struct.success)
             {
-              _iter889.write(oprot);
+              _iter897.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -94571,9 +94660,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Index _iter890 : struct.success)
+            for (Index _iter898 : struct.success)
             {
-              _iter890.write(oprot);
+              _iter898.write(oprot);
             }
           }
         }
@@ -94591,14 +94680,14 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list891 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Index>(_list891.size);
-            for (int _i892 = 0; _i892 < _list891.size; ++_i892)
+            org.apache.thrift.protocol.TList _list899 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Index>(_list899.size);
+            for (int _i900 = 0; _i900 < _list899.size; ++_i900)
             {
-              Index _elem893; // required
-              _elem893 = new Index();
-              _elem893.read(iprot);
-              struct.success.add(_elem893);
+              Index _elem901; // required
+              _elem901 = new Index();
+              _elem901.read(iprot);
+              struct.success.add(_elem901);
             }
           }
           struct.setSuccessIsSet(true);
@@ -95580,13 +95669,13 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list894 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list894.size);
-                  for (int _i895 = 0; _i895 < _list894.size; ++_i895)
+                  org.apache.thrift.protocol.TList _list902 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list902.size);
+                  for (int _i903 = 0; _i903 < _list902.size; ++_i903)
                   {
-                    String _elem896; // required
-                    _elem896 = iprot.readString();
-                    struct.success.add(_elem896);
+                    String _elem904; // required
+                    _elem904 = iprot.readString();
+                    struct.success.add(_elem904);
                   }
                   iprot.readListEnd();
                 }
@@ -95621,9 +95710,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter897 : struct.success)
+            for (String _iter905 : struct.success)
             {
-              oprot.writeString(_iter897);
+              oprot.writeString(_iter905);
             }
             oprot.writeListEnd();
           }
@@ -95662,9 +95751,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter898 : struct.success)
+            for (String _iter906 : struct.success)
             {
-              oprot.writeString(_iter898);
+              oprot.writeString(_iter906);
             }
           }
         }
@@ -95679,13 +95768,13 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list899 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list899.size);
-            for (int _i900 = 0; _i900 < _list899.size; ++_i900)
+            org.apache.thrift.protocol.TList _list907 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list907.size);
+            for (int _i908 = 0; _i908 < _list907.size; ++_i908)
             {
-              String _elem901; // required
-              _elem901 = iprot.readString();
-              struct.success.add(_elem901);
+              String _elem909; // required
+              _elem909 = iprot.readString();
+              struct.success.add(_elem909);
             }
           }
           struct.setSuccessIsSet(true);
@@ -111423,13 +111512,13 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list902 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list902.size);
-                  for (int _i903 = 0; _i903 < _list902.size; ++_i903)
+                  org.apache.thrift.protocol.TList _list910 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list910.size);
+                  for (int _i911 = 0; _i911 < _list910.size; ++_i911)
                   {
-                    String _elem904; // required
-                    _elem904 = iprot.readString();
-                    struct.success.add(_elem904);
+                    String _elem912; // required
+                    _elem912 = iprot.readString();
+                    struct.success.add(_elem912);
                   }
                   iprot.readListEnd();
                 }
@@ -111464,9 +111553,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter905 : struct.success)
+            for (String _iter913 : struct.success)
             {
-              oprot.writeString(_iter905);
+              oprot.writeString(_iter913);
             }
             oprot.writeListEnd();
           }
@@ -111505,9 +111594,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter906 : struct.success)
+            for (String _iter914 : struct.success)
             {
-              oprot.writeString(_iter906);
+              oprot.writeString(_iter914);
             }
           }
         }
@@ -111522,13 +111611,13 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list907 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list907.size);
-            for (int _i908 = 0; _i908 < _list907.size; ++_i908)
+            org.apache.thrift.protocol.TList _list915 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list915.size);
+            for (int _i916 = 0; _i916 < _list915.size; ++_i916)
             {
-              String _elem909; // required
-              _elem909 = iprot.readString();
-              struct.success.add(_elem909);
+              String _elem917; // required
+              _elem917 = iprot.readString();
+              struct.success.add(_elem917);
             }
           }
           struct.setSuccessIsSet(true);
@@ -114871,13 +114960,13 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list910 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list910.size);
-                  for (int _i911 = 0; _i911 < _list910.size; ++_i911)
+                  org.apache.thrift.protocol.TList _list918 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list918.size);
+                  for (int _i919 = 0; _i919 < _list918.size; ++_i919)
                   {
-                    String _elem912; // required
-                    _elem912 = iprot.readString();
-                    struct.success.add(_elem912);
+                    String _elem920; // required
+                    _elem920 = iprot.readString();
+                    struct.success.add(_elem920);
                   }
                   iprot.readListEnd();
                 }
@@ -114912,9 +115001,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter913 : struct.success)
+            for (String _iter921 : struct.success)
             {
-              oprot.writeString(_iter913);
+              oprot.writeString(_iter921);
             }
             oprot.writeListEnd();
           }
@@ -114953,9 +115042,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter914 : struct.success)
+            for (String _iter922 : struct.success)
             {
-              oprot.writeString(_iter914);
+              oprot.writeString(_iter922);
             }
           }
         }
@@ -114970,13 +115059,13 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list915 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list915.size);
-            for (int _i916 = 0; _i916 < _list915.size; ++_i916)
+            org.apache.thrift.protocol.TList _list923 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list923.size);
+            for (int _i924 = 0; _i924 < _list923.size; ++_i924)
             {
-              String _elem917; // required
-              _elem917 = iprot.readString();
-              struct.success.add(_elem917);
+              String _elem925; // required
+              _elem925 = iprot.readString();
+              struct.success.add(_elem925);
             }
           }
           struct.setSuccessIsSet(true);
@@ -118267,14 +118356,14 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list918 = iprot.readListBegin();
-                  struct.success = new ArrayList<Role>(_list918.size);
-                  for (int _i919 = 0; _i919 < _list918.size; ++_i919)
+                  org.apache.thrift.protocol.TList _list926 = iprot.readListBegin();
+                  struct.success = new ArrayList<Role>(_list926.size);
+                  for (int _i927 = 0; _i927 < _list926.size; ++_i927)
                   {
-                    Role _elem920; // required
-                    _elem920 = new Role();
-                    _elem920.read(iprot);
-                    struct.success.add(_elem920);
+                    Role _elem928; // required
+                    _elem928 = new Role();
+                    _elem928.read(iprot);
+                    struct.success.add(_elem928);
                   }
                   iprot.readListEnd();
                 }
@@ -118309,9 +118398,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Role _iter921 : struct.success)
+            for (Role _iter929 : struct.success)
             {
-              _iter921.write(oprot);
+              _iter929.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -118350,9 +118439,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Role _iter922 : struct.success)
+            for (Role _iter930 : struct.success)
             {
-              _iter922.write(oprot);
+              _iter930.write(oprot);
             }
           }
         }
@@ -118367,14 +118456,14 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list923 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Role>(_list923.size);
-            for (int _i924 = 0; _i924 < _list923.size; ++_i924)
+            org.apache.thrift.protocol.TList _list931 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Role>(_list931.size);
+            for (int _i932 = 0; _i932 < _list931.size; ++_i932)
             {
-              Role _elem925; // required
-              _elem925 = new Role();
-              _elem925.read(iprot);
-              struct.success.add(_elem925);
+              Role _elem933; // required
+              _elem933 = new Role();
+              _elem933.read(iprot);
+              struct.success.add(_elem933);
             }
           }
           struct.setSuccessIsSet(true);
@@ -121382,13 +121471,13 @@ public class ThriftHiveMetastore {
             case 3: // GROUP_NAMES
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list926 = iprot.readListBegin();
-                  struct.group_names = new ArrayList<String>(_list926.size);
-                  for (int _i927 = 0; _i927 < _list926.size; ++_i927)
+                  org.apache.thrift.protocol.TList _list934 = iprot.readListBegin();
+                  struct.group_names = new ArrayList<String>(_list934.size);
+                  for (int _i935 = 0; _i935 < _list934.size; ++_i935)
                   {
-                    String _elem928; // required
-                    _elem928 = iprot.readString();
-                    struct.group_names.add(_elem928);
+                    String _elem936; // required
+                    _elem936 = iprot.readString();
+                    struct.group_names.add(_elem936);
                   }
                   iprot.readListEnd();
                 }
@@ -121424,9 +121513,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(GROUP_NAMES_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.group_names.size()));
-            for (String _iter929 : struct.group_names)
+            for (String _iter937 : struct.group_names)
             {
-              oprot.writeString(_iter929);
+              oprot.writeString(_iter937);
             }
             oprot.writeListEnd();
           }
@@ -121469,9 +121558,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetGroup_names()) {
           {
             oprot.writeI32(struct.group_names.size());
-            for (String _iter930 : struct.group_names)
+            for (String _iter938 : struct.group_names)
             {
-              oprot.writeString(_iter930);
+              oprot.writeString(_iter938);
             }
           }
         }
@@ -121492,13 +121581,13 @@ public class ThriftHiveMetastore {
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list931 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.group_names = new ArrayList<String>(_list931.size);
-            for (int _i932 = 0; _i932 < _list931.size; ++_i932)
+            org.apache.thrift.protocol.TList _list939 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.group_names = new ArrayList<String>(_list939.size);
+            for (int _i940 = 0; _i940 < _list939.size; ++_i940)
             {
-              String _elem933; // required
-              _elem933 = iprot.readString();
-              struct.group_names.add(_elem933);
+              String _elem941; // required
+              _elem941 = iprot.readString();
+              struct.group_names.add(_elem941);
             }
           }
           struct.setGroup_namesIsSet(true);
@@ -122956,14 +123045,14 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list934 = iprot.readListBegin();
-                  struct.success = new ArrayList<HiveObjectPrivilege>(_list934.size);
-                  for (int _i935 = 0; _i935 < _list934.size; ++_i935)
+                  org.apache.thrift.protocol.TList _list942 = iprot.readListBegin();
+                  struct.success = new ArrayList<HiveObjectPrivilege>(_list942.size);
+                  for (int _i943 = 0; _i943 < _list942.size; ++_i943)
                   {
-                    HiveObjectPrivilege _elem936; // required
-                    _elem936 = new HiveObjectPrivilege();
-                    _elem936.read(iprot);
-                    struct.success.add(_elem936);
+                    HiveObjectPrivilege _elem944; // required
+                    _elem944 = new HiveObjectPrivilege();
+                    _elem944.read(iprot);
+                    struct.success.add(_elem944);
                   }
                   iprot.readListEnd();
                 }
@@ -122998,9 +123087,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (HiveObjectPrivilege _iter937 : struct.success)
+            for (HiveObjectPrivilege _iter945 : struct.success)
             {
-              _iter937.write(oprot);
+              _iter945.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -123039,9 +123128,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (HiveObjectPrivilege _iter938 : struct.success)
+            for (HiveObjectPrivilege _iter946 : struct.success)
             {
-              _iter938.write(oprot);
+              _iter946.write(oprot);
             }
           }
         }
@@ -123056,14 +123145,14 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list939 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<HiveObjectPrivilege>(_list939.size);
-            for (int _i940 = 0; _i940 < _list939.size; ++_i940)
+            org.apache.thrift.protocol.TList _list947 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<HiveObjectPrivilege>(_list947.size);
+            for (int _i948 = 0; _i948 < _list947.size; ++_i948)
             {
-              HiveObjectPrivilege _elem941; // required
-              _elem941 = new HiveObjectPrivilege();
-              _elem941.read(iprot);
-              struct.success.add(_elem941);
+              HiveObjectPrivilege _elem949; // required
+              _elem949 = new HiveObjectPrivilege();
+              _elem949.read(iprot);
+              struct.success.add(_elem949);
             }
           }
           struct.setSuccessIsSet(true);
@@ -125968,13 +126057,13 @@ public class ThriftHiveMetastore {
             case 2: // GROUP_NAMES
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list942 = iprot.readListBegin();
-                  struct.group_names = new ArrayList<String>(_list942.size);
-                  for (int _i943 = 0; _i943 < _list942.size; ++_i943)
+                  org.apache.thrift.protocol.TList _list950 = iprot.readListBegin();
+                  struct.group_names = new ArrayList<String>(_list950.size);
+                  for (int _i951 = 0; _i951 < _list950.size; ++_i951)
                   {
-                    String _elem944; // required
-                    _elem944 = iprot.readString();
-                    struct.group_names.add(_elem944);
+                    String _elem952; // required
+                    _elem952 = iprot.readString();
+                    struct.group_names.add(_elem952);
                   }
                   iprot.readListEnd();
                 }
@@ -126005,9 +126094,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(GROUP_NAMES_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.group_names.size()));
-            for (String _iter945 : struct.group_names)
+            for (String _iter953 : struct.group_names)
             {
-              oprot.writeString(_iter945);
+              oprot.writeString(_iter953);
             }
             oprot.writeListEnd();
           }
@@ -126044,9 +126133,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetGroup_names()) {
           {
             oprot.writeI32(struct.group_names.size());
-            for (String _iter946 : struct.group_names)
+            for (String _iter954 : struct.group_names)
             {
-              oprot.writeString(_iter946);
+              oprot.writeString(_iter954);
             }
           }
         }
@@ -126062,13 +126151,13 @@ public class ThriftHiveMetastore {
         }
         if (incoming.get(1)) {
           {
-            org.apache.thrift.protocol.TList _list947 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.group_names = new ArrayList<String>(_list947.size);
-            for (int _i948 = 0; _i948 < _list947.size; ++_i948)
+            org.apache.thrift.protocol.TList _list955 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.group_names = new ArrayList<String>(_list955.size);
+            for (int _i956 = 0; _i956 < _list955.size; ++_i956)
             {
-              String _elem949; // required
-              _elem949 = iprot.readString();
-              struct.group_names.add(_elem949);
+              String _elem957; // required
+              _elem957 = iprot.readString();
+              struct.group_names.add(_elem957);
             }
           }
           struct.setGroup_namesIsSet(true);
@@ -126474,13 +126563,13 @@ public class ThriftHiveMetastore {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list950 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list950.size);
-                  for (int _i951 = 0; _i951 < _list950.size; ++_i951)
+                  org.apache.thrift.protocol.TList _list958 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list958.size);
+                  for (int _i959 = 0; _i959 < _list958.size; ++_i959)
                   {
-                    String _elem952; // required
-                    _elem952 = iprot.readString();
-                    struct.success.add(_elem952);
+                    String _elem960; // required
+                    _elem960 = iprot.readString();
+                    struct.success.add(_elem960);
                   }
                   iprot.readListEnd();
                 }
@@ -126515,9 +126604,9 @@ public class ThriftHiveMetastore {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter953 : struct.success)
+            for (String _iter961 : struct.success)
             {
-              oprot.writeString(_iter953);
+              oprot.writeString(_iter961);
             }
             oprot.writeListEnd();
           }
@@ -126556,9 +126645,9 @@ public class ThriftHiveMetastore {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter954 : struct.success)
+            for (String _iter962 : struct.success)
             {
-              oprot.writeString(_iter954);
+              oprot.writeString(_iter962);
             }
           }
         }
@@ -126573,13 +126662,13 @@ public class ThriftHiveMetastore {
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list955 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list955.size);
-            for (int _i956 = 0; _i956 < _list955.size; ++_i956)
+            org.apache.thrift.protocol.TList _list963 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list963.size);
+            for (int _i964 = 0; _i964 < _list963.size; ++_i964)
             {
-              String _elem957; // required
-              _elem957 = iprot.readString();
-              struct.success.add(_elem957);
+              String _elem965; // required
+              _elem965 = iprot.readString();
+              struct.success.add(_elem965);
             }
           }
           struct.setSuccessIsSet(true);
@@ -139083,6 +139172,835 @@ public class ThriftHiveMetastore {
           struct.success = new ShowCompactResponse();
           struct.success.read(iprot);
           struct.setSuccessIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class add_dynamic_partitions_args implements org.apache.thrift.TBase<add_dynamic_partitions_args, add_dynamic_partitions_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("add_dynamic_partitions_args");
+
+    private static final org.apache.thrift.protocol.TField RQST_FIELD_DESC = new org.apache.thrift.protocol.TField("rqst", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new add_dynamic_partitions_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new add_dynamic_partitions_argsTupleSchemeFactory());
+    }
+
+    private AddDynamicPartitions rqst; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      RQST((short)1, "rqst");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // RQST
+            return RQST;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.RQST, new org.apache.thrift.meta_data.FieldMetaData("rqst", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, AddDynamicPartitions.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(add_dynamic_partitions_args.class, metaDataMap);
+    }
+
+    public add_dynamic_partitions_args() {
+    }
+
+    public add_dynamic_partitions_args(
+      AddDynamicPartitions rqst)
+    {
+      this();
+      this.rqst = rqst;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public add_dynamic_partitions_args(add_dynamic_partitions_args other) {
+      if (other.isSetRqst()) {
+        this.rqst = new AddDynamicPartitions(other.rqst);
+      }
+    }
+
+    public add_dynamic_partitions_args deepCopy() {
+      return new add_dynamic_partitions_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.rqst = null;
+    }
+
+    public AddDynamicPartitions getRqst() {
+      return this.rqst;
+    }
+
+    public void setRqst(AddDynamicPartitions rqst) {
+      this.rqst = rqst;
+    }
+
+    public void unsetRqst() {
+      this.rqst = null;
+    }
+
+    /** Returns true if field rqst is set (has been assigned a value) and false otherwise */
+    public boolean isSetRqst() {
+      return this.rqst != null;
+    }
+
+    public void setRqstIsSet(boolean value) {
+      if (!value) {
+        this.rqst = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case RQST:
+        if (value == null) {
+          unsetRqst();
+        } else {
+          setRqst((AddDynamicPartitions)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case RQST:
+        return getRqst();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case RQST:
+        return isSetRqst();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof add_dynamic_partitions_args)
+        return this.equals((add_dynamic_partitions_args)that);
+      return false;
+    }
+
+    public boolean equals(add_dynamic_partitions_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_rqst = true && this.isSetRqst();
+      boolean that_present_rqst = true && that.isSetRqst();
+      if (this_present_rqst || that_present_rqst) {
+        if (!(this_present_rqst && that_present_rqst))
+          return false;
+        if (!this.rqst.equals(that.rqst))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      HashCodeBuilder builder = new HashCodeBuilder();
+
+      boolean present_rqst = true && (isSetRqst());
+      builder.append(present_rqst);
+      if (present_rqst)
+        builder.append(rqst);
+
+      return builder.toHashCode();
+    }
+
+    public int compareTo(add_dynamic_partitions_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      add_dynamic_partitions_args typedOther = (add_dynamic_partitions_args)other;
+
+      lastComparison = Boolean.valueOf(isSetRqst()).compareTo(typedOther.isSetRqst());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetRqst()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.rqst, typedOther.rqst);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("add_dynamic_partitions_args(");
+      boolean first = true;
+
+      sb.append("rqst:");
+      if (this.rqst == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.rqst);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (rqst != null) {
+        rqst.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class add_dynamic_partitions_argsStandardSchemeFactory implements SchemeFactory {
+      public add_dynamic_partitions_argsStandardScheme getScheme() {
+        return new add_dynamic_partitions_argsStandardScheme();
+      }
+    }
+
+    private static class add_dynamic_partitions_argsStandardScheme extends StandardScheme<add_dynamic_partitions_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, add_dynamic_partitions_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // RQST
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.rqst = new AddDynamicPartitions();
+                struct.rqst.read(iprot);
+                struct.setRqstIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, add_dynamic_partitions_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.rqst != null) {
+          oprot.writeFieldBegin(RQST_FIELD_DESC);
+          struct.rqst.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class add_dynamic_partitions_argsTupleSchemeFactory implements SchemeFactory {
+      public add_dynamic_partitions_argsTupleScheme getScheme() {
+        return new add_dynamic_partitions_argsTupleScheme();
+      }
+    }
+
+    private static class add_dynamic_partitions_argsTupleScheme extends TupleScheme<add_dynamic_partitions_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, add_dynamic_partitions_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetRqst()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetRqst()) {
+          struct.rqst.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, add_dynamic_partitions_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.rqst = new AddDynamicPartitions();
+          struct.rqst.read(iprot);
+          struct.setRqstIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class add_dynamic_partitions_result implements org.apache.thrift.TBase<add_dynamic_partitions_result, add_dynamic_partitions_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("add_dynamic_partitions_result");
+
+    private static final org.apache.thrift.protocol.TField O1_FIELD_DESC = new org.apache.thrift.protocol.TField("o1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+    private static final org.apache.thrift.protocol.TField O2_FIELD_DESC = new org.apache.thrift.protocol.TField("o2", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new add_dynamic_partitions_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new add_dynamic_partitions_resultTupleSchemeFactory());
+    }
+
+    private NoSuchTxnException o1; // required
+    private TxnAbortedException o2; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      O1((short)1, "o1"),
+      O2((short)2, "o2");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // O1
+            return O1;
+          case 2: // O2
+            return O2;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.O1, new org.apache.thrift.meta_data.FieldMetaData("o1", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      tmpMap.put(_Fields.O2, new org.apache.thrift.meta_data.FieldMetaData("o2", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(add_dynamic_partitions_result.class, metaDataMap);
+    }
+
+    public add_dynamic_partitions_result() {
+    }
+
+    public add_dynamic_partitions_result(
+      NoSuchTxnException o1,
+      TxnAbortedException o2)
+    {
+      this();
+      this.o1 = o1;
+      this.o2 = o2;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public add_dynamic_partitions_result(add_dynamic_partitions_result other) {
+      if (other.isSetO1()) {
+        this.o1 = new NoSuchTxnException(other.o1);
+      }
+      if (other.isSetO2()) {
+        this.o2 = new TxnAbortedException(other.o2);
+      }
+    }
+
+    public add_dynamic_partitions_result deepCopy() {
+      return new add_dynamic_partitions_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.o1 = null;
+      this.o2 = null;
+    }
+
+    public NoSuchTxnException getO1() {
+      return this.o1;
+    }
+
+    public void setO1(NoSuchTxnException o1) {
+      this.o1 = o1;
+    }
+
+    public void unsetO1() {
+      this.o1 = null;
+    }
+
+    /** Returns true if field o1 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO1() {
+      return this.o1 != null;
+    }
+
+    public void setO1IsSet(boolean value) {
+      if (!value) {
+        this.o1 = null;
+      }
+    }
+
+    public TxnAbortedException getO2() {
+      return this.o2;
+    }
+
+    public void setO2(TxnAbortedException o2) {
+      this.o2 = o2;
+    }
+
+    public void unsetO2() {
+      this.o2 = null;
+    }
+
+    /** Returns true if field o2 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO2() {
+      return this.o2 != null;
+    }
+
+    public void setO2IsSet(boolean value) {
+      if (!value) {
+        this.o2 = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case O1:
+        if (value == null) {
+          unsetO1();
+        } else {
+          setO1((NoSuchTxnException)value);
+        }
+        break;
+
+      case O2:
+        if (value == null) {
+          unsetO2();
+        } else {
+          setO2((TxnAbortedException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case O1:
+        return getO1();
+
+      case O2:
+        return getO2();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case O1:
+        return isSetO1();
+      case O2:
+        return isSetO2();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof add_dynamic_partitions_result)
+        return this.equals((add_dynamic_partitions_result)that);
+      return false;
+    }
+
+    public boolean equals(add_dynamic_partitions_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_o1 = true && this.isSetO1();
+      boolean that_present_o1 = true && that.isSetO1();
+      if (this_present_o1 || that_present_o1) {
+        if (!(this_present_o1 && that_present_o1))
+          return false;
+        if (!this.o1.equals(that.o1))
+          return false;
+      }
+
+      boolean this_present_o2 = true && this.isSetO2();
+      boolean that_present_o2 = true && that.isSetO2();
+      if (this_present_o2 || that_present_o2) {
+        if (!(this_present_o2 && that_present_o2))
+          return false;
+        if (!this.o2.equals(that.o2))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      HashCodeBuilder builder = new HashCodeBuilder();
+
+      boolean present_o1 = true && (isSetO1());
+      builder.append(present_o1);
+      if (present_o1)
+        builder.append(o1);
+
+      boolean present_o2 = true && (isSetO2());
+      builder.append(present_o2);
+      if (present_o2)
+        builder.append(o2);
+
+      return builder.toHashCode();
+    }
+
+    public int compareTo(add_dynamic_partitions_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      add_dynamic_partitions_result typedOther = (add_dynamic_partitions_result)other;
+
+      lastComparison = Boolean.valueOf(isSetO1()).compareTo(typedOther.isSetO1());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO1()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o1, typedOther.o1);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetO2()).compareTo(typedOther.isSetO2());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO2()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o2, typedOther.o2);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("add_dynamic_partitions_result(");
+      boolean first = true;
+
+      sb.append("o1:");
+      if (this.o1 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o1);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("o2:");
+      if (this.o2 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o2);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class add_dynamic_partitions_resultStandardSchemeFactory implements SchemeFactory {
+      public add_dynamic_partitions_resultStandardScheme getScheme() {
+        return new add_dynamic_partitions_resultStandardScheme();
+      }
+    }
+
+    private static class add_dynamic_partitions_resultStandardScheme extends StandardScheme<add_dynamic_partitions_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, add_dynamic_partitions_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // O1
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o1 = new NoSuchTxnException();
+                struct.o1.read(iprot);
+                struct.setO1IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // O2
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o2 = new TxnAbortedException();
+                struct.o2.read(iprot);
+                struct.setO2IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, add_dynamic_partitions_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.o1 != null) {
+          oprot.writeFieldBegin(O1_FIELD_DESC);
+          struct.o1.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.o2 != null) {
+          oprot.writeFieldBegin(O2_FIELD_DESC);
+          struct.o2.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class add_dynamic_partitions_resultTupleSchemeFactory implements SchemeFactory {
+      public add_dynamic_partitions_resultTupleScheme getScheme() {
+        return new add_dynamic_partitions_resultTupleScheme();
+      }
+    }
+
+    private static class add_dynamic_partitions_resultTupleScheme extends TupleScheme<add_dynamic_partitions_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, add_dynamic_partitions_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetO1()) {
+          optionals.set(0);
+        }
+        if (struct.isSetO2()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetO1()) {
+          struct.o1.write(oprot);
+        }
+        if (struct.isSetO2()) {
+          struct.o2.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, add_dynamic_partitions_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.o1 = new NoSuchTxnException();
+          struct.o1.read(iprot);
+          struct.setO1IsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.o2 = new TxnAbortedException();
+          struct.o2.read(iprot);
+          struct.setO2IsSet(true);
         }
       }
     }
