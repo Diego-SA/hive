@@ -17401,7 +17401,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list524.size);
                   for (int _i525 = 0; _i525 < _list524.size; ++_i525)
                   {
-                    String _elem526; // required
+                    String _elem526; // optional
                     _elem526 = iprot.readString();
                     struct.success.add(_elem526);
                   }
@@ -17500,7 +17500,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list529.size);
             for (int _i530 = 0; _i530 < _list529.size; ++_i530)
             {
-              String _elem531; // required
+              String _elem531; // optional
               _elem531 = iprot.readString();
               struct.success.add(_elem531);
             }
@@ -18163,7 +18163,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list532.size);
                   for (int _i533 = 0; _i533 < _list532.size; ++_i533)
                   {
-                    String _elem534; // required
+                    String _elem534; // optional
                     _elem534 = iprot.readString();
                     struct.success.add(_elem534);
                   }
@@ -18262,7 +18262,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list537.size);
             for (int _i538 = 0; _i538 < _list537.size; ++_i538)
             {
-              String _elem539; // required
+              String _elem539; // optional
               _elem539 = iprot.readString();
               struct.success.add(_elem539);
             }
@@ -24023,7 +24023,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<FieldSchema>(_list550.size);
                   for (int _i551 = 0; _i551 < _list550.size; ++_i551)
                   {
-                    FieldSchema _elem552; // required
+                    FieldSchema _elem552; // optional
                     _elem552 = new FieldSchema();
                     _elem552.read(iprot);
                     struct.success.add(_elem552);
@@ -24163,7 +24163,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<FieldSchema>(_list555.size);
             for (int _i556 = 0; _i556 < _list555.size; ++_i556)
             {
-              FieldSchema _elem557; // required
+              FieldSchema _elem557; // optional
               _elem557 = new FieldSchema();
               _elem557.read(iprot);
               struct.success.add(_elem557);
@@ -25324,7 +25324,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<FieldSchema>(_list558.size);
                   for (int _i559 = 0; _i559 < _list558.size; ++_i559)
                   {
-                    FieldSchema _elem560; // required
+                    FieldSchema _elem560; // optional
                     _elem560 = new FieldSchema();
                     _elem560.read(iprot);
                     struct.success.add(_elem560);
@@ -25464,7 +25464,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<FieldSchema>(_list563.size);
             for (int _i564 = 0; _i564 < _list563.size; ++_i564)
             {
-              FieldSchema _elem565; // required
+              FieldSchema _elem565; // optional
               _elem565 = new FieldSchema();
               _elem565.read(iprot);
               struct.success.add(_elem565);
@@ -26516,7 +26516,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<FieldSchema>(_list566.size);
                   for (int _i567 = 0; _i567 < _list566.size; ++_i567)
                   {
-                    FieldSchema _elem568; // required
+                    FieldSchema _elem568; // optional
                     _elem568 = new FieldSchema();
                     _elem568.read(iprot);
                     struct.success.add(_elem568);
@@ -26656,7 +26656,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<FieldSchema>(_list571.size);
             for (int _i572 = 0; _i572 < _list571.size; ++_i572)
             {
-              FieldSchema _elem573; // required
+              FieldSchema _elem573; // optional
               _elem573 = new FieldSchema();
               _elem573.read(iprot);
               struct.success.add(_elem573);
@@ -27817,7 +27817,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<FieldSchema>(_list574.size);
                   for (int _i575 = 0; _i575 < _list574.size; ++_i575)
                   {
-                    FieldSchema _elem576; // required
+                    FieldSchema _elem576; // optional
                     _elem576 = new FieldSchema();
                     _elem576.read(iprot);
                     struct.success.add(_elem576);
@@ -27957,7 +27957,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<FieldSchema>(_list579.size);
             for (int _i580 = 0; _i580 < _list579.size; ++_i580)
             {
-              FieldSchema _elem581; // required
+              FieldSchema _elem581; // optional
               _elem581 = new FieldSchema();
               _elem581.read(iprot);
               struct.success.add(_elem581);
@@ -33207,7 +33207,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list582.size);
                   for (int _i583 = 0; _i583 < _list582.size; ++_i583)
                   {
-                    String _elem584; // required
+                    String _elem584; // optional
                     _elem584 = iprot.readString();
                     struct.success.add(_elem584);
                   }
@@ -33306,7 +33306,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list587.size);
             for (int _i588 = 0; _i588 < _list587.size; ++_i588)
             {
-              String _elem589; // required
+              String _elem589; // optional
               _elem589 = iprot.readString();
               struct.success.add(_elem589);
             }
@@ -34081,7 +34081,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list590.size);
                   for (int _i591 = 0; _i591 < _list590.size; ++_i591)
                   {
-                    String _elem592; // required
+                    String _elem592; // optional
                     _elem592 = iprot.readString();
                     struct.success.add(_elem592);
                   }
@@ -34180,7 +34180,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list595.size);
             for (int _i596 = 0; _i596 < _list595.size; ++_i596)
             {
-              String _elem597; // required
+              String _elem597; // optional
               _elem597 = iprot.readString();
               struct.success.add(_elem597);
             }
@@ -35642,7 +35642,7 @@ public class ThriftHiveMetastore {
                   struct.tbl_names = new ArrayList<String>(_list598.size);
                   for (int _i599 = 0; _i599 < _list598.size; ++_i599)
                   {
-                    String _elem600; // required
+                    String _elem600; // optional
                     _elem600 = iprot.readString();
                     struct.tbl_names.add(_elem600);
                   }
@@ -35736,7 +35736,7 @@ public class ThriftHiveMetastore {
             struct.tbl_names = new ArrayList<String>(_list603.size);
             for (int _i604 = 0; _i604 < _list603.size; ++_i604)
             {
-              String _elem605; // required
+              String _elem605; // optional
               _elem605 = iprot.readString();
               struct.tbl_names.add(_elem605);
             }
@@ -36310,7 +36310,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<Table>(_list606.size);
                   for (int _i607 = 0; _i607 < _list606.size; ++_i607)
                   {
-                    Table _elem608; // required
+                    Table _elem608; // optional
                     _elem608 = new Table();
                     _elem608.read(iprot);
                     struct.success.add(_elem608);
@@ -36450,7 +36450,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<Table>(_list611.size);
             for (int _i612 = 0; _i612 < _list611.size; ++_i612)
             {
-              Table _elem613; // required
+              Table _elem613; // optional
               _elem613 = new Table();
               _elem613.read(iprot);
               struct.success.add(_elem613);
@@ -37606,7 +37606,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list614.size);
                   for (int _i615 = 0; _i615 < _list614.size; ++_i615)
                   {
-                    String _elem616; // required
+                    String _elem616; // optional
                     _elem616 = iprot.readString();
                     struct.success.add(_elem616);
                   }
@@ -37745,7 +37745,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list619.size);
             for (int _i620 = 0; _i620 < _list619.size; ++_i620)
             {
-              String _elem621; // required
+              String _elem621; // optional
               _elem621 = iprot.readString();
               struct.success.add(_elem621);
             }
@@ -43610,7 +43610,7 @@ public class ThriftHiveMetastore {
                   struct.new_parts = new ArrayList<Partition>(_list622.size);
                   for (int _i623 = 0; _i623 < _list622.size; ++_i623)
                   {
-                    Partition _elem624; // required
+                    Partition _elem624; // optional
                     _elem624 = new Partition();
                     _elem624.read(iprot);
                     struct.new_parts.add(_elem624);
@@ -43690,7 +43690,7 @@ public class ThriftHiveMetastore {
             struct.new_parts = new ArrayList<Partition>(_list627.size);
             for (int _i628 = 0; _i628 < _list627.size; ++_i628)
             {
-              Partition _elem629; // required
+              Partition _elem629; // optional
               _elem629 = new Partition();
               _elem629.read(iprot);
               struct.new_parts.add(_elem629);
@@ -44698,7 +44698,7 @@ public class ThriftHiveMetastore {
                   struct.new_parts = new ArrayList<PartitionSpec>(_list630.size);
                   for (int _i631 = 0; _i631 < _list630.size; ++_i631)
                   {
-                    PartitionSpec _elem632; // required
+                    PartitionSpec _elem632; // optional
                     _elem632 = new PartitionSpec();
                     _elem632.read(iprot);
                     struct.new_parts.add(_elem632);
@@ -44778,7 +44778,7 @@ public class ThriftHiveMetastore {
             struct.new_parts = new ArrayList<PartitionSpec>(_list635.size);
             for (int _i636 = 0; _i636 < _list635.size; ++_i636)
             {
-              PartitionSpec _elem637; // required
+              PartitionSpec _elem637; // optional
               _elem637 = new PartitionSpec();
               _elem637.read(iprot);
               struct.new_parts.add(_elem637);
@@ -45964,7 +45964,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list638.size);
                   for (int _i639 = 0; _i639 < _list638.size; ++_i639)
                   {
-                    String _elem640; // required
+                    String _elem640; // optional
                     _elem640 = iprot.readString();
                     struct.part_vals.add(_elem640);
                   }
@@ -46073,7 +46073,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list643.size);
             for (int _i644 = 0; _i644 < _list643.size; ++_i644)
             {
-              String _elem645; // required
+              String _elem645; // optional
               _elem645 = iprot.readString();
               struct.part_vals.add(_elem645);
             }
@@ -48391,7 +48391,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list646.size);
                   for (int _i647 = 0; _i647 < _list646.size; ++_i647)
                   {
-                    String _elem648; // required
+                    String _elem648; // optional
                     _elem648 = iprot.readString();
                     struct.part_vals.add(_elem648);
                   }
@@ -48520,7 +48520,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list651.size);
             for (int _i652 = 0; _i652 < _list651.size; ++_i652)
             {
-              String _elem653; // required
+              String _elem653; // optional
               _elem653 = iprot.readString();
               struct.part_vals.add(_elem653);
             }
@@ -52399,7 +52399,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list654.size);
                   for (int _i655 = 0; _i655 < _list654.size; ++_i655)
                   {
-                    String _elem656; // required
+                    String _elem656; // optional
                     _elem656 = iprot.readString();
                     struct.part_vals.add(_elem656);
                   }
@@ -52525,7 +52525,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list659.size);
             for (int _i660 = 0; _i660 < _list659.size; ++_i660)
             {
-              String _elem661; // required
+              String _elem661; // optional
               _elem661 = iprot.readString();
               struct.part_vals.add(_elem661);
             }
@@ -53773,7 +53773,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list662.size);
                   for (int _i663 = 0; _i663 < _list662.size; ++_i663)
                   {
-                    String _elem664; // required
+                    String _elem664; // optional
                     _elem664 = iprot.readString();
                     struct.part_vals.add(_elem664);
                   }
@@ -53919,7 +53919,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list667.size);
             for (int _i668 = 0; _i668 < _list667.size; ++_i668)
             {
-              String _elem669; // required
+              String _elem669; // optional
               _elem669 = iprot.readString();
               struct.part_vals.add(_elem669);
             }
@@ -58530,7 +58530,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list670.size);
                   for (int _i671 = 0; _i671 < _list670.size; ++_i671)
                   {
-                    String _elem672; // required
+                    String _elem672; // optional
                     _elem672 = iprot.readString();
                     struct.part_vals.add(_elem672);
                   }
@@ -58639,7 +58639,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list675.size);
             for (int _i676 = 0; _i676 < _list675.size; ++_i676)
             {
-              String _elem677; // required
+              String _elem677; // optional
               _elem677 = iprot.readString();
               struct.part_vals.add(_elem677);
             }
@@ -61529,7 +61529,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list688.size);
                   for (int _i689 = 0; _i689 < _list688.size; ++_i689)
                   {
-                    String _elem690; // required
+                    String _elem690; // optional
                     _elem690 = iprot.readString();
                     struct.part_vals.add(_elem690);
                   }
@@ -61555,7 +61555,7 @@ public class ThriftHiveMetastore {
                   struct.group_names = new ArrayList<String>(_list691.size);
                   for (int _i692 = 0; _i692 < _list691.size; ++_i692)
                   {
-                    String _elem693; // required
+                    String _elem693; // optional
                     _elem693 = iprot.readString();
                     struct.group_names.add(_elem693);
                   }
@@ -61699,7 +61699,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list698.size);
             for (int _i699 = 0; _i699 < _list698.size; ++_i699)
             {
-              String _elem700; // required
+              String _elem700; // optional
               _elem700 = iprot.readString();
               struct.part_vals.add(_elem700);
             }
@@ -61716,7 +61716,7 @@ public class ThriftHiveMetastore {
             struct.group_names = new ArrayList<String>(_list701.size);
             for (int _i702 = 0; _i702 < _list701.size; ++_i702)
             {
-              String _elem703; // required
+              String _elem703; // optional
               _elem703 = iprot.readString();
               struct.group_names.add(_elem703);
             }
@@ -64491,7 +64491,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<Partition>(_list704.size);
                   for (int _i705 = 0; _i705 < _list704.size; ++_i705)
                   {
-                    Partition _elem706; // required
+                    Partition _elem706; // optional
                     _elem706 = new Partition();
                     _elem706.read(iprot);
                     struct.success.add(_elem706);
@@ -64611,7 +64611,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<Partition>(_list709.size);
             for (int _i710 = 0; _i710 < _list709.size; ++_i710)
             {
-              Partition _elem711; // required
+              Partition _elem711; // optional
               _elem711 = new Partition();
               _elem711.read(iprot);
               struct.success.add(_elem711);
@@ -65311,7 +65311,7 @@ public class ThriftHiveMetastore {
                   struct.group_names = new ArrayList<String>(_list712.size);
                   for (int _i713 = 0; _i713 < _list712.size; ++_i713)
                   {
-                    String _elem714; // required
+                    String _elem714; // optional
                     _elem714 = iprot.readString();
                     struct.group_names.add(_elem714);
                   }
@@ -65448,7 +65448,7 @@ public class ThriftHiveMetastore {
             struct.group_names = new ArrayList<String>(_list717.size);
             for (int _i718 = 0; _i718 < _list717.size; ++_i718)
             {
-              String _elem719; // required
+              String _elem719; // optional
               _elem719 = iprot.readString();
               struct.group_names.add(_elem719);
             }
@@ -65941,7 +65941,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<Partition>(_list720.size);
                   for (int _i721 = 0; _i721 < _list720.size; ++_i721)
                   {
-                    Partition _elem722; // required
+                    Partition _elem722; // optional
                     _elem722 = new Partition();
                     _elem722.read(iprot);
                     struct.success.add(_elem722);
@@ -66061,7 +66061,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<Partition>(_list725.size);
             for (int _i726 = 0; _i726 < _list725.size; ++_i726)
             {
-              Partition _elem727; // required
+              Partition _elem727; // optional
               _elem727 = new Partition();
               _elem727.read(iprot);
               struct.success.add(_elem727);
@@ -67131,7 +67131,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<PartitionSpec>(_list728.size);
                   for (int _i729 = 0; _i729 < _list728.size; ++_i729)
                   {
-                    PartitionSpec _elem730; // required
+                    PartitionSpec _elem730; // optional
                     _elem730 = new PartitionSpec();
                     _elem730.read(iprot);
                     struct.success.add(_elem730);
@@ -67251,7 +67251,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<PartitionSpec>(_list733.size);
             for (int _i734 = 0; _i734 < _list733.size; ++_i734)
             {
-              PartitionSpec _elem735; // required
+              PartitionSpec _elem735; // optional
               _elem735 = new PartitionSpec();
               _elem735.read(iprot);
               struct.success.add(_elem735);
@@ -68240,7 +68240,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list736.size);
                   for (int _i737 = 0; _i737 < _list736.size; ++_i737)
                   {
-                    String _elem738; // required
+                    String _elem738; // optional
                     _elem738 = iprot.readString();
                     struct.success.add(_elem738);
                   }
@@ -68339,7 +68339,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list741.size);
             for (int _i742 = 0; _i742 < _list741.size; ++_i742)
             {
-              String _elem743; // required
+              String _elem743; // optional
               _elem743 = iprot.readString();
               struct.success.add(_elem743);
             }
@@ -68936,7 +68936,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list744.size);
                   for (int _i745 = 0; _i745 < _list744.size; ++_i745)
                   {
-                    String _elem746; // required
+                    String _elem746; // optional
                     _elem746 = iprot.readString();
                     struct.part_vals.add(_elem746);
                   }
@@ -69062,7 +69062,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list749.size);
             for (int _i750 = 0; _i750 < _list749.size; ++_i750)
             {
-              String _elem751; // required
+              String _elem751; // optional
               _elem751 = iprot.readString();
               struct.part_vals.add(_elem751);
             }
@@ -69559,7 +69559,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<Partition>(_list752.size);
                   for (int _i753 = 0; _i753 < _list752.size; ++_i753)
                   {
-                    Partition _elem754; // required
+                    Partition _elem754; // optional
                     _elem754 = new Partition();
                     _elem754.read(iprot);
                     struct.success.add(_elem754);
@@ -69679,7 +69679,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<Partition>(_list757.size);
             for (int _i758 = 0; _i758 < _list757.size; ++_i758)
             {
-              Partition _elem759; // required
+              Partition _elem759; // optional
               _elem759 = new Partition();
               _elem759.read(iprot);
               struct.success.add(_elem759);
@@ -70464,7 +70464,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list760.size);
                   for (int _i761 = 0; _i761 < _list760.size; ++_i761)
                   {
-                    String _elem762; // required
+                    String _elem762; // optional
                     _elem762 = iprot.readString();
                     struct.part_vals.add(_elem762);
                   }
@@ -70498,7 +70498,7 @@ public class ThriftHiveMetastore {
                   struct.group_names = new ArrayList<String>(_list763.size);
                   for (int _i764 = 0; _i764 < _list763.size; ++_i764)
                   {
-                    String _elem765; // required
+                    String _elem765; // optional
                     _elem765 = iprot.readString();
                     struct.group_names.add(_elem765);
                   }
@@ -70651,7 +70651,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list770.size);
             for (int _i771 = 0; _i771 < _list770.size; ++_i771)
             {
-              String _elem772; // required
+              String _elem772; // optional
               _elem772 = iprot.readString();
               struct.part_vals.add(_elem772);
             }
@@ -70672,7 +70672,7 @@ public class ThriftHiveMetastore {
             struct.group_names = new ArrayList<String>(_list773.size);
             for (int _i774 = 0; _i774 < _list773.size; ++_i774)
             {
-              String _elem775; // required
+              String _elem775; // optional
               _elem775 = iprot.readString();
               struct.group_names.add(_elem775);
             }
@@ -71165,7 +71165,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<Partition>(_list776.size);
                   for (int _i777 = 0; _i777 < _list776.size; ++_i777)
                   {
-                    Partition _elem778; // required
+                    Partition _elem778; // optional
                     _elem778 = new Partition();
                     _elem778.read(iprot);
                     struct.success.add(_elem778);
@@ -71285,7 +71285,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<Partition>(_list781.size);
             for (int _i782 = 0; _i782 < _list781.size; ++_i782)
             {
-              Partition _elem783; // required
+              Partition _elem783; // optional
               _elem783 = new Partition();
               _elem783.read(iprot);
               struct.success.add(_elem783);
@@ -71888,7 +71888,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list784.size);
                   for (int _i785 = 0; _i785 < _list784.size; ++_i785)
                   {
-                    String _elem786; // required
+                    String _elem786; // optional
                     _elem786 = iprot.readString();
                     struct.part_vals.add(_elem786);
                   }
@@ -72014,7 +72014,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list789.size);
             for (int _i790 = 0; _i790 < _list789.size; ++_i790)
             {
-              String _elem791; // required
+              String _elem791; // optional
               _elem791 = iprot.readString();
               struct.part_vals.add(_elem791);
             }
@@ -72511,7 +72511,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list792.size);
                   for (int _i793 = 0; _i793 < _list792.size; ++_i793)
                   {
-                    String _elem794; // required
+                    String _elem794; // optional
                     _elem794 = iprot.readString();
                     struct.success.add(_elem794);
                   }
@@ -72630,7 +72630,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list797.size);
             for (int _i798 = 0; _i798 < _list797.size; ++_i798)
             {
-              String _elem799; // required
+              String _elem799; // optional
               _elem799 = iprot.readString();
               struct.success.add(_elem799);
             }
@@ -73803,7 +73803,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<Partition>(_list800.size);
                   for (int _i801 = 0; _i801 < _list800.size; ++_i801)
                   {
-                    Partition _elem802; // required
+                    Partition _elem802; // optional
                     _elem802 = new Partition();
                     _elem802.read(iprot);
                     struct.success.add(_elem802);
@@ -73923,7 +73923,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<Partition>(_list805.size);
             for (int _i806 = 0; _i806 < _list805.size; ++_i806)
             {
-              Partition _elem807; // required
+              Partition _elem807; // optional
               _elem807 = new Partition();
               _elem807.read(iprot);
               struct.success.add(_elem807);
@@ -75097,7 +75097,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<PartitionSpec>(_list808.size);
                   for (int _i809 = 0; _i809 < _list808.size; ++_i809)
                   {
-                    PartitionSpec _elem810; // required
+                    PartitionSpec _elem810; // optional
                     _elem810 = new PartitionSpec();
                     _elem810.read(iprot);
                     struct.success.add(_elem810);
@@ -75217,7 +75217,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<PartitionSpec>(_list813.size);
             for (int _i814 = 0; _i814 < _list813.size; ++_i814)
             {
-              PartitionSpec _elem815; // required
+              PartitionSpec _elem815; // optional
               _elem815 = new PartitionSpec();
               _elem815.read(iprot);
               struct.success.add(_elem815);
@@ -76675,7 +76675,7 @@ public class ThriftHiveMetastore {
                   struct.names = new ArrayList<String>(_list816.size);
                   for (int _i817 = 0; _i817 < _list816.size; ++_i817)
                   {
-                    String _elem818; // required
+                    String _elem818; // optional
                     _elem818 = iprot.readString();
                     struct.names.add(_elem818);
                   }
@@ -76784,7 +76784,7 @@ public class ThriftHiveMetastore {
             struct.names = new ArrayList<String>(_list821.size);
             for (int _i822 = 0; _i822 < _list821.size; ++_i822)
             {
-              String _elem823; // required
+              String _elem823; // optional
               _elem823 = iprot.readString();
               struct.names.add(_elem823);
             }
@@ -77277,7 +77277,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<Partition>(_list824.size);
                   for (int _i825 = 0; _i825 < _list824.size; ++_i825)
                   {
-                    Partition _elem826; // required
+                    Partition _elem826; // optional
                     _elem826 = new Partition();
                     _elem826.read(iprot);
                     struct.success.add(_elem826);
@@ -77397,7 +77397,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<Partition>(_list829.size);
             for (int _i830 = 0; _i830 < _list829.size; ++_i830)
             {
-              Partition _elem831; // required
+              Partition _elem831; // optional
               _elem831 = new Partition();
               _elem831.read(iprot);
               struct.success.add(_elem831);
@@ -78954,7 +78954,7 @@ public class ThriftHiveMetastore {
                   struct.new_parts = new ArrayList<Partition>(_list832.size);
                   for (int _i833 = 0; _i833 < _list832.size; ++_i833)
                   {
-                    Partition _elem834; // required
+                    Partition _elem834; // optional
                     _elem834 = new Partition();
                     _elem834.read(iprot);
                     struct.new_parts.add(_elem834);
@@ -79064,7 +79064,7 @@ public class ThriftHiveMetastore {
             struct.new_parts = new ArrayList<Partition>(_list837.size);
             for (int _i838 = 0; _i838 < _list837.size; ++_i838)
             {
-              Partition _elem839; // required
+              Partition _elem839; // optional
               _elem839 = new Partition();
               _elem839.read(iprot);
               struct.new_parts.add(_elem839);
@@ -81270,7 +81270,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list840.size);
                   for (int _i841 = 0; _i841 < _list840.size; ++_i841)
                   {
-                    String _elem842; // required
+                    String _elem842; // optional
                     _elem842 = iprot.readString();
                     struct.part_vals.add(_elem842);
                   }
@@ -81399,7 +81399,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list845.size);
             for (int _i846 = 0; _i846 < _list845.size; ++_i846)
             {
-              String _elem847; // required
+              String _elem847; // optional
               _elem847 = iprot.readString();
               struct.part_vals.add(_elem847);
             }
@@ -82282,7 +82282,7 @@ public class ThriftHiveMetastore {
                   struct.part_vals = new ArrayList<String>(_list848.size);
                   for (int _i849 = 0; _i849 < _list848.size; ++_i849)
                   {
-                    String _elem850; // required
+                    String _elem850; // optional
                     _elem850 = iprot.readString();
                     struct.part_vals.add(_elem850);
                   }
@@ -82378,7 +82378,7 @@ public class ThriftHiveMetastore {
             struct.part_vals = new ArrayList<String>(_list853.size);
             for (int _i854 = 0; _i854 < _list853.size; ++_i854)
             {
-              String _elem855; // required
+              String _elem855; // optional
               _elem855 = iprot.readString();
               struct.part_vals.add(_elem855);
             }
@@ -84542,7 +84542,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list856.size);
                   for (int _i857 = 0; _i857 < _list856.size; ++_i857)
                   {
-                    String _elem858; // required
+                    String _elem858; // optional
                     _elem858 = iprot.readString();
                     struct.success.add(_elem858);
                   }
@@ -84641,7 +84641,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list861.size);
             for (int _i862 = 0; _i862 < _list861.size; ++_i862)
             {
-              String _elem863; // required
+              String _elem863; // optional
               _elem863 = iprot.readString();
               struct.success.add(_elem863);
             }
@@ -94637,7 +94637,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<Index>(_list894.size);
                   for (int _i895 = 0; _i895 < _list894.size; ++_i895)
                   {
-                    Index _elem896; // required
+                    Index _elem896; // optional
                     _elem896 = new Index();
                     _elem896.read(iprot);
                     struct.success.add(_elem896);
@@ -94757,7 +94757,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<Index>(_list899.size);
             for (int _i900 = 0; _i900 < _list899.size; ++_i900)
             {
-              Index _elem901; // required
+              Index _elem901; // optional
               _elem901 = new Index();
               _elem901.read(iprot);
               struct.success.add(_elem901);
@@ -95746,7 +95746,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list902.size);
                   for (int _i903 = 0; _i903 < _list902.size; ++_i903)
                   {
-                    String _elem904; // required
+                    String _elem904; // optional
                     _elem904 = iprot.readString();
                     struct.success.add(_elem904);
                   }
@@ -95845,7 +95845,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list907.size);
             for (int _i908 = 0; _i908 < _list907.size; ++_i908)
             {
-              String _elem909; // required
+              String _elem909; // optional
               _elem909 = iprot.readString();
               struct.success.add(_elem909);
             }
@@ -111589,7 +111589,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list910.size);
                   for (int _i911 = 0; _i911 < _list910.size; ++_i911)
                   {
-                    String _elem912; // required
+                    String _elem912; // optional
                     _elem912 = iprot.readString();
                     struct.success.add(_elem912);
                   }
@@ -111688,7 +111688,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list915.size);
             for (int _i916 = 0; _i916 < _list915.size; ++_i916)
             {
-              String _elem917; // required
+              String _elem917; // optional
               _elem917 = iprot.readString();
               struct.success.add(_elem917);
             }
@@ -115037,7 +115037,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list918.size);
                   for (int _i919 = 0; _i919 < _list918.size; ++_i919)
                   {
-                    String _elem920; // required
+                    String _elem920; // optional
                     _elem920 = iprot.readString();
                     struct.success.add(_elem920);
                   }
@@ -115136,7 +115136,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list923.size);
             for (int _i924 = 0; _i924 < _list923.size; ++_i924)
             {
-              String _elem925; // required
+              String _elem925; // optional
               _elem925 = iprot.readString();
               struct.success.add(_elem925);
             }
@@ -118433,7 +118433,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<Role>(_list926.size);
                   for (int _i927 = 0; _i927 < _list926.size; ++_i927)
                   {
-                    Role _elem928; // required
+                    Role _elem928; // optional
                     _elem928 = new Role();
                     _elem928.read(iprot);
                     struct.success.add(_elem928);
@@ -118533,7 +118533,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<Role>(_list931.size);
             for (int _i932 = 0; _i932 < _list931.size; ++_i932)
             {
-              Role _elem933; // required
+              Role _elem933; // optional
               _elem933 = new Role();
               _elem933.read(iprot);
               struct.success.add(_elem933);
@@ -121548,7 +121548,7 @@ public class ThriftHiveMetastore {
                   struct.group_names = new ArrayList<String>(_list934.size);
                   for (int _i935 = 0; _i935 < _list934.size; ++_i935)
                   {
-                    String _elem936; // required
+                    String _elem936; // optional
                     _elem936 = iprot.readString();
                     struct.group_names.add(_elem936);
                   }
@@ -121658,7 +121658,7 @@ public class ThriftHiveMetastore {
             struct.group_names = new ArrayList<String>(_list939.size);
             for (int _i940 = 0; _i940 < _list939.size; ++_i940)
             {
-              String _elem941; // required
+              String _elem941; // optional
               _elem941 = iprot.readString();
               struct.group_names.add(_elem941);
             }
@@ -123122,7 +123122,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<HiveObjectPrivilege>(_list942.size);
                   for (int _i943 = 0; _i943 < _list942.size; ++_i943)
                   {
-                    HiveObjectPrivilege _elem944; // required
+                    HiveObjectPrivilege _elem944; // optional
                     _elem944 = new HiveObjectPrivilege();
                     _elem944.read(iprot);
                     struct.success.add(_elem944);
@@ -123222,7 +123222,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<HiveObjectPrivilege>(_list947.size);
             for (int _i948 = 0; _i948 < _list947.size; ++_i948)
             {
-              HiveObjectPrivilege _elem949; // required
+              HiveObjectPrivilege _elem949; // optional
               _elem949 = new HiveObjectPrivilege();
               _elem949.read(iprot);
               struct.success.add(_elem949);
@@ -126134,7 +126134,7 @@ public class ThriftHiveMetastore {
                   struct.group_names = new ArrayList<String>(_list950.size);
                   for (int _i951 = 0; _i951 < _list950.size; ++_i951)
                   {
-                    String _elem952; // required
+                    String _elem952; // optional
                     _elem952 = iprot.readString();
                     struct.group_names.add(_elem952);
                   }
@@ -126228,7 +126228,7 @@ public class ThriftHiveMetastore {
             struct.group_names = new ArrayList<String>(_list955.size);
             for (int _i956 = 0; _i956 < _list955.size; ++_i956)
             {
-              String _elem957; // required
+              String _elem957; // optional
               _elem957 = iprot.readString();
               struct.group_names.add(_elem957);
             }
@@ -126640,7 +126640,7 @@ public class ThriftHiveMetastore {
                   struct.success = new ArrayList<String>(_list958.size);
                   for (int _i959 = 0; _i959 < _list958.size; ++_i959)
                   {
-                    String _elem960; // required
+                    String _elem960; // optional
                     _elem960 = iprot.readString();
                     struct.success.add(_elem960);
                   }
@@ -126739,7 +126739,7 @@ public class ThriftHiveMetastore {
             struct.success = new ArrayList<String>(_list963.size);
             for (int _i964 = 0; _i964 < _list963.size; ++_i964)
             {
-              String _elem965; // required
+              String _elem965; // optional
               _elem965 = iprot.readString();
               struct.success.add(_elem965);
             }
