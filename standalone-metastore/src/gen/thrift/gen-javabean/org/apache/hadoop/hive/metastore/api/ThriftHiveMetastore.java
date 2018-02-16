@@ -116,6 +116,8 @@ import org.slf4j.LoggerFactory;
 
     public Map<String,Materialization> get_materialization_invalidation_info(String dbname, List<String> tbl_names) throws MetaException, InvalidOperationException, UnknownDBException, org.apache.thrift.TException;
 
+    public void update_creation_metadata(String dbname, String tbl_name, CreationMetadata creation_metadata) throws MetaException, InvalidOperationException, UnknownDBException, org.apache.thrift.TException;
+
     public List<String> get_table_names_by_filter(String dbname, String filter, short max_tables) throws MetaException, InvalidOperationException, UnknownDBException, org.apache.thrift.TException;
 
     public void alter_table(String dbname, String tbl_name, Table new_tbl) throws InvalidOperationException, MetaException, org.apache.thrift.TException;
@@ -481,6 +483,8 @@ import org.slf4j.LoggerFactory;
     public void get_table_objects_by_name_req(GetTablesRequest req, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
     public void get_materialization_invalidation_info(String dbname, List<String> tbl_names, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+
+    public void update_creation_metadata(String dbname, String tbl_name, CreationMetadata creation_metadata, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
     public void get_table_names_by_filter(String dbname, String filter, short max_tables, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
@@ -1853,6 +1857,37 @@ import org.slf4j.LoggerFactory;
         throw result.o3;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "get_materialization_invalidation_info failed: unknown result");
+    }
+
+    public void update_creation_metadata(String dbname, String tbl_name, CreationMetadata creation_metadata) throws MetaException, InvalidOperationException, UnknownDBException, org.apache.thrift.TException
+    {
+      send_update_creation_metadata(dbname, tbl_name, creation_metadata);
+      recv_update_creation_metadata();
+    }
+
+    public void send_update_creation_metadata(String dbname, String tbl_name, CreationMetadata creation_metadata) throws org.apache.thrift.TException
+    {
+      update_creation_metadata_args args = new update_creation_metadata_args();
+      args.setDbname(dbname);
+      args.setTbl_name(tbl_name);
+      args.setCreation_metadata(creation_metadata);
+      sendBase("update_creation_metadata", args);
+    }
+
+    public void recv_update_creation_metadata() throws MetaException, InvalidOperationException, UnknownDBException, org.apache.thrift.TException
+    {
+      update_creation_metadata_result result = new update_creation_metadata_result();
+      receiveBase(result, "update_creation_metadata");
+      if (result.o1 != null) {
+        throw result.o1;
+      }
+      if (result.o2 != null) {
+        throw result.o2;
+      }
+      if (result.o3 != null) {
+        throw result.o3;
+      }
+      return;
     }
 
     public List<String> get_table_names_by_filter(String dbname, String filter, short max_tables) throws MetaException, InvalidOperationException, UnknownDBException, org.apache.thrift.TException
@@ -7323,6 +7358,44 @@ import org.slf4j.LoggerFactory;
       }
     }
 
+    public void update_creation_metadata(String dbname, String tbl_name, CreationMetadata creation_metadata, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      update_creation_metadata_call method_call = new update_creation_metadata_call(dbname, tbl_name, creation_metadata, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class update_creation_metadata_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String dbname;
+      private String tbl_name;
+      private CreationMetadata creation_metadata;
+      public update_creation_metadata_call(String dbname, String tbl_name, CreationMetadata creation_metadata, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.dbname = dbname;
+        this.tbl_name = tbl_name;
+        this.creation_metadata = creation_metadata;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("update_creation_metadata", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        update_creation_metadata_args args = new update_creation_metadata_args();
+        args.setDbname(dbname);
+        args.setTbl_name(tbl_name);
+        args.setCreation_metadata(creation_metadata);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws MetaException, InvalidOperationException, UnknownDBException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_update_creation_metadata();
+      }
+    }
+
     public void get_table_names_by_filter(String dbname, String filter, short max_tables, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       get_table_names_by_filter_call method_call = new get_table_names_by_filter_call(dbname, filter, max_tables, resultHandler, this, ___protocolFactory, ___transport);
@@ -12395,6 +12468,7 @@ import org.slf4j.LoggerFactory;
       processMap.put("get_table_req", new get_table_req());
       processMap.put("get_table_objects_by_name_req", new get_table_objects_by_name_req());
       processMap.put("get_materialization_invalidation_info", new get_materialization_invalidation_info());
+      processMap.put("update_creation_metadata", new update_creation_metadata());
       processMap.put("get_table_names_by_filter", new get_table_names_by_filter());
       processMap.put("alter_table", new alter_table());
       processMap.put("alter_table_with_environment_context", new alter_table_with_environment_context());
@@ -13497,6 +13571,34 @@ import org.slf4j.LoggerFactory;
         get_materialization_invalidation_info_result result = new get_materialization_invalidation_info_result();
         try {
           result.success = iface.get_materialization_invalidation_info(args.dbname, args.tbl_names);
+        } catch (MetaException o1) {
+          result.o1 = o1;
+        } catch (InvalidOperationException o2) {
+          result.o2 = o2;
+        } catch (UnknownDBException o3) {
+          result.o3 = o3;
+        }
+        return result;
+      }
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class update_creation_metadata<I extends Iface> extends org.apache.thrift.ProcessFunction<I, update_creation_metadata_args> {
+      public update_creation_metadata() {
+        super("update_creation_metadata");
+      }
+
+      public update_creation_metadata_args getEmptyArgsInstance() {
+        return new update_creation_metadata_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public update_creation_metadata_result getResult(I iface, update_creation_metadata_args args) throws org.apache.thrift.TException {
+        update_creation_metadata_result result = new update_creation_metadata_result();
+        try {
+          iface.update_creation_metadata(args.dbname, args.tbl_name, args.creation_metadata);
         } catch (MetaException o1) {
           result.o1 = o1;
         } catch (InvalidOperationException o2) {
@@ -17236,6 +17338,7 @@ import org.slf4j.LoggerFactory;
       processMap.put("get_table_req", new get_table_req());
       processMap.put("get_table_objects_by_name_req", new get_table_objects_by_name_req());
       processMap.put("get_materialization_invalidation_info", new get_materialization_invalidation_info());
+      processMap.put("update_creation_metadata", new update_creation_metadata());
       processMap.put("get_table_names_by_filter", new get_table_names_by_filter());
       processMap.put("alter_table", new alter_table());
       processMap.put("alter_table_with_environment_context", new alter_table_with_environment_context());
@@ -19670,6 +19773,72 @@ import org.slf4j.LoggerFactory;
 
       public void start(I iface, get_materialization_invalidation_info_args args, org.apache.thrift.async.AsyncMethodCallback<Map<String,Materialization>> resultHandler) throws TException {
         iface.get_materialization_invalidation_info(args.dbname, args.tbl_names,resultHandler);
+      }
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class update_creation_metadata<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, update_creation_metadata_args, Void> {
+      public update_creation_metadata() {
+        super("update_creation_metadata");
+      }
+
+      public update_creation_metadata_args getEmptyArgsInstance() {
+        return new update_creation_metadata_args();
+      }
+
+      public AsyncMethodCallback<Void> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new AsyncMethodCallback<Void>() { 
+          public void onComplete(Void o) {
+            update_creation_metadata_result result = new update_creation_metadata_result();
+            try {
+              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+              return;
+            } catch (Exception e) {
+              LOGGER.error("Exception writing to internal frame buffer", e);
+            }
+            fb.close();
+          }
+          public void onError(Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TBase msg;
+            update_creation_metadata_result result = new update_creation_metadata_result();
+            if (e instanceof MetaException) {
+                        result.o1 = (MetaException) e;
+                        result.setO1IsSet(true);
+                        msg = result;
+            }
+            else             if (e instanceof InvalidOperationException) {
+                        result.o2 = (InvalidOperationException) e;
+                        result.setO2IsSet(true);
+                        msg = result;
+            }
+            else             if (e instanceof UnknownDBException) {
+                        result.o3 = (UnknownDBException) e;
+                        result.setO3IsSet(true);
+                        msg = result;
+            }
+             else 
+            {
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+              return;
+            } catch (Exception ex) {
+              LOGGER.error("Exception writing to internal frame buffer", ex);
+            }
+            fb.close();
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, update_creation_metadata_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws TException {
+        iface.update_creation_metadata(args.dbname, args.tbl_name, args.creation_metadata,resultHandler);
       }
     }
 
@@ -65717,6 +65886,1149 @@ import org.slf4j.LoggerFactory;
           struct.setO2IsSet(true);
         }
         if (incoming.get(3)) {
+          struct.o3 = new UnknownDBException();
+          struct.o3.read(iprot);
+          struct.setO3IsSet(true);
+        }
+      }
+    }
+
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class update_creation_metadata_args implements org.apache.thrift.TBase<update_creation_metadata_args, update_creation_metadata_args._Fields>, java.io.Serializable, Cloneable, Comparable<update_creation_metadata_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("update_creation_metadata_args");
+
+    private static final org.apache.thrift.protocol.TField DBNAME_FIELD_DESC = new org.apache.thrift.protocol.TField("dbname", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField TBL_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("tbl_name", org.apache.thrift.protocol.TType.STRING, (short)2);
+    private static final org.apache.thrift.protocol.TField CREATION_METADATA_FIELD_DESC = new org.apache.thrift.protocol.TField("creation_metadata", org.apache.thrift.protocol.TType.STRUCT, (short)3);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new update_creation_metadata_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new update_creation_metadata_argsTupleSchemeFactory());
+    }
+
+    private String dbname; // required
+    private String tbl_name; // required
+    private CreationMetadata creation_metadata; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      DBNAME((short)1, "dbname"),
+      TBL_NAME((short)2, "tbl_name"),
+      CREATION_METADATA((short)3, "creation_metadata");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // DBNAME
+            return DBNAME;
+          case 2: // TBL_NAME
+            return TBL_NAME;
+          case 3: // CREATION_METADATA
+            return CREATION_METADATA;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.DBNAME, new org.apache.thrift.meta_data.FieldMetaData("dbname", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.TBL_NAME, new org.apache.thrift.meta_data.FieldMetaData("tbl_name", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.CREATION_METADATA, new org.apache.thrift.meta_data.FieldMetaData("creation_metadata", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, CreationMetadata.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(update_creation_metadata_args.class, metaDataMap);
+    }
+
+    public update_creation_metadata_args() {
+    }
+
+    public update_creation_metadata_args(
+      String dbname,
+      String tbl_name,
+      CreationMetadata creation_metadata)
+    {
+      this();
+      this.dbname = dbname;
+      this.tbl_name = tbl_name;
+      this.creation_metadata = creation_metadata;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public update_creation_metadata_args(update_creation_metadata_args other) {
+      if (other.isSetDbname()) {
+        this.dbname = other.dbname;
+      }
+      if (other.isSetTbl_name()) {
+        this.tbl_name = other.tbl_name;
+      }
+      if (other.isSetCreation_metadata()) {
+        this.creation_metadata = new CreationMetadata(other.creation_metadata);
+      }
+    }
+
+    public update_creation_metadata_args deepCopy() {
+      return new update_creation_metadata_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.dbname = null;
+      this.tbl_name = null;
+      this.creation_metadata = null;
+    }
+
+    public String getDbname() {
+      return this.dbname;
+    }
+
+    public void setDbname(String dbname) {
+      this.dbname = dbname;
+    }
+
+    public void unsetDbname() {
+      this.dbname = null;
+    }
+
+    /** Returns true if field dbname is set (has been assigned a value) and false otherwise */
+    public boolean isSetDbname() {
+      return this.dbname != null;
+    }
+
+    public void setDbnameIsSet(boolean value) {
+      if (!value) {
+        this.dbname = null;
+      }
+    }
+
+    public String getTbl_name() {
+      return this.tbl_name;
+    }
+
+    public void setTbl_name(String tbl_name) {
+      this.tbl_name = tbl_name;
+    }
+
+    public void unsetTbl_name() {
+      this.tbl_name = null;
+    }
+
+    /** Returns true if field tbl_name is set (has been assigned a value) and false otherwise */
+    public boolean isSetTbl_name() {
+      return this.tbl_name != null;
+    }
+
+    public void setTbl_nameIsSet(boolean value) {
+      if (!value) {
+        this.tbl_name = null;
+      }
+    }
+
+    public CreationMetadata getCreation_metadata() {
+      return this.creation_metadata;
+    }
+
+    public void setCreation_metadata(CreationMetadata creation_metadata) {
+      this.creation_metadata = creation_metadata;
+    }
+
+    public void unsetCreation_metadata() {
+      this.creation_metadata = null;
+    }
+
+    /** Returns true if field creation_metadata is set (has been assigned a value) and false otherwise */
+    public boolean isSetCreation_metadata() {
+      return this.creation_metadata != null;
+    }
+
+    public void setCreation_metadataIsSet(boolean value) {
+      if (!value) {
+        this.creation_metadata = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case DBNAME:
+        if (value == null) {
+          unsetDbname();
+        } else {
+          setDbname((String)value);
+        }
+        break;
+
+      case TBL_NAME:
+        if (value == null) {
+          unsetTbl_name();
+        } else {
+          setTbl_name((String)value);
+        }
+        break;
+
+      case CREATION_METADATA:
+        if (value == null) {
+          unsetCreation_metadata();
+        } else {
+          setCreation_metadata((CreationMetadata)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case DBNAME:
+        return getDbname();
+
+      case TBL_NAME:
+        return getTbl_name();
+
+      case CREATION_METADATA:
+        return getCreation_metadata();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case DBNAME:
+        return isSetDbname();
+      case TBL_NAME:
+        return isSetTbl_name();
+      case CREATION_METADATA:
+        return isSetCreation_metadata();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof update_creation_metadata_args)
+        return this.equals((update_creation_metadata_args)that);
+      return false;
+    }
+
+    public boolean equals(update_creation_metadata_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_dbname = true && this.isSetDbname();
+      boolean that_present_dbname = true && that.isSetDbname();
+      if (this_present_dbname || that_present_dbname) {
+        if (!(this_present_dbname && that_present_dbname))
+          return false;
+        if (!this.dbname.equals(that.dbname))
+          return false;
+      }
+
+      boolean this_present_tbl_name = true && this.isSetTbl_name();
+      boolean that_present_tbl_name = true && that.isSetTbl_name();
+      if (this_present_tbl_name || that_present_tbl_name) {
+        if (!(this_present_tbl_name && that_present_tbl_name))
+          return false;
+        if (!this.tbl_name.equals(that.tbl_name))
+          return false;
+      }
+
+      boolean this_present_creation_metadata = true && this.isSetCreation_metadata();
+      boolean that_present_creation_metadata = true && that.isSetCreation_metadata();
+      if (this_present_creation_metadata || that_present_creation_metadata) {
+        if (!(this_present_creation_metadata && that_present_creation_metadata))
+          return false;
+        if (!this.creation_metadata.equals(that.creation_metadata))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_dbname = true && (isSetDbname());
+      list.add(present_dbname);
+      if (present_dbname)
+        list.add(dbname);
+
+      boolean present_tbl_name = true && (isSetTbl_name());
+      list.add(present_tbl_name);
+      if (present_tbl_name)
+        list.add(tbl_name);
+
+      boolean present_creation_metadata = true && (isSetCreation_metadata());
+      list.add(present_creation_metadata);
+      if (present_creation_metadata)
+        list.add(creation_metadata);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(update_creation_metadata_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetDbname()).compareTo(other.isSetDbname());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetDbname()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.dbname, other.dbname);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetTbl_name()).compareTo(other.isSetTbl_name());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetTbl_name()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.tbl_name, other.tbl_name);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetCreation_metadata()).compareTo(other.isSetCreation_metadata());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetCreation_metadata()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.creation_metadata, other.creation_metadata);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("update_creation_metadata_args(");
+      boolean first = true;
+
+      sb.append("dbname:");
+      if (this.dbname == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.dbname);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("tbl_name:");
+      if (this.tbl_name == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.tbl_name);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("creation_metadata:");
+      if (this.creation_metadata == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.creation_metadata);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (creation_metadata != null) {
+        creation_metadata.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class update_creation_metadata_argsStandardSchemeFactory implements SchemeFactory {
+      public update_creation_metadata_argsStandardScheme getScheme() {
+        return new update_creation_metadata_argsStandardScheme();
+      }
+    }
+
+    private static class update_creation_metadata_argsStandardScheme extends StandardScheme<update_creation_metadata_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, update_creation_metadata_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // DBNAME
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.dbname = iprot.readString();
+                struct.setDbnameIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // TBL_NAME
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.tbl_name = iprot.readString();
+                struct.setTbl_nameIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 3: // CREATION_METADATA
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.creation_metadata = new CreationMetadata();
+                struct.creation_metadata.read(iprot);
+                struct.setCreation_metadataIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, update_creation_metadata_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.dbname != null) {
+          oprot.writeFieldBegin(DBNAME_FIELD_DESC);
+          oprot.writeString(struct.dbname);
+          oprot.writeFieldEnd();
+        }
+        if (struct.tbl_name != null) {
+          oprot.writeFieldBegin(TBL_NAME_FIELD_DESC);
+          oprot.writeString(struct.tbl_name);
+          oprot.writeFieldEnd();
+        }
+        if (struct.creation_metadata != null) {
+          oprot.writeFieldBegin(CREATION_METADATA_FIELD_DESC);
+          struct.creation_metadata.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class update_creation_metadata_argsTupleSchemeFactory implements SchemeFactory {
+      public update_creation_metadata_argsTupleScheme getScheme() {
+        return new update_creation_metadata_argsTupleScheme();
+      }
+    }
+
+    private static class update_creation_metadata_argsTupleScheme extends TupleScheme<update_creation_metadata_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, update_creation_metadata_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetDbname()) {
+          optionals.set(0);
+        }
+        if (struct.isSetTbl_name()) {
+          optionals.set(1);
+        }
+        if (struct.isSetCreation_metadata()) {
+          optionals.set(2);
+        }
+        oprot.writeBitSet(optionals, 3);
+        if (struct.isSetDbname()) {
+          oprot.writeString(struct.dbname);
+        }
+        if (struct.isSetTbl_name()) {
+          oprot.writeString(struct.tbl_name);
+        }
+        if (struct.isSetCreation_metadata()) {
+          struct.creation_metadata.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, update_creation_metadata_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(3);
+        if (incoming.get(0)) {
+          struct.dbname = iprot.readString();
+          struct.setDbnameIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.tbl_name = iprot.readString();
+          struct.setTbl_nameIsSet(true);
+        }
+        if (incoming.get(2)) {
+          struct.creation_metadata = new CreationMetadata();
+          struct.creation_metadata.read(iprot);
+          struct.setCreation_metadataIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class update_creation_metadata_result implements org.apache.thrift.TBase<update_creation_metadata_result, update_creation_metadata_result._Fields>, java.io.Serializable, Cloneable, Comparable<update_creation_metadata_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("update_creation_metadata_result");
+
+    private static final org.apache.thrift.protocol.TField O1_FIELD_DESC = new org.apache.thrift.protocol.TField("o1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+    private static final org.apache.thrift.protocol.TField O2_FIELD_DESC = new org.apache.thrift.protocol.TField("o2", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+    private static final org.apache.thrift.protocol.TField O3_FIELD_DESC = new org.apache.thrift.protocol.TField("o3", org.apache.thrift.protocol.TType.STRUCT, (short)3);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new update_creation_metadata_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new update_creation_metadata_resultTupleSchemeFactory());
+    }
+
+    private MetaException o1; // required
+    private InvalidOperationException o2; // required
+    private UnknownDBException o3; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      O1((short)1, "o1"),
+      O2((short)2, "o2"),
+      O3((short)3, "o3");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // O1
+            return O1;
+          case 2: // O2
+            return O2;
+          case 3: // O3
+            return O3;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.O1, new org.apache.thrift.meta_data.FieldMetaData("o1", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      tmpMap.put(_Fields.O2, new org.apache.thrift.meta_data.FieldMetaData("o2", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      tmpMap.put(_Fields.O3, new org.apache.thrift.meta_data.FieldMetaData("o3", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(update_creation_metadata_result.class, metaDataMap);
+    }
+
+    public update_creation_metadata_result() {
+    }
+
+    public update_creation_metadata_result(
+      MetaException o1,
+      InvalidOperationException o2,
+      UnknownDBException o3)
+    {
+      this();
+      this.o1 = o1;
+      this.o2 = o2;
+      this.o3 = o3;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public update_creation_metadata_result(update_creation_metadata_result other) {
+      if (other.isSetO1()) {
+        this.o1 = new MetaException(other.o1);
+      }
+      if (other.isSetO2()) {
+        this.o2 = new InvalidOperationException(other.o2);
+      }
+      if (other.isSetO3()) {
+        this.o3 = new UnknownDBException(other.o3);
+      }
+    }
+
+    public update_creation_metadata_result deepCopy() {
+      return new update_creation_metadata_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.o1 = null;
+      this.o2 = null;
+      this.o3 = null;
+    }
+
+    public MetaException getO1() {
+      return this.o1;
+    }
+
+    public void setO1(MetaException o1) {
+      this.o1 = o1;
+    }
+
+    public void unsetO1() {
+      this.o1 = null;
+    }
+
+    /** Returns true if field o1 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO1() {
+      return this.o1 != null;
+    }
+
+    public void setO1IsSet(boolean value) {
+      if (!value) {
+        this.o1 = null;
+      }
+    }
+
+    public InvalidOperationException getO2() {
+      return this.o2;
+    }
+
+    public void setO2(InvalidOperationException o2) {
+      this.o2 = o2;
+    }
+
+    public void unsetO2() {
+      this.o2 = null;
+    }
+
+    /** Returns true if field o2 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO2() {
+      return this.o2 != null;
+    }
+
+    public void setO2IsSet(boolean value) {
+      if (!value) {
+        this.o2 = null;
+      }
+    }
+
+    public UnknownDBException getO3() {
+      return this.o3;
+    }
+
+    public void setO3(UnknownDBException o3) {
+      this.o3 = o3;
+    }
+
+    public void unsetO3() {
+      this.o3 = null;
+    }
+
+    /** Returns true if field o3 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO3() {
+      return this.o3 != null;
+    }
+
+    public void setO3IsSet(boolean value) {
+      if (!value) {
+        this.o3 = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case O1:
+        if (value == null) {
+          unsetO1();
+        } else {
+          setO1((MetaException)value);
+        }
+        break;
+
+      case O2:
+        if (value == null) {
+          unsetO2();
+        } else {
+          setO2((InvalidOperationException)value);
+        }
+        break;
+
+      case O3:
+        if (value == null) {
+          unsetO3();
+        } else {
+          setO3((UnknownDBException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case O1:
+        return getO1();
+
+      case O2:
+        return getO2();
+
+      case O3:
+        return getO3();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case O1:
+        return isSetO1();
+      case O2:
+        return isSetO2();
+      case O3:
+        return isSetO3();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof update_creation_metadata_result)
+        return this.equals((update_creation_metadata_result)that);
+      return false;
+    }
+
+    public boolean equals(update_creation_metadata_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_o1 = true && this.isSetO1();
+      boolean that_present_o1 = true && that.isSetO1();
+      if (this_present_o1 || that_present_o1) {
+        if (!(this_present_o1 && that_present_o1))
+          return false;
+        if (!this.o1.equals(that.o1))
+          return false;
+      }
+
+      boolean this_present_o2 = true && this.isSetO2();
+      boolean that_present_o2 = true && that.isSetO2();
+      if (this_present_o2 || that_present_o2) {
+        if (!(this_present_o2 && that_present_o2))
+          return false;
+        if (!this.o2.equals(that.o2))
+          return false;
+      }
+
+      boolean this_present_o3 = true && this.isSetO3();
+      boolean that_present_o3 = true && that.isSetO3();
+      if (this_present_o3 || that_present_o3) {
+        if (!(this_present_o3 && that_present_o3))
+          return false;
+        if (!this.o3.equals(that.o3))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_o1 = true && (isSetO1());
+      list.add(present_o1);
+      if (present_o1)
+        list.add(o1);
+
+      boolean present_o2 = true && (isSetO2());
+      list.add(present_o2);
+      if (present_o2)
+        list.add(o2);
+
+      boolean present_o3 = true && (isSetO3());
+      list.add(present_o3);
+      if (present_o3)
+        list.add(o3);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(update_creation_metadata_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetO1()).compareTo(other.isSetO1());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO1()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o1, other.o1);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetO2()).compareTo(other.isSetO2());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO2()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o2, other.o2);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetO3()).compareTo(other.isSetO3());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO3()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o3, other.o3);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("update_creation_metadata_result(");
+      boolean first = true;
+
+      sb.append("o1:");
+      if (this.o1 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o1);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("o2:");
+      if (this.o2 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o2);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("o3:");
+      if (this.o3 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o3);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class update_creation_metadata_resultStandardSchemeFactory implements SchemeFactory {
+      public update_creation_metadata_resultStandardScheme getScheme() {
+        return new update_creation_metadata_resultStandardScheme();
+      }
+    }
+
+    private static class update_creation_metadata_resultStandardScheme extends StandardScheme<update_creation_metadata_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, update_creation_metadata_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // O1
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o1 = new MetaException();
+                struct.o1.read(iprot);
+                struct.setO1IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // O2
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o2 = new InvalidOperationException();
+                struct.o2.read(iprot);
+                struct.setO2IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 3: // O3
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o3 = new UnknownDBException();
+                struct.o3.read(iprot);
+                struct.setO3IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, update_creation_metadata_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.o1 != null) {
+          oprot.writeFieldBegin(O1_FIELD_DESC);
+          struct.o1.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.o2 != null) {
+          oprot.writeFieldBegin(O2_FIELD_DESC);
+          struct.o2.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.o3 != null) {
+          oprot.writeFieldBegin(O3_FIELD_DESC);
+          struct.o3.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class update_creation_metadata_resultTupleSchemeFactory implements SchemeFactory {
+      public update_creation_metadata_resultTupleScheme getScheme() {
+        return new update_creation_metadata_resultTupleScheme();
+      }
+    }
+
+    private static class update_creation_metadata_resultTupleScheme extends TupleScheme<update_creation_metadata_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, update_creation_metadata_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetO1()) {
+          optionals.set(0);
+        }
+        if (struct.isSetO2()) {
+          optionals.set(1);
+        }
+        if (struct.isSetO3()) {
+          optionals.set(2);
+        }
+        oprot.writeBitSet(optionals, 3);
+        if (struct.isSetO1()) {
+          struct.o1.write(oprot);
+        }
+        if (struct.isSetO2()) {
+          struct.o2.write(oprot);
+        }
+        if (struct.isSetO3()) {
+          struct.o3.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, update_creation_metadata_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(3);
+        if (incoming.get(0)) {
+          struct.o1 = new MetaException();
+          struct.o1.read(iprot);
+          struct.setO1IsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.o2 = new InvalidOperationException();
+          struct.o2.read(iprot);
+          struct.setO2IsSet(true);
+        }
+        if (incoming.get(2)) {
           struct.o3 = new UnknownDBException();
           struct.o3.read(iprot);
           struct.setO3IsSet(true);
