@@ -442,6 +442,10 @@ import org.slf4j.LoggerFactory;
 
     public SerDeInfo get_serde(GetSerdeRequest rqst) throws NoSuchObjectException, MetaException, org.apache.thrift.TException;
 
+    public LockResponse get_lock_materialization_rebuild(String dbName, String tableName, long txnId) throws org.apache.thrift.TException;
+
+    public boolean heartbeat_lock_materialization_rebuild(String dbName, String tableName, long txnId) throws org.apache.thrift.TException;
+
   }
 
   @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public interface AsyncIface extends com.facebook.fb303.FacebookService .AsyncIface {
@@ -845,6 +849,10 @@ import org.slf4j.LoggerFactory;
     public void add_serde(SerDeInfo serde, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
     public void get_serde(GetSerdeRequest rqst, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+
+    public void get_lock_materialization_rebuild(String dbName, String tableName, long txnId, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+
+    public void heartbeat_lock_materialization_rebuild(String dbName, String tableName, long txnId, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -6632,6 +6640,56 @@ import org.slf4j.LoggerFactory;
         throw result.o2;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "get_serde failed: unknown result");
+    }
+
+    public LockResponse get_lock_materialization_rebuild(String dbName, String tableName, long txnId) throws org.apache.thrift.TException
+    {
+      send_get_lock_materialization_rebuild(dbName, tableName, txnId);
+      return recv_get_lock_materialization_rebuild();
+    }
+
+    public void send_get_lock_materialization_rebuild(String dbName, String tableName, long txnId) throws org.apache.thrift.TException
+    {
+      get_lock_materialization_rebuild_args args = new get_lock_materialization_rebuild_args();
+      args.setDbName(dbName);
+      args.setTableName(tableName);
+      args.setTxnId(txnId);
+      sendBase("get_lock_materialization_rebuild", args);
+    }
+
+    public LockResponse recv_get_lock_materialization_rebuild() throws org.apache.thrift.TException
+    {
+      get_lock_materialization_rebuild_result result = new get_lock_materialization_rebuild_result();
+      receiveBase(result, "get_lock_materialization_rebuild");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "get_lock_materialization_rebuild failed: unknown result");
+    }
+
+    public boolean heartbeat_lock_materialization_rebuild(String dbName, String tableName, long txnId) throws org.apache.thrift.TException
+    {
+      send_heartbeat_lock_materialization_rebuild(dbName, tableName, txnId);
+      return recv_heartbeat_lock_materialization_rebuild();
+    }
+
+    public void send_heartbeat_lock_materialization_rebuild(String dbName, String tableName, long txnId) throws org.apache.thrift.TException
+    {
+      heartbeat_lock_materialization_rebuild_args args = new heartbeat_lock_materialization_rebuild_args();
+      args.setDbName(dbName);
+      args.setTableName(tableName);
+      args.setTxnId(txnId);
+      sendBase("heartbeat_lock_materialization_rebuild", args);
+    }
+
+    public boolean recv_heartbeat_lock_materialization_rebuild() throws org.apache.thrift.TException
+    {
+      heartbeat_lock_materialization_rebuild_result result = new heartbeat_lock_materialization_rebuild_result();
+      receiveBase(result, "heartbeat_lock_materialization_rebuild");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "heartbeat_lock_materialization_rebuild failed: unknown result");
     }
 
   }
@@ -13526,6 +13584,82 @@ import org.slf4j.LoggerFactory;
       }
     }
 
+    public void get_lock_materialization_rebuild(String dbName, String tableName, long txnId, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      get_lock_materialization_rebuild_call method_call = new get_lock_materialization_rebuild_call(dbName, tableName, txnId, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_lock_materialization_rebuild_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String dbName;
+      private String tableName;
+      private long txnId;
+      public get_lock_materialization_rebuild_call(String dbName, String tableName, long txnId, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.dbName = dbName;
+        this.tableName = tableName;
+        this.txnId = txnId;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("get_lock_materialization_rebuild", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        get_lock_materialization_rebuild_args args = new get_lock_materialization_rebuild_args();
+        args.setDbName(dbName);
+        args.setTableName(tableName);
+        args.setTxnId(txnId);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public LockResponse getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_get_lock_materialization_rebuild();
+      }
+    }
+
+    public void heartbeat_lock_materialization_rebuild(String dbName, String tableName, long txnId, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      heartbeat_lock_materialization_rebuild_call method_call = new heartbeat_lock_materialization_rebuild_call(dbName, tableName, txnId, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class heartbeat_lock_materialization_rebuild_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String dbName;
+      private String tableName;
+      private long txnId;
+      public heartbeat_lock_materialization_rebuild_call(String dbName, String tableName, long txnId, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.dbName = dbName;
+        this.tableName = tableName;
+        this.txnId = txnId;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("heartbeat_lock_materialization_rebuild", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        heartbeat_lock_materialization_rebuild_args args = new heartbeat_lock_materialization_rebuild_args();
+        args.setDbName(dbName);
+        args.setTableName(tableName);
+        args.setTxnId(txnId);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public boolean getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_heartbeat_lock_materialization_rebuild();
+      }
+    }
+
   }
 
   @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class Processor<I extends Iface> extends com.facebook.fb303.FacebookService.Processor<I> implements org.apache.thrift.TProcessor {
@@ -13739,6 +13873,8 @@ import org.slf4j.LoggerFactory;
       processMap.put("set_schema_version_state", new set_schema_version_state());
       processMap.put("add_serde", new add_serde());
       processMap.put("get_serde", new get_serde());
+      processMap.put("get_lock_materialization_rebuild", new get_lock_materialization_rebuild());
+      processMap.put("heartbeat_lock_materialization_rebuild", new heartbeat_lock_materialization_rebuild());
       return processMap;
     }
 
@@ -18891,6 +19027,47 @@ import org.slf4j.LoggerFactory;
       }
     }
 
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_lock_materialization_rebuild<I extends Iface> extends org.apache.thrift.ProcessFunction<I, get_lock_materialization_rebuild_args> {
+      public get_lock_materialization_rebuild() {
+        super("get_lock_materialization_rebuild");
+      }
+
+      public get_lock_materialization_rebuild_args getEmptyArgsInstance() {
+        return new get_lock_materialization_rebuild_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public get_lock_materialization_rebuild_result getResult(I iface, get_lock_materialization_rebuild_args args) throws org.apache.thrift.TException {
+        get_lock_materialization_rebuild_result result = new get_lock_materialization_rebuild_result();
+        result.success = iface.get_lock_materialization_rebuild(args.dbName, args.tableName, args.txnId);
+        return result;
+      }
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class heartbeat_lock_materialization_rebuild<I extends Iface> extends org.apache.thrift.ProcessFunction<I, heartbeat_lock_materialization_rebuild_args> {
+      public heartbeat_lock_materialization_rebuild() {
+        super("heartbeat_lock_materialization_rebuild");
+      }
+
+      public heartbeat_lock_materialization_rebuild_args getEmptyArgsInstance() {
+        return new heartbeat_lock_materialization_rebuild_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public heartbeat_lock_materialization_rebuild_result getResult(I iface, heartbeat_lock_materialization_rebuild_args args) throws org.apache.thrift.TException {
+        heartbeat_lock_materialization_rebuild_result result = new heartbeat_lock_materialization_rebuild_result();
+        result.success = iface.heartbeat_lock_materialization_rebuild(args.dbName, args.tableName, args.txnId);
+        result.setSuccessIsSet(true);
+        return result;
+      }
+    }
+
   }
 
   @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class AsyncProcessor<I extends AsyncIface> extends com.facebook.fb303.FacebookService.AsyncProcessor<I> {
@@ -19104,6 +19281,8 @@ import org.slf4j.LoggerFactory;
       processMap.put("set_schema_version_state", new set_schema_version_state());
       processMap.put("add_serde", new add_serde());
       processMap.put("get_serde", new get_serde());
+      processMap.put("get_lock_materialization_rebuild", new get_lock_materialization_rebuild());
+      processMap.put("heartbeat_lock_materialization_rebuild", new heartbeat_lock_materialization_rebuild());
       return processMap;
     }
 
@@ -31386,6 +31565,109 @@ import org.slf4j.LoggerFactory;
 
       public void start(I iface, get_serde_args args, org.apache.thrift.async.AsyncMethodCallback<SerDeInfo> resultHandler) throws TException {
         iface.get_serde(args.rqst,resultHandler);
+      }
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_lock_materialization_rebuild<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, get_lock_materialization_rebuild_args, LockResponse> {
+      public get_lock_materialization_rebuild() {
+        super("get_lock_materialization_rebuild");
+      }
+
+      public get_lock_materialization_rebuild_args getEmptyArgsInstance() {
+        return new get_lock_materialization_rebuild_args();
+      }
+
+      public AsyncMethodCallback<LockResponse> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new AsyncMethodCallback<LockResponse>() { 
+          public void onComplete(LockResponse o) {
+            get_lock_materialization_rebuild_result result = new get_lock_materialization_rebuild_result();
+            result.success = o;
+            try {
+              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+              return;
+            } catch (Exception e) {
+              LOGGER.error("Exception writing to internal frame buffer", e);
+            }
+            fb.close();
+          }
+          public void onError(Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TBase msg;
+            get_lock_materialization_rebuild_result result = new get_lock_materialization_rebuild_result();
+            {
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+              return;
+            } catch (Exception ex) {
+              LOGGER.error("Exception writing to internal frame buffer", ex);
+            }
+            fb.close();
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, get_lock_materialization_rebuild_args args, org.apache.thrift.async.AsyncMethodCallback<LockResponse> resultHandler) throws TException {
+        iface.get_lock_materialization_rebuild(args.dbName, args.tableName, args.txnId,resultHandler);
+      }
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class heartbeat_lock_materialization_rebuild<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, heartbeat_lock_materialization_rebuild_args, Boolean> {
+      public heartbeat_lock_materialization_rebuild() {
+        super("heartbeat_lock_materialization_rebuild");
+      }
+
+      public heartbeat_lock_materialization_rebuild_args getEmptyArgsInstance() {
+        return new heartbeat_lock_materialization_rebuild_args();
+      }
+
+      public AsyncMethodCallback<Boolean> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new AsyncMethodCallback<Boolean>() { 
+          public void onComplete(Boolean o) {
+            heartbeat_lock_materialization_rebuild_result result = new heartbeat_lock_materialization_rebuild_result();
+            result.success = o;
+            result.setSuccessIsSet(true);
+            try {
+              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+              return;
+            } catch (Exception e) {
+              LOGGER.error("Exception writing to internal frame buffer", e);
+            }
+            fb.close();
+          }
+          public void onError(Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TBase msg;
+            heartbeat_lock_materialization_rebuild_result result = new heartbeat_lock_materialization_rebuild_result();
+            {
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+              return;
+            } catch (Exception ex) {
+              LOGGER.error("Exception writing to internal frame buffer", ex);
+            }
+            fb.close();
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, heartbeat_lock_materialization_rebuild_args args, org.apache.thrift.async.AsyncMethodCallback<Boolean> resultHandler) throws TException {
+        iface.heartbeat_lock_materialization_rebuild(args.dbName, args.tableName, args.txnId,resultHandler);
       }
     }
 
@@ -231369,6 +231651,1855 @@ import org.slf4j.LoggerFactory;
           struct.o2 = new MetaException();
           struct.o2.read(iprot);
           struct.setO2IsSet(true);
+        }
+      }
+    }
+
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_lock_materialization_rebuild_args implements org.apache.thrift.TBase<get_lock_materialization_rebuild_args, get_lock_materialization_rebuild_args._Fields>, java.io.Serializable, Cloneable, Comparable<get_lock_materialization_rebuild_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("get_lock_materialization_rebuild_args");
+
+    private static final org.apache.thrift.protocol.TField DB_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("dbName", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField TABLE_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("tableName", org.apache.thrift.protocol.TType.STRING, (short)2);
+    private static final org.apache.thrift.protocol.TField TXN_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("txnId", org.apache.thrift.protocol.TType.I64, (short)3);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new get_lock_materialization_rebuild_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new get_lock_materialization_rebuild_argsTupleSchemeFactory());
+    }
+
+    private String dbName; // required
+    private String tableName; // required
+    private long txnId; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      DB_NAME((short)1, "dbName"),
+      TABLE_NAME((short)2, "tableName"),
+      TXN_ID((short)3, "txnId");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // DB_NAME
+            return DB_NAME;
+          case 2: // TABLE_NAME
+            return TABLE_NAME;
+          case 3: // TXN_ID
+            return TXN_ID;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    private static final int __TXNID_ISSET_ID = 0;
+    private byte __isset_bitfield = 0;
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.DB_NAME, new org.apache.thrift.meta_data.FieldMetaData("dbName", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.TABLE_NAME, new org.apache.thrift.meta_data.FieldMetaData("tableName", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.TXN_ID, new org.apache.thrift.meta_data.FieldMetaData("txnId", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(get_lock_materialization_rebuild_args.class, metaDataMap);
+    }
+
+    public get_lock_materialization_rebuild_args() {
+    }
+
+    public get_lock_materialization_rebuild_args(
+      String dbName,
+      String tableName,
+      long txnId)
+    {
+      this();
+      this.dbName = dbName;
+      this.tableName = tableName;
+      this.txnId = txnId;
+      setTxnIdIsSet(true);
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public get_lock_materialization_rebuild_args(get_lock_materialization_rebuild_args other) {
+      __isset_bitfield = other.__isset_bitfield;
+      if (other.isSetDbName()) {
+        this.dbName = other.dbName;
+      }
+      if (other.isSetTableName()) {
+        this.tableName = other.tableName;
+      }
+      this.txnId = other.txnId;
+    }
+
+    public get_lock_materialization_rebuild_args deepCopy() {
+      return new get_lock_materialization_rebuild_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.dbName = null;
+      this.tableName = null;
+      setTxnIdIsSet(false);
+      this.txnId = 0;
+    }
+
+    public String getDbName() {
+      return this.dbName;
+    }
+
+    public void setDbName(String dbName) {
+      this.dbName = dbName;
+    }
+
+    public void unsetDbName() {
+      this.dbName = null;
+    }
+
+    /** Returns true if field dbName is set (has been assigned a value) and false otherwise */
+    public boolean isSetDbName() {
+      return this.dbName != null;
+    }
+
+    public void setDbNameIsSet(boolean value) {
+      if (!value) {
+        this.dbName = null;
+      }
+    }
+
+    public String getTableName() {
+      return this.tableName;
+    }
+
+    public void setTableName(String tableName) {
+      this.tableName = tableName;
+    }
+
+    public void unsetTableName() {
+      this.tableName = null;
+    }
+
+    /** Returns true if field tableName is set (has been assigned a value) and false otherwise */
+    public boolean isSetTableName() {
+      return this.tableName != null;
+    }
+
+    public void setTableNameIsSet(boolean value) {
+      if (!value) {
+        this.tableName = null;
+      }
+    }
+
+    public long getTxnId() {
+      return this.txnId;
+    }
+
+    public void setTxnId(long txnId) {
+      this.txnId = txnId;
+      setTxnIdIsSet(true);
+    }
+
+    public void unsetTxnId() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __TXNID_ISSET_ID);
+    }
+
+    /** Returns true if field txnId is set (has been assigned a value) and false otherwise */
+    public boolean isSetTxnId() {
+      return EncodingUtils.testBit(__isset_bitfield, __TXNID_ISSET_ID);
+    }
+
+    public void setTxnIdIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __TXNID_ISSET_ID, value);
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case DB_NAME:
+        if (value == null) {
+          unsetDbName();
+        } else {
+          setDbName((String)value);
+        }
+        break;
+
+      case TABLE_NAME:
+        if (value == null) {
+          unsetTableName();
+        } else {
+          setTableName((String)value);
+        }
+        break;
+
+      case TXN_ID:
+        if (value == null) {
+          unsetTxnId();
+        } else {
+          setTxnId((Long)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case DB_NAME:
+        return getDbName();
+
+      case TABLE_NAME:
+        return getTableName();
+
+      case TXN_ID:
+        return getTxnId();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case DB_NAME:
+        return isSetDbName();
+      case TABLE_NAME:
+        return isSetTableName();
+      case TXN_ID:
+        return isSetTxnId();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof get_lock_materialization_rebuild_args)
+        return this.equals((get_lock_materialization_rebuild_args)that);
+      return false;
+    }
+
+    public boolean equals(get_lock_materialization_rebuild_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_dbName = true && this.isSetDbName();
+      boolean that_present_dbName = true && that.isSetDbName();
+      if (this_present_dbName || that_present_dbName) {
+        if (!(this_present_dbName && that_present_dbName))
+          return false;
+        if (!this.dbName.equals(that.dbName))
+          return false;
+      }
+
+      boolean this_present_tableName = true && this.isSetTableName();
+      boolean that_present_tableName = true && that.isSetTableName();
+      if (this_present_tableName || that_present_tableName) {
+        if (!(this_present_tableName && that_present_tableName))
+          return false;
+        if (!this.tableName.equals(that.tableName))
+          return false;
+      }
+
+      boolean this_present_txnId = true;
+      boolean that_present_txnId = true;
+      if (this_present_txnId || that_present_txnId) {
+        if (!(this_present_txnId && that_present_txnId))
+          return false;
+        if (this.txnId != that.txnId)
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_dbName = true && (isSetDbName());
+      list.add(present_dbName);
+      if (present_dbName)
+        list.add(dbName);
+
+      boolean present_tableName = true && (isSetTableName());
+      list.add(present_tableName);
+      if (present_tableName)
+        list.add(tableName);
+
+      boolean present_txnId = true;
+      list.add(present_txnId);
+      if (present_txnId)
+        list.add(txnId);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(get_lock_materialization_rebuild_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetDbName()).compareTo(other.isSetDbName());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetDbName()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.dbName, other.dbName);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetTableName()).compareTo(other.isSetTableName());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetTableName()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.tableName, other.tableName);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetTxnId()).compareTo(other.isSetTxnId());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetTxnId()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.txnId, other.txnId);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("get_lock_materialization_rebuild_args(");
+      boolean first = true;
+
+      sb.append("dbName:");
+      if (this.dbName == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.dbName);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("tableName:");
+      if (this.tableName == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.tableName);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("txnId:");
+      sb.append(this.txnId);
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+        __isset_bitfield = 0;
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class get_lock_materialization_rebuild_argsStandardSchemeFactory implements SchemeFactory {
+      public get_lock_materialization_rebuild_argsStandardScheme getScheme() {
+        return new get_lock_materialization_rebuild_argsStandardScheme();
+      }
+    }
+
+    private static class get_lock_materialization_rebuild_argsStandardScheme extends StandardScheme<get_lock_materialization_rebuild_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, get_lock_materialization_rebuild_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // DB_NAME
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.dbName = iprot.readString();
+                struct.setDbNameIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // TABLE_NAME
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.tableName = iprot.readString();
+                struct.setTableNameIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 3: // TXN_ID
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.txnId = iprot.readI64();
+                struct.setTxnIdIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, get_lock_materialization_rebuild_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.dbName != null) {
+          oprot.writeFieldBegin(DB_NAME_FIELD_DESC);
+          oprot.writeString(struct.dbName);
+          oprot.writeFieldEnd();
+        }
+        if (struct.tableName != null) {
+          oprot.writeFieldBegin(TABLE_NAME_FIELD_DESC);
+          oprot.writeString(struct.tableName);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldBegin(TXN_ID_FIELD_DESC);
+        oprot.writeI64(struct.txnId);
+        oprot.writeFieldEnd();
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class get_lock_materialization_rebuild_argsTupleSchemeFactory implements SchemeFactory {
+      public get_lock_materialization_rebuild_argsTupleScheme getScheme() {
+        return new get_lock_materialization_rebuild_argsTupleScheme();
+      }
+    }
+
+    private static class get_lock_materialization_rebuild_argsTupleScheme extends TupleScheme<get_lock_materialization_rebuild_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, get_lock_materialization_rebuild_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetDbName()) {
+          optionals.set(0);
+        }
+        if (struct.isSetTableName()) {
+          optionals.set(1);
+        }
+        if (struct.isSetTxnId()) {
+          optionals.set(2);
+        }
+        oprot.writeBitSet(optionals, 3);
+        if (struct.isSetDbName()) {
+          oprot.writeString(struct.dbName);
+        }
+        if (struct.isSetTableName()) {
+          oprot.writeString(struct.tableName);
+        }
+        if (struct.isSetTxnId()) {
+          oprot.writeI64(struct.txnId);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, get_lock_materialization_rebuild_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(3);
+        if (incoming.get(0)) {
+          struct.dbName = iprot.readString();
+          struct.setDbNameIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.tableName = iprot.readString();
+          struct.setTableNameIsSet(true);
+        }
+        if (incoming.get(2)) {
+          struct.txnId = iprot.readI64();
+          struct.setTxnIdIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_lock_materialization_rebuild_result implements org.apache.thrift.TBase<get_lock_materialization_rebuild_result, get_lock_materialization_rebuild_result._Fields>, java.io.Serializable, Cloneable, Comparable<get_lock_materialization_rebuild_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("get_lock_materialization_rebuild_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new get_lock_materialization_rebuild_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new get_lock_materialization_rebuild_resultTupleSchemeFactory());
+    }
+
+    private LockResponse success; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, LockResponse.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(get_lock_materialization_rebuild_result.class, metaDataMap);
+    }
+
+    public get_lock_materialization_rebuild_result() {
+    }
+
+    public get_lock_materialization_rebuild_result(
+      LockResponse success)
+    {
+      this();
+      this.success = success;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public get_lock_materialization_rebuild_result(get_lock_materialization_rebuild_result other) {
+      if (other.isSetSuccess()) {
+        this.success = new LockResponse(other.success);
+      }
+    }
+
+    public get_lock_materialization_rebuild_result deepCopy() {
+      return new get_lock_materialization_rebuild_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+    }
+
+    public LockResponse getSuccess() {
+      return this.success;
+    }
+
+    public void setSuccess(LockResponse success) {
+      this.success = success;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((LockResponse)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof get_lock_materialization_rebuild_result)
+        return this.equals((get_lock_materialization_rebuild_result)that);
+      return false;
+    }
+
+    public boolean equals(get_lock_materialization_rebuild_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_success = true && (isSetSuccess());
+      list.add(present_success);
+      if (present_success)
+        list.add(success);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(get_lock_materialization_rebuild_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(other.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("get_lock_materialization_rebuild_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (success != null) {
+        success.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class get_lock_materialization_rebuild_resultStandardSchemeFactory implements SchemeFactory {
+      public get_lock_materialization_rebuild_resultStandardScheme getScheme() {
+        return new get_lock_materialization_rebuild_resultStandardScheme();
+      }
+    }
+
+    private static class get_lock_materialization_rebuild_resultStandardScheme extends StandardScheme<get_lock_materialization_rebuild_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, get_lock_materialization_rebuild_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.success = new LockResponse();
+                struct.success.read(iprot);
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, get_lock_materialization_rebuild_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.success != null) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          struct.success.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class get_lock_materialization_rebuild_resultTupleSchemeFactory implements SchemeFactory {
+      public get_lock_materialization_rebuild_resultTupleScheme getScheme() {
+        return new get_lock_materialization_rebuild_resultTupleScheme();
+      }
+    }
+
+    private static class get_lock_materialization_rebuild_resultTupleScheme extends TupleScheme<get_lock_materialization_rebuild_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, get_lock_materialization_rebuild_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetSuccess()) {
+          struct.success.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, get_lock_materialization_rebuild_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.success = new LockResponse();
+          struct.success.read(iprot);
+          struct.setSuccessIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class heartbeat_lock_materialization_rebuild_args implements org.apache.thrift.TBase<heartbeat_lock_materialization_rebuild_args, heartbeat_lock_materialization_rebuild_args._Fields>, java.io.Serializable, Cloneable, Comparable<heartbeat_lock_materialization_rebuild_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("heartbeat_lock_materialization_rebuild_args");
+
+    private static final org.apache.thrift.protocol.TField DB_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("dbName", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField TABLE_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("tableName", org.apache.thrift.protocol.TType.STRING, (short)2);
+    private static final org.apache.thrift.protocol.TField TXN_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("txnId", org.apache.thrift.protocol.TType.I64, (short)3);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new heartbeat_lock_materialization_rebuild_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new heartbeat_lock_materialization_rebuild_argsTupleSchemeFactory());
+    }
+
+    private String dbName; // required
+    private String tableName; // required
+    private long txnId; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      DB_NAME((short)1, "dbName"),
+      TABLE_NAME((short)2, "tableName"),
+      TXN_ID((short)3, "txnId");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // DB_NAME
+            return DB_NAME;
+          case 2: // TABLE_NAME
+            return TABLE_NAME;
+          case 3: // TXN_ID
+            return TXN_ID;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    private static final int __TXNID_ISSET_ID = 0;
+    private byte __isset_bitfield = 0;
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.DB_NAME, new org.apache.thrift.meta_data.FieldMetaData("dbName", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.TABLE_NAME, new org.apache.thrift.meta_data.FieldMetaData("tableName", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.TXN_ID, new org.apache.thrift.meta_data.FieldMetaData("txnId", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(heartbeat_lock_materialization_rebuild_args.class, metaDataMap);
+    }
+
+    public heartbeat_lock_materialization_rebuild_args() {
+    }
+
+    public heartbeat_lock_materialization_rebuild_args(
+      String dbName,
+      String tableName,
+      long txnId)
+    {
+      this();
+      this.dbName = dbName;
+      this.tableName = tableName;
+      this.txnId = txnId;
+      setTxnIdIsSet(true);
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public heartbeat_lock_materialization_rebuild_args(heartbeat_lock_materialization_rebuild_args other) {
+      __isset_bitfield = other.__isset_bitfield;
+      if (other.isSetDbName()) {
+        this.dbName = other.dbName;
+      }
+      if (other.isSetTableName()) {
+        this.tableName = other.tableName;
+      }
+      this.txnId = other.txnId;
+    }
+
+    public heartbeat_lock_materialization_rebuild_args deepCopy() {
+      return new heartbeat_lock_materialization_rebuild_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.dbName = null;
+      this.tableName = null;
+      setTxnIdIsSet(false);
+      this.txnId = 0;
+    }
+
+    public String getDbName() {
+      return this.dbName;
+    }
+
+    public void setDbName(String dbName) {
+      this.dbName = dbName;
+    }
+
+    public void unsetDbName() {
+      this.dbName = null;
+    }
+
+    /** Returns true if field dbName is set (has been assigned a value) and false otherwise */
+    public boolean isSetDbName() {
+      return this.dbName != null;
+    }
+
+    public void setDbNameIsSet(boolean value) {
+      if (!value) {
+        this.dbName = null;
+      }
+    }
+
+    public String getTableName() {
+      return this.tableName;
+    }
+
+    public void setTableName(String tableName) {
+      this.tableName = tableName;
+    }
+
+    public void unsetTableName() {
+      this.tableName = null;
+    }
+
+    /** Returns true if field tableName is set (has been assigned a value) and false otherwise */
+    public boolean isSetTableName() {
+      return this.tableName != null;
+    }
+
+    public void setTableNameIsSet(boolean value) {
+      if (!value) {
+        this.tableName = null;
+      }
+    }
+
+    public long getTxnId() {
+      return this.txnId;
+    }
+
+    public void setTxnId(long txnId) {
+      this.txnId = txnId;
+      setTxnIdIsSet(true);
+    }
+
+    public void unsetTxnId() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __TXNID_ISSET_ID);
+    }
+
+    /** Returns true if field txnId is set (has been assigned a value) and false otherwise */
+    public boolean isSetTxnId() {
+      return EncodingUtils.testBit(__isset_bitfield, __TXNID_ISSET_ID);
+    }
+
+    public void setTxnIdIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __TXNID_ISSET_ID, value);
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case DB_NAME:
+        if (value == null) {
+          unsetDbName();
+        } else {
+          setDbName((String)value);
+        }
+        break;
+
+      case TABLE_NAME:
+        if (value == null) {
+          unsetTableName();
+        } else {
+          setTableName((String)value);
+        }
+        break;
+
+      case TXN_ID:
+        if (value == null) {
+          unsetTxnId();
+        } else {
+          setTxnId((Long)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case DB_NAME:
+        return getDbName();
+
+      case TABLE_NAME:
+        return getTableName();
+
+      case TXN_ID:
+        return getTxnId();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case DB_NAME:
+        return isSetDbName();
+      case TABLE_NAME:
+        return isSetTableName();
+      case TXN_ID:
+        return isSetTxnId();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof heartbeat_lock_materialization_rebuild_args)
+        return this.equals((heartbeat_lock_materialization_rebuild_args)that);
+      return false;
+    }
+
+    public boolean equals(heartbeat_lock_materialization_rebuild_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_dbName = true && this.isSetDbName();
+      boolean that_present_dbName = true && that.isSetDbName();
+      if (this_present_dbName || that_present_dbName) {
+        if (!(this_present_dbName && that_present_dbName))
+          return false;
+        if (!this.dbName.equals(that.dbName))
+          return false;
+      }
+
+      boolean this_present_tableName = true && this.isSetTableName();
+      boolean that_present_tableName = true && that.isSetTableName();
+      if (this_present_tableName || that_present_tableName) {
+        if (!(this_present_tableName && that_present_tableName))
+          return false;
+        if (!this.tableName.equals(that.tableName))
+          return false;
+      }
+
+      boolean this_present_txnId = true;
+      boolean that_present_txnId = true;
+      if (this_present_txnId || that_present_txnId) {
+        if (!(this_present_txnId && that_present_txnId))
+          return false;
+        if (this.txnId != that.txnId)
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_dbName = true && (isSetDbName());
+      list.add(present_dbName);
+      if (present_dbName)
+        list.add(dbName);
+
+      boolean present_tableName = true && (isSetTableName());
+      list.add(present_tableName);
+      if (present_tableName)
+        list.add(tableName);
+
+      boolean present_txnId = true;
+      list.add(present_txnId);
+      if (present_txnId)
+        list.add(txnId);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(heartbeat_lock_materialization_rebuild_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetDbName()).compareTo(other.isSetDbName());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetDbName()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.dbName, other.dbName);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetTableName()).compareTo(other.isSetTableName());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetTableName()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.tableName, other.tableName);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetTxnId()).compareTo(other.isSetTxnId());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetTxnId()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.txnId, other.txnId);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("heartbeat_lock_materialization_rebuild_args(");
+      boolean first = true;
+
+      sb.append("dbName:");
+      if (this.dbName == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.dbName);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("tableName:");
+      if (this.tableName == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.tableName);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("txnId:");
+      sb.append(this.txnId);
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+        __isset_bitfield = 0;
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class heartbeat_lock_materialization_rebuild_argsStandardSchemeFactory implements SchemeFactory {
+      public heartbeat_lock_materialization_rebuild_argsStandardScheme getScheme() {
+        return new heartbeat_lock_materialization_rebuild_argsStandardScheme();
+      }
+    }
+
+    private static class heartbeat_lock_materialization_rebuild_argsStandardScheme extends StandardScheme<heartbeat_lock_materialization_rebuild_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, heartbeat_lock_materialization_rebuild_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // DB_NAME
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.dbName = iprot.readString();
+                struct.setDbNameIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // TABLE_NAME
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.tableName = iprot.readString();
+                struct.setTableNameIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 3: // TXN_ID
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.txnId = iprot.readI64();
+                struct.setTxnIdIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, heartbeat_lock_materialization_rebuild_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.dbName != null) {
+          oprot.writeFieldBegin(DB_NAME_FIELD_DESC);
+          oprot.writeString(struct.dbName);
+          oprot.writeFieldEnd();
+        }
+        if (struct.tableName != null) {
+          oprot.writeFieldBegin(TABLE_NAME_FIELD_DESC);
+          oprot.writeString(struct.tableName);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldBegin(TXN_ID_FIELD_DESC);
+        oprot.writeI64(struct.txnId);
+        oprot.writeFieldEnd();
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class heartbeat_lock_materialization_rebuild_argsTupleSchemeFactory implements SchemeFactory {
+      public heartbeat_lock_materialization_rebuild_argsTupleScheme getScheme() {
+        return new heartbeat_lock_materialization_rebuild_argsTupleScheme();
+      }
+    }
+
+    private static class heartbeat_lock_materialization_rebuild_argsTupleScheme extends TupleScheme<heartbeat_lock_materialization_rebuild_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, heartbeat_lock_materialization_rebuild_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetDbName()) {
+          optionals.set(0);
+        }
+        if (struct.isSetTableName()) {
+          optionals.set(1);
+        }
+        if (struct.isSetTxnId()) {
+          optionals.set(2);
+        }
+        oprot.writeBitSet(optionals, 3);
+        if (struct.isSetDbName()) {
+          oprot.writeString(struct.dbName);
+        }
+        if (struct.isSetTableName()) {
+          oprot.writeString(struct.tableName);
+        }
+        if (struct.isSetTxnId()) {
+          oprot.writeI64(struct.txnId);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, heartbeat_lock_materialization_rebuild_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(3);
+        if (incoming.get(0)) {
+          struct.dbName = iprot.readString();
+          struct.setDbNameIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.tableName = iprot.readString();
+          struct.setTableNameIsSet(true);
+        }
+        if (incoming.get(2)) {
+          struct.txnId = iprot.readI64();
+          struct.setTxnIdIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class heartbeat_lock_materialization_rebuild_result implements org.apache.thrift.TBase<heartbeat_lock_materialization_rebuild_result, heartbeat_lock_materialization_rebuild_result._Fields>, java.io.Serializable, Cloneable, Comparable<heartbeat_lock_materialization_rebuild_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("heartbeat_lock_materialization_rebuild_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.BOOL, (short)0);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new heartbeat_lock_materialization_rebuild_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new heartbeat_lock_materialization_rebuild_resultTupleSchemeFactory());
+    }
+
+    private boolean success; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    private static final int __SUCCESS_ISSET_ID = 0;
+    private byte __isset_bitfield = 0;
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.BOOL)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(heartbeat_lock_materialization_rebuild_result.class, metaDataMap);
+    }
+
+    public heartbeat_lock_materialization_rebuild_result() {
+    }
+
+    public heartbeat_lock_materialization_rebuild_result(
+      boolean success)
+    {
+      this();
+      this.success = success;
+      setSuccessIsSet(true);
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public heartbeat_lock_materialization_rebuild_result(heartbeat_lock_materialization_rebuild_result other) {
+      __isset_bitfield = other.__isset_bitfield;
+      this.success = other.success;
+    }
+
+    public heartbeat_lock_materialization_rebuild_result deepCopy() {
+      return new heartbeat_lock_materialization_rebuild_result(this);
+    }
+
+    @Override
+    public void clear() {
+      setSuccessIsSet(false);
+      this.success = false;
+    }
+
+    public boolean isSuccess() {
+      return this.success;
+    }
+
+    public void setSuccess(boolean success) {
+      this.success = success;
+      setSuccessIsSet(true);
+    }
+
+    public void unsetSuccess() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __SUCCESS_ISSET_ID, value);
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((Boolean)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return isSuccess();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof heartbeat_lock_materialization_rebuild_result)
+        return this.equals((heartbeat_lock_materialization_rebuild_result)that);
+      return false;
+    }
+
+    public boolean equals(heartbeat_lock_materialization_rebuild_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true;
+      boolean that_present_success = true;
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (this.success != that.success)
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_success = true;
+      list.add(present_success);
+      if (present_success)
+        list.add(success);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(heartbeat_lock_materialization_rebuild_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(other.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("heartbeat_lock_materialization_rebuild_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      sb.append(this.success);
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+        __isset_bitfield = 0;
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class heartbeat_lock_materialization_rebuild_resultStandardSchemeFactory implements SchemeFactory {
+      public heartbeat_lock_materialization_rebuild_resultStandardScheme getScheme() {
+        return new heartbeat_lock_materialization_rebuild_resultStandardScheme();
+      }
+    }
+
+    private static class heartbeat_lock_materialization_rebuild_resultStandardScheme extends StandardScheme<heartbeat_lock_materialization_rebuild_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, heartbeat_lock_materialization_rebuild_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.BOOL) {
+                struct.success = iprot.readBool();
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, heartbeat_lock_materialization_rebuild_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.isSetSuccess()) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          oprot.writeBool(struct.success);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class heartbeat_lock_materialization_rebuild_resultTupleSchemeFactory implements SchemeFactory {
+      public heartbeat_lock_materialization_rebuild_resultTupleScheme getScheme() {
+        return new heartbeat_lock_materialization_rebuild_resultTupleScheme();
+      }
+    }
+
+    private static class heartbeat_lock_materialization_rebuild_resultTupleScheme extends TupleScheme<heartbeat_lock_materialization_rebuild_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, heartbeat_lock_materialization_rebuild_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetSuccess()) {
+          oprot.writeBool(struct.success);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, heartbeat_lock_materialization_rebuild_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.success = iprot.readBool();
+          struct.setSuccessIsSet(true);
         }
       }
     }
