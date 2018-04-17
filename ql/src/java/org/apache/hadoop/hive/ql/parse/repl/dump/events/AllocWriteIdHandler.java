@@ -15,37 +15,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.apache.hadoop.hive.ql.parse.repl.dump.events;
 
-package org.apache.hadoop.hive.metastore.events;
+import org.apache.hadoop.hive.metastore.api.NotificationEvent;
+import org.apache.hadoop.hive.ql.parse.repl.DumpType;
+import org.apache.hadoop.hive.ql.parse.repl.load.DumpMetaData;
 
-import org.apache.hadoop.classification.InterfaceAudience;
-import org.apache.hadoop.classification.InterfaceStability;
-import org.apache.hadoop.hive.metastore.IHMSHandler;
-
-/**
- * CommitTxnEvent
- * Event generated for commit transaction operation
- */
-@InterfaceAudience.Public
-@InterfaceStability.Stable
-public class CommitTxnEvent extends ListenerEvent {
-
-  private final Long txnId;
-
-  /**
-   *
-   * @param transactionId Unique identification for the transaction just got committed.
-   * @param handler handler that is firing the event
-   */
-  public CommitTxnEvent(Long transactionId, IHMSHandler handler) {
-    super(true, handler);
-    this.txnId = transactionId;
+class AllocWriteIdHandler extends AbstractEventHandler {
+  AllocWriteIdHandler(NotificationEvent event) {
+    super(event);
   }
 
-  /**
-   * @return Long txnId
-   */
-  public Long getTxnId() {
-    return txnId;
+  @Override
+  public void handle(Context withinContext) throws Exception {
+    LOG.info("Processing#{} ALLOC_WRITE_ID message : {}", fromEventId(), event.getMessage());
+    DumpMetaData dmd = withinContext.createDmd(this);
+    dmd.setPayload(event.getMessage());
+    dmd.write();
+  }
+
+  @Override
+  public DumpType dumpType() {
+    return DumpType.EVENT_ALLOC_WRITE_ID;
   }
 }

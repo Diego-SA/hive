@@ -21,31 +21,37 @@ package org.apache.hadoop.hive.metastore.events;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.hive.metastore.IHMSHandler;
-import com.google.common.collect.Lists;
+import org.apache.hadoop.hive.metastore.api.TxnToWriteId;
 import java.util.List;
 
 /**
- * OpenTxnEvent
- * Event generated for open transaction event.
+ * AllocWriteIdEvent.
+ * Event for allocating write id.
  */
 @InterfaceAudience.Public
 @InterfaceStability.Stable
-public class OpenTxnEvent extends ListenerEvent {
-  private List<Long> txnIds;
+public class AllocWriteIdEvent extends ListenerEvent {
 
-  /**
-   * @param txnIds List of unique identification for the transaction just opened.
-   * @param handler handler that is firing the event
-   */
-  public OpenTxnEvent(List<Long> txnIds, IHMSHandler handler) {
+  private final List<TxnToWriteId> txnToWriteIdList;
+  private final String tableName;
+  private final String dbName;
+
+  public AllocWriteIdEvent(List<TxnToWriteId> txnToWriteIdList, String dbName, String tableName, IHMSHandler handler) {
     super(true, handler);
-    this.txnIds = Lists.newArrayList(txnIds);
+    this.txnToWriteIdList = txnToWriteIdList;
+    this.tableName = tableName;
+    this.dbName = dbName;
   }
 
-  /**
-   * @return List<Long> txnIds
-   */
-  public List<Long> getTxnIds() {
-    return txnIds;
+  public List<TxnToWriteId> getTxnToWriteIdList() {
+    return txnToWriteIdList;
+  }
+
+  public String getTableName() {
+    return tableName;
+  }
+
+  public String getDbName() {
+    return dbName;
   }
 }
