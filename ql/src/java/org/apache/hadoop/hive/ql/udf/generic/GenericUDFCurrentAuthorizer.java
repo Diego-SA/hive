@@ -34,49 +34,44 @@ import org.apache.hadoop.hive.ql.session.SessionState;
 import org.apache.hadoop.hive.ql.udf.UDFType;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
-import org.apache.hadoop.io.BooleanWritable;
+import org.apache.hadoop.io.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * UDF to determine whether to enforce restriction of information schema.
+ * UDF to determine the current authorizer (class name of the authorizer)
  * This is intended for internal usage only. This function is not a deterministic function,
  * but a runtime constant. The return value is constant within a query but can be different between queries
  */
 @UDFType(deterministic = false, runtimeConstant = true)
-@Description(name = "restrict_information_schema",
-    value = "_FUNC_() - Returns whether or not to enable information schema restriction. " +
-    "Currently it is enabled if either HS2 authorizer or metastore authorizer implements policy provider " +
-    "interface.")
+@Description(name = "current_authorizer",
+    value = "_FUNC_() - Returns the current authorizer (class name of the authorizer). ")
 @NDV(maxNdv = 1)
-public class GenericUDFRestrictInformationSchema extends GenericUDF {
-  private static final Logger LOG = LoggerFactory.getLogger(GenericUDFRestrictInformationSchema.class.getName());
-  protected BooleanWritable enabled;
+public class GenericUDFCurrentAuthorizer extends GenericUDF {
+  private static final Logger LOG = LoggerFactory.getLogger(GenericUDFCurrentAuthorizer.class.getName());
+  protected Text authorizer;
 
   @Override
   public ObjectInspector initialize(ObjectInspector[] arguments) throws UDFArgumentException {
     if (arguments.length != 0) {
       throw new UDFArgumentLengthException(
-          "The function RestrictInformationSchema does not take any arguments, but found " + arguments.length);
+          "The function CurrentAuthorizer does not take any arguments, but found " + arguments.length);
     }
 
-    if (enabled == null) {
+    if (authorizer == null) {
+
       HiveConf hiveConf = SessionState.getSessionConf();
-
-      boolean enableHS2PolicyProvider = false;
-      boolean enableMetastorePolicyProvider = false;
-
-      HiveAuthorizer authorizer = SessionState.get().getAuthorizerV2();
+      HiveAuthorizer hiveAuthorizer = SessionState.get().getAuthorizerV2();
       try {
-        if (hiveConf.getBoolVar(HiveConf.ConfVars.HIVE_AUTHORIZATION_ENABLED)
-            && authorizer.getHivePolicyProvider() != null) {
-          enableHS2PolicyProvider = true;
+        if (hiveAuthorizer.getHivePolicyProvider() != null) {
+          authorizer = new Text(hiveAuthorizer.getHivePolicyProvider().getClass().getSimpleName());
         }
       } catch (HiveAuthzPluginException e) {
         LOG.warn("Error getting HivePolicyProvider", e);
       }
 
-      if (!enableHS2PolicyProvider) {
+      if (authorizer == null) {
+        // If authorizer is not set, check for metastore authorizer (eg. StorageBasedAuthorizationProvider)
         if (MetastoreConf.getVar(hiveConf, MetastoreConf.ConfVars.PRE_EVENT_LISTENERS) != null &&
             !MetastoreConf.getVar(hiveConf, MetastoreConf.ConfVars.PRE_EVENT_LISTENERS).isEmpty() &&
             HiveConf.getVar(hiveConf, HiveConf.ConfVars.HIVE_METASTORE_AUTHORIZATION_MANAGER) != null) {
@@ -87,7 +82,7 @@ public class GenericUDFRestrictInformationSchema extends GenericUDF {
               SessionState.get().getAuthenticator());
             for (HiveMetastoreAuthorizationProvider authProvider : authorizerProviders) {
               if (authProvider.getHivePolicyProvider() != null) {
-                enableMetastorePolicyProvider = true;
+                authorizer = new Text(authProvider.getHivePolicyProvider().getClass().getSimpleName());
                 break;
               }
             }
@@ -97,35 +92,29 @@ public class GenericUDFRestrictInformationSchema extends GenericUDF {
             LOG.warn("Error instantiating hive.security.metastore.authorization.manager", e);
           }
         }
-
-        if (enableHS2PolicyProvider || enableMetastorePolicyProvider) {
-          enabled = new BooleanWritable(true);
-        } else {
-          enabled = new BooleanWritable(false);
-        }
       }
     }
 
-    return PrimitiveObjectInspectorFactory.writableBooleanObjectInspector;
+    return PrimitiveObjectInspectorFactory.writableStringObjectInspector;
   }
 
   @Override
   public Object evaluate(DeferredObject[] arguments) throws HiveException {
-    return enabled;
+    return authorizer;
   }
 
   @Override
   public String getDisplayString(String[] children) {
-    return "RESTRICT_INFORMATION_SCHEMA()";
+    return "CURRENT_AUTHORIZER()";
   }
 
   @Override
   public void copyToNewInstance(Object newInstance) throws UDFArgumentException {
     super.copyToNewInstance(newInstance);
-    // Need to preserve enabled flag
-    GenericUDFRestrictInformationSchema other = (GenericUDFRestrictInformationSchema) newInstance;
-    if (this.enabled != null) {
-      other.enabled = new BooleanWritable(this.enabled.get());
+    // Need to preserve authorizer flag
+    GenericUDFCurrentAuthorizer other = (GenericUDFCurrentAuthorizer) newInstance;
+    if (this.authorizer != null) {
+      other.authorizer = new Text(this.authorizer);
     }
   }
 }

@@ -296,7 +296,7 @@ import org.slf4j.LoggerFactory;
 
     public GrantRevokePrivilegeResponse grant_revoke_privileges(GrantRevokePrivilegeRequest request) throws MetaException, org.apache.thrift.TException;
 
-    public GrantRevokePrivilegeResponse refresh_privileges(HiveObjectRef objToRefresh, GrantRevokePrivilegeRequest grantRequest) throws MetaException, org.apache.thrift.TException;
+    public GrantRevokePrivilegeResponse refresh_privileges(HiveObjectRef objToRefresh, String authorizer, GrantRevokePrivilegeRequest grantRequest) throws MetaException, org.apache.thrift.TException;
 
     public List<String> set_ugi(String user_name, List<String> group_names) throws MetaException, org.apache.thrift.TException;
 
@@ -712,7 +712,7 @@ import org.slf4j.LoggerFactory;
 
     public void grant_revoke_privileges(GrantRevokePrivilegeRequest request, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void refresh_privileges(HiveObjectRef objToRefresh, GrantRevokePrivilegeRequest grantRequest, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void refresh_privileges(HiveObjectRef objToRefresh, String authorizer, GrantRevokePrivilegeRequest grantRequest, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
     public void set_ugi(String user_name, List<String> group_names, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
@@ -4706,16 +4706,17 @@ import org.slf4j.LoggerFactory;
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "grant_revoke_privileges failed: unknown result");
     }
 
-    public GrantRevokePrivilegeResponse refresh_privileges(HiveObjectRef objToRefresh, GrantRevokePrivilegeRequest grantRequest) throws MetaException, org.apache.thrift.TException
+    public GrantRevokePrivilegeResponse refresh_privileges(HiveObjectRef objToRefresh, String authorizer, GrantRevokePrivilegeRequest grantRequest) throws MetaException, org.apache.thrift.TException
     {
-      send_refresh_privileges(objToRefresh, grantRequest);
+      send_refresh_privileges(objToRefresh, authorizer, grantRequest);
       return recv_refresh_privileges();
     }
 
-    public void send_refresh_privileges(HiveObjectRef objToRefresh, GrantRevokePrivilegeRequest grantRequest) throws org.apache.thrift.TException
+    public void send_refresh_privileges(HiveObjectRef objToRefresh, String authorizer, GrantRevokePrivilegeRequest grantRequest) throws org.apache.thrift.TException
     {
       refresh_privileges_args args = new refresh_privileges_args();
       args.setObjToRefresh(objToRefresh);
+      args.setAuthorizer(authorizer);
       args.setGrantRequest(grantRequest);
       sendBase("refresh_privileges", args);
     }
@@ -11369,19 +11370,21 @@ import org.slf4j.LoggerFactory;
       }
     }
 
-    public void refresh_privileges(HiveObjectRef objToRefresh, GrantRevokePrivilegeRequest grantRequest, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void refresh_privileges(HiveObjectRef objToRefresh, String authorizer, GrantRevokePrivilegeRequest grantRequest, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      refresh_privileges_call method_call = new refresh_privileges_call(objToRefresh, grantRequest, resultHandler, this, ___protocolFactory, ___transport);
+      refresh_privileges_call method_call = new refresh_privileges_call(objToRefresh, authorizer, grantRequest, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
     @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class refresh_privileges_call extends org.apache.thrift.async.TAsyncMethodCall {
       private HiveObjectRef objToRefresh;
+      private String authorizer;
       private GrantRevokePrivilegeRequest grantRequest;
-      public refresh_privileges_call(HiveObjectRef objToRefresh, GrantRevokePrivilegeRequest grantRequest, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      public refresh_privileges_call(HiveObjectRef objToRefresh, String authorizer, GrantRevokePrivilegeRequest grantRequest, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.objToRefresh = objToRefresh;
+        this.authorizer = authorizer;
         this.grantRequest = grantRequest;
       }
 
@@ -11389,6 +11392,7 @@ import org.slf4j.LoggerFactory;
         prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("refresh_privileges", org.apache.thrift.protocol.TMessageType.CALL, 0));
         refresh_privileges_args args = new refresh_privileges_args();
         args.setObjToRefresh(objToRefresh);
+        args.setAuthorizer(authorizer);
         args.setGrantRequest(grantRequest);
         args.write(prot);
         prot.writeMessageEnd();
@@ -17507,7 +17511,7 @@ import org.slf4j.LoggerFactory;
       public refresh_privileges_result getResult(I iface, refresh_privileges_args args) throws org.apache.thrift.TException {
         refresh_privileges_result result = new refresh_privileges_result();
         try {
-          result.success = iface.refresh_privileges(args.objToRefresh, args.grantRequest);
+          result.success = iface.refresh_privileges(args.objToRefresh, args.authorizer, args.grantRequest);
         } catch (MetaException o1) {
           result.o1 = o1;
         }
@@ -27655,7 +27659,7 @@ import org.slf4j.LoggerFactory;
       }
 
       public void start(I iface, refresh_privileges_args args, org.apache.thrift.async.AsyncMethodCallback<GrantRevokePrivilegeResponse> resultHandler) throws TException {
-        iface.refresh_privileges(args.objToRefresh, args.grantRequest,resultHandler);
+        iface.refresh_privileges(args.objToRefresh, args.authorizer, args.grantRequest,resultHandler);
       }
     }
 
@@ -169811,7 +169815,8 @@ import org.slf4j.LoggerFactory;
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("refresh_privileges_args");
 
     private static final org.apache.thrift.protocol.TField OBJ_TO_REFRESH_FIELD_DESC = new org.apache.thrift.protocol.TField("objToRefresh", org.apache.thrift.protocol.TType.STRUCT, (short)1);
-    private static final org.apache.thrift.protocol.TField GRANT_REQUEST_FIELD_DESC = new org.apache.thrift.protocol.TField("grantRequest", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+    private static final org.apache.thrift.protocol.TField AUTHORIZER_FIELD_DESC = new org.apache.thrift.protocol.TField("authorizer", org.apache.thrift.protocol.TType.STRING, (short)2);
+    private static final org.apache.thrift.protocol.TField GRANT_REQUEST_FIELD_DESC = new org.apache.thrift.protocol.TField("grantRequest", org.apache.thrift.protocol.TType.STRUCT, (short)3);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -169820,12 +169825,14 @@ import org.slf4j.LoggerFactory;
     }
 
     private HiveObjectRef objToRefresh; // required
+    private String authorizer; // required
     private GrantRevokePrivilegeRequest grantRequest; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       OBJ_TO_REFRESH((short)1, "objToRefresh"),
-      GRANT_REQUEST((short)2, "grantRequest");
+      AUTHORIZER((short)2, "authorizer"),
+      GRANT_REQUEST((short)3, "grantRequest");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -169842,7 +169849,9 @@ import org.slf4j.LoggerFactory;
         switch(fieldId) {
           case 1: // OBJ_TO_REFRESH
             return OBJ_TO_REFRESH;
-          case 2: // GRANT_REQUEST
+          case 2: // AUTHORIZER
+            return AUTHORIZER;
+          case 3: // GRANT_REQUEST
             return GRANT_REQUEST;
           default:
             return null;
@@ -169889,6 +169898,8 @@ import org.slf4j.LoggerFactory;
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.OBJ_TO_REFRESH, new org.apache.thrift.meta_data.FieldMetaData("objToRefresh", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, HiveObjectRef.class)));
+      tmpMap.put(_Fields.AUTHORIZER, new org.apache.thrift.meta_data.FieldMetaData("authorizer", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       tmpMap.put(_Fields.GRANT_REQUEST, new org.apache.thrift.meta_data.FieldMetaData("grantRequest", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, GrantRevokePrivilegeRequest.class)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
@@ -169900,10 +169911,12 @@ import org.slf4j.LoggerFactory;
 
     public refresh_privileges_args(
       HiveObjectRef objToRefresh,
+      String authorizer,
       GrantRevokePrivilegeRequest grantRequest)
     {
       this();
       this.objToRefresh = objToRefresh;
+      this.authorizer = authorizer;
       this.grantRequest = grantRequest;
     }
 
@@ -169913,6 +169926,9 @@ import org.slf4j.LoggerFactory;
     public refresh_privileges_args(refresh_privileges_args other) {
       if (other.isSetObjToRefresh()) {
         this.objToRefresh = new HiveObjectRef(other.objToRefresh);
+      }
+      if (other.isSetAuthorizer()) {
+        this.authorizer = other.authorizer;
       }
       if (other.isSetGrantRequest()) {
         this.grantRequest = new GrantRevokePrivilegeRequest(other.grantRequest);
@@ -169926,6 +169942,7 @@ import org.slf4j.LoggerFactory;
     @Override
     public void clear() {
       this.objToRefresh = null;
+      this.authorizer = null;
       this.grantRequest = null;
     }
 
@@ -169949,6 +169966,29 @@ import org.slf4j.LoggerFactory;
     public void setObjToRefreshIsSet(boolean value) {
       if (!value) {
         this.objToRefresh = null;
+      }
+    }
+
+    public String getAuthorizer() {
+      return this.authorizer;
+    }
+
+    public void setAuthorizer(String authorizer) {
+      this.authorizer = authorizer;
+    }
+
+    public void unsetAuthorizer() {
+      this.authorizer = null;
+    }
+
+    /** Returns true if field authorizer is set (has been assigned a value) and false otherwise */
+    public boolean isSetAuthorizer() {
+      return this.authorizer != null;
+    }
+
+    public void setAuthorizerIsSet(boolean value) {
+      if (!value) {
+        this.authorizer = null;
       }
     }
 
@@ -169985,6 +170025,14 @@ import org.slf4j.LoggerFactory;
         }
         break;
 
+      case AUTHORIZER:
+        if (value == null) {
+          unsetAuthorizer();
+        } else {
+          setAuthorizer((String)value);
+        }
+        break;
+
       case GRANT_REQUEST:
         if (value == null) {
           unsetGrantRequest();
@@ -170000,6 +170048,9 @@ import org.slf4j.LoggerFactory;
       switch (field) {
       case OBJ_TO_REFRESH:
         return getObjToRefresh();
+
+      case AUTHORIZER:
+        return getAuthorizer();
 
       case GRANT_REQUEST:
         return getGrantRequest();
@@ -170017,6 +170068,8 @@ import org.slf4j.LoggerFactory;
       switch (field) {
       case OBJ_TO_REFRESH:
         return isSetObjToRefresh();
+      case AUTHORIZER:
+        return isSetAuthorizer();
       case GRANT_REQUEST:
         return isSetGrantRequest();
       }
@@ -170045,6 +170098,15 @@ import org.slf4j.LoggerFactory;
           return false;
       }
 
+      boolean this_present_authorizer = true && this.isSetAuthorizer();
+      boolean that_present_authorizer = true && that.isSetAuthorizer();
+      if (this_present_authorizer || that_present_authorizer) {
+        if (!(this_present_authorizer && that_present_authorizer))
+          return false;
+        if (!this.authorizer.equals(that.authorizer))
+          return false;
+      }
+
       boolean this_present_grantRequest = true && this.isSetGrantRequest();
       boolean that_present_grantRequest = true && that.isSetGrantRequest();
       if (this_present_grantRequest || that_present_grantRequest) {
@@ -170065,6 +170127,11 @@ import org.slf4j.LoggerFactory;
       list.add(present_objToRefresh);
       if (present_objToRefresh)
         list.add(objToRefresh);
+
+      boolean present_authorizer = true && (isSetAuthorizer());
+      list.add(present_authorizer);
+      if (present_authorizer)
+        list.add(authorizer);
 
       boolean present_grantRequest = true && (isSetGrantRequest());
       list.add(present_grantRequest);
@@ -170088,6 +170155,16 @@ import org.slf4j.LoggerFactory;
       }
       if (isSetObjToRefresh()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.objToRefresh, other.objToRefresh);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetAuthorizer()).compareTo(other.isSetAuthorizer());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetAuthorizer()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.authorizer, other.authorizer);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -170127,6 +170204,14 @@ import org.slf4j.LoggerFactory;
         sb.append("null");
       } else {
         sb.append(this.objToRefresh);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("authorizer:");
+      if (this.authorizer == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.authorizer);
       }
       first = false;
       if (!first) sb.append(", ");
@@ -170195,7 +170280,15 @@ import org.slf4j.LoggerFactory;
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
-            case 2: // GRANT_REQUEST
+            case 2: // AUTHORIZER
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.authorizer = iprot.readString();
+                struct.setAuthorizerIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 3: // GRANT_REQUEST
               if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
                 struct.grantRequest = new GrantRevokePrivilegeRequest();
                 struct.grantRequest.read(iprot);
@@ -170220,6 +170313,11 @@ import org.slf4j.LoggerFactory;
         if (struct.objToRefresh != null) {
           oprot.writeFieldBegin(OBJ_TO_REFRESH_FIELD_DESC);
           struct.objToRefresh.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.authorizer != null) {
+          oprot.writeFieldBegin(AUTHORIZER_FIELD_DESC);
+          oprot.writeString(struct.authorizer);
           oprot.writeFieldEnd();
         }
         if (struct.grantRequest != null) {
@@ -170248,12 +170346,18 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetObjToRefresh()) {
           optionals.set(0);
         }
-        if (struct.isSetGrantRequest()) {
+        if (struct.isSetAuthorizer()) {
           optionals.set(1);
         }
-        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetGrantRequest()) {
+          optionals.set(2);
+        }
+        oprot.writeBitSet(optionals, 3);
         if (struct.isSetObjToRefresh()) {
           struct.objToRefresh.write(oprot);
+        }
+        if (struct.isSetAuthorizer()) {
+          oprot.writeString(struct.authorizer);
         }
         if (struct.isSetGrantRequest()) {
           struct.grantRequest.write(oprot);
@@ -170263,13 +170367,17 @@ import org.slf4j.LoggerFactory;
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, refresh_privileges_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
-        BitSet incoming = iprot.readBitSet(2);
+        BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           struct.objToRefresh = new HiveObjectRef();
           struct.objToRefresh.read(iprot);
           struct.setObjToRefreshIsSet(true);
         }
         if (incoming.get(1)) {
+          struct.authorizer = iprot.readString();
+          struct.setAuthorizerIsSet(true);
+        }
+        if (incoming.get(2)) {
           struct.grantRequest = new GrantRevokePrivilegeRequest();
           struct.grantRequest.read(iprot);
           struct.setGrantRequestIsSet(true);
