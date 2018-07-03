@@ -19,41 +19,32 @@ package org.apache.hadoop.hive.metastore.messaging;
 
 import org.apache.hadoop.hive.metastore.api.Partition;
 import org.apache.hadoop.hive.metastore.api.Table;
-import org.apache.hadoop.hive.metastore.api.WriteEventInfo;
-
 import java.util.List;
 
 /**
- * HCat message sent when an commit transaction is done.
+ * HCat message sent when an ACID write is done.
  */
-public abstract class CommitTxnMessage extends EventMessage {
+public abstract class AcidWriteMessage extends EventMessage {
 
-  protected CommitTxnMessage() {
-    super(EventType.COMMIT_TXN);
+  protected AcidWriteMessage() {
+    super(EventType.ACID_WRITE);
   }
 
-  /**
-   * Get the transaction id to be committed.
-   *
-   * @return The TxnId
-   */
   public abstract Long getTxnId();
 
-  public abstract List<Long> getWriteIds();
+  public abstract String getTable();
 
-  public abstract List<String> getDatabases();
+  public abstract Long getWriteId();
 
-  public abstract List<String> getTables();
+  public abstract String getPartition();
 
-  public abstract List<String> getPartitions();
+  public abstract List<String> getFiles();
 
-  public abstract Table getTableObj(int idx) throws Exception;
+  public abstract Table getTableObj() throws Exception;
 
-  public abstract Partition getPartitionObj(int idx) throws Exception;
+  public abstract Partition getPartitionObj() throws Exception;
 
-  public abstract String getFiles(int idx);
+  public abstract String getTableObjStr();
 
-  public abstract List<String> getFilesList();
-
-  public abstract void addWriteEventInfo(List<WriteEventInfo> writeEventInfoList);
+  public abstract String getPartitionObjStr();
 }
