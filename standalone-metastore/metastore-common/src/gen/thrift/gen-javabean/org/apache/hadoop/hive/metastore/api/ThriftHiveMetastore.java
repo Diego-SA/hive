@@ -230374,7 +230374,7 @@ import org.slf4j.LoggerFactory;
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("create_ischema_result");
 
     private static final org.apache.thrift.protocol.TField O1_FIELD_DESC = new org.apache.thrift.protocol.TField("o1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
-    private static final org.apache.thrift.protocol.TField O2_FIELD_DESC = new org.apache.thrift.protocol.TField("o2", org.apache.thrift.protocol.TType.STRUCT, (short)-1);
+    private static final org.apache.thrift.protocol.TField O2_FIELD_DESC = new org.apache.thrift.protocol.TField("o2", org.apache.thrift.protocol.TType.STRUCT, (short)2);
     private static final org.apache.thrift.protocol.TField O3_FIELD_DESC = new org.apache.thrift.protocol.TField("o3", org.apache.thrift.protocol.TType.STRUCT, (short)3);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
@@ -230390,7 +230390,7 @@ import org.slf4j.LoggerFactory;
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       O1((short)1, "o1"),
-      O2((short)-1, "o2"),
+      O2((short)2, "o2"),
       O3((short)3, "o3");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
@@ -230408,7 +230408,7 @@ import org.slf4j.LoggerFactory;
         switch(fieldId) {
           case 1: // O1
             return O1;
-          case -1: // O2
+          case 2: // O2
             return O2;
           case 3: // O3
             return O3;
@@ -230833,7 +230833,7 @@ import org.slf4j.LoggerFactory;
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
-            case -1: // O2
+            case 2: // O2
               if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
                 struct.o2 = new NoSuchObjectException();
                 struct.o2.read(iprot);
@@ -230864,14 +230864,14 @@ import org.slf4j.LoggerFactory;
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
-        if (struct.o2 != null) {
-          oprot.writeFieldBegin(O2_FIELD_DESC);
-          struct.o2.write(oprot);
-          oprot.writeFieldEnd();
-        }
         if (struct.o1 != null) {
           oprot.writeFieldBegin(O1_FIELD_DESC);
           struct.o1.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.o2 != null) {
+          oprot.writeFieldBegin(O2_FIELD_DESC);
+          struct.o2.write(oprot);
           oprot.writeFieldEnd();
         }
         if (struct.o3 != null) {
