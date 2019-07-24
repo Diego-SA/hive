@@ -274,9 +274,9 @@ import org.slf4j.LoggerFactory;
 
     public boolean set_aggr_stats_for(SetPartitionsStatsRequest request) throws NoSuchObjectException, InvalidObjectException, MetaException, InvalidInputException, org.apache.thrift.TException;
 
-    public boolean delete_partition_column_statistics(String db_name, String tbl_name, String part_name, String col_name) throws NoSuchObjectException, MetaException, InvalidObjectException, InvalidInputException, org.apache.thrift.TException;
+    public boolean delete_partition_column_statistics(String db_name, String tbl_name, String part_name, String col_name, String engine) throws NoSuchObjectException, MetaException, InvalidObjectException, InvalidInputException, org.apache.thrift.TException;
 
-    public boolean delete_table_column_statistics(String db_name, String tbl_name, String col_name) throws NoSuchObjectException, MetaException, InvalidObjectException, InvalidInputException, org.apache.thrift.TException;
+    public boolean delete_table_column_statistics(String db_name, String tbl_name, String col_name, String engine) throws NoSuchObjectException, MetaException, InvalidObjectException, InvalidInputException, org.apache.thrift.TException;
 
     public void create_function(Function func) throws AlreadyExistsException, InvalidObjectException, MetaException, NoSuchObjectException, org.apache.thrift.TException;
 
@@ -730,9 +730,9 @@ import org.slf4j.LoggerFactory;
 
     public void set_aggr_stats_for(SetPartitionsStatsRequest request, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void delete_partition_column_statistics(String db_name, String tbl_name, String part_name, String col_name, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void delete_partition_column_statistics(String db_name, String tbl_name, String part_name, String col_name, String engine, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void delete_table_column_statistics(String db_name, String tbl_name, String col_name, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void delete_table_column_statistics(String db_name, String tbl_name, String col_name, String engine, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
     public void create_function(Function func, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
@@ -4491,19 +4491,20 @@ import org.slf4j.LoggerFactory;
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "set_aggr_stats_for failed: unknown result");
     }
 
-    public boolean delete_partition_column_statistics(String db_name, String tbl_name, String part_name, String col_name) throws NoSuchObjectException, MetaException, InvalidObjectException, InvalidInputException, org.apache.thrift.TException
+    public boolean delete_partition_column_statistics(String db_name, String tbl_name, String part_name, String col_name, String engine) throws NoSuchObjectException, MetaException, InvalidObjectException, InvalidInputException, org.apache.thrift.TException
     {
-      send_delete_partition_column_statistics(db_name, tbl_name, part_name, col_name);
+      send_delete_partition_column_statistics(db_name, tbl_name, part_name, col_name, engine);
       return recv_delete_partition_column_statistics();
     }
 
-    public void send_delete_partition_column_statistics(String db_name, String tbl_name, String part_name, String col_name) throws org.apache.thrift.TException
+    public void send_delete_partition_column_statistics(String db_name, String tbl_name, String part_name, String col_name, String engine) throws org.apache.thrift.TException
     {
       delete_partition_column_statistics_args args = new delete_partition_column_statistics_args();
       args.setDb_name(db_name);
       args.setTbl_name(tbl_name);
       args.setPart_name(part_name);
       args.setCol_name(col_name);
+      args.setEngine(engine);
       sendBase("delete_partition_column_statistics", args);
     }
 
@@ -4529,18 +4530,19 @@ import org.slf4j.LoggerFactory;
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "delete_partition_column_statistics failed: unknown result");
     }
 
-    public boolean delete_table_column_statistics(String db_name, String tbl_name, String col_name) throws NoSuchObjectException, MetaException, InvalidObjectException, InvalidInputException, org.apache.thrift.TException
+    public boolean delete_table_column_statistics(String db_name, String tbl_name, String col_name, String engine) throws NoSuchObjectException, MetaException, InvalidObjectException, InvalidInputException, org.apache.thrift.TException
     {
-      send_delete_table_column_statistics(db_name, tbl_name, col_name);
+      send_delete_table_column_statistics(db_name, tbl_name, col_name, engine);
       return recv_delete_table_column_statistics();
     }
 
-    public void send_delete_table_column_statistics(String db_name, String tbl_name, String col_name) throws org.apache.thrift.TException
+    public void send_delete_table_column_statistics(String db_name, String tbl_name, String col_name, String engine) throws org.apache.thrift.TException
     {
       delete_table_column_statistics_args args = new delete_table_column_statistics_args();
       args.setDb_name(db_name);
       args.setTbl_name(tbl_name);
       args.setCol_name(col_name);
+      args.setEngine(engine);
       sendBase("delete_table_column_statistics", args);
     }
 
@@ -11568,9 +11570,9 @@ import org.slf4j.LoggerFactory;
       }
     }
 
-    public void delete_partition_column_statistics(String db_name, String tbl_name, String part_name, String col_name, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void delete_partition_column_statistics(String db_name, String tbl_name, String part_name, String col_name, String engine, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      delete_partition_column_statistics_call method_call = new delete_partition_column_statistics_call(db_name, tbl_name, part_name, col_name, resultHandler, this, ___protocolFactory, ___transport);
+      delete_partition_column_statistics_call method_call = new delete_partition_column_statistics_call(db_name, tbl_name, part_name, col_name, engine, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
@@ -11580,12 +11582,14 @@ import org.slf4j.LoggerFactory;
       private String tbl_name;
       private String part_name;
       private String col_name;
-      public delete_partition_column_statistics_call(String db_name, String tbl_name, String part_name, String col_name, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private String engine;
+      public delete_partition_column_statistics_call(String db_name, String tbl_name, String part_name, String col_name, String engine, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.db_name = db_name;
         this.tbl_name = tbl_name;
         this.part_name = part_name;
         this.col_name = col_name;
+        this.engine = engine;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
@@ -11595,6 +11599,7 @@ import org.slf4j.LoggerFactory;
         args.setTbl_name(tbl_name);
         args.setPart_name(part_name);
         args.setCol_name(col_name);
+        args.setEngine(engine);
         args.write(prot);
         prot.writeMessageEnd();
       }
@@ -11609,9 +11614,9 @@ import org.slf4j.LoggerFactory;
       }
     }
 
-    public void delete_table_column_statistics(String db_name, String tbl_name, String col_name, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void delete_table_column_statistics(String db_name, String tbl_name, String col_name, String engine, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      delete_table_column_statistics_call method_call = new delete_table_column_statistics_call(db_name, tbl_name, col_name, resultHandler, this, ___protocolFactory, ___transport);
+      delete_table_column_statistics_call method_call = new delete_table_column_statistics_call(db_name, tbl_name, col_name, engine, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
@@ -11620,11 +11625,13 @@ import org.slf4j.LoggerFactory;
       private String db_name;
       private String tbl_name;
       private String col_name;
-      public delete_table_column_statistics_call(String db_name, String tbl_name, String col_name, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private String engine;
+      public delete_table_column_statistics_call(String db_name, String tbl_name, String col_name, String engine, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.db_name = db_name;
         this.tbl_name = tbl_name;
         this.col_name = col_name;
+        this.engine = engine;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
@@ -11633,6 +11640,7 @@ import org.slf4j.LoggerFactory;
         args.setDb_name(db_name);
         args.setTbl_name(tbl_name);
         args.setCol_name(col_name);
+        args.setEngine(engine);
         args.write(prot);
         prot.writeMessageEnd();
       }
@@ -18521,7 +18529,7 @@ import org.slf4j.LoggerFactory;
       public delete_partition_column_statistics_result getResult(I iface, delete_partition_column_statistics_args args) throws org.apache.thrift.TException {
         delete_partition_column_statistics_result result = new delete_partition_column_statistics_result();
         try {
-          result.success = iface.delete_partition_column_statistics(args.db_name, args.tbl_name, args.part_name, args.col_name);
+          result.success = iface.delete_partition_column_statistics(args.db_name, args.tbl_name, args.part_name, args.col_name, args.engine);
           result.setSuccessIsSet(true);
         } catch (NoSuchObjectException o1) {
           result.o1 = o1;
@@ -18552,7 +18560,7 @@ import org.slf4j.LoggerFactory;
       public delete_table_column_statistics_result getResult(I iface, delete_table_column_statistics_args args) throws org.apache.thrift.TException {
         delete_table_column_statistics_result result = new delete_table_column_statistics_result();
         try {
-          result.success = iface.delete_table_column_statistics(args.db_name, args.tbl_name, args.col_name);
+          result.success = iface.delete_table_column_statistics(args.db_name, args.tbl_name, args.col_name, args.engine);
           result.setSuccessIsSet(true);
         } catch (NoSuchObjectException o1) {
           result.o1 = o1;
@@ -28846,7 +28854,7 @@ import org.slf4j.LoggerFactory;
       }
 
       public void start(I iface, delete_partition_column_statistics_args args, org.apache.thrift.async.AsyncMethodCallback<Boolean> resultHandler) throws TException {
-        iface.delete_partition_column_statistics(args.db_name, args.tbl_name, args.part_name, args.col_name,resultHandler);
+        iface.delete_partition_column_statistics(args.db_name, args.tbl_name, args.part_name, args.col_name, args.engine,resultHandler);
       }
     }
 
@@ -28919,7 +28927,7 @@ import org.slf4j.LoggerFactory;
       }
 
       public void start(I iface, delete_table_column_statistics_args args, org.apache.thrift.async.AsyncMethodCallback<Boolean> resultHandler) throws TException {
-        iface.delete_table_column_statistics(args.db_name, args.tbl_name, args.col_name,resultHandler);
+        iface.delete_table_column_statistics(args.db_name, args.tbl_name, args.col_name, args.engine,resultHandler);
       }
     }
 
@@ -161682,6 +161690,7 @@ import org.slf4j.LoggerFactory;
     private static final org.apache.thrift.protocol.TField TBL_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("tbl_name", org.apache.thrift.protocol.TType.STRING, (short)2);
     private static final org.apache.thrift.protocol.TField PART_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("part_name", org.apache.thrift.protocol.TType.STRING, (short)3);
     private static final org.apache.thrift.protocol.TField COL_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("col_name", org.apache.thrift.protocol.TType.STRING, (short)4);
+    private static final org.apache.thrift.protocol.TField ENGINE_FIELD_DESC = new org.apache.thrift.protocol.TField("engine", org.apache.thrift.protocol.TType.STRING, (short)5);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -161693,13 +161702,15 @@ import org.slf4j.LoggerFactory;
     private String tbl_name; // required
     private String part_name; // required
     private String col_name; // required
+    private String engine; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       DB_NAME((short)1, "db_name"),
       TBL_NAME((short)2, "tbl_name"),
       PART_NAME((short)3, "part_name"),
-      COL_NAME((short)4, "col_name");
+      COL_NAME((short)4, "col_name"),
+      ENGINE((short)5, "engine");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -161722,6 +161733,8 @@ import org.slf4j.LoggerFactory;
             return PART_NAME;
           case 4: // COL_NAME
             return COL_NAME;
+          case 5: // ENGINE
+            return ENGINE;
           default:
             return null;
         }
@@ -161773,6 +161786,8 @@ import org.slf4j.LoggerFactory;
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       tmpMap.put(_Fields.COL_NAME, new org.apache.thrift.meta_data.FieldMetaData("col_name", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.ENGINE, new org.apache.thrift.meta_data.FieldMetaData("engine", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(delete_partition_column_statistics_args.class, metaDataMap);
     }
@@ -161784,13 +161799,15 @@ import org.slf4j.LoggerFactory;
       String db_name,
       String tbl_name,
       String part_name,
-      String col_name)
+      String col_name,
+      String engine)
     {
       this();
       this.db_name = db_name;
       this.tbl_name = tbl_name;
       this.part_name = part_name;
       this.col_name = col_name;
+      this.engine = engine;
     }
 
     /**
@@ -161809,6 +161826,9 @@ import org.slf4j.LoggerFactory;
       if (other.isSetCol_name()) {
         this.col_name = other.col_name;
       }
+      if (other.isSetEngine()) {
+        this.engine = other.engine;
+      }
     }
 
     public delete_partition_column_statistics_args deepCopy() {
@@ -161821,6 +161841,7 @@ import org.slf4j.LoggerFactory;
       this.tbl_name = null;
       this.part_name = null;
       this.col_name = null;
+      this.engine = null;
     }
 
     public String getDb_name() {
@@ -161915,6 +161936,29 @@ import org.slf4j.LoggerFactory;
       }
     }
 
+    public String getEngine() {
+      return this.engine;
+    }
+
+    public void setEngine(String engine) {
+      this.engine = engine;
+    }
+
+    public void unsetEngine() {
+      this.engine = null;
+    }
+
+    /** Returns true if field engine is set (has been assigned a value) and false otherwise */
+    public boolean isSetEngine() {
+      return this.engine != null;
+    }
+
+    public void setEngineIsSet(boolean value) {
+      if (!value) {
+        this.engine = null;
+      }
+    }
+
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
       case DB_NAME:
@@ -161949,6 +161993,14 @@ import org.slf4j.LoggerFactory;
         }
         break;
 
+      case ENGINE:
+        if (value == null) {
+          unsetEngine();
+        } else {
+          setEngine((String)value);
+        }
+        break;
+
       }
     }
 
@@ -161965,6 +162017,9 @@ import org.slf4j.LoggerFactory;
 
       case COL_NAME:
         return getCol_name();
+
+      case ENGINE:
+        return getEngine();
 
       }
       throw new IllegalStateException();
@@ -161985,6 +162040,8 @@ import org.slf4j.LoggerFactory;
         return isSetPart_name();
       case COL_NAME:
         return isSetCol_name();
+      case ENGINE:
+        return isSetEngine();
       }
       throw new IllegalStateException();
     }
@@ -162038,6 +162095,15 @@ import org.slf4j.LoggerFactory;
           return false;
       }
 
+      boolean this_present_engine = true && this.isSetEngine();
+      boolean that_present_engine = true && that.isSetEngine();
+      if (this_present_engine || that_present_engine) {
+        if (!(this_present_engine && that_present_engine))
+          return false;
+        if (!this.engine.equals(that.engine))
+          return false;
+      }
+
       return true;
     }
 
@@ -162064,6 +162130,11 @@ import org.slf4j.LoggerFactory;
       list.add(present_col_name);
       if (present_col_name)
         list.add(col_name);
+
+      boolean present_engine = true && (isSetEngine());
+      list.add(present_engine);
+      if (present_engine)
+        list.add(engine);
 
       return list.hashCode();
     }
@@ -162112,6 +162183,16 @@ import org.slf4j.LoggerFactory;
       }
       if (isSetCol_name()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.col_name, other.col_name);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetEngine()).compareTo(other.isSetEngine());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetEngine()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.engine, other.engine);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -162165,6 +162246,14 @@ import org.slf4j.LoggerFactory;
         sb.append("null");
       } else {
         sb.append(this.col_name);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("engine:");
+      if (this.engine == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.engine);
       }
       first = false;
       sb.append(")");
@@ -162242,6 +162331,14 @@ import org.slf4j.LoggerFactory;
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 5: // ENGINE
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.engine = iprot.readString();
+                struct.setEngineIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -162275,6 +162372,11 @@ import org.slf4j.LoggerFactory;
           oprot.writeString(struct.col_name);
           oprot.writeFieldEnd();
         }
+        if (struct.engine != null) {
+          oprot.writeFieldBegin(ENGINE_FIELD_DESC);
+          oprot.writeString(struct.engine);
+          oprot.writeFieldEnd();
+        }
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
@@ -162305,7 +162407,10 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetCol_name()) {
           optionals.set(3);
         }
-        oprot.writeBitSet(optionals, 4);
+        if (struct.isSetEngine()) {
+          optionals.set(4);
+        }
+        oprot.writeBitSet(optionals, 5);
         if (struct.isSetDb_name()) {
           oprot.writeString(struct.db_name);
         }
@@ -162318,12 +162423,15 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetCol_name()) {
           oprot.writeString(struct.col_name);
         }
+        if (struct.isSetEngine()) {
+          oprot.writeString(struct.engine);
+        }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, delete_partition_column_statistics_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
-        BitSet incoming = iprot.readBitSet(4);
+        BitSet incoming = iprot.readBitSet(5);
         if (incoming.get(0)) {
           struct.db_name = iprot.readString();
           struct.setDb_nameIsSet(true);
@@ -162339,6 +162447,10 @@ import org.slf4j.LoggerFactory;
         if (incoming.get(3)) {
           struct.col_name = iprot.readString();
           struct.setCol_nameIsSet(true);
+        }
+        if (incoming.get(4)) {
+          struct.engine = iprot.readString();
+          struct.setEngineIsSet(true);
         }
       }
     }
@@ -163133,6 +163245,7 @@ import org.slf4j.LoggerFactory;
     private static final org.apache.thrift.protocol.TField DB_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("db_name", org.apache.thrift.protocol.TType.STRING, (short)1);
     private static final org.apache.thrift.protocol.TField TBL_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("tbl_name", org.apache.thrift.protocol.TType.STRING, (short)2);
     private static final org.apache.thrift.protocol.TField COL_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("col_name", org.apache.thrift.protocol.TType.STRING, (short)3);
+    private static final org.apache.thrift.protocol.TField ENGINE_FIELD_DESC = new org.apache.thrift.protocol.TField("engine", org.apache.thrift.protocol.TType.STRING, (short)4);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -163143,12 +163256,14 @@ import org.slf4j.LoggerFactory;
     private String db_name; // required
     private String tbl_name; // required
     private String col_name; // required
+    private String engine; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       DB_NAME((short)1, "db_name"),
       TBL_NAME((short)2, "tbl_name"),
-      COL_NAME((short)3, "col_name");
+      COL_NAME((short)3, "col_name"),
+      ENGINE((short)4, "engine");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -163169,6 +163284,8 @@ import org.slf4j.LoggerFactory;
             return TBL_NAME;
           case 3: // COL_NAME
             return COL_NAME;
+          case 4: // ENGINE
+            return ENGINE;
           default:
             return null;
         }
@@ -163218,6 +163335,8 @@ import org.slf4j.LoggerFactory;
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       tmpMap.put(_Fields.COL_NAME, new org.apache.thrift.meta_data.FieldMetaData("col_name", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.ENGINE, new org.apache.thrift.meta_data.FieldMetaData("engine", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(delete_table_column_statistics_args.class, metaDataMap);
     }
@@ -163228,12 +163347,14 @@ import org.slf4j.LoggerFactory;
     public delete_table_column_statistics_args(
       String db_name,
       String tbl_name,
-      String col_name)
+      String col_name,
+      String engine)
     {
       this();
       this.db_name = db_name;
       this.tbl_name = tbl_name;
       this.col_name = col_name;
+      this.engine = engine;
     }
 
     /**
@@ -163249,6 +163370,9 @@ import org.slf4j.LoggerFactory;
       if (other.isSetCol_name()) {
         this.col_name = other.col_name;
       }
+      if (other.isSetEngine()) {
+        this.engine = other.engine;
+      }
     }
 
     public delete_table_column_statistics_args deepCopy() {
@@ -163260,6 +163384,7 @@ import org.slf4j.LoggerFactory;
       this.db_name = null;
       this.tbl_name = null;
       this.col_name = null;
+      this.engine = null;
     }
 
     public String getDb_name() {
@@ -163331,6 +163456,29 @@ import org.slf4j.LoggerFactory;
       }
     }
 
+    public String getEngine() {
+      return this.engine;
+    }
+
+    public void setEngine(String engine) {
+      this.engine = engine;
+    }
+
+    public void unsetEngine() {
+      this.engine = null;
+    }
+
+    /** Returns true if field engine is set (has been assigned a value) and false otherwise */
+    public boolean isSetEngine() {
+      return this.engine != null;
+    }
+
+    public void setEngineIsSet(boolean value) {
+      if (!value) {
+        this.engine = null;
+      }
+    }
+
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
       case DB_NAME:
@@ -163357,6 +163505,14 @@ import org.slf4j.LoggerFactory;
         }
         break;
 
+      case ENGINE:
+        if (value == null) {
+          unsetEngine();
+        } else {
+          setEngine((String)value);
+        }
+        break;
+
       }
     }
 
@@ -163370,6 +163526,9 @@ import org.slf4j.LoggerFactory;
 
       case COL_NAME:
         return getCol_name();
+
+      case ENGINE:
+        return getEngine();
 
       }
       throw new IllegalStateException();
@@ -163388,6 +163547,8 @@ import org.slf4j.LoggerFactory;
         return isSetTbl_name();
       case COL_NAME:
         return isSetCol_name();
+      case ENGINE:
+        return isSetEngine();
       }
       throw new IllegalStateException();
     }
@@ -163432,6 +163593,15 @@ import org.slf4j.LoggerFactory;
           return false;
       }
 
+      boolean this_present_engine = true && this.isSetEngine();
+      boolean that_present_engine = true && that.isSetEngine();
+      if (this_present_engine || that_present_engine) {
+        if (!(this_present_engine && that_present_engine))
+          return false;
+        if (!this.engine.equals(that.engine))
+          return false;
+      }
+
       return true;
     }
 
@@ -163453,6 +163623,11 @@ import org.slf4j.LoggerFactory;
       list.add(present_col_name);
       if (present_col_name)
         list.add(col_name);
+
+      boolean present_engine = true && (isSetEngine());
+      list.add(present_engine);
+      if (present_engine)
+        list.add(engine);
 
       return list.hashCode();
     }
@@ -163491,6 +163666,16 @@ import org.slf4j.LoggerFactory;
       }
       if (isSetCol_name()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.col_name, other.col_name);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetEngine()).compareTo(other.isSetEngine());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetEngine()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.engine, other.engine);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -163536,6 +163721,14 @@ import org.slf4j.LoggerFactory;
         sb.append("null");
       } else {
         sb.append(this.col_name);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("engine:");
+      if (this.engine == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.engine);
       }
       first = false;
       sb.append(")");
@@ -163605,6 +163798,14 @@ import org.slf4j.LoggerFactory;
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 4: // ENGINE
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.engine = iprot.readString();
+                struct.setEngineIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -163631,6 +163832,11 @@ import org.slf4j.LoggerFactory;
         if (struct.col_name != null) {
           oprot.writeFieldBegin(COL_NAME_FIELD_DESC);
           oprot.writeString(struct.col_name);
+          oprot.writeFieldEnd();
+        }
+        if (struct.engine != null) {
+          oprot.writeFieldBegin(ENGINE_FIELD_DESC);
+          oprot.writeString(struct.engine);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -163660,7 +163866,10 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetCol_name()) {
           optionals.set(2);
         }
-        oprot.writeBitSet(optionals, 3);
+        if (struct.isSetEngine()) {
+          optionals.set(3);
+        }
+        oprot.writeBitSet(optionals, 4);
         if (struct.isSetDb_name()) {
           oprot.writeString(struct.db_name);
         }
@@ -163670,12 +163879,15 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetCol_name()) {
           oprot.writeString(struct.col_name);
         }
+        if (struct.isSetEngine()) {
+          oprot.writeString(struct.engine);
+        }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, delete_table_column_statistics_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
-        BitSet incoming = iprot.readBitSet(3);
+        BitSet incoming = iprot.readBitSet(4);
         if (incoming.get(0)) {
           struct.db_name = iprot.readString();
           struct.setDb_nameIsSet(true);
@@ -163687,6 +163899,10 @@ import org.slf4j.LoggerFactory;
         if (incoming.get(2)) {
           struct.col_name = iprot.readString();
           struct.setCol_nameIsSet(true);
+        }
+        if (incoming.get(3)) {
+          struct.engine = iprot.readString();
+          struct.setEngineIsSet(true);
         }
       }
     }
