@@ -90,6 +90,8 @@ import org.slf4j.LoggerFactory;
 
     public void create_table_with_constraints(Table tbl, List<SQLPrimaryKey> primaryKeys, List<SQLForeignKey> foreignKeys, List<SQLUniqueConstraint> uniqueConstraints, List<SQLNotNullConstraint> notNullConstraints, List<SQLDefaultConstraint> defaultConstraints, List<SQLCheckConstraint> checkConstraints) throws AlreadyExistsException, InvalidObjectException, MetaException, NoSuchObjectException, org.apache.thrift.TException;
 
+    public void create_table_req(CreateTableRequest request) throws AlreadyExistsException, InvalidObjectException, MetaException, NoSuchObjectException, org.apache.thrift.TException;
+
     public void drop_constraint(DropConstraintRequest req) throws NoSuchObjectException, MetaException, org.apache.thrift.TException;
 
     public void add_primary_key(AddPrimaryKeyRequest req) throws NoSuchObjectException, MetaException, org.apache.thrift.TException;
@@ -543,6 +545,8 @@ import org.slf4j.LoggerFactory;
     public void create_table_with_environment_context(Table tbl, EnvironmentContext environment_context, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
     public void create_table_with_constraints(Table tbl, List<SQLPrimaryKey> primaryKeys, List<SQLForeignKey> foreignKeys, List<SQLUniqueConstraint> uniqueConstraints, List<SQLNotNullConstraint> notNullConstraints, List<SQLDefaultConstraint> defaultConstraints, List<SQLCheckConstraint> checkConstraints, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+
+    public void create_table_req(CreateTableRequest request, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
     public void drop_constraint(DropConstraintRequest req, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
@@ -1664,6 +1668,38 @@ import org.slf4j.LoggerFactory;
     {
       create_table_with_constraints_result result = new create_table_with_constraints_result();
       receiveBase(result, "create_table_with_constraints");
+      if (result.o1 != null) {
+        throw result.o1;
+      }
+      if (result.o2 != null) {
+        throw result.o2;
+      }
+      if (result.o3 != null) {
+        throw result.o3;
+      }
+      if (result.o4 != null) {
+        throw result.o4;
+      }
+      return;
+    }
+
+    public void create_table_req(CreateTableRequest request) throws AlreadyExistsException, InvalidObjectException, MetaException, NoSuchObjectException, org.apache.thrift.TException
+    {
+      send_create_table_req(request);
+      recv_create_table_req();
+    }
+
+    public void send_create_table_req(CreateTableRequest request) throws org.apache.thrift.TException
+    {
+      create_table_req_args args = new create_table_req_args();
+      args.setRequest(request);
+      sendBase("create_table_req", args);
+    }
+
+    public void recv_create_table_req() throws AlreadyExistsException, InvalidObjectException, MetaException, NoSuchObjectException, org.apache.thrift.TException
+    {
+      create_table_req_result result = new create_table_req_result();
+      receiveBase(result, "create_table_req");
       if (result.o1 != null) {
         throw result.o1;
       }
@@ -8210,6 +8246,38 @@ import org.slf4j.LoggerFactory;
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
         (new Client(prot)).recv_create_table_with_constraints();
+      }
+    }
+
+    public void create_table_req(CreateTableRequest request, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      create_table_req_call method_call = new create_table_req_call(request, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class create_table_req_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private CreateTableRequest request;
+      public create_table_req_call(CreateTableRequest request, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.request = request;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("create_table_req", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        create_table_req_args args = new create_table_req_args();
+        args.setRequest(request);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws AlreadyExistsException, InvalidObjectException, MetaException, NoSuchObjectException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_create_table_req();
       }
     }
 
@@ -15132,6 +15200,7 @@ import org.slf4j.LoggerFactory;
       processMap.put("create_table", new create_table());
       processMap.put("create_table_with_environment_context", new create_table_with_environment_context());
       processMap.put("create_table_with_constraints", new create_table_with_constraints());
+      processMap.put("create_table_req", new create_table_req());
       processMap.put("drop_constraint", new drop_constraint());
       processMap.put("add_primary_key", new add_primary_key());
       processMap.put("add_foreign_key", new add_foreign_key());
@@ -15969,6 +16038,36 @@ import org.slf4j.LoggerFactory;
         create_table_with_constraints_result result = new create_table_with_constraints_result();
         try {
           iface.create_table_with_constraints(args.tbl, args.primaryKeys, args.foreignKeys, args.uniqueConstraints, args.notNullConstraints, args.defaultConstraints, args.checkConstraints);
+        } catch (AlreadyExistsException o1) {
+          result.o1 = o1;
+        } catch (InvalidObjectException o2) {
+          result.o2 = o2;
+        } catch (MetaException o3) {
+          result.o3 = o3;
+        } catch (NoSuchObjectException o4) {
+          result.o4 = o4;
+        }
+        return result;
+      }
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class create_table_req<I extends Iface> extends org.apache.thrift.ProcessFunction<I, create_table_req_args> {
+      public create_table_req() {
+        super("create_table_req");
+      }
+
+      public create_table_req_args getEmptyArgsInstance() {
+        return new create_table_req_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public create_table_req_result getResult(I iface, create_table_req_args args) throws org.apache.thrift.TException {
+        create_table_req_result result = new create_table_req_result();
+        try {
+          iface.create_table_req(args.request);
         } catch (AlreadyExistsException o1) {
           result.o1 = o1;
         } catch (InvalidObjectException o2) {
@@ -21119,6 +21218,7 @@ import org.slf4j.LoggerFactory;
       processMap.put("create_table", new create_table());
       processMap.put("create_table_with_environment_context", new create_table_with_environment_context());
       processMap.put("create_table_with_constraints", new create_table_with_constraints());
+      processMap.put("create_table_req", new create_table_req());
       processMap.put("drop_constraint", new drop_constraint());
       processMap.put("add_primary_key", new add_primary_key());
       processMap.put("add_foreign_key", new add_foreign_key());
@@ -22850,6 +22950,77 @@ import org.slf4j.LoggerFactory;
 
       public void start(I iface, create_table_with_constraints_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws TException {
         iface.create_table_with_constraints(args.tbl, args.primaryKeys, args.foreignKeys, args.uniqueConstraints, args.notNullConstraints, args.defaultConstraints, args.checkConstraints,resultHandler);
+      }
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class create_table_req<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, create_table_req_args, Void> {
+      public create_table_req() {
+        super("create_table_req");
+      }
+
+      public create_table_req_args getEmptyArgsInstance() {
+        return new create_table_req_args();
+      }
+
+      public AsyncMethodCallback<Void> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new AsyncMethodCallback<Void>() { 
+          public void onComplete(Void o) {
+            create_table_req_result result = new create_table_req_result();
+            try {
+              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+              return;
+            } catch (Exception e) {
+              LOGGER.error("Exception writing to internal frame buffer", e);
+            }
+            fb.close();
+          }
+          public void onError(Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TBase msg;
+            create_table_req_result result = new create_table_req_result();
+            if (e instanceof AlreadyExistsException) {
+                        result.o1 = (AlreadyExistsException) e;
+                        result.setO1IsSet(true);
+                        msg = result;
+            }
+            else             if (e instanceof InvalidObjectException) {
+                        result.o2 = (InvalidObjectException) e;
+                        result.setO2IsSet(true);
+                        msg = result;
+            }
+            else             if (e instanceof MetaException) {
+                        result.o3 = (MetaException) e;
+                        result.setO3IsSet(true);
+                        msg = result;
+            }
+            else             if (e instanceof NoSuchObjectException) {
+                        result.o4 = (NoSuchObjectException) e;
+                        result.setO4IsSet(true);
+                        msg = result;
+            }
+             else 
+            {
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+              return;
+            } catch (Exception ex) {
+              LOGGER.error("Exception writing to internal frame buffer", ex);
+            }
+            fb.close();
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, create_table_req_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws TException {
+        iface.create_table_req(args.request,resultHandler);
       }
     }
 
@@ -44894,13 +45065,13 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1080 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list1080.size);
-                  String _elem1081;
-                  for (int _i1082 = 0; _i1082 < _list1080.size; ++_i1082)
+                  org.apache.thrift.protocol.TList _list1160 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list1160.size);
+                  String _elem1161;
+                  for (int _i1162 = 0; _i1162 < _list1160.size; ++_i1162)
                   {
-                    _elem1081 = iprot.readString();
-                    struct.success.add(_elem1081);
+                    _elem1161 = iprot.readString();
+                    struct.success.add(_elem1161);
                   }
                   iprot.readListEnd();
                 }
@@ -44935,9 +45106,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter1083 : struct.success)
+            for (String _iter1163 : struct.success)
             {
-              oprot.writeString(_iter1083);
+              oprot.writeString(_iter1163);
             }
             oprot.writeListEnd();
           }
@@ -44976,9 +45147,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter1084 : struct.success)
+            for (String _iter1164 : struct.success)
             {
-              oprot.writeString(_iter1084);
+              oprot.writeString(_iter1164);
             }
           }
         }
@@ -44993,13 +45164,13 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1085 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list1085.size);
-            String _elem1086;
-            for (int _i1087 = 0; _i1087 < _list1085.size; ++_i1087)
+            org.apache.thrift.protocol.TList _list1165 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list1165.size);
+            String _elem1166;
+            for (int _i1167 = 0; _i1167 < _list1165.size; ++_i1167)
             {
-              _elem1086 = iprot.readString();
-              struct.success.add(_elem1086);
+              _elem1166 = iprot.readString();
+              struct.success.add(_elem1166);
             }
           }
           struct.setSuccessIsSet(true);
@@ -45653,13 +45824,13 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1088 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list1088.size);
-                  String _elem1089;
-                  for (int _i1090 = 0; _i1090 < _list1088.size; ++_i1090)
+                  org.apache.thrift.protocol.TList _list1168 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list1168.size);
+                  String _elem1169;
+                  for (int _i1170 = 0; _i1170 < _list1168.size; ++_i1170)
                   {
-                    _elem1089 = iprot.readString();
-                    struct.success.add(_elem1089);
+                    _elem1169 = iprot.readString();
+                    struct.success.add(_elem1169);
                   }
                   iprot.readListEnd();
                 }
@@ -45694,9 +45865,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter1091 : struct.success)
+            for (String _iter1171 : struct.success)
             {
-              oprot.writeString(_iter1091);
+              oprot.writeString(_iter1171);
             }
             oprot.writeListEnd();
           }
@@ -45735,9 +45906,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter1092 : struct.success)
+            for (String _iter1172 : struct.success)
             {
-              oprot.writeString(_iter1092);
+              oprot.writeString(_iter1172);
             }
           }
         }
@@ -45752,13 +45923,13 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1093 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list1093.size);
-            String _elem1094;
-            for (int _i1095 = 0; _i1095 < _list1093.size; ++_i1095)
+            org.apache.thrift.protocol.TList _list1173 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list1173.size);
+            String _elem1174;
+            for (int _i1175 = 0; _i1175 < _list1173.size; ++_i1175)
             {
-              _elem1094 = iprot.readString();
-              struct.success.add(_elem1094);
+              _elem1174 = iprot.readString();
+              struct.success.add(_elem1174);
             }
           }
           struct.setSuccessIsSet(true);
@@ -50365,16 +50536,16 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
                 {
-                  org.apache.thrift.protocol.TMap _map1096 = iprot.readMapBegin();
-                  struct.success = new HashMap<String,Type>(2*_map1096.size);
-                  String _key1097;
-                  Type _val1098;
-                  for (int _i1099 = 0; _i1099 < _map1096.size; ++_i1099)
+                  org.apache.thrift.protocol.TMap _map1176 = iprot.readMapBegin();
+                  struct.success = new HashMap<String,Type>(2*_map1176.size);
+                  String _key1177;
+                  Type _val1178;
+                  for (int _i1179 = 0; _i1179 < _map1176.size; ++_i1179)
                   {
-                    _key1097 = iprot.readString();
-                    _val1098 = new Type();
-                    _val1098.read(iprot);
-                    struct.success.put(_key1097, _val1098);
+                    _key1177 = iprot.readString();
+                    _val1178 = new Type();
+                    _val1178.read(iprot);
+                    struct.success.put(_key1177, _val1178);
                   }
                   iprot.readMapEnd();
                 }
@@ -50409,10 +50580,10 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Map.Entry<String, Type> _iter1100 : struct.success.entrySet())
+            for (Map.Entry<String, Type> _iter1180 : struct.success.entrySet())
             {
-              oprot.writeString(_iter1100.getKey());
-              _iter1100.getValue().write(oprot);
+              oprot.writeString(_iter1180.getKey());
+              _iter1180.getValue().write(oprot);
             }
             oprot.writeMapEnd();
           }
@@ -50451,10 +50622,10 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Map.Entry<String, Type> _iter1101 : struct.success.entrySet())
+            for (Map.Entry<String, Type> _iter1181 : struct.success.entrySet())
             {
-              oprot.writeString(_iter1101.getKey());
-              _iter1101.getValue().write(oprot);
+              oprot.writeString(_iter1181.getKey());
+              _iter1181.getValue().write(oprot);
             }
           }
         }
@@ -50469,16 +50640,16 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TMap _map1102 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new HashMap<String,Type>(2*_map1102.size);
-            String _key1103;
-            Type _val1104;
-            for (int _i1105 = 0; _i1105 < _map1102.size; ++_i1105)
+            org.apache.thrift.protocol.TMap _map1182 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new HashMap<String,Type>(2*_map1182.size);
+            String _key1183;
+            Type _val1184;
+            for (int _i1185 = 0; _i1185 < _map1182.size; ++_i1185)
             {
-              _key1103 = iprot.readString();
-              _val1104 = new Type();
-              _val1104.read(iprot);
-              struct.success.put(_key1103, _val1104);
+              _key1183 = iprot.readString();
+              _val1184 = new Type();
+              _val1184.read(iprot);
+              struct.success.put(_key1183, _val1184);
             }
           }
           struct.setSuccessIsSet(true);
@@ -51513,14 +51684,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1106 = iprot.readListBegin();
-                  struct.success = new ArrayList<FieldSchema>(_list1106.size);
-                  FieldSchema _elem1107;
-                  for (int _i1108 = 0; _i1108 < _list1106.size; ++_i1108)
+                  org.apache.thrift.protocol.TList _list1186 = iprot.readListBegin();
+                  struct.success = new ArrayList<FieldSchema>(_list1186.size);
+                  FieldSchema _elem1187;
+                  for (int _i1188 = 0; _i1188 < _list1186.size; ++_i1188)
                   {
-                    _elem1107 = new FieldSchema();
-                    _elem1107.read(iprot);
-                    struct.success.add(_elem1107);
+                    _elem1187 = new FieldSchema();
+                    _elem1187.read(iprot);
+                    struct.success.add(_elem1187);
                   }
                   iprot.readListEnd();
                 }
@@ -51573,9 +51744,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (FieldSchema _iter1109 : struct.success)
+            for (FieldSchema _iter1189 : struct.success)
             {
-              _iter1109.write(oprot);
+              _iter1189.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -51630,9 +51801,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (FieldSchema _iter1110 : struct.success)
+            for (FieldSchema _iter1190 : struct.success)
             {
-              _iter1110.write(oprot);
+              _iter1190.write(oprot);
             }
           }
         }
@@ -51653,14 +51824,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(4);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1111 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<FieldSchema>(_list1111.size);
-            FieldSchema _elem1112;
-            for (int _i1113 = 0; _i1113 < _list1111.size; ++_i1113)
+            org.apache.thrift.protocol.TList _list1191 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<FieldSchema>(_list1191.size);
+            FieldSchema _elem1192;
+            for (int _i1193 = 0; _i1193 < _list1191.size; ++_i1193)
             {
-              _elem1112 = new FieldSchema();
-              _elem1112.read(iprot);
-              struct.success.add(_elem1112);
+              _elem1192 = new FieldSchema();
+              _elem1192.read(iprot);
+              struct.success.add(_elem1192);
             }
           }
           struct.setSuccessIsSet(true);
@@ -52814,14 +52985,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1114 = iprot.readListBegin();
-                  struct.success = new ArrayList<FieldSchema>(_list1114.size);
-                  FieldSchema _elem1115;
-                  for (int _i1116 = 0; _i1116 < _list1114.size; ++_i1116)
+                  org.apache.thrift.protocol.TList _list1194 = iprot.readListBegin();
+                  struct.success = new ArrayList<FieldSchema>(_list1194.size);
+                  FieldSchema _elem1195;
+                  for (int _i1196 = 0; _i1196 < _list1194.size; ++_i1196)
                   {
-                    _elem1115 = new FieldSchema();
-                    _elem1115.read(iprot);
-                    struct.success.add(_elem1115);
+                    _elem1195 = new FieldSchema();
+                    _elem1195.read(iprot);
+                    struct.success.add(_elem1195);
                   }
                   iprot.readListEnd();
                 }
@@ -52874,9 +53045,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (FieldSchema _iter1117 : struct.success)
+            for (FieldSchema _iter1197 : struct.success)
             {
-              _iter1117.write(oprot);
+              _iter1197.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -52931,9 +53102,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (FieldSchema _iter1118 : struct.success)
+            for (FieldSchema _iter1198 : struct.success)
             {
-              _iter1118.write(oprot);
+              _iter1198.write(oprot);
             }
           }
         }
@@ -52954,14 +53125,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(4);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1119 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<FieldSchema>(_list1119.size);
-            FieldSchema _elem1120;
-            for (int _i1121 = 0; _i1121 < _list1119.size; ++_i1121)
+            org.apache.thrift.protocol.TList _list1199 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<FieldSchema>(_list1199.size);
+            FieldSchema _elem1200;
+            for (int _i1201 = 0; _i1201 < _list1199.size; ++_i1201)
             {
-              _elem1120 = new FieldSchema();
-              _elem1120.read(iprot);
-              struct.success.add(_elem1120);
+              _elem1200 = new FieldSchema();
+              _elem1200.read(iprot);
+              struct.success.add(_elem1200);
             }
           }
           struct.setSuccessIsSet(true);
@@ -54006,14 +54177,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1122 = iprot.readListBegin();
-                  struct.success = new ArrayList<FieldSchema>(_list1122.size);
-                  FieldSchema _elem1123;
-                  for (int _i1124 = 0; _i1124 < _list1122.size; ++_i1124)
+                  org.apache.thrift.protocol.TList _list1202 = iprot.readListBegin();
+                  struct.success = new ArrayList<FieldSchema>(_list1202.size);
+                  FieldSchema _elem1203;
+                  for (int _i1204 = 0; _i1204 < _list1202.size; ++_i1204)
                   {
-                    _elem1123 = new FieldSchema();
-                    _elem1123.read(iprot);
-                    struct.success.add(_elem1123);
+                    _elem1203 = new FieldSchema();
+                    _elem1203.read(iprot);
+                    struct.success.add(_elem1203);
                   }
                   iprot.readListEnd();
                 }
@@ -54066,9 +54237,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (FieldSchema _iter1125 : struct.success)
+            for (FieldSchema _iter1205 : struct.success)
             {
-              _iter1125.write(oprot);
+              _iter1205.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -54123,9 +54294,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (FieldSchema _iter1126 : struct.success)
+            for (FieldSchema _iter1206 : struct.success)
             {
-              _iter1126.write(oprot);
+              _iter1206.write(oprot);
             }
           }
         }
@@ -54146,14 +54317,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(4);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1127 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<FieldSchema>(_list1127.size);
-            FieldSchema _elem1128;
-            for (int _i1129 = 0; _i1129 < _list1127.size; ++_i1129)
+            org.apache.thrift.protocol.TList _list1207 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<FieldSchema>(_list1207.size);
+            FieldSchema _elem1208;
+            for (int _i1209 = 0; _i1209 < _list1207.size; ++_i1209)
             {
-              _elem1128 = new FieldSchema();
-              _elem1128.read(iprot);
-              struct.success.add(_elem1128);
+              _elem1208 = new FieldSchema();
+              _elem1208.read(iprot);
+              struct.success.add(_elem1208);
             }
           }
           struct.setSuccessIsSet(true);
@@ -55307,14 +55478,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1130 = iprot.readListBegin();
-                  struct.success = new ArrayList<FieldSchema>(_list1130.size);
-                  FieldSchema _elem1131;
-                  for (int _i1132 = 0; _i1132 < _list1130.size; ++_i1132)
+                  org.apache.thrift.protocol.TList _list1210 = iprot.readListBegin();
+                  struct.success = new ArrayList<FieldSchema>(_list1210.size);
+                  FieldSchema _elem1211;
+                  for (int _i1212 = 0; _i1212 < _list1210.size; ++_i1212)
                   {
-                    _elem1131 = new FieldSchema();
-                    _elem1131.read(iprot);
-                    struct.success.add(_elem1131);
+                    _elem1211 = new FieldSchema();
+                    _elem1211.read(iprot);
+                    struct.success.add(_elem1211);
                   }
                   iprot.readListEnd();
                 }
@@ -55367,9 +55538,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (FieldSchema _iter1133 : struct.success)
+            for (FieldSchema _iter1213 : struct.success)
             {
-              _iter1133.write(oprot);
+              _iter1213.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -55424,9 +55595,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (FieldSchema _iter1134 : struct.success)
+            for (FieldSchema _iter1214 : struct.success)
             {
-              _iter1134.write(oprot);
+              _iter1214.write(oprot);
             }
           }
         }
@@ -55447,14 +55618,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(4);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1135 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<FieldSchema>(_list1135.size);
-            FieldSchema _elem1136;
-            for (int _i1137 = 0; _i1137 < _list1135.size; ++_i1137)
+            org.apache.thrift.protocol.TList _list1215 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<FieldSchema>(_list1215.size);
+            FieldSchema _elem1216;
+            for (int _i1217 = 0; _i1217 < _list1215.size; ++_i1217)
             {
-              _elem1136 = new FieldSchema();
-              _elem1136.read(iprot);
-              struct.success.add(_elem1136);
+              _elem1216 = new FieldSchema();
+              _elem1216.read(iprot);
+              struct.success.add(_elem1216);
             }
           }
           struct.setSuccessIsSet(true);
@@ -58583,14 +58754,14 @@ import org.slf4j.LoggerFactory;
             case 2: // PRIMARY_KEYS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1138 = iprot.readListBegin();
-                  struct.primaryKeys = new ArrayList<SQLPrimaryKey>(_list1138.size);
-                  SQLPrimaryKey _elem1139;
-                  for (int _i1140 = 0; _i1140 < _list1138.size; ++_i1140)
+                  org.apache.thrift.protocol.TList _list1218 = iprot.readListBegin();
+                  struct.primaryKeys = new ArrayList<SQLPrimaryKey>(_list1218.size);
+                  SQLPrimaryKey _elem1219;
+                  for (int _i1220 = 0; _i1220 < _list1218.size; ++_i1220)
                   {
-                    _elem1139 = new SQLPrimaryKey();
-                    _elem1139.read(iprot);
-                    struct.primaryKeys.add(_elem1139);
+                    _elem1219 = new SQLPrimaryKey();
+                    _elem1219.read(iprot);
+                    struct.primaryKeys.add(_elem1219);
                   }
                   iprot.readListEnd();
                 }
@@ -58602,14 +58773,14 @@ import org.slf4j.LoggerFactory;
             case 3: // FOREIGN_KEYS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1141 = iprot.readListBegin();
-                  struct.foreignKeys = new ArrayList<SQLForeignKey>(_list1141.size);
-                  SQLForeignKey _elem1142;
-                  for (int _i1143 = 0; _i1143 < _list1141.size; ++_i1143)
+                  org.apache.thrift.protocol.TList _list1221 = iprot.readListBegin();
+                  struct.foreignKeys = new ArrayList<SQLForeignKey>(_list1221.size);
+                  SQLForeignKey _elem1222;
+                  for (int _i1223 = 0; _i1223 < _list1221.size; ++_i1223)
                   {
-                    _elem1142 = new SQLForeignKey();
-                    _elem1142.read(iprot);
-                    struct.foreignKeys.add(_elem1142);
+                    _elem1222 = new SQLForeignKey();
+                    _elem1222.read(iprot);
+                    struct.foreignKeys.add(_elem1222);
                   }
                   iprot.readListEnd();
                 }
@@ -58621,14 +58792,14 @@ import org.slf4j.LoggerFactory;
             case 4: // UNIQUE_CONSTRAINTS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1144 = iprot.readListBegin();
-                  struct.uniqueConstraints = new ArrayList<SQLUniqueConstraint>(_list1144.size);
-                  SQLUniqueConstraint _elem1145;
-                  for (int _i1146 = 0; _i1146 < _list1144.size; ++_i1146)
+                  org.apache.thrift.protocol.TList _list1224 = iprot.readListBegin();
+                  struct.uniqueConstraints = new ArrayList<SQLUniqueConstraint>(_list1224.size);
+                  SQLUniqueConstraint _elem1225;
+                  for (int _i1226 = 0; _i1226 < _list1224.size; ++_i1226)
                   {
-                    _elem1145 = new SQLUniqueConstraint();
-                    _elem1145.read(iprot);
-                    struct.uniqueConstraints.add(_elem1145);
+                    _elem1225 = new SQLUniqueConstraint();
+                    _elem1225.read(iprot);
+                    struct.uniqueConstraints.add(_elem1225);
                   }
                   iprot.readListEnd();
                 }
@@ -58640,14 +58811,14 @@ import org.slf4j.LoggerFactory;
             case 5: // NOT_NULL_CONSTRAINTS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1147 = iprot.readListBegin();
-                  struct.notNullConstraints = new ArrayList<SQLNotNullConstraint>(_list1147.size);
-                  SQLNotNullConstraint _elem1148;
-                  for (int _i1149 = 0; _i1149 < _list1147.size; ++_i1149)
+                  org.apache.thrift.protocol.TList _list1227 = iprot.readListBegin();
+                  struct.notNullConstraints = new ArrayList<SQLNotNullConstraint>(_list1227.size);
+                  SQLNotNullConstraint _elem1228;
+                  for (int _i1229 = 0; _i1229 < _list1227.size; ++_i1229)
                   {
-                    _elem1148 = new SQLNotNullConstraint();
-                    _elem1148.read(iprot);
-                    struct.notNullConstraints.add(_elem1148);
+                    _elem1228 = new SQLNotNullConstraint();
+                    _elem1228.read(iprot);
+                    struct.notNullConstraints.add(_elem1228);
                   }
                   iprot.readListEnd();
                 }
@@ -58659,14 +58830,14 @@ import org.slf4j.LoggerFactory;
             case 6: // DEFAULT_CONSTRAINTS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1150 = iprot.readListBegin();
-                  struct.defaultConstraints = new ArrayList<SQLDefaultConstraint>(_list1150.size);
-                  SQLDefaultConstraint _elem1151;
-                  for (int _i1152 = 0; _i1152 < _list1150.size; ++_i1152)
+                  org.apache.thrift.protocol.TList _list1230 = iprot.readListBegin();
+                  struct.defaultConstraints = new ArrayList<SQLDefaultConstraint>(_list1230.size);
+                  SQLDefaultConstraint _elem1231;
+                  for (int _i1232 = 0; _i1232 < _list1230.size; ++_i1232)
                   {
-                    _elem1151 = new SQLDefaultConstraint();
-                    _elem1151.read(iprot);
-                    struct.defaultConstraints.add(_elem1151);
+                    _elem1231 = new SQLDefaultConstraint();
+                    _elem1231.read(iprot);
+                    struct.defaultConstraints.add(_elem1231);
                   }
                   iprot.readListEnd();
                 }
@@ -58678,14 +58849,14 @@ import org.slf4j.LoggerFactory;
             case 7: // CHECK_CONSTRAINTS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1153 = iprot.readListBegin();
-                  struct.checkConstraints = new ArrayList<SQLCheckConstraint>(_list1153.size);
-                  SQLCheckConstraint _elem1154;
-                  for (int _i1155 = 0; _i1155 < _list1153.size; ++_i1155)
+                  org.apache.thrift.protocol.TList _list1233 = iprot.readListBegin();
+                  struct.checkConstraints = new ArrayList<SQLCheckConstraint>(_list1233.size);
+                  SQLCheckConstraint _elem1234;
+                  for (int _i1235 = 0; _i1235 < _list1233.size; ++_i1235)
                   {
-                    _elem1154 = new SQLCheckConstraint();
-                    _elem1154.read(iprot);
-                    struct.checkConstraints.add(_elem1154);
+                    _elem1234 = new SQLCheckConstraint();
+                    _elem1234.read(iprot);
+                    struct.checkConstraints.add(_elem1234);
                   }
                   iprot.readListEnd();
                 }
@@ -58716,9 +58887,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(PRIMARY_KEYS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.primaryKeys.size()));
-            for (SQLPrimaryKey _iter1156 : struct.primaryKeys)
+            for (SQLPrimaryKey _iter1236 : struct.primaryKeys)
             {
-              _iter1156.write(oprot);
+              _iter1236.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -58728,9 +58899,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(FOREIGN_KEYS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.foreignKeys.size()));
-            for (SQLForeignKey _iter1157 : struct.foreignKeys)
+            for (SQLForeignKey _iter1237 : struct.foreignKeys)
             {
-              _iter1157.write(oprot);
+              _iter1237.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -58740,9 +58911,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(UNIQUE_CONSTRAINTS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.uniqueConstraints.size()));
-            for (SQLUniqueConstraint _iter1158 : struct.uniqueConstraints)
+            for (SQLUniqueConstraint _iter1238 : struct.uniqueConstraints)
             {
-              _iter1158.write(oprot);
+              _iter1238.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -58752,9 +58923,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(NOT_NULL_CONSTRAINTS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.notNullConstraints.size()));
-            for (SQLNotNullConstraint _iter1159 : struct.notNullConstraints)
+            for (SQLNotNullConstraint _iter1239 : struct.notNullConstraints)
             {
-              _iter1159.write(oprot);
+              _iter1239.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -58764,9 +58935,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(DEFAULT_CONSTRAINTS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.defaultConstraints.size()));
-            for (SQLDefaultConstraint _iter1160 : struct.defaultConstraints)
+            for (SQLDefaultConstraint _iter1240 : struct.defaultConstraints)
             {
-              _iter1160.write(oprot);
+              _iter1240.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -58776,9 +58947,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(CHECK_CONSTRAINTS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.checkConstraints.size()));
-            for (SQLCheckConstraint _iter1161 : struct.checkConstraints)
+            for (SQLCheckConstraint _iter1241 : struct.checkConstraints)
             {
-              _iter1161.write(oprot);
+              _iter1241.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -58830,54 +59001,54 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetPrimaryKeys()) {
           {
             oprot.writeI32(struct.primaryKeys.size());
-            for (SQLPrimaryKey _iter1162 : struct.primaryKeys)
+            for (SQLPrimaryKey _iter1242 : struct.primaryKeys)
             {
-              _iter1162.write(oprot);
+              _iter1242.write(oprot);
             }
           }
         }
         if (struct.isSetForeignKeys()) {
           {
             oprot.writeI32(struct.foreignKeys.size());
-            for (SQLForeignKey _iter1163 : struct.foreignKeys)
+            for (SQLForeignKey _iter1243 : struct.foreignKeys)
             {
-              _iter1163.write(oprot);
+              _iter1243.write(oprot);
             }
           }
         }
         if (struct.isSetUniqueConstraints()) {
           {
             oprot.writeI32(struct.uniqueConstraints.size());
-            for (SQLUniqueConstraint _iter1164 : struct.uniqueConstraints)
+            for (SQLUniqueConstraint _iter1244 : struct.uniqueConstraints)
             {
-              _iter1164.write(oprot);
+              _iter1244.write(oprot);
             }
           }
         }
         if (struct.isSetNotNullConstraints()) {
           {
             oprot.writeI32(struct.notNullConstraints.size());
-            for (SQLNotNullConstraint _iter1165 : struct.notNullConstraints)
+            for (SQLNotNullConstraint _iter1245 : struct.notNullConstraints)
             {
-              _iter1165.write(oprot);
+              _iter1245.write(oprot);
             }
           }
         }
         if (struct.isSetDefaultConstraints()) {
           {
             oprot.writeI32(struct.defaultConstraints.size());
-            for (SQLDefaultConstraint _iter1166 : struct.defaultConstraints)
+            for (SQLDefaultConstraint _iter1246 : struct.defaultConstraints)
             {
-              _iter1166.write(oprot);
+              _iter1246.write(oprot);
             }
           }
         }
         if (struct.isSetCheckConstraints()) {
           {
             oprot.writeI32(struct.checkConstraints.size());
-            for (SQLCheckConstraint _iter1167 : struct.checkConstraints)
+            for (SQLCheckConstraint _iter1247 : struct.checkConstraints)
             {
-              _iter1167.write(oprot);
+              _iter1247.write(oprot);
             }
           }
         }
@@ -58894,84 +59065,84 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(1)) {
           {
-            org.apache.thrift.protocol.TList _list1168 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.primaryKeys = new ArrayList<SQLPrimaryKey>(_list1168.size);
-            SQLPrimaryKey _elem1169;
-            for (int _i1170 = 0; _i1170 < _list1168.size; ++_i1170)
+            org.apache.thrift.protocol.TList _list1248 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.primaryKeys = new ArrayList<SQLPrimaryKey>(_list1248.size);
+            SQLPrimaryKey _elem1249;
+            for (int _i1250 = 0; _i1250 < _list1248.size; ++_i1250)
             {
-              _elem1169 = new SQLPrimaryKey();
-              _elem1169.read(iprot);
-              struct.primaryKeys.add(_elem1169);
+              _elem1249 = new SQLPrimaryKey();
+              _elem1249.read(iprot);
+              struct.primaryKeys.add(_elem1249);
             }
           }
           struct.setPrimaryKeysIsSet(true);
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list1171 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.foreignKeys = new ArrayList<SQLForeignKey>(_list1171.size);
-            SQLForeignKey _elem1172;
-            for (int _i1173 = 0; _i1173 < _list1171.size; ++_i1173)
+            org.apache.thrift.protocol.TList _list1251 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.foreignKeys = new ArrayList<SQLForeignKey>(_list1251.size);
+            SQLForeignKey _elem1252;
+            for (int _i1253 = 0; _i1253 < _list1251.size; ++_i1253)
             {
-              _elem1172 = new SQLForeignKey();
-              _elem1172.read(iprot);
-              struct.foreignKeys.add(_elem1172);
+              _elem1252 = new SQLForeignKey();
+              _elem1252.read(iprot);
+              struct.foreignKeys.add(_elem1252);
             }
           }
           struct.setForeignKeysIsSet(true);
         }
         if (incoming.get(3)) {
           {
-            org.apache.thrift.protocol.TList _list1174 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.uniqueConstraints = new ArrayList<SQLUniqueConstraint>(_list1174.size);
-            SQLUniqueConstraint _elem1175;
-            for (int _i1176 = 0; _i1176 < _list1174.size; ++_i1176)
+            org.apache.thrift.protocol.TList _list1254 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.uniqueConstraints = new ArrayList<SQLUniqueConstraint>(_list1254.size);
+            SQLUniqueConstraint _elem1255;
+            for (int _i1256 = 0; _i1256 < _list1254.size; ++_i1256)
             {
-              _elem1175 = new SQLUniqueConstraint();
-              _elem1175.read(iprot);
-              struct.uniqueConstraints.add(_elem1175);
+              _elem1255 = new SQLUniqueConstraint();
+              _elem1255.read(iprot);
+              struct.uniqueConstraints.add(_elem1255);
             }
           }
           struct.setUniqueConstraintsIsSet(true);
         }
         if (incoming.get(4)) {
           {
-            org.apache.thrift.protocol.TList _list1177 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.notNullConstraints = new ArrayList<SQLNotNullConstraint>(_list1177.size);
-            SQLNotNullConstraint _elem1178;
-            for (int _i1179 = 0; _i1179 < _list1177.size; ++_i1179)
+            org.apache.thrift.protocol.TList _list1257 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.notNullConstraints = new ArrayList<SQLNotNullConstraint>(_list1257.size);
+            SQLNotNullConstraint _elem1258;
+            for (int _i1259 = 0; _i1259 < _list1257.size; ++_i1259)
             {
-              _elem1178 = new SQLNotNullConstraint();
-              _elem1178.read(iprot);
-              struct.notNullConstraints.add(_elem1178);
+              _elem1258 = new SQLNotNullConstraint();
+              _elem1258.read(iprot);
+              struct.notNullConstraints.add(_elem1258);
             }
           }
           struct.setNotNullConstraintsIsSet(true);
         }
         if (incoming.get(5)) {
           {
-            org.apache.thrift.protocol.TList _list1180 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.defaultConstraints = new ArrayList<SQLDefaultConstraint>(_list1180.size);
-            SQLDefaultConstraint _elem1181;
-            for (int _i1182 = 0; _i1182 < _list1180.size; ++_i1182)
+            org.apache.thrift.protocol.TList _list1260 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.defaultConstraints = new ArrayList<SQLDefaultConstraint>(_list1260.size);
+            SQLDefaultConstraint _elem1261;
+            for (int _i1262 = 0; _i1262 < _list1260.size; ++_i1262)
             {
-              _elem1181 = new SQLDefaultConstraint();
-              _elem1181.read(iprot);
-              struct.defaultConstraints.add(_elem1181);
+              _elem1261 = new SQLDefaultConstraint();
+              _elem1261.read(iprot);
+              struct.defaultConstraints.add(_elem1261);
             }
           }
           struct.setDefaultConstraintsIsSet(true);
         }
         if (incoming.get(6)) {
           {
-            org.apache.thrift.protocol.TList _list1183 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.checkConstraints = new ArrayList<SQLCheckConstraint>(_list1183.size);
-            SQLCheckConstraint _elem1184;
-            for (int _i1185 = 0; _i1185 < _list1183.size; ++_i1185)
+            org.apache.thrift.protocol.TList _list1263 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.checkConstraints = new ArrayList<SQLCheckConstraint>(_list1263.size);
+            SQLCheckConstraint _elem1264;
+            for (int _i1265 = 0; _i1265 < _list1263.size; ++_i1265)
             {
-              _elem1184 = new SQLCheckConstraint();
-              _elem1184.read(iprot);
-              struct.checkConstraints.add(_elem1184);
+              _elem1264 = new SQLCheckConstraint();
+              _elem1264.read(iprot);
+              struct.checkConstraints.add(_elem1264);
             }
           }
           struct.setCheckConstraintsIsSet(true);
@@ -59632,6 +59803,1047 @@ import org.slf4j.LoggerFactory;
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, create_table_with_constraints_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(4);
+        if (incoming.get(0)) {
+          struct.o1 = new AlreadyExistsException();
+          struct.o1.read(iprot);
+          struct.setO1IsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.o2 = new InvalidObjectException();
+          struct.o2.read(iprot);
+          struct.setO2IsSet(true);
+        }
+        if (incoming.get(2)) {
+          struct.o3 = new MetaException();
+          struct.o3.read(iprot);
+          struct.setO3IsSet(true);
+        }
+        if (incoming.get(3)) {
+          struct.o4 = new NoSuchObjectException();
+          struct.o4.read(iprot);
+          struct.setO4IsSet(true);
+        }
+      }
+    }
+
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class create_table_req_args implements org.apache.thrift.TBase<create_table_req_args, create_table_req_args._Fields>, java.io.Serializable, Cloneable, Comparable<create_table_req_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("create_table_req_args");
+
+    private static final org.apache.thrift.protocol.TField REQUEST_FIELD_DESC = new org.apache.thrift.protocol.TField("request", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new create_table_req_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new create_table_req_argsTupleSchemeFactory());
+    }
+
+    private CreateTableRequest request; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      REQUEST((short)1, "request");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // REQUEST
+            return REQUEST;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.REQUEST, new org.apache.thrift.meta_data.FieldMetaData("request", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, CreateTableRequest.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(create_table_req_args.class, metaDataMap);
+    }
+
+    public create_table_req_args() {
+    }
+
+    public create_table_req_args(
+      CreateTableRequest request)
+    {
+      this();
+      this.request = request;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public create_table_req_args(create_table_req_args other) {
+      if (other.isSetRequest()) {
+        this.request = new CreateTableRequest(other.request);
+      }
+    }
+
+    public create_table_req_args deepCopy() {
+      return new create_table_req_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.request = null;
+    }
+
+    public CreateTableRequest getRequest() {
+      return this.request;
+    }
+
+    public void setRequest(CreateTableRequest request) {
+      this.request = request;
+    }
+
+    public void unsetRequest() {
+      this.request = null;
+    }
+
+    /** Returns true if field request is set (has been assigned a value) and false otherwise */
+    public boolean isSetRequest() {
+      return this.request != null;
+    }
+
+    public void setRequestIsSet(boolean value) {
+      if (!value) {
+        this.request = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case REQUEST:
+        if (value == null) {
+          unsetRequest();
+        } else {
+          setRequest((CreateTableRequest)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case REQUEST:
+        return getRequest();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case REQUEST:
+        return isSetRequest();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof create_table_req_args)
+        return this.equals((create_table_req_args)that);
+      return false;
+    }
+
+    public boolean equals(create_table_req_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_request = true && this.isSetRequest();
+      boolean that_present_request = true && that.isSetRequest();
+      if (this_present_request || that_present_request) {
+        if (!(this_present_request && that_present_request))
+          return false;
+        if (!this.request.equals(that.request))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_request = true && (isSetRequest());
+      list.add(present_request);
+      if (present_request)
+        list.add(request);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(create_table_req_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetRequest()).compareTo(other.isSetRequest());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetRequest()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.request, other.request);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("create_table_req_args(");
+      boolean first = true;
+
+      sb.append("request:");
+      if (this.request == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.request);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (request != null) {
+        request.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class create_table_req_argsStandardSchemeFactory implements SchemeFactory {
+      public create_table_req_argsStandardScheme getScheme() {
+        return new create_table_req_argsStandardScheme();
+      }
+    }
+
+    private static class create_table_req_argsStandardScheme extends StandardScheme<create_table_req_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, create_table_req_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // REQUEST
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.request = new CreateTableRequest();
+                struct.request.read(iprot);
+                struct.setRequestIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, create_table_req_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.request != null) {
+          oprot.writeFieldBegin(REQUEST_FIELD_DESC);
+          struct.request.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class create_table_req_argsTupleSchemeFactory implements SchemeFactory {
+      public create_table_req_argsTupleScheme getScheme() {
+        return new create_table_req_argsTupleScheme();
+      }
+    }
+
+    private static class create_table_req_argsTupleScheme extends TupleScheme<create_table_req_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, create_table_req_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetRequest()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetRequest()) {
+          struct.request.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, create_table_req_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.request = new CreateTableRequest();
+          struct.request.read(iprot);
+          struct.setRequestIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class create_table_req_result implements org.apache.thrift.TBase<create_table_req_result, create_table_req_result._Fields>, java.io.Serializable, Cloneable, Comparable<create_table_req_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("create_table_req_result");
+
+    private static final org.apache.thrift.protocol.TField O1_FIELD_DESC = new org.apache.thrift.protocol.TField("o1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+    private static final org.apache.thrift.protocol.TField O2_FIELD_DESC = new org.apache.thrift.protocol.TField("o2", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+    private static final org.apache.thrift.protocol.TField O3_FIELD_DESC = new org.apache.thrift.protocol.TField("o3", org.apache.thrift.protocol.TType.STRUCT, (short)3);
+    private static final org.apache.thrift.protocol.TField O4_FIELD_DESC = new org.apache.thrift.protocol.TField("o4", org.apache.thrift.protocol.TType.STRUCT, (short)4);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new create_table_req_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new create_table_req_resultTupleSchemeFactory());
+    }
+
+    private AlreadyExistsException o1; // required
+    private InvalidObjectException o2; // required
+    private MetaException o3; // required
+    private NoSuchObjectException o4; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      O1((short)1, "o1"),
+      O2((short)2, "o2"),
+      O3((short)3, "o3"),
+      O4((short)4, "o4");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // O1
+            return O1;
+          case 2: // O2
+            return O2;
+          case 3: // O3
+            return O3;
+          case 4: // O4
+            return O4;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.O1, new org.apache.thrift.meta_data.FieldMetaData("o1", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      tmpMap.put(_Fields.O2, new org.apache.thrift.meta_data.FieldMetaData("o2", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      tmpMap.put(_Fields.O3, new org.apache.thrift.meta_data.FieldMetaData("o3", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      tmpMap.put(_Fields.O4, new org.apache.thrift.meta_data.FieldMetaData("o4", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(create_table_req_result.class, metaDataMap);
+    }
+
+    public create_table_req_result() {
+    }
+
+    public create_table_req_result(
+      AlreadyExistsException o1,
+      InvalidObjectException o2,
+      MetaException o3,
+      NoSuchObjectException o4)
+    {
+      this();
+      this.o1 = o1;
+      this.o2 = o2;
+      this.o3 = o3;
+      this.o4 = o4;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public create_table_req_result(create_table_req_result other) {
+      if (other.isSetO1()) {
+        this.o1 = new AlreadyExistsException(other.o1);
+      }
+      if (other.isSetO2()) {
+        this.o2 = new InvalidObjectException(other.o2);
+      }
+      if (other.isSetO3()) {
+        this.o3 = new MetaException(other.o3);
+      }
+      if (other.isSetO4()) {
+        this.o4 = new NoSuchObjectException(other.o4);
+      }
+    }
+
+    public create_table_req_result deepCopy() {
+      return new create_table_req_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.o1 = null;
+      this.o2 = null;
+      this.o3 = null;
+      this.o4 = null;
+    }
+
+    public AlreadyExistsException getO1() {
+      return this.o1;
+    }
+
+    public void setO1(AlreadyExistsException o1) {
+      this.o1 = o1;
+    }
+
+    public void unsetO1() {
+      this.o1 = null;
+    }
+
+    /** Returns true if field o1 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO1() {
+      return this.o1 != null;
+    }
+
+    public void setO1IsSet(boolean value) {
+      if (!value) {
+        this.o1 = null;
+      }
+    }
+
+    public InvalidObjectException getO2() {
+      return this.o2;
+    }
+
+    public void setO2(InvalidObjectException o2) {
+      this.o2 = o2;
+    }
+
+    public void unsetO2() {
+      this.o2 = null;
+    }
+
+    /** Returns true if field o2 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO2() {
+      return this.o2 != null;
+    }
+
+    public void setO2IsSet(boolean value) {
+      if (!value) {
+        this.o2 = null;
+      }
+    }
+
+    public MetaException getO3() {
+      return this.o3;
+    }
+
+    public void setO3(MetaException o3) {
+      this.o3 = o3;
+    }
+
+    public void unsetO3() {
+      this.o3 = null;
+    }
+
+    /** Returns true if field o3 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO3() {
+      return this.o3 != null;
+    }
+
+    public void setO3IsSet(boolean value) {
+      if (!value) {
+        this.o3 = null;
+      }
+    }
+
+    public NoSuchObjectException getO4() {
+      return this.o4;
+    }
+
+    public void setO4(NoSuchObjectException o4) {
+      this.o4 = o4;
+    }
+
+    public void unsetO4() {
+      this.o4 = null;
+    }
+
+    /** Returns true if field o4 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO4() {
+      return this.o4 != null;
+    }
+
+    public void setO4IsSet(boolean value) {
+      if (!value) {
+        this.o4 = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case O1:
+        if (value == null) {
+          unsetO1();
+        } else {
+          setO1((AlreadyExistsException)value);
+        }
+        break;
+
+      case O2:
+        if (value == null) {
+          unsetO2();
+        } else {
+          setO2((InvalidObjectException)value);
+        }
+        break;
+
+      case O3:
+        if (value == null) {
+          unsetO3();
+        } else {
+          setO3((MetaException)value);
+        }
+        break;
+
+      case O4:
+        if (value == null) {
+          unsetO4();
+        } else {
+          setO4((NoSuchObjectException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case O1:
+        return getO1();
+
+      case O2:
+        return getO2();
+
+      case O3:
+        return getO3();
+
+      case O4:
+        return getO4();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case O1:
+        return isSetO1();
+      case O2:
+        return isSetO2();
+      case O3:
+        return isSetO3();
+      case O4:
+        return isSetO4();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof create_table_req_result)
+        return this.equals((create_table_req_result)that);
+      return false;
+    }
+
+    public boolean equals(create_table_req_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_o1 = true && this.isSetO1();
+      boolean that_present_o1 = true && that.isSetO1();
+      if (this_present_o1 || that_present_o1) {
+        if (!(this_present_o1 && that_present_o1))
+          return false;
+        if (!this.o1.equals(that.o1))
+          return false;
+      }
+
+      boolean this_present_o2 = true && this.isSetO2();
+      boolean that_present_o2 = true && that.isSetO2();
+      if (this_present_o2 || that_present_o2) {
+        if (!(this_present_o2 && that_present_o2))
+          return false;
+        if (!this.o2.equals(that.o2))
+          return false;
+      }
+
+      boolean this_present_o3 = true && this.isSetO3();
+      boolean that_present_o3 = true && that.isSetO3();
+      if (this_present_o3 || that_present_o3) {
+        if (!(this_present_o3 && that_present_o3))
+          return false;
+        if (!this.o3.equals(that.o3))
+          return false;
+      }
+
+      boolean this_present_o4 = true && this.isSetO4();
+      boolean that_present_o4 = true && that.isSetO4();
+      if (this_present_o4 || that_present_o4) {
+        if (!(this_present_o4 && that_present_o4))
+          return false;
+        if (!this.o4.equals(that.o4))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_o1 = true && (isSetO1());
+      list.add(present_o1);
+      if (present_o1)
+        list.add(o1);
+
+      boolean present_o2 = true && (isSetO2());
+      list.add(present_o2);
+      if (present_o2)
+        list.add(o2);
+
+      boolean present_o3 = true && (isSetO3());
+      list.add(present_o3);
+      if (present_o3)
+        list.add(o3);
+
+      boolean present_o4 = true && (isSetO4());
+      list.add(present_o4);
+      if (present_o4)
+        list.add(o4);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(create_table_req_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetO1()).compareTo(other.isSetO1());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO1()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o1, other.o1);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetO2()).compareTo(other.isSetO2());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO2()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o2, other.o2);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetO3()).compareTo(other.isSetO3());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO3()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o3, other.o3);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetO4()).compareTo(other.isSetO4());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO4()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o4, other.o4);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("create_table_req_result(");
+      boolean first = true;
+
+      sb.append("o1:");
+      if (this.o1 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o1);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("o2:");
+      if (this.o2 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o2);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("o3:");
+      if (this.o3 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o3);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("o4:");
+      if (this.o4 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o4);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class create_table_req_resultStandardSchemeFactory implements SchemeFactory {
+      public create_table_req_resultStandardScheme getScheme() {
+        return new create_table_req_resultStandardScheme();
+      }
+    }
+
+    private static class create_table_req_resultStandardScheme extends StandardScheme<create_table_req_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, create_table_req_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // O1
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o1 = new AlreadyExistsException();
+                struct.o1.read(iprot);
+                struct.setO1IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // O2
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o2 = new InvalidObjectException();
+                struct.o2.read(iprot);
+                struct.setO2IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 3: // O3
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o3 = new MetaException();
+                struct.o3.read(iprot);
+                struct.setO3IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 4: // O4
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o4 = new NoSuchObjectException();
+                struct.o4.read(iprot);
+                struct.setO4IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, create_table_req_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.o1 != null) {
+          oprot.writeFieldBegin(O1_FIELD_DESC);
+          struct.o1.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.o2 != null) {
+          oprot.writeFieldBegin(O2_FIELD_DESC);
+          struct.o2.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.o3 != null) {
+          oprot.writeFieldBegin(O3_FIELD_DESC);
+          struct.o3.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.o4 != null) {
+          oprot.writeFieldBegin(O4_FIELD_DESC);
+          struct.o4.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class create_table_req_resultTupleSchemeFactory implements SchemeFactory {
+      public create_table_req_resultTupleScheme getScheme() {
+        return new create_table_req_resultTupleScheme();
+      }
+    }
+
+    private static class create_table_req_resultTupleScheme extends TupleScheme<create_table_req_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, create_table_req_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetO1()) {
+          optionals.set(0);
+        }
+        if (struct.isSetO2()) {
+          optionals.set(1);
+        }
+        if (struct.isSetO3()) {
+          optionals.set(2);
+        }
+        if (struct.isSetO4()) {
+          optionals.set(3);
+        }
+        oprot.writeBitSet(optionals, 4);
+        if (struct.isSetO1()) {
+          struct.o1.write(oprot);
+        }
+        if (struct.isSetO2()) {
+          struct.o2.write(oprot);
+        }
+        if (struct.isSetO3()) {
+          struct.o3.write(oprot);
+        }
+        if (struct.isSetO4()) {
+          struct.o4.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, create_table_req_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(4);
         if (incoming.get(0)) {
@@ -68121,13 +69333,13 @@ import org.slf4j.LoggerFactory;
             case 3: // PART_NAMES
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1186 = iprot.readListBegin();
-                  struct.partNames = new ArrayList<String>(_list1186.size);
-                  String _elem1187;
-                  for (int _i1188 = 0; _i1188 < _list1186.size; ++_i1188)
+                  org.apache.thrift.protocol.TList _list1266 = iprot.readListBegin();
+                  struct.partNames = new ArrayList<String>(_list1266.size);
+                  String _elem1267;
+                  for (int _i1268 = 0; _i1268 < _list1266.size; ++_i1268)
                   {
-                    _elem1187 = iprot.readString();
-                    struct.partNames.add(_elem1187);
+                    _elem1267 = iprot.readString();
+                    struct.partNames.add(_elem1267);
                   }
                   iprot.readListEnd();
                 }
@@ -68163,9 +69375,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(PART_NAMES_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.partNames.size()));
-            for (String _iter1189 : struct.partNames)
+            for (String _iter1269 : struct.partNames)
             {
-              oprot.writeString(_iter1189);
+              oprot.writeString(_iter1269);
             }
             oprot.writeListEnd();
           }
@@ -68208,9 +69420,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetPartNames()) {
           {
             oprot.writeI32(struct.partNames.size());
-            for (String _iter1190 : struct.partNames)
+            for (String _iter1270 : struct.partNames)
             {
-              oprot.writeString(_iter1190);
+              oprot.writeString(_iter1270);
             }
           }
         }
@@ -68230,13 +69442,13 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list1191 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.partNames = new ArrayList<String>(_list1191.size);
-            String _elem1192;
-            for (int _i1193 = 0; _i1193 < _list1191.size; ++_i1193)
+            org.apache.thrift.protocol.TList _list1271 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.partNames = new ArrayList<String>(_list1271.size);
+            String _elem1272;
+            for (int _i1273 = 0; _i1273 < _list1271.size; ++_i1273)
             {
-              _elem1192 = iprot.readString();
-              struct.partNames.add(_elem1192);
+              _elem1272 = iprot.readString();
+              struct.partNames.add(_elem1272);
             }
           }
           struct.setPartNamesIsSet(true);
@@ -70293,13 +71505,13 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1194 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list1194.size);
-                  String _elem1195;
-                  for (int _i1196 = 0; _i1196 < _list1194.size; ++_i1196)
+                  org.apache.thrift.protocol.TList _list1274 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list1274.size);
+                  String _elem1275;
+                  for (int _i1276 = 0; _i1276 < _list1274.size; ++_i1276)
                   {
-                    _elem1195 = iprot.readString();
-                    struct.success.add(_elem1195);
+                    _elem1275 = iprot.readString();
+                    struct.success.add(_elem1275);
                   }
                   iprot.readListEnd();
                 }
@@ -70334,9 +71546,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter1197 : struct.success)
+            for (String _iter1277 : struct.success)
             {
-              oprot.writeString(_iter1197);
+              oprot.writeString(_iter1277);
             }
             oprot.writeListEnd();
           }
@@ -70375,9 +71587,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter1198 : struct.success)
+            for (String _iter1278 : struct.success)
             {
-              oprot.writeString(_iter1198);
+              oprot.writeString(_iter1278);
             }
           }
         }
@@ -70392,13 +71604,13 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1199 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list1199.size);
-            String _elem1200;
-            for (int _i1201 = 0; _i1201 < _list1199.size; ++_i1201)
+            org.apache.thrift.protocol.TList _list1279 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list1279.size);
+            String _elem1280;
+            for (int _i1281 = 0; _i1281 < _list1279.size; ++_i1281)
             {
-              _elem1200 = iprot.readString();
-              struct.success.add(_elem1200);
+              _elem1280 = iprot.readString();
+              struct.success.add(_elem1280);
             }
           }
           struct.setSuccessIsSet(true);
@@ -71372,13 +72584,13 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1202 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list1202.size);
-                  String _elem1203;
-                  for (int _i1204 = 0; _i1204 < _list1202.size; ++_i1204)
+                  org.apache.thrift.protocol.TList _list1282 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list1282.size);
+                  String _elem1283;
+                  for (int _i1284 = 0; _i1284 < _list1282.size; ++_i1284)
                   {
-                    _elem1203 = iprot.readString();
-                    struct.success.add(_elem1203);
+                    _elem1283 = iprot.readString();
+                    struct.success.add(_elem1283);
                   }
                   iprot.readListEnd();
                 }
@@ -71413,9 +72625,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter1205 : struct.success)
+            for (String _iter1285 : struct.success)
             {
-              oprot.writeString(_iter1205);
+              oprot.writeString(_iter1285);
             }
             oprot.writeListEnd();
           }
@@ -71454,9 +72666,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter1206 : struct.success)
+            for (String _iter1286 : struct.success)
             {
-              oprot.writeString(_iter1206);
+              oprot.writeString(_iter1286);
             }
           }
         }
@@ -71471,13 +72683,13 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1207 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list1207.size);
-            String _elem1208;
-            for (int _i1209 = 0; _i1209 < _list1207.size; ++_i1209)
+            org.apache.thrift.protocol.TList _list1287 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list1287.size);
+            String _elem1288;
+            for (int _i1289 = 0; _i1289 < _list1287.size; ++_i1289)
             {
-              _elem1208 = iprot.readString();
-              struct.success.add(_elem1208);
+              _elem1288 = iprot.readString();
+              struct.success.add(_elem1288);
             }
           }
           struct.setSuccessIsSet(true);
@@ -72134,14 +73346,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1210 = iprot.readListBegin();
-                  struct.success = new ArrayList<Table>(_list1210.size);
-                  Table _elem1211;
-                  for (int _i1212 = 0; _i1212 < _list1210.size; ++_i1212)
+                  org.apache.thrift.protocol.TList _list1290 = iprot.readListBegin();
+                  struct.success = new ArrayList<Table>(_list1290.size);
+                  Table _elem1291;
+                  for (int _i1292 = 0; _i1292 < _list1290.size; ++_i1292)
                   {
-                    _elem1211 = new Table();
-                    _elem1211.read(iprot);
-                    struct.success.add(_elem1211);
+                    _elem1291 = new Table();
+                    _elem1291.read(iprot);
+                    struct.success.add(_elem1291);
                   }
                   iprot.readListEnd();
                 }
@@ -72176,9 +73388,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Table _iter1213 : struct.success)
+            for (Table _iter1293 : struct.success)
             {
-              _iter1213.write(oprot);
+              _iter1293.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -72217,9 +73429,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Table _iter1214 : struct.success)
+            for (Table _iter1294 : struct.success)
             {
-              _iter1214.write(oprot);
+              _iter1294.write(oprot);
             }
           }
         }
@@ -72234,14 +73446,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1215 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Table>(_list1215.size);
-            Table _elem1216;
-            for (int _i1217 = 0; _i1217 < _list1215.size; ++_i1217)
+            org.apache.thrift.protocol.TList _list1295 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Table>(_list1295.size);
+            Table _elem1296;
+            for (int _i1297 = 0; _i1297 < _list1295.size; ++_i1297)
             {
-              _elem1216 = new Table();
-              _elem1216.read(iprot);
-              struct.success.add(_elem1216);
+              _elem1296 = new Table();
+              _elem1296.read(iprot);
+              struct.success.add(_elem1296);
             }
           }
           struct.setSuccessIsSet(true);
@@ -73007,13 +74219,13 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1218 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list1218.size);
-                  String _elem1219;
-                  for (int _i1220 = 0; _i1220 < _list1218.size; ++_i1220)
+                  org.apache.thrift.protocol.TList _list1298 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list1298.size);
+                  String _elem1299;
+                  for (int _i1300 = 0; _i1300 < _list1298.size; ++_i1300)
                   {
-                    _elem1219 = iprot.readString();
-                    struct.success.add(_elem1219);
+                    _elem1299 = iprot.readString();
+                    struct.success.add(_elem1299);
                   }
                   iprot.readListEnd();
                 }
@@ -73048,9 +74260,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter1221 : struct.success)
+            for (String _iter1301 : struct.success)
             {
-              oprot.writeString(_iter1221);
+              oprot.writeString(_iter1301);
             }
             oprot.writeListEnd();
           }
@@ -73089,9 +74301,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter1222 : struct.success)
+            for (String _iter1302 : struct.success)
             {
-              oprot.writeString(_iter1222);
+              oprot.writeString(_iter1302);
             }
           }
         }
@@ -73106,13 +74318,13 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1223 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list1223.size);
-            String _elem1224;
-            for (int _i1225 = 0; _i1225 < _list1223.size; ++_i1225)
+            org.apache.thrift.protocol.TList _list1303 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list1303.size);
+            String _elem1304;
+            for (int _i1305 = 0; _i1305 < _list1303.size; ++_i1305)
             {
-              _elem1224 = iprot.readString();
-              struct.success.add(_elem1224);
+              _elem1304 = iprot.readString();
+              struct.success.add(_elem1304);
             }
           }
           struct.setSuccessIsSet(true);
@@ -73617,13 +74829,13 @@ import org.slf4j.LoggerFactory;
             case 3: // TBL_TYPES
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1226 = iprot.readListBegin();
-                  struct.tbl_types = new ArrayList<String>(_list1226.size);
-                  String _elem1227;
-                  for (int _i1228 = 0; _i1228 < _list1226.size; ++_i1228)
+                  org.apache.thrift.protocol.TList _list1306 = iprot.readListBegin();
+                  struct.tbl_types = new ArrayList<String>(_list1306.size);
+                  String _elem1307;
+                  for (int _i1308 = 0; _i1308 < _list1306.size; ++_i1308)
                   {
-                    _elem1227 = iprot.readString();
-                    struct.tbl_types.add(_elem1227);
+                    _elem1307 = iprot.readString();
+                    struct.tbl_types.add(_elem1307);
                   }
                   iprot.readListEnd();
                 }
@@ -73659,9 +74871,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(TBL_TYPES_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.tbl_types.size()));
-            for (String _iter1229 : struct.tbl_types)
+            for (String _iter1309 : struct.tbl_types)
             {
-              oprot.writeString(_iter1229);
+              oprot.writeString(_iter1309);
             }
             oprot.writeListEnd();
           }
@@ -73704,9 +74916,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetTbl_types()) {
           {
             oprot.writeI32(struct.tbl_types.size());
-            for (String _iter1230 : struct.tbl_types)
+            for (String _iter1310 : struct.tbl_types)
             {
-              oprot.writeString(_iter1230);
+              oprot.writeString(_iter1310);
             }
           }
         }
@@ -73726,13 +74938,13 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list1231 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.tbl_types = new ArrayList<String>(_list1231.size);
-            String _elem1232;
-            for (int _i1233 = 0; _i1233 < _list1231.size; ++_i1233)
+            org.apache.thrift.protocol.TList _list1311 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.tbl_types = new ArrayList<String>(_list1311.size);
+            String _elem1312;
+            for (int _i1313 = 0; _i1313 < _list1311.size; ++_i1313)
             {
-              _elem1232 = iprot.readString();
-              struct.tbl_types.add(_elem1232);
+              _elem1312 = iprot.readString();
+              struct.tbl_types.add(_elem1312);
             }
           }
           struct.setTbl_typesIsSet(true);
@@ -74138,14 +75350,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1234 = iprot.readListBegin();
-                  struct.success = new ArrayList<TableMeta>(_list1234.size);
-                  TableMeta _elem1235;
-                  for (int _i1236 = 0; _i1236 < _list1234.size; ++_i1236)
+                  org.apache.thrift.protocol.TList _list1314 = iprot.readListBegin();
+                  struct.success = new ArrayList<TableMeta>(_list1314.size);
+                  TableMeta _elem1315;
+                  for (int _i1316 = 0; _i1316 < _list1314.size; ++_i1316)
                   {
-                    _elem1235 = new TableMeta();
-                    _elem1235.read(iprot);
-                    struct.success.add(_elem1235);
+                    _elem1315 = new TableMeta();
+                    _elem1315.read(iprot);
+                    struct.success.add(_elem1315);
                   }
                   iprot.readListEnd();
                 }
@@ -74180,9 +75392,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (TableMeta _iter1237 : struct.success)
+            for (TableMeta _iter1317 : struct.success)
             {
-              _iter1237.write(oprot);
+              _iter1317.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -74221,9 +75433,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (TableMeta _iter1238 : struct.success)
+            for (TableMeta _iter1318 : struct.success)
             {
-              _iter1238.write(oprot);
+              _iter1318.write(oprot);
             }
           }
         }
@@ -74238,14 +75450,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1239 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<TableMeta>(_list1239.size);
-            TableMeta _elem1240;
-            for (int _i1241 = 0; _i1241 < _list1239.size; ++_i1241)
+            org.apache.thrift.protocol.TList _list1319 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<TableMeta>(_list1319.size);
+            TableMeta _elem1320;
+            for (int _i1321 = 0; _i1321 < _list1319.size; ++_i1321)
             {
-              _elem1240 = new TableMeta();
-              _elem1240.read(iprot);
-              struct.success.add(_elem1240);
+              _elem1320 = new TableMeta();
+              _elem1320.read(iprot);
+              struct.success.add(_elem1320);
             }
           }
           struct.setSuccessIsSet(true);
@@ -75011,13 +76223,13 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1242 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list1242.size);
-                  String _elem1243;
-                  for (int _i1244 = 0; _i1244 < _list1242.size; ++_i1244)
+                  org.apache.thrift.protocol.TList _list1322 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list1322.size);
+                  String _elem1323;
+                  for (int _i1324 = 0; _i1324 < _list1322.size; ++_i1324)
                   {
-                    _elem1243 = iprot.readString();
-                    struct.success.add(_elem1243);
+                    _elem1323 = iprot.readString();
+                    struct.success.add(_elem1323);
                   }
                   iprot.readListEnd();
                 }
@@ -75052,9 +76264,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter1245 : struct.success)
+            for (String _iter1325 : struct.success)
             {
-              oprot.writeString(_iter1245);
+              oprot.writeString(_iter1325);
             }
             oprot.writeListEnd();
           }
@@ -75093,9 +76305,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter1246 : struct.success)
+            for (String _iter1326 : struct.success)
             {
-              oprot.writeString(_iter1246);
+              oprot.writeString(_iter1326);
             }
           }
         }
@@ -75110,13 +76322,13 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1247 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list1247.size);
-            String _elem1248;
-            for (int _i1249 = 0; _i1249 < _list1247.size; ++_i1249)
+            org.apache.thrift.protocol.TList _list1327 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list1327.size);
+            String _elem1328;
+            for (int _i1329 = 0; _i1329 < _list1327.size; ++_i1329)
             {
-              _elem1248 = iprot.readString();
-              struct.success.add(_elem1248);
+              _elem1328 = iprot.readString();
+              struct.success.add(_elem1328);
             }
           }
           struct.setSuccessIsSet(true);
@@ -76569,13 +77781,13 @@ import org.slf4j.LoggerFactory;
             case 2: // TBL_NAMES
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1250 = iprot.readListBegin();
-                  struct.tbl_names = new ArrayList<String>(_list1250.size);
-                  String _elem1251;
-                  for (int _i1252 = 0; _i1252 < _list1250.size; ++_i1252)
+                  org.apache.thrift.protocol.TList _list1330 = iprot.readListBegin();
+                  struct.tbl_names = new ArrayList<String>(_list1330.size);
+                  String _elem1331;
+                  for (int _i1332 = 0; _i1332 < _list1330.size; ++_i1332)
                   {
-                    _elem1251 = iprot.readString();
-                    struct.tbl_names.add(_elem1251);
+                    _elem1331 = iprot.readString();
+                    struct.tbl_names.add(_elem1331);
                   }
                   iprot.readListEnd();
                 }
@@ -76606,9 +77818,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(TBL_NAMES_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.tbl_names.size()));
-            for (String _iter1253 : struct.tbl_names)
+            for (String _iter1333 : struct.tbl_names)
             {
-              oprot.writeString(_iter1253);
+              oprot.writeString(_iter1333);
             }
             oprot.writeListEnd();
           }
@@ -76645,9 +77857,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetTbl_names()) {
           {
             oprot.writeI32(struct.tbl_names.size());
-            for (String _iter1254 : struct.tbl_names)
+            for (String _iter1334 : struct.tbl_names)
             {
-              oprot.writeString(_iter1254);
+              oprot.writeString(_iter1334);
             }
           }
         }
@@ -76663,13 +77875,13 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(1)) {
           {
-            org.apache.thrift.protocol.TList _list1255 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.tbl_names = new ArrayList<String>(_list1255.size);
-            String _elem1256;
-            for (int _i1257 = 0; _i1257 < _list1255.size; ++_i1257)
+            org.apache.thrift.protocol.TList _list1335 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.tbl_names = new ArrayList<String>(_list1335.size);
+            String _elem1336;
+            for (int _i1337 = 0; _i1337 < _list1335.size; ++_i1337)
             {
-              _elem1256 = iprot.readString();
-              struct.tbl_names.add(_elem1256);
+              _elem1336 = iprot.readString();
+              struct.tbl_names.add(_elem1336);
             }
           }
           struct.setTbl_namesIsSet(true);
@@ -76994,14 +78206,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1258 = iprot.readListBegin();
-                  struct.success = new ArrayList<Table>(_list1258.size);
-                  Table _elem1259;
-                  for (int _i1260 = 0; _i1260 < _list1258.size; ++_i1260)
+                  org.apache.thrift.protocol.TList _list1338 = iprot.readListBegin();
+                  struct.success = new ArrayList<Table>(_list1338.size);
+                  Table _elem1339;
+                  for (int _i1340 = 0; _i1340 < _list1338.size; ++_i1340)
                   {
-                    _elem1259 = new Table();
-                    _elem1259.read(iprot);
-                    struct.success.add(_elem1259);
+                    _elem1339 = new Table();
+                    _elem1339.read(iprot);
+                    struct.success.add(_elem1339);
                   }
                   iprot.readListEnd();
                 }
@@ -77027,9 +78239,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Table _iter1261 : struct.success)
+            for (Table _iter1341 : struct.success)
             {
-              _iter1261.write(oprot);
+              _iter1341.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -77060,9 +78272,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Table _iter1262 : struct.success)
+            for (Table _iter1342 : struct.success)
             {
-              _iter1262.write(oprot);
+              _iter1342.write(oprot);
             }
           }
         }
@@ -77074,14 +78286,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1263 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Table>(_list1263.size);
-            Table _elem1264;
-            for (int _i1265 = 0; _i1265 < _list1263.size; ++_i1265)
+            org.apache.thrift.protocol.TList _list1343 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Table>(_list1343.size);
+            Table _elem1344;
+            for (int _i1345 = 0; _i1345 < _list1343.size; ++_i1345)
             {
-              _elem1264 = new Table();
-              _elem1264.read(iprot);
-              struct.success.add(_elem1264);
+              _elem1344 = new Table();
+              _elem1344.read(iprot);
+              struct.success.add(_elem1344);
             }
           }
           struct.setSuccessIsSet(true);
@@ -77850,14 +79062,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1266 = iprot.readListBegin();
-                  struct.success = new ArrayList<ExtendedTableInfo>(_list1266.size);
-                  ExtendedTableInfo _elem1267;
-                  for (int _i1268 = 0; _i1268 < _list1266.size; ++_i1268)
+                  org.apache.thrift.protocol.TList _list1346 = iprot.readListBegin();
+                  struct.success = new ArrayList<ExtendedTableInfo>(_list1346.size);
+                  ExtendedTableInfo _elem1347;
+                  for (int _i1348 = 0; _i1348 < _list1346.size; ++_i1348)
                   {
-                    _elem1267 = new ExtendedTableInfo();
-                    _elem1267.read(iprot);
-                    struct.success.add(_elem1267);
+                    _elem1347 = new ExtendedTableInfo();
+                    _elem1347.read(iprot);
+                    struct.success.add(_elem1347);
                   }
                   iprot.readListEnd();
                 }
@@ -77892,9 +79104,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (ExtendedTableInfo _iter1269 : struct.success)
+            for (ExtendedTableInfo _iter1349 : struct.success)
             {
-              _iter1269.write(oprot);
+              _iter1349.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -77933,9 +79145,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (ExtendedTableInfo _iter1270 : struct.success)
+            for (ExtendedTableInfo _iter1350 : struct.success)
             {
-              _iter1270.write(oprot);
+              _iter1350.write(oprot);
             }
           }
         }
@@ -77950,14 +79162,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1271 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<ExtendedTableInfo>(_list1271.size);
-            ExtendedTableInfo _elem1272;
-            for (int _i1273 = 0; _i1273 < _list1271.size; ++_i1273)
+            org.apache.thrift.protocol.TList _list1351 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<ExtendedTableInfo>(_list1351.size);
+            ExtendedTableInfo _elem1352;
+            for (int _i1353 = 0; _i1353 < _list1351.size; ++_i1353)
             {
-              _elem1272 = new ExtendedTableInfo();
-              _elem1272.read(iprot);
-              struct.success.add(_elem1272);
+              _elem1352 = new ExtendedTableInfo();
+              _elem1352.read(iprot);
+              struct.success.add(_elem1352);
             }
           }
           struct.setSuccessIsSet(true);
@@ -83470,13 +84682,13 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1274 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list1274.size);
-                  String _elem1275;
-                  for (int _i1276 = 0; _i1276 < _list1274.size; ++_i1276)
+                  org.apache.thrift.protocol.TList _list1354 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list1354.size);
+                  String _elem1355;
+                  for (int _i1356 = 0; _i1356 < _list1354.size; ++_i1356)
                   {
-                    _elem1275 = iprot.readString();
-                    struct.success.add(_elem1275);
+                    _elem1355 = iprot.readString();
+                    struct.success.add(_elem1355);
                   }
                   iprot.readListEnd();
                 }
@@ -83529,9 +84741,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter1277 : struct.success)
+            for (String _iter1357 : struct.success)
             {
-              oprot.writeString(_iter1277);
+              oprot.writeString(_iter1357);
             }
             oprot.writeListEnd();
           }
@@ -83586,9 +84798,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter1278 : struct.success)
+            for (String _iter1358 : struct.success)
             {
-              oprot.writeString(_iter1278);
+              oprot.writeString(_iter1358);
             }
           }
         }
@@ -83609,13 +84821,13 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(4);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1279 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list1279.size);
-            String _elem1280;
-            for (int _i1281 = 0; _i1281 < _list1279.size; ++_i1281)
+            org.apache.thrift.protocol.TList _list1359 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list1359.size);
+            String _elem1360;
+            for (int _i1361 = 0; _i1361 < _list1359.size; ++_i1361)
             {
-              _elem1280 = iprot.readString();
-              struct.success.add(_elem1280);
+              _elem1360 = iprot.readString();
+              struct.success.add(_elem1360);
             }
           }
           struct.setSuccessIsSet(true);
@@ -90412,14 +91624,14 @@ import org.slf4j.LoggerFactory;
             case 1: // NEW_PARTS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1282 = iprot.readListBegin();
-                  struct.new_parts = new ArrayList<Partition>(_list1282.size);
-                  Partition _elem1283;
-                  for (int _i1284 = 0; _i1284 < _list1282.size; ++_i1284)
+                  org.apache.thrift.protocol.TList _list1362 = iprot.readListBegin();
+                  struct.new_parts = new ArrayList<Partition>(_list1362.size);
+                  Partition _elem1363;
+                  for (int _i1364 = 0; _i1364 < _list1362.size; ++_i1364)
                   {
-                    _elem1283 = new Partition();
-                    _elem1283.read(iprot);
-                    struct.new_parts.add(_elem1283);
+                    _elem1363 = new Partition();
+                    _elem1363.read(iprot);
+                    struct.new_parts.add(_elem1363);
                   }
                   iprot.readListEnd();
                 }
@@ -90445,9 +91657,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(NEW_PARTS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.new_parts.size()));
-            for (Partition _iter1285 : struct.new_parts)
+            for (Partition _iter1365 : struct.new_parts)
             {
-              _iter1285.write(oprot);
+              _iter1365.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -90478,9 +91690,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetNew_parts()) {
           {
             oprot.writeI32(struct.new_parts.size());
-            for (Partition _iter1286 : struct.new_parts)
+            for (Partition _iter1366 : struct.new_parts)
             {
-              _iter1286.write(oprot);
+              _iter1366.write(oprot);
             }
           }
         }
@@ -90492,14 +91704,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1287 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.new_parts = new ArrayList<Partition>(_list1287.size);
-            Partition _elem1288;
-            for (int _i1289 = 0; _i1289 < _list1287.size; ++_i1289)
+            org.apache.thrift.protocol.TList _list1367 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.new_parts = new ArrayList<Partition>(_list1367.size);
+            Partition _elem1368;
+            for (int _i1369 = 0; _i1369 < _list1367.size; ++_i1369)
             {
-              _elem1288 = new Partition();
-              _elem1288.read(iprot);
-              struct.new_parts.add(_elem1288);
+              _elem1368 = new Partition();
+              _elem1368.read(iprot);
+              struct.new_parts.add(_elem1368);
             }
           }
           struct.setNew_partsIsSet(true);
@@ -91500,14 +92712,14 @@ import org.slf4j.LoggerFactory;
             case 1: // NEW_PARTS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1290 = iprot.readListBegin();
-                  struct.new_parts = new ArrayList<PartitionSpec>(_list1290.size);
-                  PartitionSpec _elem1291;
-                  for (int _i1292 = 0; _i1292 < _list1290.size; ++_i1292)
+                  org.apache.thrift.protocol.TList _list1370 = iprot.readListBegin();
+                  struct.new_parts = new ArrayList<PartitionSpec>(_list1370.size);
+                  PartitionSpec _elem1371;
+                  for (int _i1372 = 0; _i1372 < _list1370.size; ++_i1372)
                   {
-                    _elem1291 = new PartitionSpec();
-                    _elem1291.read(iprot);
-                    struct.new_parts.add(_elem1291);
+                    _elem1371 = new PartitionSpec();
+                    _elem1371.read(iprot);
+                    struct.new_parts.add(_elem1371);
                   }
                   iprot.readListEnd();
                 }
@@ -91533,9 +92745,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(NEW_PARTS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.new_parts.size()));
-            for (PartitionSpec _iter1293 : struct.new_parts)
+            for (PartitionSpec _iter1373 : struct.new_parts)
             {
-              _iter1293.write(oprot);
+              _iter1373.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -91566,9 +92778,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetNew_parts()) {
           {
             oprot.writeI32(struct.new_parts.size());
-            for (PartitionSpec _iter1294 : struct.new_parts)
+            for (PartitionSpec _iter1374 : struct.new_parts)
             {
-              _iter1294.write(oprot);
+              _iter1374.write(oprot);
             }
           }
         }
@@ -91580,14 +92792,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1295 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.new_parts = new ArrayList<PartitionSpec>(_list1295.size);
-            PartitionSpec _elem1296;
-            for (int _i1297 = 0; _i1297 < _list1295.size; ++_i1297)
+            org.apache.thrift.protocol.TList _list1375 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.new_parts = new ArrayList<PartitionSpec>(_list1375.size);
+            PartitionSpec _elem1376;
+            for (int _i1377 = 0; _i1377 < _list1375.size; ++_i1377)
             {
-              _elem1296 = new PartitionSpec();
-              _elem1296.read(iprot);
-              struct.new_parts.add(_elem1296);
+              _elem1376 = new PartitionSpec();
+              _elem1376.read(iprot);
+              struct.new_parts.add(_elem1376);
             }
           }
           struct.setNew_partsIsSet(true);
@@ -92763,13 +93975,13 @@ import org.slf4j.LoggerFactory;
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1298 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list1298.size);
-                  String _elem1299;
-                  for (int _i1300 = 0; _i1300 < _list1298.size; ++_i1300)
+                  org.apache.thrift.protocol.TList _list1378 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list1378.size);
+                  String _elem1379;
+                  for (int _i1380 = 0; _i1380 < _list1378.size; ++_i1380)
                   {
-                    _elem1299 = iprot.readString();
-                    struct.part_vals.add(_elem1299);
+                    _elem1379 = iprot.readString();
+                    struct.part_vals.add(_elem1379);
                   }
                   iprot.readListEnd();
                 }
@@ -92805,9 +94017,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter1301 : struct.part_vals)
+            for (String _iter1381 : struct.part_vals)
             {
-              oprot.writeString(_iter1301);
+              oprot.writeString(_iter1381);
             }
             oprot.writeListEnd();
           }
@@ -92850,9 +94062,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter1302 : struct.part_vals)
+            for (String _iter1382 : struct.part_vals)
             {
-              oprot.writeString(_iter1302);
+              oprot.writeString(_iter1382);
             }
           }
         }
@@ -92872,13 +94084,13 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list1303 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list1303.size);
-            String _elem1304;
-            for (int _i1305 = 0; _i1305 < _list1303.size; ++_i1305)
+            org.apache.thrift.protocol.TList _list1383 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list1383.size);
+            String _elem1384;
+            for (int _i1385 = 0; _i1385 < _list1383.size; ++_i1385)
             {
-              _elem1304 = iprot.readString();
-              struct.part_vals.add(_elem1304);
+              _elem1384 = iprot.readString();
+              struct.part_vals.add(_elem1384);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -95187,13 +96399,13 @@ import org.slf4j.LoggerFactory;
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1306 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list1306.size);
-                  String _elem1307;
-                  for (int _i1308 = 0; _i1308 < _list1306.size; ++_i1308)
+                  org.apache.thrift.protocol.TList _list1386 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list1386.size);
+                  String _elem1387;
+                  for (int _i1388 = 0; _i1388 < _list1386.size; ++_i1388)
                   {
-                    _elem1307 = iprot.readString();
-                    struct.part_vals.add(_elem1307);
+                    _elem1387 = iprot.readString();
+                    struct.part_vals.add(_elem1387);
                   }
                   iprot.readListEnd();
                 }
@@ -95238,9 +96450,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter1309 : struct.part_vals)
+            for (String _iter1389 : struct.part_vals)
             {
-              oprot.writeString(_iter1309);
+              oprot.writeString(_iter1389);
             }
             oprot.writeListEnd();
           }
@@ -95291,9 +96503,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter1310 : struct.part_vals)
+            for (String _iter1390 : struct.part_vals)
             {
-              oprot.writeString(_iter1310);
+              oprot.writeString(_iter1390);
             }
           }
         }
@@ -95316,13 +96528,13 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list1311 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list1311.size);
-            String _elem1312;
-            for (int _i1313 = 0; _i1313 < _list1311.size; ++_i1313)
+            org.apache.thrift.protocol.TList _list1391 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list1391.size);
+            String _elem1392;
+            for (int _i1393 = 0; _i1393 < _list1391.size; ++_i1393)
             {
-              _elem1312 = iprot.readString();
-              struct.part_vals.add(_elem1312);
+              _elem1392 = iprot.readString();
+              struct.part_vals.add(_elem1392);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -99192,13 +100404,13 @@ import org.slf4j.LoggerFactory;
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1314 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list1314.size);
-                  String _elem1315;
-                  for (int _i1316 = 0; _i1316 < _list1314.size; ++_i1316)
+                  org.apache.thrift.protocol.TList _list1394 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list1394.size);
+                  String _elem1395;
+                  for (int _i1396 = 0; _i1396 < _list1394.size; ++_i1396)
                   {
-                    _elem1315 = iprot.readString();
-                    struct.part_vals.add(_elem1315);
+                    _elem1395 = iprot.readString();
+                    struct.part_vals.add(_elem1395);
                   }
                   iprot.readListEnd();
                 }
@@ -99242,9 +100454,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter1317 : struct.part_vals)
+            for (String _iter1397 : struct.part_vals)
             {
-              oprot.writeString(_iter1317);
+              oprot.writeString(_iter1397);
             }
             oprot.writeListEnd();
           }
@@ -99293,9 +100505,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter1318 : struct.part_vals)
+            for (String _iter1398 : struct.part_vals)
             {
-              oprot.writeString(_iter1318);
+              oprot.writeString(_iter1398);
             }
           }
         }
@@ -99318,13 +100530,13 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list1319 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list1319.size);
-            String _elem1320;
-            for (int _i1321 = 0; _i1321 < _list1319.size; ++_i1321)
+            org.apache.thrift.protocol.TList _list1399 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list1399.size);
+            String _elem1400;
+            for (int _i1401 = 0; _i1401 < _list1399.size; ++_i1401)
             {
-              _elem1320 = iprot.readString();
-              struct.part_vals.add(_elem1320);
+              _elem1400 = iprot.readString();
+              struct.part_vals.add(_elem1400);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -100563,13 +101775,13 @@ import org.slf4j.LoggerFactory;
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1322 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list1322.size);
-                  String _elem1323;
-                  for (int _i1324 = 0; _i1324 < _list1322.size; ++_i1324)
+                  org.apache.thrift.protocol.TList _list1402 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list1402.size);
+                  String _elem1403;
+                  for (int _i1404 = 0; _i1404 < _list1402.size; ++_i1404)
                   {
-                    _elem1323 = iprot.readString();
-                    struct.part_vals.add(_elem1323);
+                    _elem1403 = iprot.readString();
+                    struct.part_vals.add(_elem1403);
                   }
                   iprot.readListEnd();
                 }
@@ -100622,9 +101834,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter1325 : struct.part_vals)
+            for (String _iter1405 : struct.part_vals)
             {
-              oprot.writeString(_iter1325);
+              oprot.writeString(_iter1405);
             }
             oprot.writeListEnd();
           }
@@ -100681,9 +101893,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter1326 : struct.part_vals)
+            for (String _iter1406 : struct.part_vals)
             {
-              oprot.writeString(_iter1326);
+              oprot.writeString(_iter1406);
             }
           }
         }
@@ -100709,13 +101921,13 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list1327 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list1327.size);
-            String _elem1328;
-            for (int _i1329 = 0; _i1329 < _list1327.size; ++_i1329)
+            org.apache.thrift.protocol.TList _list1407 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list1407.size);
+            String _elem1408;
+            for (int _i1409 = 0; _i1409 < _list1407.size; ++_i1409)
             {
-              _elem1328 = iprot.readString();
-              struct.part_vals.add(_elem1328);
+              _elem1408 = iprot.readString();
+              struct.part_vals.add(_elem1408);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -105317,13 +106529,13 @@ import org.slf4j.LoggerFactory;
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1330 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list1330.size);
-                  String _elem1331;
-                  for (int _i1332 = 0; _i1332 < _list1330.size; ++_i1332)
+                  org.apache.thrift.protocol.TList _list1410 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list1410.size);
+                  String _elem1411;
+                  for (int _i1412 = 0; _i1412 < _list1410.size; ++_i1412)
                   {
-                    _elem1331 = iprot.readString();
-                    struct.part_vals.add(_elem1331);
+                    _elem1411 = iprot.readString();
+                    struct.part_vals.add(_elem1411);
                   }
                   iprot.readListEnd();
                 }
@@ -105359,9 +106571,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter1333 : struct.part_vals)
+            for (String _iter1413 : struct.part_vals)
             {
-              oprot.writeString(_iter1333);
+              oprot.writeString(_iter1413);
             }
             oprot.writeListEnd();
           }
@@ -105404,9 +106616,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter1334 : struct.part_vals)
+            for (String _iter1414 : struct.part_vals)
             {
-              oprot.writeString(_iter1334);
+              oprot.writeString(_iter1414);
             }
           }
         }
@@ -105426,13 +106638,13 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list1335 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list1335.size);
-            String _elem1336;
-            for (int _i1337 = 0; _i1337 < _list1335.size; ++_i1337)
+            org.apache.thrift.protocol.TList _list1415 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list1415.size);
+            String _elem1416;
+            for (int _i1417 = 0; _i1417 < _list1415.size; ++_i1417)
             {
-              _elem1336 = iprot.readString();
-              struct.part_vals.add(_elem1336);
+              _elem1416 = iprot.readString();
+              struct.part_vals.add(_elem1416);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -106650,15 +107862,15 @@ import org.slf4j.LoggerFactory;
             case 1: // PARTITION_SPECS
               if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
                 {
-                  org.apache.thrift.protocol.TMap _map1338 = iprot.readMapBegin();
-                  struct.partitionSpecs = new HashMap<String,String>(2*_map1338.size);
-                  String _key1339;
-                  String _val1340;
-                  for (int _i1341 = 0; _i1341 < _map1338.size; ++_i1341)
+                  org.apache.thrift.protocol.TMap _map1418 = iprot.readMapBegin();
+                  struct.partitionSpecs = new HashMap<String,String>(2*_map1418.size);
+                  String _key1419;
+                  String _val1420;
+                  for (int _i1421 = 0; _i1421 < _map1418.size; ++_i1421)
                   {
-                    _key1339 = iprot.readString();
-                    _val1340 = iprot.readString();
-                    struct.partitionSpecs.put(_key1339, _val1340);
+                    _key1419 = iprot.readString();
+                    _val1420 = iprot.readString();
+                    struct.partitionSpecs.put(_key1419, _val1420);
                   }
                   iprot.readMapEnd();
                 }
@@ -106716,10 +107928,10 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(PARTITION_SPECS_FIELD_DESC);
           {
             oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, struct.partitionSpecs.size()));
-            for (Map.Entry<String, String> _iter1342 : struct.partitionSpecs.entrySet())
+            for (Map.Entry<String, String> _iter1422 : struct.partitionSpecs.entrySet())
             {
-              oprot.writeString(_iter1342.getKey());
-              oprot.writeString(_iter1342.getValue());
+              oprot.writeString(_iter1422.getKey());
+              oprot.writeString(_iter1422.getValue());
             }
             oprot.writeMapEnd();
           }
@@ -106782,10 +107994,10 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetPartitionSpecs()) {
           {
             oprot.writeI32(struct.partitionSpecs.size());
-            for (Map.Entry<String, String> _iter1343 : struct.partitionSpecs.entrySet())
+            for (Map.Entry<String, String> _iter1423 : struct.partitionSpecs.entrySet())
             {
-              oprot.writeString(_iter1343.getKey());
-              oprot.writeString(_iter1343.getValue());
+              oprot.writeString(_iter1423.getKey());
+              oprot.writeString(_iter1423.getValue());
             }
           }
         }
@@ -106809,15 +108021,15 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(5);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TMap _map1344 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.partitionSpecs = new HashMap<String,String>(2*_map1344.size);
-            String _key1345;
-            String _val1346;
-            for (int _i1347 = 0; _i1347 < _map1344.size; ++_i1347)
+            org.apache.thrift.protocol.TMap _map1424 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.partitionSpecs = new HashMap<String,String>(2*_map1424.size);
+            String _key1425;
+            String _val1426;
+            for (int _i1427 = 0; _i1427 < _map1424.size; ++_i1427)
             {
-              _key1345 = iprot.readString();
-              _val1346 = iprot.readString();
-              struct.partitionSpecs.put(_key1345, _val1346);
+              _key1425 = iprot.readString();
+              _val1426 = iprot.readString();
+              struct.partitionSpecs.put(_key1425, _val1426);
             }
           }
           struct.setPartitionSpecsIsSet(true);
@@ -108263,15 +109475,15 @@ import org.slf4j.LoggerFactory;
             case 1: // PARTITION_SPECS
               if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
                 {
-                  org.apache.thrift.protocol.TMap _map1348 = iprot.readMapBegin();
-                  struct.partitionSpecs = new HashMap<String,String>(2*_map1348.size);
-                  String _key1349;
-                  String _val1350;
-                  for (int _i1351 = 0; _i1351 < _map1348.size; ++_i1351)
+                  org.apache.thrift.protocol.TMap _map1428 = iprot.readMapBegin();
+                  struct.partitionSpecs = new HashMap<String,String>(2*_map1428.size);
+                  String _key1429;
+                  String _val1430;
+                  for (int _i1431 = 0; _i1431 < _map1428.size; ++_i1431)
                   {
-                    _key1349 = iprot.readString();
-                    _val1350 = iprot.readString();
-                    struct.partitionSpecs.put(_key1349, _val1350);
+                    _key1429 = iprot.readString();
+                    _val1430 = iprot.readString();
+                    struct.partitionSpecs.put(_key1429, _val1430);
                   }
                   iprot.readMapEnd();
                 }
@@ -108329,10 +109541,10 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(PARTITION_SPECS_FIELD_DESC);
           {
             oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, struct.partitionSpecs.size()));
-            for (Map.Entry<String, String> _iter1352 : struct.partitionSpecs.entrySet())
+            for (Map.Entry<String, String> _iter1432 : struct.partitionSpecs.entrySet())
             {
-              oprot.writeString(_iter1352.getKey());
-              oprot.writeString(_iter1352.getValue());
+              oprot.writeString(_iter1432.getKey());
+              oprot.writeString(_iter1432.getValue());
             }
             oprot.writeMapEnd();
           }
@@ -108395,10 +109607,10 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetPartitionSpecs()) {
           {
             oprot.writeI32(struct.partitionSpecs.size());
-            for (Map.Entry<String, String> _iter1353 : struct.partitionSpecs.entrySet())
+            for (Map.Entry<String, String> _iter1433 : struct.partitionSpecs.entrySet())
             {
-              oprot.writeString(_iter1353.getKey());
-              oprot.writeString(_iter1353.getValue());
+              oprot.writeString(_iter1433.getKey());
+              oprot.writeString(_iter1433.getValue());
             }
           }
         }
@@ -108422,15 +109634,15 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(5);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TMap _map1354 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.partitionSpecs = new HashMap<String,String>(2*_map1354.size);
-            String _key1355;
-            String _val1356;
-            for (int _i1357 = 0; _i1357 < _map1354.size; ++_i1357)
+            org.apache.thrift.protocol.TMap _map1434 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.partitionSpecs = new HashMap<String,String>(2*_map1434.size);
+            String _key1435;
+            String _val1436;
+            for (int _i1437 = 0; _i1437 < _map1434.size; ++_i1437)
             {
-              _key1355 = iprot.readString();
-              _val1356 = iprot.readString();
-              struct.partitionSpecs.put(_key1355, _val1356);
+              _key1435 = iprot.readString();
+              _val1436 = iprot.readString();
+              struct.partitionSpecs.put(_key1435, _val1436);
             }
           }
           struct.setPartitionSpecsIsSet(true);
@@ -109095,14 +110307,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1358 = iprot.readListBegin();
-                  struct.success = new ArrayList<Partition>(_list1358.size);
-                  Partition _elem1359;
-                  for (int _i1360 = 0; _i1360 < _list1358.size; ++_i1360)
+                  org.apache.thrift.protocol.TList _list1438 = iprot.readListBegin();
+                  struct.success = new ArrayList<Partition>(_list1438.size);
+                  Partition _elem1439;
+                  for (int _i1440 = 0; _i1440 < _list1438.size; ++_i1440)
                   {
-                    _elem1359 = new Partition();
-                    _elem1359.read(iprot);
-                    struct.success.add(_elem1359);
+                    _elem1439 = new Partition();
+                    _elem1439.read(iprot);
+                    struct.success.add(_elem1439);
                   }
                   iprot.readListEnd();
                 }
@@ -109164,9 +110376,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Partition _iter1361 : struct.success)
+            for (Partition _iter1441 : struct.success)
             {
-              _iter1361.write(oprot);
+              _iter1441.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -109229,9 +110441,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Partition _iter1362 : struct.success)
+            for (Partition _iter1442 : struct.success)
             {
-              _iter1362.write(oprot);
+              _iter1442.write(oprot);
             }
           }
         }
@@ -109255,14 +110467,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(5);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1363 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Partition>(_list1363.size);
-            Partition _elem1364;
-            for (int _i1365 = 0; _i1365 < _list1363.size; ++_i1365)
+            org.apache.thrift.protocol.TList _list1443 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Partition>(_list1443.size);
+            Partition _elem1444;
+            for (int _i1445 = 0; _i1445 < _list1443.size; ++_i1445)
             {
-              _elem1364 = new Partition();
-              _elem1364.read(iprot);
-              struct.success.add(_elem1364);
+              _elem1444 = new Partition();
+              _elem1444.read(iprot);
+              struct.success.add(_elem1444);
             }
           }
           struct.setSuccessIsSet(true);
@@ -109961,13 +111173,13 @@ import org.slf4j.LoggerFactory;
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1366 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list1366.size);
-                  String _elem1367;
-                  for (int _i1368 = 0; _i1368 < _list1366.size; ++_i1368)
+                  org.apache.thrift.protocol.TList _list1446 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list1446.size);
+                  String _elem1447;
+                  for (int _i1448 = 0; _i1448 < _list1446.size; ++_i1448)
                   {
-                    _elem1367 = iprot.readString();
-                    struct.part_vals.add(_elem1367);
+                    _elem1447 = iprot.readString();
+                    struct.part_vals.add(_elem1447);
                   }
                   iprot.readListEnd();
                 }
@@ -109987,13 +111199,13 @@ import org.slf4j.LoggerFactory;
             case 5: // GROUP_NAMES
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1369 = iprot.readListBegin();
-                  struct.group_names = new ArrayList<String>(_list1369.size);
-                  String _elem1370;
-                  for (int _i1371 = 0; _i1371 < _list1369.size; ++_i1371)
+                  org.apache.thrift.protocol.TList _list1449 = iprot.readListBegin();
+                  struct.group_names = new ArrayList<String>(_list1449.size);
+                  String _elem1450;
+                  for (int _i1451 = 0; _i1451 < _list1449.size; ++_i1451)
                   {
-                    _elem1370 = iprot.readString();
-                    struct.group_names.add(_elem1370);
+                    _elem1450 = iprot.readString();
+                    struct.group_names.add(_elem1450);
                   }
                   iprot.readListEnd();
                 }
@@ -110029,9 +111241,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter1372 : struct.part_vals)
+            for (String _iter1452 : struct.part_vals)
             {
-              oprot.writeString(_iter1372);
+              oprot.writeString(_iter1452);
             }
             oprot.writeListEnd();
           }
@@ -110046,9 +111258,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(GROUP_NAMES_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.group_names.size()));
-            for (String _iter1373 : struct.group_names)
+            for (String _iter1453 : struct.group_names)
             {
-              oprot.writeString(_iter1373);
+              oprot.writeString(_iter1453);
             }
             oprot.writeListEnd();
           }
@@ -110097,9 +111309,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter1374 : struct.part_vals)
+            for (String _iter1454 : struct.part_vals)
             {
-              oprot.writeString(_iter1374);
+              oprot.writeString(_iter1454);
             }
           }
         }
@@ -110109,9 +111321,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetGroup_names()) {
           {
             oprot.writeI32(struct.group_names.size());
-            for (String _iter1375 : struct.group_names)
+            for (String _iter1455 : struct.group_names)
             {
-              oprot.writeString(_iter1375);
+              oprot.writeString(_iter1455);
             }
           }
         }
@@ -110131,13 +111343,13 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list1376 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list1376.size);
-            String _elem1377;
-            for (int _i1378 = 0; _i1378 < _list1376.size; ++_i1378)
+            org.apache.thrift.protocol.TList _list1456 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list1456.size);
+            String _elem1457;
+            for (int _i1458 = 0; _i1458 < _list1456.size; ++_i1458)
             {
-              _elem1377 = iprot.readString();
-              struct.part_vals.add(_elem1377);
+              _elem1457 = iprot.readString();
+              struct.part_vals.add(_elem1457);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -110148,13 +111360,13 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(4)) {
           {
-            org.apache.thrift.protocol.TList _list1379 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.group_names = new ArrayList<String>(_list1379.size);
-            String _elem1380;
-            for (int _i1381 = 0; _i1381 < _list1379.size; ++_i1381)
+            org.apache.thrift.protocol.TList _list1459 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.group_names = new ArrayList<String>(_list1459.size);
+            String _elem1460;
+            for (int _i1461 = 0; _i1461 < _list1459.size; ++_i1461)
             {
-              _elem1380 = iprot.readString();
-              struct.group_names.add(_elem1380);
+              _elem1460 = iprot.readString();
+              struct.group_names.add(_elem1460);
             }
           }
           struct.setGroup_namesIsSet(true);
@@ -112923,14 +114135,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1382 = iprot.readListBegin();
-                  struct.success = new ArrayList<Partition>(_list1382.size);
-                  Partition _elem1383;
-                  for (int _i1384 = 0; _i1384 < _list1382.size; ++_i1384)
+                  org.apache.thrift.protocol.TList _list1462 = iprot.readListBegin();
+                  struct.success = new ArrayList<Partition>(_list1462.size);
+                  Partition _elem1463;
+                  for (int _i1464 = 0; _i1464 < _list1462.size; ++_i1464)
                   {
-                    _elem1383 = new Partition();
-                    _elem1383.read(iprot);
-                    struct.success.add(_elem1383);
+                    _elem1463 = new Partition();
+                    _elem1463.read(iprot);
+                    struct.success.add(_elem1463);
                   }
                   iprot.readListEnd();
                 }
@@ -112974,9 +114186,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Partition _iter1385 : struct.success)
+            for (Partition _iter1465 : struct.success)
             {
-              _iter1385.write(oprot);
+              _iter1465.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -113023,9 +114235,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Partition _iter1386 : struct.success)
+            for (Partition _iter1466 : struct.success)
             {
-              _iter1386.write(oprot);
+              _iter1466.write(oprot);
             }
           }
         }
@@ -113043,14 +114255,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1387 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Partition>(_list1387.size);
-            Partition _elem1388;
-            for (int _i1389 = 0; _i1389 < _list1387.size; ++_i1389)
+            org.apache.thrift.protocol.TList _list1467 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Partition>(_list1467.size);
+            Partition _elem1468;
+            for (int _i1469 = 0; _i1469 < _list1467.size; ++_i1469)
             {
-              _elem1388 = new Partition();
-              _elem1388.read(iprot);
-              struct.success.add(_elem1388);
+              _elem1468 = new Partition();
+              _elem1468.read(iprot);
+              struct.success.add(_elem1468);
             }
           }
           struct.setSuccessIsSet(true);
@@ -113740,13 +114952,13 @@ import org.slf4j.LoggerFactory;
             case 5: // GROUP_NAMES
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1390 = iprot.readListBegin();
-                  struct.group_names = new ArrayList<String>(_list1390.size);
-                  String _elem1391;
-                  for (int _i1392 = 0; _i1392 < _list1390.size; ++_i1392)
+                  org.apache.thrift.protocol.TList _list1470 = iprot.readListBegin();
+                  struct.group_names = new ArrayList<String>(_list1470.size);
+                  String _elem1471;
+                  for (int _i1472 = 0; _i1472 < _list1470.size; ++_i1472)
                   {
-                    _elem1391 = iprot.readString();
-                    struct.group_names.add(_elem1391);
+                    _elem1471 = iprot.readString();
+                    struct.group_names.add(_elem1471);
                   }
                   iprot.readListEnd();
                 }
@@ -113790,9 +115002,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(GROUP_NAMES_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.group_names.size()));
-            for (String _iter1393 : struct.group_names)
+            for (String _iter1473 : struct.group_names)
             {
-              oprot.writeString(_iter1393);
+              oprot.writeString(_iter1473);
             }
             oprot.writeListEnd();
           }
@@ -113847,9 +115059,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetGroup_names()) {
           {
             oprot.writeI32(struct.group_names.size());
-            for (String _iter1394 : struct.group_names)
+            for (String _iter1474 : struct.group_names)
             {
-              oprot.writeString(_iter1394);
+              oprot.writeString(_iter1474);
             }
           }
         }
@@ -113877,13 +115089,13 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(4)) {
           {
-            org.apache.thrift.protocol.TList _list1395 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.group_names = new ArrayList<String>(_list1395.size);
-            String _elem1396;
-            for (int _i1397 = 0; _i1397 < _list1395.size; ++_i1397)
+            org.apache.thrift.protocol.TList _list1475 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.group_names = new ArrayList<String>(_list1475.size);
+            String _elem1476;
+            for (int _i1477 = 0; _i1477 < _list1475.size; ++_i1477)
             {
-              _elem1396 = iprot.readString();
-              struct.group_names.add(_elem1396);
+              _elem1476 = iprot.readString();
+              struct.group_names.add(_elem1476);
             }
           }
           struct.setGroup_namesIsSet(true);
@@ -114370,14 +115582,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1398 = iprot.readListBegin();
-                  struct.success = new ArrayList<Partition>(_list1398.size);
-                  Partition _elem1399;
-                  for (int _i1400 = 0; _i1400 < _list1398.size; ++_i1400)
+                  org.apache.thrift.protocol.TList _list1478 = iprot.readListBegin();
+                  struct.success = new ArrayList<Partition>(_list1478.size);
+                  Partition _elem1479;
+                  for (int _i1480 = 0; _i1480 < _list1478.size; ++_i1480)
                   {
-                    _elem1399 = new Partition();
-                    _elem1399.read(iprot);
-                    struct.success.add(_elem1399);
+                    _elem1479 = new Partition();
+                    _elem1479.read(iprot);
+                    struct.success.add(_elem1479);
                   }
                   iprot.readListEnd();
                 }
@@ -114421,9 +115633,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Partition _iter1401 : struct.success)
+            for (Partition _iter1481 : struct.success)
             {
-              _iter1401.write(oprot);
+              _iter1481.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -114470,9 +115682,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Partition _iter1402 : struct.success)
+            for (Partition _iter1482 : struct.success)
             {
-              _iter1402.write(oprot);
+              _iter1482.write(oprot);
             }
           }
         }
@@ -114490,14 +115702,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1403 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Partition>(_list1403.size);
-            Partition _elem1404;
-            for (int _i1405 = 0; _i1405 < _list1403.size; ++_i1405)
+            org.apache.thrift.protocol.TList _list1483 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Partition>(_list1483.size);
+            Partition _elem1484;
+            for (int _i1485 = 0; _i1485 < _list1483.size; ++_i1485)
             {
-              _elem1404 = new Partition();
-              _elem1404.read(iprot);
-              struct.success.add(_elem1404);
+              _elem1484 = new Partition();
+              _elem1484.read(iprot);
+              struct.success.add(_elem1484);
             }
           }
           struct.setSuccessIsSet(true);
@@ -115560,14 +116772,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1406 = iprot.readListBegin();
-                  struct.success = new ArrayList<PartitionSpec>(_list1406.size);
-                  PartitionSpec _elem1407;
-                  for (int _i1408 = 0; _i1408 < _list1406.size; ++_i1408)
+                  org.apache.thrift.protocol.TList _list1486 = iprot.readListBegin();
+                  struct.success = new ArrayList<PartitionSpec>(_list1486.size);
+                  PartitionSpec _elem1487;
+                  for (int _i1488 = 0; _i1488 < _list1486.size; ++_i1488)
                   {
-                    _elem1407 = new PartitionSpec();
-                    _elem1407.read(iprot);
-                    struct.success.add(_elem1407);
+                    _elem1487 = new PartitionSpec();
+                    _elem1487.read(iprot);
+                    struct.success.add(_elem1487);
                   }
                   iprot.readListEnd();
                 }
@@ -115611,9 +116823,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (PartitionSpec _iter1409 : struct.success)
+            for (PartitionSpec _iter1489 : struct.success)
             {
-              _iter1409.write(oprot);
+              _iter1489.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -115660,9 +116872,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (PartitionSpec _iter1410 : struct.success)
+            for (PartitionSpec _iter1490 : struct.success)
             {
-              _iter1410.write(oprot);
+              _iter1490.write(oprot);
             }
           }
         }
@@ -115680,14 +116892,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1411 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<PartitionSpec>(_list1411.size);
-            PartitionSpec _elem1412;
-            for (int _i1413 = 0; _i1413 < _list1411.size; ++_i1413)
+            org.apache.thrift.protocol.TList _list1491 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<PartitionSpec>(_list1491.size);
+            PartitionSpec _elem1492;
+            for (int _i1493 = 0; _i1493 < _list1491.size; ++_i1493)
             {
-              _elem1412 = new PartitionSpec();
-              _elem1412.read(iprot);
-              struct.success.add(_elem1412);
+              _elem1492 = new PartitionSpec();
+              _elem1492.read(iprot);
+              struct.success.add(_elem1492);
             }
           }
           struct.setSuccessIsSet(true);
@@ -116747,13 +117959,13 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1414 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list1414.size);
-                  String _elem1415;
-                  for (int _i1416 = 0; _i1416 < _list1414.size; ++_i1416)
+                  org.apache.thrift.protocol.TList _list1494 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list1494.size);
+                  String _elem1495;
+                  for (int _i1496 = 0; _i1496 < _list1494.size; ++_i1496)
                   {
-                    _elem1415 = iprot.readString();
-                    struct.success.add(_elem1415);
+                    _elem1495 = iprot.readString();
+                    struct.success.add(_elem1495);
                   }
                   iprot.readListEnd();
                 }
@@ -116797,9 +118009,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter1417 : struct.success)
+            for (String _iter1497 : struct.success)
             {
-              oprot.writeString(_iter1417);
+              oprot.writeString(_iter1497);
             }
             oprot.writeListEnd();
           }
@@ -116846,9 +118058,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter1418 : struct.success)
+            for (String _iter1498 : struct.success)
             {
-              oprot.writeString(_iter1418);
+              oprot.writeString(_iter1498);
             }
           }
         }
@@ -116866,13 +118078,13 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1419 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list1419.size);
-            String _elem1420;
-            for (int _i1421 = 0; _i1421 < _list1419.size; ++_i1421)
+            org.apache.thrift.protocol.TList _list1499 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list1499.size);
+            String _elem1500;
+            for (int _i1501 = 0; _i1501 < _list1499.size; ++_i1501)
             {
-              _elem1420 = iprot.readString();
-              struct.success.add(_elem1420);
+              _elem1500 = iprot.readString();
+              struct.success.add(_elem1500);
             }
           }
           struct.setSuccessIsSet(true);
@@ -118403,13 +119615,13 @@ import org.slf4j.LoggerFactory;
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1422 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list1422.size);
-                  String _elem1423;
-                  for (int _i1424 = 0; _i1424 < _list1422.size; ++_i1424)
+                  org.apache.thrift.protocol.TList _list1502 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list1502.size);
+                  String _elem1503;
+                  for (int _i1504 = 0; _i1504 < _list1502.size; ++_i1504)
                   {
-                    _elem1423 = iprot.readString();
-                    struct.part_vals.add(_elem1423);
+                    _elem1503 = iprot.readString();
+                    struct.part_vals.add(_elem1503);
                   }
                   iprot.readListEnd();
                 }
@@ -118453,9 +119665,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter1425 : struct.part_vals)
+            for (String _iter1505 : struct.part_vals)
             {
-              oprot.writeString(_iter1425);
+              oprot.writeString(_iter1505);
             }
             oprot.writeListEnd();
           }
@@ -118504,9 +119716,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter1426 : struct.part_vals)
+            for (String _iter1506 : struct.part_vals)
             {
-              oprot.writeString(_iter1426);
+              oprot.writeString(_iter1506);
             }
           }
         }
@@ -118529,13 +119741,13 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list1427 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list1427.size);
-            String _elem1428;
-            for (int _i1429 = 0; _i1429 < _list1427.size; ++_i1429)
+            org.apache.thrift.protocol.TList _list1507 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list1507.size);
+            String _elem1508;
+            for (int _i1509 = 0; _i1509 < _list1507.size; ++_i1509)
             {
-              _elem1428 = iprot.readString();
-              struct.part_vals.add(_elem1428);
+              _elem1508 = iprot.readString();
+              struct.part_vals.add(_elem1508);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -119026,14 +120238,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1430 = iprot.readListBegin();
-                  struct.success = new ArrayList<Partition>(_list1430.size);
-                  Partition _elem1431;
-                  for (int _i1432 = 0; _i1432 < _list1430.size; ++_i1432)
+                  org.apache.thrift.protocol.TList _list1510 = iprot.readListBegin();
+                  struct.success = new ArrayList<Partition>(_list1510.size);
+                  Partition _elem1511;
+                  for (int _i1512 = 0; _i1512 < _list1510.size; ++_i1512)
                   {
-                    _elem1431 = new Partition();
-                    _elem1431.read(iprot);
-                    struct.success.add(_elem1431);
+                    _elem1511 = new Partition();
+                    _elem1511.read(iprot);
+                    struct.success.add(_elem1511);
                   }
                   iprot.readListEnd();
                 }
@@ -119077,9 +120289,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Partition _iter1433 : struct.success)
+            for (Partition _iter1513 : struct.success)
             {
-              _iter1433.write(oprot);
+              _iter1513.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -119126,9 +120338,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Partition _iter1434 : struct.success)
+            for (Partition _iter1514 : struct.success)
             {
-              _iter1434.write(oprot);
+              _iter1514.write(oprot);
             }
           }
         }
@@ -119146,14 +120358,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1435 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Partition>(_list1435.size);
-            Partition _elem1436;
-            for (int _i1437 = 0; _i1437 < _list1435.size; ++_i1437)
+            org.apache.thrift.protocol.TList _list1515 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Partition>(_list1515.size);
+            Partition _elem1516;
+            for (int _i1517 = 0; _i1517 < _list1515.size; ++_i1517)
             {
-              _elem1436 = new Partition();
-              _elem1436.read(iprot);
-              struct.success.add(_elem1436);
+              _elem1516 = new Partition();
+              _elem1516.read(iprot);
+              struct.success.add(_elem1516);
             }
           }
           struct.setSuccessIsSet(true);
@@ -119925,13 +121137,13 @@ import org.slf4j.LoggerFactory;
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1438 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list1438.size);
-                  String _elem1439;
-                  for (int _i1440 = 0; _i1440 < _list1438.size; ++_i1440)
+                  org.apache.thrift.protocol.TList _list1518 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list1518.size);
+                  String _elem1519;
+                  for (int _i1520 = 0; _i1520 < _list1518.size; ++_i1520)
                   {
-                    _elem1439 = iprot.readString();
-                    struct.part_vals.add(_elem1439);
+                    _elem1519 = iprot.readString();
+                    struct.part_vals.add(_elem1519);
                   }
                   iprot.readListEnd();
                 }
@@ -119959,13 +121171,13 @@ import org.slf4j.LoggerFactory;
             case 6: // GROUP_NAMES
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1441 = iprot.readListBegin();
-                  struct.group_names = new ArrayList<String>(_list1441.size);
-                  String _elem1442;
-                  for (int _i1443 = 0; _i1443 < _list1441.size; ++_i1443)
+                  org.apache.thrift.protocol.TList _list1521 = iprot.readListBegin();
+                  struct.group_names = new ArrayList<String>(_list1521.size);
+                  String _elem1522;
+                  for (int _i1523 = 0; _i1523 < _list1521.size; ++_i1523)
                   {
-                    _elem1442 = iprot.readString();
-                    struct.group_names.add(_elem1442);
+                    _elem1522 = iprot.readString();
+                    struct.group_names.add(_elem1522);
                   }
                   iprot.readListEnd();
                 }
@@ -120001,9 +121213,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter1444 : struct.part_vals)
+            for (String _iter1524 : struct.part_vals)
             {
-              oprot.writeString(_iter1444);
+              oprot.writeString(_iter1524);
             }
             oprot.writeListEnd();
           }
@@ -120021,9 +121233,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(GROUP_NAMES_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.group_names.size()));
-            for (String _iter1445 : struct.group_names)
+            for (String _iter1525 : struct.group_names)
             {
-              oprot.writeString(_iter1445);
+              oprot.writeString(_iter1525);
             }
             oprot.writeListEnd();
           }
@@ -120075,9 +121287,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter1446 : struct.part_vals)
+            for (String _iter1526 : struct.part_vals)
             {
-              oprot.writeString(_iter1446);
+              oprot.writeString(_iter1526);
             }
           }
         }
@@ -120090,9 +121302,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetGroup_names()) {
           {
             oprot.writeI32(struct.group_names.size());
-            for (String _iter1447 : struct.group_names)
+            for (String _iter1527 : struct.group_names)
             {
-              oprot.writeString(_iter1447);
+              oprot.writeString(_iter1527);
             }
           }
         }
@@ -120112,13 +121324,13 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list1448 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list1448.size);
-            String _elem1449;
-            for (int _i1450 = 0; _i1450 < _list1448.size; ++_i1450)
+            org.apache.thrift.protocol.TList _list1528 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list1528.size);
+            String _elem1529;
+            for (int _i1530 = 0; _i1530 < _list1528.size; ++_i1530)
             {
-              _elem1449 = iprot.readString();
-              struct.part_vals.add(_elem1449);
+              _elem1529 = iprot.readString();
+              struct.part_vals.add(_elem1529);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -120133,13 +121345,13 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(5)) {
           {
-            org.apache.thrift.protocol.TList _list1451 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.group_names = new ArrayList<String>(_list1451.size);
-            String _elem1452;
-            for (int _i1453 = 0; _i1453 < _list1451.size; ++_i1453)
+            org.apache.thrift.protocol.TList _list1531 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.group_names = new ArrayList<String>(_list1531.size);
+            String _elem1532;
+            for (int _i1533 = 0; _i1533 < _list1531.size; ++_i1533)
             {
-              _elem1452 = iprot.readString();
-              struct.group_names.add(_elem1452);
+              _elem1532 = iprot.readString();
+              struct.group_names.add(_elem1532);
             }
           }
           struct.setGroup_namesIsSet(true);
@@ -120626,14 +121838,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1454 = iprot.readListBegin();
-                  struct.success = new ArrayList<Partition>(_list1454.size);
-                  Partition _elem1455;
-                  for (int _i1456 = 0; _i1456 < _list1454.size; ++_i1456)
+                  org.apache.thrift.protocol.TList _list1534 = iprot.readListBegin();
+                  struct.success = new ArrayList<Partition>(_list1534.size);
+                  Partition _elem1535;
+                  for (int _i1536 = 0; _i1536 < _list1534.size; ++_i1536)
                   {
-                    _elem1455 = new Partition();
-                    _elem1455.read(iprot);
-                    struct.success.add(_elem1455);
+                    _elem1535 = new Partition();
+                    _elem1535.read(iprot);
+                    struct.success.add(_elem1535);
                   }
                   iprot.readListEnd();
                 }
@@ -120677,9 +121889,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Partition _iter1457 : struct.success)
+            for (Partition _iter1537 : struct.success)
             {
-              _iter1457.write(oprot);
+              _iter1537.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -120726,9 +121938,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Partition _iter1458 : struct.success)
+            for (Partition _iter1538 : struct.success)
             {
-              _iter1458.write(oprot);
+              _iter1538.write(oprot);
             }
           }
         }
@@ -120746,14 +121958,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1459 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Partition>(_list1459.size);
-            Partition _elem1460;
-            for (int _i1461 = 0; _i1461 < _list1459.size; ++_i1461)
+            org.apache.thrift.protocol.TList _list1539 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Partition>(_list1539.size);
+            Partition _elem1540;
+            for (int _i1541 = 0; _i1541 < _list1539.size; ++_i1541)
             {
-              _elem1460 = new Partition();
-              _elem1460.read(iprot);
-              struct.success.add(_elem1460);
+              _elem1540 = new Partition();
+              _elem1540.read(iprot);
+              struct.success.add(_elem1540);
             }
           }
           struct.setSuccessIsSet(true);
@@ -121346,13 +122558,13 @@ import org.slf4j.LoggerFactory;
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1462 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list1462.size);
-                  String _elem1463;
-                  for (int _i1464 = 0; _i1464 < _list1462.size; ++_i1464)
+                  org.apache.thrift.protocol.TList _list1542 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list1542.size);
+                  String _elem1543;
+                  for (int _i1544 = 0; _i1544 < _list1542.size; ++_i1544)
                   {
-                    _elem1463 = iprot.readString();
-                    struct.part_vals.add(_elem1463);
+                    _elem1543 = iprot.readString();
+                    struct.part_vals.add(_elem1543);
                   }
                   iprot.readListEnd();
                 }
@@ -121396,9 +122608,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter1465 : struct.part_vals)
+            for (String _iter1545 : struct.part_vals)
             {
-              oprot.writeString(_iter1465);
+              oprot.writeString(_iter1545);
             }
             oprot.writeListEnd();
           }
@@ -121447,9 +122659,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter1466 : struct.part_vals)
+            for (String _iter1546 : struct.part_vals)
             {
-              oprot.writeString(_iter1466);
+              oprot.writeString(_iter1546);
             }
           }
         }
@@ -121472,13 +122684,13 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list1467 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list1467.size);
-            String _elem1468;
-            for (int _i1469 = 0; _i1469 < _list1467.size; ++_i1469)
+            org.apache.thrift.protocol.TList _list1547 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list1547.size);
+            String _elem1548;
+            for (int _i1549 = 0; _i1549 < _list1547.size; ++_i1549)
             {
-              _elem1468 = iprot.readString();
-              struct.part_vals.add(_elem1468);
+              _elem1548 = iprot.readString();
+              struct.part_vals.add(_elem1548);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -121966,13 +123178,13 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1470 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list1470.size);
-                  String _elem1471;
-                  for (int _i1472 = 0; _i1472 < _list1470.size; ++_i1472)
+                  org.apache.thrift.protocol.TList _list1550 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list1550.size);
+                  String _elem1551;
+                  for (int _i1552 = 0; _i1552 < _list1550.size; ++_i1552)
                   {
-                    _elem1471 = iprot.readString();
-                    struct.success.add(_elem1471);
+                    _elem1551 = iprot.readString();
+                    struct.success.add(_elem1551);
                   }
                   iprot.readListEnd();
                 }
@@ -122016,9 +123228,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter1473 : struct.success)
+            for (String _iter1553 : struct.success)
             {
-              oprot.writeString(_iter1473);
+              oprot.writeString(_iter1553);
             }
             oprot.writeListEnd();
           }
@@ -122065,9 +123277,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter1474 : struct.success)
+            for (String _iter1554 : struct.success)
             {
-              oprot.writeString(_iter1474);
+              oprot.writeString(_iter1554);
             }
           }
         }
@@ -122085,13 +123297,13 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1475 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list1475.size);
-            String _elem1476;
-            for (int _i1477 = 0; _i1477 < _list1475.size; ++_i1477)
+            org.apache.thrift.protocol.TList _list1555 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list1555.size);
+            String _elem1556;
+            for (int _i1557 = 0; _i1557 < _list1555.size; ++_i1557)
             {
-              _elem1476 = iprot.readString();
-              struct.success.add(_elem1476);
+              _elem1556 = iprot.readString();
+              struct.success.add(_elem1556);
             }
           }
           struct.setSuccessIsSet(true);
@@ -123258,14 +124470,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1478 = iprot.readListBegin();
-                  struct.success = new ArrayList<Partition>(_list1478.size);
-                  Partition _elem1479;
-                  for (int _i1480 = 0; _i1480 < _list1478.size; ++_i1480)
+                  org.apache.thrift.protocol.TList _list1558 = iprot.readListBegin();
+                  struct.success = new ArrayList<Partition>(_list1558.size);
+                  Partition _elem1559;
+                  for (int _i1560 = 0; _i1560 < _list1558.size; ++_i1560)
                   {
-                    _elem1479 = new Partition();
-                    _elem1479.read(iprot);
-                    struct.success.add(_elem1479);
+                    _elem1559 = new Partition();
+                    _elem1559.read(iprot);
+                    struct.success.add(_elem1559);
                   }
                   iprot.readListEnd();
                 }
@@ -123309,9 +124521,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Partition _iter1481 : struct.success)
+            for (Partition _iter1561 : struct.success)
             {
-              _iter1481.write(oprot);
+              _iter1561.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -123358,9 +124570,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Partition _iter1482 : struct.success)
+            for (Partition _iter1562 : struct.success)
             {
-              _iter1482.write(oprot);
+              _iter1562.write(oprot);
             }
           }
         }
@@ -123378,14 +124590,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1483 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Partition>(_list1483.size);
-            Partition _elem1484;
-            for (int _i1485 = 0; _i1485 < _list1483.size; ++_i1485)
+            org.apache.thrift.protocol.TList _list1563 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Partition>(_list1563.size);
+            Partition _elem1564;
+            for (int _i1565 = 0; _i1565 < _list1563.size; ++_i1565)
             {
-              _elem1484 = new Partition();
-              _elem1484.read(iprot);
-              struct.success.add(_elem1484);
+              _elem1564 = new Partition();
+              _elem1564.read(iprot);
+              struct.success.add(_elem1564);
             }
           }
           struct.setSuccessIsSet(true);
@@ -124552,14 +125764,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1486 = iprot.readListBegin();
-                  struct.success = new ArrayList<PartitionSpec>(_list1486.size);
-                  PartitionSpec _elem1487;
-                  for (int _i1488 = 0; _i1488 < _list1486.size; ++_i1488)
+                  org.apache.thrift.protocol.TList _list1566 = iprot.readListBegin();
+                  struct.success = new ArrayList<PartitionSpec>(_list1566.size);
+                  PartitionSpec _elem1567;
+                  for (int _i1568 = 0; _i1568 < _list1566.size; ++_i1568)
                   {
-                    _elem1487 = new PartitionSpec();
-                    _elem1487.read(iprot);
-                    struct.success.add(_elem1487);
+                    _elem1567 = new PartitionSpec();
+                    _elem1567.read(iprot);
+                    struct.success.add(_elem1567);
                   }
                   iprot.readListEnd();
                 }
@@ -124603,9 +125815,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (PartitionSpec _iter1489 : struct.success)
+            for (PartitionSpec _iter1569 : struct.success)
             {
-              _iter1489.write(oprot);
+              _iter1569.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -124652,9 +125864,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (PartitionSpec _iter1490 : struct.success)
+            for (PartitionSpec _iter1570 : struct.success)
             {
-              _iter1490.write(oprot);
+              _iter1570.write(oprot);
             }
           }
         }
@@ -124672,14 +125884,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1491 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<PartitionSpec>(_list1491.size);
-            PartitionSpec _elem1492;
-            for (int _i1493 = 0; _i1493 < _list1491.size; ++_i1493)
+            org.apache.thrift.protocol.TList _list1571 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<PartitionSpec>(_list1571.size);
+            PartitionSpec _elem1572;
+            for (int _i1573 = 0; _i1573 < _list1571.size; ++_i1573)
             {
-              _elem1492 = new PartitionSpec();
-              _elem1492.read(iprot);
-              struct.success.add(_elem1492);
+              _elem1572 = new PartitionSpec();
+              _elem1572.read(iprot);
+              struct.success.add(_elem1572);
             }
           }
           struct.setSuccessIsSet(true);
@@ -127263,13 +128475,13 @@ import org.slf4j.LoggerFactory;
             case 3: // NAMES
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1494 = iprot.readListBegin();
-                  struct.names = new ArrayList<String>(_list1494.size);
-                  String _elem1495;
-                  for (int _i1496 = 0; _i1496 < _list1494.size; ++_i1496)
+                  org.apache.thrift.protocol.TList _list1574 = iprot.readListBegin();
+                  struct.names = new ArrayList<String>(_list1574.size);
+                  String _elem1575;
+                  for (int _i1576 = 0; _i1576 < _list1574.size; ++_i1576)
                   {
-                    _elem1495 = iprot.readString();
-                    struct.names.add(_elem1495);
+                    _elem1575 = iprot.readString();
+                    struct.names.add(_elem1575);
                   }
                   iprot.readListEnd();
                 }
@@ -127305,9 +128517,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(NAMES_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.names.size()));
-            for (String _iter1497 : struct.names)
+            for (String _iter1577 : struct.names)
             {
-              oprot.writeString(_iter1497);
+              oprot.writeString(_iter1577);
             }
             oprot.writeListEnd();
           }
@@ -127350,9 +128562,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetNames()) {
           {
             oprot.writeI32(struct.names.size());
-            for (String _iter1498 : struct.names)
+            for (String _iter1578 : struct.names)
             {
-              oprot.writeString(_iter1498);
+              oprot.writeString(_iter1578);
             }
           }
         }
@@ -127372,13 +128584,13 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list1499 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.names = new ArrayList<String>(_list1499.size);
-            String _elem1500;
-            for (int _i1501 = 0; _i1501 < _list1499.size; ++_i1501)
+            org.apache.thrift.protocol.TList _list1579 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.names = new ArrayList<String>(_list1579.size);
+            String _elem1580;
+            for (int _i1581 = 0; _i1581 < _list1579.size; ++_i1581)
             {
-              _elem1500 = iprot.readString();
-              struct.names.add(_elem1500);
+              _elem1580 = iprot.readString();
+              struct.names.add(_elem1580);
             }
           }
           struct.setNamesIsSet(true);
@@ -127865,14 +129077,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1502 = iprot.readListBegin();
-                  struct.success = new ArrayList<Partition>(_list1502.size);
-                  Partition _elem1503;
-                  for (int _i1504 = 0; _i1504 < _list1502.size; ++_i1504)
+                  org.apache.thrift.protocol.TList _list1582 = iprot.readListBegin();
+                  struct.success = new ArrayList<Partition>(_list1582.size);
+                  Partition _elem1583;
+                  for (int _i1584 = 0; _i1584 < _list1582.size; ++_i1584)
                   {
-                    _elem1503 = new Partition();
-                    _elem1503.read(iprot);
-                    struct.success.add(_elem1503);
+                    _elem1583 = new Partition();
+                    _elem1583.read(iprot);
+                    struct.success.add(_elem1583);
                   }
                   iprot.readListEnd();
                 }
@@ -127916,9 +129128,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Partition _iter1505 : struct.success)
+            for (Partition _iter1585 : struct.success)
             {
-              _iter1505.write(oprot);
+              _iter1585.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -127965,9 +129177,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Partition _iter1506 : struct.success)
+            for (Partition _iter1586 : struct.success)
             {
-              _iter1506.write(oprot);
+              _iter1586.write(oprot);
             }
           }
         }
@@ -127985,14 +129197,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1507 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Partition>(_list1507.size);
-            Partition _elem1508;
-            for (int _i1509 = 0; _i1509 < _list1507.size; ++_i1509)
+            org.apache.thrift.protocol.TList _list1587 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Partition>(_list1587.size);
+            Partition _elem1588;
+            for (int _i1589 = 0; _i1589 < _list1587.size; ++_i1589)
             {
-              _elem1508 = new Partition();
-              _elem1508.read(iprot);
-              struct.success.add(_elem1508);
+              _elem1588 = new Partition();
+              _elem1588.read(iprot);
+              struct.success.add(_elem1588);
             }
           }
           struct.setSuccessIsSet(true);
@@ -130480,14 +131692,14 @@ import org.slf4j.LoggerFactory;
             case 3: // NEW_PARTS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1510 = iprot.readListBegin();
-                  struct.new_parts = new ArrayList<Partition>(_list1510.size);
-                  Partition _elem1511;
-                  for (int _i1512 = 0; _i1512 < _list1510.size; ++_i1512)
+                  org.apache.thrift.protocol.TList _list1590 = iprot.readListBegin();
+                  struct.new_parts = new ArrayList<Partition>(_list1590.size);
+                  Partition _elem1591;
+                  for (int _i1592 = 0; _i1592 < _list1590.size; ++_i1592)
                   {
-                    _elem1511 = new Partition();
-                    _elem1511.read(iprot);
-                    struct.new_parts.add(_elem1511);
+                    _elem1591 = new Partition();
+                    _elem1591.read(iprot);
+                    struct.new_parts.add(_elem1591);
                   }
                   iprot.readListEnd();
                 }
@@ -130523,9 +131735,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(NEW_PARTS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.new_parts.size()));
-            for (Partition _iter1513 : struct.new_parts)
+            for (Partition _iter1593 : struct.new_parts)
             {
-              _iter1513.write(oprot);
+              _iter1593.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -130568,9 +131780,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetNew_parts()) {
           {
             oprot.writeI32(struct.new_parts.size());
-            for (Partition _iter1514 : struct.new_parts)
+            for (Partition _iter1594 : struct.new_parts)
             {
-              _iter1514.write(oprot);
+              _iter1594.write(oprot);
             }
           }
         }
@@ -130590,14 +131802,14 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list1515 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.new_parts = new ArrayList<Partition>(_list1515.size);
-            Partition _elem1516;
-            for (int _i1517 = 0; _i1517 < _list1515.size; ++_i1517)
+            org.apache.thrift.protocol.TList _list1595 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.new_parts = new ArrayList<Partition>(_list1595.size);
+            Partition _elem1596;
+            for (int _i1597 = 0; _i1597 < _list1595.size; ++_i1597)
             {
-              _elem1516 = new Partition();
-              _elem1516.read(iprot);
-              struct.new_parts.add(_elem1516);
+              _elem1596 = new Partition();
+              _elem1596.read(iprot);
+              struct.new_parts.add(_elem1596);
             }
           }
           struct.setNew_partsIsSet(true);
@@ -131650,14 +132862,14 @@ import org.slf4j.LoggerFactory;
             case 3: // NEW_PARTS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1518 = iprot.readListBegin();
-                  struct.new_parts = new ArrayList<Partition>(_list1518.size);
-                  Partition _elem1519;
-                  for (int _i1520 = 0; _i1520 < _list1518.size; ++_i1520)
+                  org.apache.thrift.protocol.TList _list1598 = iprot.readListBegin();
+                  struct.new_parts = new ArrayList<Partition>(_list1598.size);
+                  Partition _elem1599;
+                  for (int _i1600 = 0; _i1600 < _list1598.size; ++_i1600)
                   {
-                    _elem1519 = new Partition();
-                    _elem1519.read(iprot);
-                    struct.new_parts.add(_elem1519);
+                    _elem1599 = new Partition();
+                    _elem1599.read(iprot);
+                    struct.new_parts.add(_elem1599);
                   }
                   iprot.readListEnd();
                 }
@@ -131702,9 +132914,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(NEW_PARTS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.new_parts.size()));
-            for (Partition _iter1521 : struct.new_parts)
+            for (Partition _iter1601 : struct.new_parts)
             {
-              _iter1521.write(oprot);
+              _iter1601.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -131755,9 +132967,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetNew_parts()) {
           {
             oprot.writeI32(struct.new_parts.size());
-            for (Partition _iter1522 : struct.new_parts)
+            for (Partition _iter1602 : struct.new_parts)
             {
-              _iter1522.write(oprot);
+              _iter1602.write(oprot);
             }
           }
         }
@@ -131780,14 +132992,14 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list1523 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.new_parts = new ArrayList<Partition>(_list1523.size);
-            Partition _elem1524;
-            for (int _i1525 = 0; _i1525 < _list1523.size; ++_i1525)
+            org.apache.thrift.protocol.TList _list1603 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.new_parts = new ArrayList<Partition>(_list1603.size);
+            Partition _elem1604;
+            for (int _i1605 = 0; _i1605 < _list1603.size; ++_i1605)
             {
-              _elem1524 = new Partition();
-              _elem1524.read(iprot);
-              struct.new_parts.add(_elem1524);
+              _elem1604 = new Partition();
+              _elem1604.read(iprot);
+              struct.new_parts.add(_elem1604);
             }
           }
           struct.setNew_partsIsSet(true);
@@ -134926,13 +136138,13 @@ import org.slf4j.LoggerFactory;
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1526 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list1526.size);
-                  String _elem1527;
-                  for (int _i1528 = 0; _i1528 < _list1526.size; ++_i1528)
+                  org.apache.thrift.protocol.TList _list1606 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list1606.size);
+                  String _elem1607;
+                  for (int _i1608 = 0; _i1608 < _list1606.size; ++_i1608)
                   {
-                    _elem1527 = iprot.readString();
-                    struct.part_vals.add(_elem1527);
+                    _elem1607 = iprot.readString();
+                    struct.part_vals.add(_elem1607);
                   }
                   iprot.readListEnd();
                 }
@@ -134977,9 +136189,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter1529 : struct.part_vals)
+            for (String _iter1609 : struct.part_vals)
             {
-              oprot.writeString(_iter1529);
+              oprot.writeString(_iter1609);
             }
             oprot.writeListEnd();
           }
@@ -135030,9 +136242,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter1530 : struct.part_vals)
+            for (String _iter1610 : struct.part_vals)
             {
-              oprot.writeString(_iter1530);
+              oprot.writeString(_iter1610);
             }
           }
         }
@@ -135055,13 +136267,13 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list1531 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list1531.size);
-            String _elem1532;
-            for (int _i1533 = 0; _i1533 < _list1531.size; ++_i1533)
+            org.apache.thrift.protocol.TList _list1611 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list1611.size);
+            String _elem1612;
+            for (int _i1613 = 0; _i1613 < _list1611.size; ++_i1613)
             {
-              _elem1532 = iprot.readString();
-              struct.part_vals.add(_elem1532);
+              _elem1612 = iprot.readString();
+              struct.part_vals.add(_elem1612);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -136873,13 +138085,13 @@ import org.slf4j.LoggerFactory;
             case 1: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1534 = iprot.readListBegin();
-                  struct.part_vals = new ArrayList<String>(_list1534.size);
-                  String _elem1535;
-                  for (int _i1536 = 0; _i1536 < _list1534.size; ++_i1536)
+                  org.apache.thrift.protocol.TList _list1614 = iprot.readListBegin();
+                  struct.part_vals = new ArrayList<String>(_list1614.size);
+                  String _elem1615;
+                  for (int _i1616 = 0; _i1616 < _list1614.size; ++_i1616)
                   {
-                    _elem1535 = iprot.readString();
-                    struct.part_vals.add(_elem1535);
+                    _elem1615 = iprot.readString();
+                    struct.part_vals.add(_elem1615);
                   }
                   iprot.readListEnd();
                 }
@@ -136913,9 +138125,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (String _iter1537 : struct.part_vals)
+            for (String _iter1617 : struct.part_vals)
             {
-              oprot.writeString(_iter1537);
+              oprot.writeString(_iter1617);
             }
             oprot.writeListEnd();
           }
@@ -136952,9 +138164,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (String _iter1538 : struct.part_vals)
+            for (String _iter1618 : struct.part_vals)
             {
-              oprot.writeString(_iter1538);
+              oprot.writeString(_iter1618);
             }
           }
         }
@@ -136969,13 +138181,13 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1539 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new ArrayList<String>(_list1539.size);
-            String _elem1540;
-            for (int _i1541 = 0; _i1541 < _list1539.size; ++_i1541)
+            org.apache.thrift.protocol.TList _list1619 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new ArrayList<String>(_list1619.size);
+            String _elem1620;
+            for (int _i1621 = 0; _i1621 < _list1619.size; ++_i1621)
             {
-              _elem1540 = iprot.readString();
-              struct.part_vals.add(_elem1540);
+              _elem1620 = iprot.readString();
+              struct.part_vals.add(_elem1620);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -139130,13 +140342,13 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1542 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list1542.size);
-                  String _elem1543;
-                  for (int _i1544 = 0; _i1544 < _list1542.size; ++_i1544)
+                  org.apache.thrift.protocol.TList _list1622 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list1622.size);
+                  String _elem1623;
+                  for (int _i1624 = 0; _i1624 < _list1622.size; ++_i1624)
                   {
-                    _elem1543 = iprot.readString();
-                    struct.success.add(_elem1543);
+                    _elem1623 = iprot.readString();
+                    struct.success.add(_elem1623);
                   }
                   iprot.readListEnd();
                 }
@@ -139171,9 +140383,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter1545 : struct.success)
+            for (String _iter1625 : struct.success)
             {
-              oprot.writeString(_iter1545);
+              oprot.writeString(_iter1625);
             }
             oprot.writeListEnd();
           }
@@ -139212,9 +140424,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter1546 : struct.success)
+            for (String _iter1626 : struct.success)
             {
-              oprot.writeString(_iter1546);
+              oprot.writeString(_iter1626);
             }
           }
         }
@@ -139229,13 +140441,13 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1547 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list1547.size);
-            String _elem1548;
-            for (int _i1549 = 0; _i1549 < _list1547.size; ++_i1549)
+            org.apache.thrift.protocol.TList _list1627 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list1627.size);
+            String _elem1628;
+            for (int _i1629 = 0; _i1629 < _list1627.size; ++_i1629)
             {
-              _elem1548 = iprot.readString();
-              struct.success.add(_elem1548);
+              _elem1628 = iprot.readString();
+              struct.success.add(_elem1628);
             }
           }
           struct.setSuccessIsSet(true);
@@ -139998,15 +141210,15 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
                 {
-                  org.apache.thrift.protocol.TMap _map1550 = iprot.readMapBegin();
-                  struct.success = new HashMap<String,String>(2*_map1550.size);
-                  String _key1551;
-                  String _val1552;
-                  for (int _i1553 = 0; _i1553 < _map1550.size; ++_i1553)
+                  org.apache.thrift.protocol.TMap _map1630 = iprot.readMapBegin();
+                  struct.success = new HashMap<String,String>(2*_map1630.size);
+                  String _key1631;
+                  String _val1632;
+                  for (int _i1633 = 0; _i1633 < _map1630.size; ++_i1633)
                   {
-                    _key1551 = iprot.readString();
-                    _val1552 = iprot.readString();
-                    struct.success.put(_key1551, _val1552);
+                    _key1631 = iprot.readString();
+                    _val1632 = iprot.readString();
+                    struct.success.put(_key1631, _val1632);
                   }
                   iprot.readMapEnd();
                 }
@@ -140041,10 +141253,10 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (Map.Entry<String, String> _iter1554 : struct.success.entrySet())
+            for (Map.Entry<String, String> _iter1634 : struct.success.entrySet())
             {
-              oprot.writeString(_iter1554.getKey());
-              oprot.writeString(_iter1554.getValue());
+              oprot.writeString(_iter1634.getKey());
+              oprot.writeString(_iter1634.getValue());
             }
             oprot.writeMapEnd();
           }
@@ -140083,10 +141295,10 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Map.Entry<String, String> _iter1555 : struct.success.entrySet())
+            for (Map.Entry<String, String> _iter1635 : struct.success.entrySet())
             {
-              oprot.writeString(_iter1555.getKey());
-              oprot.writeString(_iter1555.getValue());
+              oprot.writeString(_iter1635.getKey());
+              oprot.writeString(_iter1635.getValue());
             }
           }
         }
@@ -140101,15 +141313,15 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TMap _map1556 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new HashMap<String,String>(2*_map1556.size);
-            String _key1557;
-            String _val1558;
-            for (int _i1559 = 0; _i1559 < _map1556.size; ++_i1559)
+            org.apache.thrift.protocol.TMap _map1636 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new HashMap<String,String>(2*_map1636.size);
+            String _key1637;
+            String _val1638;
+            for (int _i1639 = 0; _i1639 < _map1636.size; ++_i1639)
             {
-              _key1557 = iprot.readString();
-              _val1558 = iprot.readString();
-              struct.success.put(_key1557, _val1558);
+              _key1637 = iprot.readString();
+              _val1638 = iprot.readString();
+              struct.success.put(_key1637, _val1638);
             }
           }
           struct.setSuccessIsSet(true);
@@ -140704,15 +141916,15 @@ import org.slf4j.LoggerFactory;
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
                 {
-                  org.apache.thrift.protocol.TMap _map1560 = iprot.readMapBegin();
-                  struct.part_vals = new HashMap<String,String>(2*_map1560.size);
-                  String _key1561;
-                  String _val1562;
-                  for (int _i1563 = 0; _i1563 < _map1560.size; ++_i1563)
+                  org.apache.thrift.protocol.TMap _map1640 = iprot.readMapBegin();
+                  struct.part_vals = new HashMap<String,String>(2*_map1640.size);
+                  String _key1641;
+                  String _val1642;
+                  for (int _i1643 = 0; _i1643 < _map1640.size; ++_i1643)
                   {
-                    _key1561 = iprot.readString();
-                    _val1562 = iprot.readString();
-                    struct.part_vals.put(_key1561, _val1562);
+                    _key1641 = iprot.readString();
+                    _val1642 = iprot.readString();
+                    struct.part_vals.put(_key1641, _val1642);
                   }
                   iprot.readMapEnd();
                 }
@@ -140756,10 +141968,10 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (Map.Entry<String, String> _iter1564 : struct.part_vals.entrySet())
+            for (Map.Entry<String, String> _iter1644 : struct.part_vals.entrySet())
             {
-              oprot.writeString(_iter1564.getKey());
-              oprot.writeString(_iter1564.getValue());
+              oprot.writeString(_iter1644.getKey());
+              oprot.writeString(_iter1644.getValue());
             }
             oprot.writeMapEnd();
           }
@@ -140810,10 +142022,10 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (Map.Entry<String, String> _iter1565 : struct.part_vals.entrySet())
+            for (Map.Entry<String, String> _iter1645 : struct.part_vals.entrySet())
             {
-              oprot.writeString(_iter1565.getKey());
-              oprot.writeString(_iter1565.getValue());
+              oprot.writeString(_iter1645.getKey());
+              oprot.writeString(_iter1645.getValue());
             }
           }
         }
@@ -140836,15 +142048,15 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TMap _map1566 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new HashMap<String,String>(2*_map1566.size);
-            String _key1567;
-            String _val1568;
-            for (int _i1569 = 0; _i1569 < _map1566.size; ++_i1569)
+            org.apache.thrift.protocol.TMap _map1646 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new HashMap<String,String>(2*_map1646.size);
+            String _key1647;
+            String _val1648;
+            for (int _i1649 = 0; _i1649 < _map1646.size; ++_i1649)
             {
-              _key1567 = iprot.readString();
-              _val1568 = iprot.readString();
-              struct.part_vals.put(_key1567, _val1568);
+              _key1647 = iprot.readString();
+              _val1648 = iprot.readString();
+              struct.part_vals.put(_key1647, _val1648);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -142328,15 +143540,15 @@ import org.slf4j.LoggerFactory;
             case 3: // PART_VALS
               if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
                 {
-                  org.apache.thrift.protocol.TMap _map1570 = iprot.readMapBegin();
-                  struct.part_vals = new HashMap<String,String>(2*_map1570.size);
-                  String _key1571;
-                  String _val1572;
-                  for (int _i1573 = 0; _i1573 < _map1570.size; ++_i1573)
+                  org.apache.thrift.protocol.TMap _map1650 = iprot.readMapBegin();
+                  struct.part_vals = new HashMap<String,String>(2*_map1650.size);
+                  String _key1651;
+                  String _val1652;
+                  for (int _i1653 = 0; _i1653 < _map1650.size; ++_i1653)
                   {
-                    _key1571 = iprot.readString();
-                    _val1572 = iprot.readString();
-                    struct.part_vals.put(_key1571, _val1572);
+                    _key1651 = iprot.readString();
+                    _val1652 = iprot.readString();
+                    struct.part_vals.put(_key1651, _val1652);
                   }
                   iprot.readMapEnd();
                 }
@@ -142380,10 +143592,10 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(PART_VALS_FIELD_DESC);
           {
             oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, struct.part_vals.size()));
-            for (Map.Entry<String, String> _iter1574 : struct.part_vals.entrySet())
+            for (Map.Entry<String, String> _iter1654 : struct.part_vals.entrySet())
             {
-              oprot.writeString(_iter1574.getKey());
-              oprot.writeString(_iter1574.getValue());
+              oprot.writeString(_iter1654.getKey());
+              oprot.writeString(_iter1654.getValue());
             }
             oprot.writeMapEnd();
           }
@@ -142434,10 +143646,10 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetPart_vals()) {
           {
             oprot.writeI32(struct.part_vals.size());
-            for (Map.Entry<String, String> _iter1575 : struct.part_vals.entrySet())
+            for (Map.Entry<String, String> _iter1655 : struct.part_vals.entrySet())
             {
-              oprot.writeString(_iter1575.getKey());
-              oprot.writeString(_iter1575.getValue());
+              oprot.writeString(_iter1655.getKey());
+              oprot.writeString(_iter1655.getValue());
             }
           }
         }
@@ -142460,15 +143672,15 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TMap _map1576 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.part_vals = new HashMap<String,String>(2*_map1576.size);
-            String _key1577;
-            String _val1578;
-            for (int _i1579 = 0; _i1579 < _map1576.size; ++_i1579)
+            org.apache.thrift.protocol.TMap _map1656 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.part_vals = new HashMap<String,String>(2*_map1656.size);
+            String _key1657;
+            String _val1658;
+            for (int _i1659 = 0; _i1659 < _map1656.size; ++_i1659)
             {
-              _key1577 = iprot.readString();
-              _val1578 = iprot.readString();
-              struct.part_vals.put(_key1577, _val1578);
+              _key1657 = iprot.readString();
+              _val1658 = iprot.readString();
+              struct.part_vals.put(_key1657, _val1658);
             }
           }
           struct.setPart_valsIsSet(true);
@@ -167124,13 +168336,13 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1580 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list1580.size);
-                  String _elem1581;
-                  for (int _i1582 = 0; _i1582 < _list1580.size; ++_i1582)
+                  org.apache.thrift.protocol.TList _list1660 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list1660.size);
+                  String _elem1661;
+                  for (int _i1662 = 0; _i1662 < _list1660.size; ++_i1662)
                   {
-                    _elem1581 = iprot.readString();
-                    struct.success.add(_elem1581);
+                    _elem1661 = iprot.readString();
+                    struct.success.add(_elem1661);
                   }
                   iprot.readListEnd();
                 }
@@ -167165,9 +168377,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter1583 : struct.success)
+            for (String _iter1663 : struct.success)
             {
-              oprot.writeString(_iter1583);
+              oprot.writeString(_iter1663);
             }
             oprot.writeListEnd();
           }
@@ -167206,9 +168418,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter1584 : struct.success)
+            for (String _iter1664 : struct.success)
             {
-              oprot.writeString(_iter1584);
+              oprot.writeString(_iter1664);
             }
           }
         }
@@ -167223,13 +168435,13 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1585 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list1585.size);
-            String _elem1586;
-            for (int _i1587 = 0; _i1587 < _list1585.size; ++_i1587)
+            org.apache.thrift.protocol.TList _list1665 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list1665.size);
+            String _elem1666;
+            for (int _i1667 = 0; _i1667 < _list1665.size; ++_i1667)
             {
-              _elem1586 = iprot.readString();
-              struct.success.add(_elem1586);
+              _elem1666 = iprot.readString();
+              struct.success.add(_elem1666);
             }
           }
           struct.setSuccessIsSet(true);
@@ -171284,13 +172496,13 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1588 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list1588.size);
-                  String _elem1589;
-                  for (int _i1590 = 0; _i1590 < _list1588.size; ++_i1590)
+                  org.apache.thrift.protocol.TList _list1668 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list1668.size);
+                  String _elem1669;
+                  for (int _i1670 = 0; _i1670 < _list1668.size; ++_i1670)
                   {
-                    _elem1589 = iprot.readString();
-                    struct.success.add(_elem1589);
+                    _elem1669 = iprot.readString();
+                    struct.success.add(_elem1669);
                   }
                   iprot.readListEnd();
                 }
@@ -171325,9 +172537,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter1591 : struct.success)
+            for (String _iter1671 : struct.success)
             {
-              oprot.writeString(_iter1591);
+              oprot.writeString(_iter1671);
             }
             oprot.writeListEnd();
           }
@@ -171366,9 +172578,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter1592 : struct.success)
+            for (String _iter1672 : struct.success)
             {
-              oprot.writeString(_iter1592);
+              oprot.writeString(_iter1672);
             }
           }
         }
@@ -171383,13 +172595,13 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1593 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list1593.size);
-            String _elem1594;
-            for (int _i1595 = 0; _i1595 < _list1593.size; ++_i1595)
+            org.apache.thrift.protocol.TList _list1673 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list1673.size);
+            String _elem1674;
+            for (int _i1675 = 0; _i1675 < _list1673.size; ++_i1675)
             {
-              _elem1594 = iprot.readString();
-              struct.success.add(_elem1594);
+              _elem1674 = iprot.readString();
+              struct.success.add(_elem1674);
             }
           }
           struct.setSuccessIsSet(true);
@@ -174680,14 +175892,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1596 = iprot.readListBegin();
-                  struct.success = new ArrayList<Role>(_list1596.size);
-                  Role _elem1597;
-                  for (int _i1598 = 0; _i1598 < _list1596.size; ++_i1598)
+                  org.apache.thrift.protocol.TList _list1676 = iprot.readListBegin();
+                  struct.success = new ArrayList<Role>(_list1676.size);
+                  Role _elem1677;
+                  for (int _i1678 = 0; _i1678 < _list1676.size; ++_i1678)
                   {
-                    _elem1597 = new Role();
-                    _elem1597.read(iprot);
-                    struct.success.add(_elem1597);
+                    _elem1677 = new Role();
+                    _elem1677.read(iprot);
+                    struct.success.add(_elem1677);
                   }
                   iprot.readListEnd();
                 }
@@ -174722,9 +175934,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Role _iter1599 : struct.success)
+            for (Role _iter1679 : struct.success)
             {
-              _iter1599.write(oprot);
+              _iter1679.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -174763,9 +175975,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Role _iter1600 : struct.success)
+            for (Role _iter1680 : struct.success)
             {
-              _iter1600.write(oprot);
+              _iter1680.write(oprot);
             }
           }
         }
@@ -174780,14 +175992,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1601 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Role>(_list1601.size);
-            Role _elem1602;
-            for (int _i1603 = 0; _i1603 < _list1601.size; ++_i1603)
+            org.apache.thrift.protocol.TList _list1681 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Role>(_list1681.size);
+            Role _elem1682;
+            for (int _i1683 = 0; _i1683 < _list1681.size; ++_i1683)
             {
-              _elem1602 = new Role();
-              _elem1602.read(iprot);
-              struct.success.add(_elem1602);
+              _elem1682 = new Role();
+              _elem1682.read(iprot);
+              struct.success.add(_elem1682);
             }
           }
           struct.setSuccessIsSet(true);
@@ -177792,13 +179004,13 @@ import org.slf4j.LoggerFactory;
             case 3: // GROUP_NAMES
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1604 = iprot.readListBegin();
-                  struct.group_names = new ArrayList<String>(_list1604.size);
-                  String _elem1605;
-                  for (int _i1606 = 0; _i1606 < _list1604.size; ++_i1606)
+                  org.apache.thrift.protocol.TList _list1684 = iprot.readListBegin();
+                  struct.group_names = new ArrayList<String>(_list1684.size);
+                  String _elem1685;
+                  for (int _i1686 = 0; _i1686 < _list1684.size; ++_i1686)
                   {
-                    _elem1605 = iprot.readString();
-                    struct.group_names.add(_elem1605);
+                    _elem1685 = iprot.readString();
+                    struct.group_names.add(_elem1685);
                   }
                   iprot.readListEnd();
                 }
@@ -177834,9 +179046,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(GROUP_NAMES_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.group_names.size()));
-            for (String _iter1607 : struct.group_names)
+            for (String _iter1687 : struct.group_names)
             {
-              oprot.writeString(_iter1607);
+              oprot.writeString(_iter1687);
             }
             oprot.writeListEnd();
           }
@@ -177879,9 +179091,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetGroup_names()) {
           {
             oprot.writeI32(struct.group_names.size());
-            for (String _iter1608 : struct.group_names)
+            for (String _iter1688 : struct.group_names)
             {
-              oprot.writeString(_iter1608);
+              oprot.writeString(_iter1688);
             }
           }
         }
@@ -177902,13 +179114,13 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list1609 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.group_names = new ArrayList<String>(_list1609.size);
-            String _elem1610;
-            for (int _i1611 = 0; _i1611 < _list1609.size; ++_i1611)
+            org.apache.thrift.protocol.TList _list1689 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.group_names = new ArrayList<String>(_list1689.size);
+            String _elem1690;
+            for (int _i1691 = 0; _i1691 < _list1689.size; ++_i1691)
             {
-              _elem1610 = iprot.readString();
-              struct.group_names.add(_elem1610);
+              _elem1690 = iprot.readString();
+              struct.group_names.add(_elem1690);
             }
           }
           struct.setGroup_namesIsSet(true);
@@ -179366,14 +180578,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1612 = iprot.readListBegin();
-                  struct.success = new ArrayList<HiveObjectPrivilege>(_list1612.size);
-                  HiveObjectPrivilege _elem1613;
-                  for (int _i1614 = 0; _i1614 < _list1612.size; ++_i1614)
+                  org.apache.thrift.protocol.TList _list1692 = iprot.readListBegin();
+                  struct.success = new ArrayList<HiveObjectPrivilege>(_list1692.size);
+                  HiveObjectPrivilege _elem1693;
+                  for (int _i1694 = 0; _i1694 < _list1692.size; ++_i1694)
                   {
-                    _elem1613 = new HiveObjectPrivilege();
-                    _elem1613.read(iprot);
-                    struct.success.add(_elem1613);
+                    _elem1693 = new HiveObjectPrivilege();
+                    _elem1693.read(iprot);
+                    struct.success.add(_elem1693);
                   }
                   iprot.readListEnd();
                 }
@@ -179408,9 +180620,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (HiveObjectPrivilege _iter1615 : struct.success)
+            for (HiveObjectPrivilege _iter1695 : struct.success)
             {
-              _iter1615.write(oprot);
+              _iter1695.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -179449,9 +180661,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (HiveObjectPrivilege _iter1616 : struct.success)
+            for (HiveObjectPrivilege _iter1696 : struct.success)
             {
-              _iter1616.write(oprot);
+              _iter1696.write(oprot);
             }
           }
         }
@@ -179466,14 +180678,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1617 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<HiveObjectPrivilege>(_list1617.size);
-            HiveObjectPrivilege _elem1618;
-            for (int _i1619 = 0; _i1619 < _list1617.size; ++_i1619)
+            org.apache.thrift.protocol.TList _list1697 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<HiveObjectPrivilege>(_list1697.size);
+            HiveObjectPrivilege _elem1698;
+            for (int _i1699 = 0; _i1699 < _list1697.size; ++_i1699)
             {
-              _elem1618 = new HiveObjectPrivilege();
-              _elem1618.read(iprot);
-              struct.success.add(_elem1618);
+              _elem1698 = new HiveObjectPrivilege();
+              _elem1698.read(iprot);
+              struct.success.add(_elem1698);
             }
           }
           struct.setSuccessIsSet(true);
@@ -183420,13 +184632,13 @@ import org.slf4j.LoggerFactory;
             case 2: // GROUP_NAMES
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1620 = iprot.readListBegin();
-                  struct.group_names = new ArrayList<String>(_list1620.size);
-                  String _elem1621;
-                  for (int _i1622 = 0; _i1622 < _list1620.size; ++_i1622)
+                  org.apache.thrift.protocol.TList _list1700 = iprot.readListBegin();
+                  struct.group_names = new ArrayList<String>(_list1700.size);
+                  String _elem1701;
+                  for (int _i1702 = 0; _i1702 < _list1700.size; ++_i1702)
                   {
-                    _elem1621 = iprot.readString();
-                    struct.group_names.add(_elem1621);
+                    _elem1701 = iprot.readString();
+                    struct.group_names.add(_elem1701);
                   }
                   iprot.readListEnd();
                 }
@@ -183457,9 +184669,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(GROUP_NAMES_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.group_names.size()));
-            for (String _iter1623 : struct.group_names)
+            for (String _iter1703 : struct.group_names)
             {
-              oprot.writeString(_iter1623);
+              oprot.writeString(_iter1703);
             }
             oprot.writeListEnd();
           }
@@ -183496,9 +184708,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetGroup_names()) {
           {
             oprot.writeI32(struct.group_names.size());
-            for (String _iter1624 : struct.group_names)
+            for (String _iter1704 : struct.group_names)
             {
-              oprot.writeString(_iter1624);
+              oprot.writeString(_iter1704);
             }
           }
         }
@@ -183514,13 +184726,13 @@ import org.slf4j.LoggerFactory;
         }
         if (incoming.get(1)) {
           {
-            org.apache.thrift.protocol.TList _list1625 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.group_names = new ArrayList<String>(_list1625.size);
-            String _elem1626;
-            for (int _i1627 = 0; _i1627 < _list1625.size; ++_i1627)
+            org.apache.thrift.protocol.TList _list1705 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.group_names = new ArrayList<String>(_list1705.size);
+            String _elem1706;
+            for (int _i1707 = 0; _i1707 < _list1705.size; ++_i1707)
             {
-              _elem1626 = iprot.readString();
-              struct.group_names.add(_elem1626);
+              _elem1706 = iprot.readString();
+              struct.group_names.add(_elem1706);
             }
           }
           struct.setGroup_namesIsSet(true);
@@ -183923,13 +185135,13 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1628 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list1628.size);
-                  String _elem1629;
-                  for (int _i1630 = 0; _i1630 < _list1628.size; ++_i1630)
+                  org.apache.thrift.protocol.TList _list1708 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list1708.size);
+                  String _elem1709;
+                  for (int _i1710 = 0; _i1710 < _list1708.size; ++_i1710)
                   {
-                    _elem1629 = iprot.readString();
-                    struct.success.add(_elem1629);
+                    _elem1709 = iprot.readString();
+                    struct.success.add(_elem1709);
                   }
                   iprot.readListEnd();
                 }
@@ -183964,9 +185176,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter1631 : struct.success)
+            for (String _iter1711 : struct.success)
             {
-              oprot.writeString(_iter1631);
+              oprot.writeString(_iter1711);
             }
             oprot.writeListEnd();
           }
@@ -184005,9 +185217,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter1632 : struct.success)
+            for (String _iter1712 : struct.success)
             {
-              oprot.writeString(_iter1632);
+              oprot.writeString(_iter1712);
             }
           }
         }
@@ -184022,13 +185234,13 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1633 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list1633.size);
-            String _elem1634;
-            for (int _i1635 = 0; _i1635 < _list1633.size; ++_i1635)
+            org.apache.thrift.protocol.TList _list1713 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list1713.size);
+            String _elem1714;
+            for (int _i1715 = 0; _i1715 < _list1713.size; ++_i1715)
             {
-              _elem1634 = iprot.readString();
-              struct.success.add(_elem1634);
+              _elem1714 = iprot.readString();
+              struct.success.add(_elem1714);
             }
           }
           struct.setSuccessIsSet(true);
@@ -189319,13 +190531,13 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1636 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list1636.size);
-                  String _elem1637;
-                  for (int _i1638 = 0; _i1638 < _list1636.size; ++_i1638)
+                  org.apache.thrift.protocol.TList _list1716 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list1716.size);
+                  String _elem1717;
+                  for (int _i1718 = 0; _i1718 < _list1716.size; ++_i1718)
                   {
-                    _elem1637 = iprot.readString();
-                    struct.success.add(_elem1637);
+                    _elem1717 = iprot.readString();
+                    struct.success.add(_elem1717);
                   }
                   iprot.readListEnd();
                 }
@@ -189351,9 +190563,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter1639 : struct.success)
+            for (String _iter1719 : struct.success)
             {
-              oprot.writeString(_iter1639);
+              oprot.writeString(_iter1719);
             }
             oprot.writeListEnd();
           }
@@ -189384,9 +190596,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter1640 : struct.success)
+            for (String _iter1720 : struct.success)
             {
-              oprot.writeString(_iter1640);
+              oprot.writeString(_iter1720);
             }
           }
         }
@@ -189398,13 +190610,13 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1641 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list1641.size);
-            String _elem1642;
-            for (int _i1643 = 0; _i1643 < _list1641.size; ++_i1643)
+            org.apache.thrift.protocol.TList _list1721 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list1721.size);
+            String _elem1722;
+            for (int _i1723 = 0; _i1723 < _list1721.size; ++_i1723)
             {
-              _elem1642 = iprot.readString();
-              struct.success.add(_elem1642);
+              _elem1722 = iprot.readString();
+              struct.success.add(_elem1722);
             }
           }
           struct.setSuccessIsSet(true);
@@ -192434,13 +193646,13 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1644 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list1644.size);
-                  String _elem1645;
-                  for (int _i1646 = 0; _i1646 < _list1644.size; ++_i1646)
+                  org.apache.thrift.protocol.TList _list1724 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list1724.size);
+                  String _elem1725;
+                  for (int _i1726 = 0; _i1726 < _list1724.size; ++_i1726)
                   {
-                    _elem1645 = iprot.readString();
-                    struct.success.add(_elem1645);
+                    _elem1725 = iprot.readString();
+                    struct.success.add(_elem1725);
                   }
                   iprot.readListEnd();
                 }
@@ -192466,9 +193678,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter1647 : struct.success)
+            for (String _iter1727 : struct.success)
             {
-              oprot.writeString(_iter1647);
+              oprot.writeString(_iter1727);
             }
             oprot.writeListEnd();
           }
@@ -192499,9 +193711,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter1648 : struct.success)
+            for (String _iter1728 : struct.success)
             {
-              oprot.writeString(_iter1648);
+              oprot.writeString(_iter1728);
             }
           }
         }
@@ -192513,13 +193725,13 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1649 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list1649.size);
-            String _elem1650;
-            for (int _i1651 = 0; _i1651 < _list1649.size; ++_i1651)
+            org.apache.thrift.protocol.TList _list1729 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list1729.size);
+            String _elem1730;
+            for (int _i1731 = 0; _i1731 < _list1729.size; ++_i1731)
             {
-              _elem1650 = iprot.readString();
-              struct.success.add(_elem1650);
+              _elem1730 = iprot.readString();
+              struct.success.add(_elem1730);
             }
           }
           struct.setSuccessIsSet(true);
@@ -209640,13 +210852,13 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1652 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list1652.size);
-                  String _elem1653;
-                  for (int _i1654 = 0; _i1654 < _list1652.size; ++_i1654)
+                  org.apache.thrift.protocol.TList _list1732 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list1732.size);
+                  String _elem1733;
+                  for (int _i1734 = 0; _i1734 < _list1732.size; ++_i1734)
                   {
-                    _elem1653 = iprot.readString();
-                    struct.success.add(_elem1653);
+                    _elem1733 = iprot.readString();
+                    struct.success.add(_elem1733);
                   }
                   iprot.readListEnd();
                 }
@@ -209672,9 +210884,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter1655 : struct.success)
+            for (String _iter1735 : struct.success)
             {
-              oprot.writeString(_iter1655);
+              oprot.writeString(_iter1735);
             }
             oprot.writeListEnd();
           }
@@ -209705,9 +210917,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter1656 : struct.success)
+            for (String _iter1736 : struct.success)
             {
-              oprot.writeString(_iter1656);
+              oprot.writeString(_iter1736);
             }
           }
         }
@@ -209719,13 +210931,13 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1657 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list1657.size);
-            String _elem1658;
-            for (int _i1659 = 0; _i1659 < _list1657.size; ++_i1659)
+            org.apache.thrift.protocol.TList _list1737 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list1737.size);
+            String _elem1738;
+            for (int _i1739 = 0; _i1739 < _list1737.size; ++_i1739)
             {
-              _elem1658 = iprot.readString();
-              struct.success.add(_elem1658);
+              _elem1738 = iprot.readString();
+              struct.success.add(_elem1738);
             }
           }
           struct.setSuccessIsSet(true);
@@ -246611,14 +247823,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1660 = iprot.readListBegin();
-                  struct.success = new ArrayList<SchemaVersion>(_list1660.size);
-                  SchemaVersion _elem1661;
-                  for (int _i1662 = 0; _i1662 < _list1660.size; ++_i1662)
+                  org.apache.thrift.protocol.TList _list1740 = iprot.readListBegin();
+                  struct.success = new ArrayList<SchemaVersion>(_list1740.size);
+                  SchemaVersion _elem1741;
+                  for (int _i1742 = 0; _i1742 < _list1740.size; ++_i1742)
                   {
-                    _elem1661 = new SchemaVersion();
-                    _elem1661.read(iprot);
-                    struct.success.add(_elem1661);
+                    _elem1741 = new SchemaVersion();
+                    _elem1741.read(iprot);
+                    struct.success.add(_elem1741);
                   }
                   iprot.readListEnd();
                 }
@@ -246662,9 +247874,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (SchemaVersion _iter1663 : struct.success)
+            for (SchemaVersion _iter1743 : struct.success)
             {
-              _iter1663.write(oprot);
+              _iter1743.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -246711,9 +247923,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (SchemaVersion _iter1664 : struct.success)
+            for (SchemaVersion _iter1744 : struct.success)
             {
-              _iter1664.write(oprot);
+              _iter1744.write(oprot);
             }
           }
         }
@@ -246731,14 +247943,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1665 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<SchemaVersion>(_list1665.size);
-            SchemaVersion _elem1666;
-            for (int _i1667 = 0; _i1667 < _list1665.size; ++_i1667)
+            org.apache.thrift.protocol.TList _list1745 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<SchemaVersion>(_list1745.size);
+            SchemaVersion _elem1746;
+            for (int _i1747 = 0; _i1747 < _list1745.size; ++_i1747)
             {
-              _elem1666 = new SchemaVersion();
-              _elem1666.read(iprot);
-              struct.success.add(_elem1666);
+              _elem1746 = new SchemaVersion();
+              _elem1746.read(iprot);
+              struct.success.add(_elem1746);
             }
           }
           struct.setSuccessIsSet(true);
@@ -255281,14 +256493,14 @@ import org.slf4j.LoggerFactory;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list1668 = iprot.readListBegin();
-                  struct.success = new ArrayList<RuntimeStat>(_list1668.size);
-                  RuntimeStat _elem1669;
-                  for (int _i1670 = 0; _i1670 < _list1668.size; ++_i1670)
+                  org.apache.thrift.protocol.TList _list1748 = iprot.readListBegin();
+                  struct.success = new ArrayList<RuntimeStat>(_list1748.size);
+                  RuntimeStat _elem1749;
+                  for (int _i1750 = 0; _i1750 < _list1748.size; ++_i1750)
                   {
-                    _elem1669 = new RuntimeStat();
-                    _elem1669.read(iprot);
-                    struct.success.add(_elem1669);
+                    _elem1749 = new RuntimeStat();
+                    _elem1749.read(iprot);
+                    struct.success.add(_elem1749);
                   }
                   iprot.readListEnd();
                 }
@@ -255323,9 +256535,9 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (RuntimeStat _iter1671 : struct.success)
+            for (RuntimeStat _iter1751 : struct.success)
             {
-              _iter1671.write(oprot);
+              _iter1751.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -255364,9 +256576,9 @@ import org.slf4j.LoggerFactory;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (RuntimeStat _iter1672 : struct.success)
+            for (RuntimeStat _iter1752 : struct.success)
             {
-              _iter1672.write(oprot);
+              _iter1752.write(oprot);
             }
           }
         }
@@ -255381,14 +256593,14 @@ import org.slf4j.LoggerFactory;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list1673 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<RuntimeStat>(_list1673.size);
-            RuntimeStat _elem1674;
-            for (int _i1675 = 0; _i1675 < _list1673.size; ++_i1675)
+            org.apache.thrift.protocol.TList _list1753 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<RuntimeStat>(_list1753.size);
+            RuntimeStat _elem1754;
+            for (int _i1755 = 0; _i1755 < _list1753.size; ++_i1755)
             {
-              _elem1674 = new RuntimeStat();
-              _elem1674.read(iprot);
-              struct.success.add(_elem1674);
+              _elem1754 = new RuntimeStat();
+              _elem1754.read(iprot);
+              struct.success.add(_elem1754);
             }
           }
           struct.setSuccessIsSet(true);
