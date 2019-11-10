@@ -496,6 +496,14 @@ import org.slf4j.LoggerFactory;
 
     public GetPartitionsResponse get_partitions_with_specs(GetPartitionsRequest request) throws MetaException, org.apache.thrift.TException;
 
+    public ScheduledQueryPollResponse scheduled_query_poll(ScheduledQueryPollRequest request) throws MetaException, org.apache.thrift.TException;
+
+    public void scheduled_query_maintenance(ScheduledQueryMaintenanceRequest request) throws MetaException, NoSuchObjectException, AlreadyExistsException, InvalidInputException, org.apache.thrift.TException;
+
+    public void scheduled_query_progress(ScheduledQueryProgressInfo info) throws MetaException, InvalidOperationException, org.apache.thrift.TException;
+
+    public ScheduledQuery get_scheduled_query(ScheduledQueryKey scheduleKey) throws MetaException, NoSuchObjectException, org.apache.thrift.TException;
+
   }
 
   @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public interface AsyncIface extends com.facebook.fb303.FacebookService .AsyncIface {
@@ -953,6 +961,14 @@ import org.slf4j.LoggerFactory;
     public void get_runtime_stats(GetRuntimeStatsRequest rqst, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
     public void get_partitions_with_specs(GetPartitionsRequest request, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+
+    public void scheduled_query_poll(ScheduledQueryPollRequest request, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+
+    public void scheduled_query_maintenance(ScheduledQueryMaintenanceRequest request, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+
+    public void scheduled_query_progress(ScheduledQueryProgressInfo info, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+
+    public void get_scheduled_query(ScheduledQueryKey scheduleKey, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -7451,6 +7467,119 @@ import org.slf4j.LoggerFactory;
         throw result.o1;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "get_partitions_with_specs failed: unknown result");
+    }
+
+    public ScheduledQueryPollResponse scheduled_query_poll(ScheduledQueryPollRequest request) throws MetaException, org.apache.thrift.TException
+    {
+      send_scheduled_query_poll(request);
+      return recv_scheduled_query_poll();
+    }
+
+    public void send_scheduled_query_poll(ScheduledQueryPollRequest request) throws org.apache.thrift.TException
+    {
+      scheduled_query_poll_args args = new scheduled_query_poll_args();
+      args.setRequest(request);
+      sendBase("scheduled_query_poll", args);
+    }
+
+    public ScheduledQueryPollResponse recv_scheduled_query_poll() throws MetaException, org.apache.thrift.TException
+    {
+      scheduled_query_poll_result result = new scheduled_query_poll_result();
+      receiveBase(result, "scheduled_query_poll");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      if (result.o1 != null) {
+        throw result.o1;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "scheduled_query_poll failed: unknown result");
+    }
+
+    public void scheduled_query_maintenance(ScheduledQueryMaintenanceRequest request) throws MetaException, NoSuchObjectException, AlreadyExistsException, InvalidInputException, org.apache.thrift.TException
+    {
+      send_scheduled_query_maintenance(request);
+      recv_scheduled_query_maintenance();
+    }
+
+    public void send_scheduled_query_maintenance(ScheduledQueryMaintenanceRequest request) throws org.apache.thrift.TException
+    {
+      scheduled_query_maintenance_args args = new scheduled_query_maintenance_args();
+      args.setRequest(request);
+      sendBase("scheduled_query_maintenance", args);
+    }
+
+    public void recv_scheduled_query_maintenance() throws MetaException, NoSuchObjectException, AlreadyExistsException, InvalidInputException, org.apache.thrift.TException
+    {
+      scheduled_query_maintenance_result result = new scheduled_query_maintenance_result();
+      receiveBase(result, "scheduled_query_maintenance");
+      if (result.o1 != null) {
+        throw result.o1;
+      }
+      if (result.o2 != null) {
+        throw result.o2;
+      }
+      if (result.o3 != null) {
+        throw result.o3;
+      }
+      if (result.o4 != null) {
+        throw result.o4;
+      }
+      return;
+    }
+
+    public void scheduled_query_progress(ScheduledQueryProgressInfo info) throws MetaException, InvalidOperationException, org.apache.thrift.TException
+    {
+      send_scheduled_query_progress(info);
+      recv_scheduled_query_progress();
+    }
+
+    public void send_scheduled_query_progress(ScheduledQueryProgressInfo info) throws org.apache.thrift.TException
+    {
+      scheduled_query_progress_args args = new scheduled_query_progress_args();
+      args.setInfo(info);
+      sendBase("scheduled_query_progress", args);
+    }
+
+    public void recv_scheduled_query_progress() throws MetaException, InvalidOperationException, org.apache.thrift.TException
+    {
+      scheduled_query_progress_result result = new scheduled_query_progress_result();
+      receiveBase(result, "scheduled_query_progress");
+      if (result.o1 != null) {
+        throw result.o1;
+      }
+      if (result.o2 != null) {
+        throw result.o2;
+      }
+      return;
+    }
+
+    public ScheduledQuery get_scheduled_query(ScheduledQueryKey scheduleKey) throws MetaException, NoSuchObjectException, org.apache.thrift.TException
+    {
+      send_get_scheduled_query(scheduleKey);
+      return recv_get_scheduled_query();
+    }
+
+    public void send_get_scheduled_query(ScheduledQueryKey scheduleKey) throws org.apache.thrift.TException
+    {
+      get_scheduled_query_args args = new get_scheduled_query_args();
+      args.setScheduleKey(scheduleKey);
+      sendBase("get_scheduled_query", args);
+    }
+
+    public ScheduledQuery recv_get_scheduled_query() throws MetaException, NoSuchObjectException, org.apache.thrift.TException
+    {
+      get_scheduled_query_result result = new get_scheduled_query_result();
+      receiveBase(result, "get_scheduled_query");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      if (result.o1 != null) {
+        throw result.o1;
+      }
+      if (result.o2 != null) {
+        throw result.o2;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "get_scheduled_query failed: unknown result");
     }
 
   }
@@ -15236,6 +15365,134 @@ import org.slf4j.LoggerFactory;
       }
     }
 
+    public void scheduled_query_poll(ScheduledQueryPollRequest request, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      scheduled_query_poll_call method_call = new scheduled_query_poll_call(request, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class scheduled_query_poll_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private ScheduledQueryPollRequest request;
+      public scheduled_query_poll_call(ScheduledQueryPollRequest request, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.request = request;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("scheduled_query_poll", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        scheduled_query_poll_args args = new scheduled_query_poll_args();
+        args.setRequest(request);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public ScheduledQueryPollResponse getResult() throws MetaException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_scheduled_query_poll();
+      }
+    }
+
+    public void scheduled_query_maintenance(ScheduledQueryMaintenanceRequest request, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      scheduled_query_maintenance_call method_call = new scheduled_query_maintenance_call(request, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class scheduled_query_maintenance_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private ScheduledQueryMaintenanceRequest request;
+      public scheduled_query_maintenance_call(ScheduledQueryMaintenanceRequest request, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.request = request;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("scheduled_query_maintenance", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        scheduled_query_maintenance_args args = new scheduled_query_maintenance_args();
+        args.setRequest(request);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws MetaException, NoSuchObjectException, AlreadyExistsException, InvalidInputException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_scheduled_query_maintenance();
+      }
+    }
+
+    public void scheduled_query_progress(ScheduledQueryProgressInfo info, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      scheduled_query_progress_call method_call = new scheduled_query_progress_call(info, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class scheduled_query_progress_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private ScheduledQueryProgressInfo info;
+      public scheduled_query_progress_call(ScheduledQueryProgressInfo info, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.info = info;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("scheduled_query_progress", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        scheduled_query_progress_args args = new scheduled_query_progress_args();
+        args.setInfo(info);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws MetaException, InvalidOperationException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_scheduled_query_progress();
+      }
+    }
+
+    public void get_scheduled_query(ScheduledQueryKey scheduleKey, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      get_scheduled_query_call method_call = new get_scheduled_query_call(scheduleKey, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_scheduled_query_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private ScheduledQueryKey scheduleKey;
+      public get_scheduled_query_call(ScheduledQueryKey scheduleKey, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.scheduleKey = scheduleKey;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("get_scheduled_query", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        get_scheduled_query_args args = new get_scheduled_query_args();
+        args.setScheduleKey(scheduleKey);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public ScheduledQuery getResult() throws MetaException, NoSuchObjectException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_get_scheduled_query();
+      }
+    }
+
   }
 
   @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class Processor<I extends Iface> extends com.facebook.fb303.FacebookService.Processor<I> implements org.apache.thrift.TProcessor {
@@ -15476,6 +15733,10 @@ import org.slf4j.LoggerFactory;
       processMap.put("add_runtime_stats", new add_runtime_stats());
       processMap.put("get_runtime_stats", new get_runtime_stats());
       processMap.put("get_partitions_with_specs", new get_partitions_with_specs());
+      processMap.put("scheduled_query_poll", new scheduled_query_poll());
+      processMap.put("scheduled_query_maintenance", new scheduled_query_maintenance());
+      processMap.put("scheduled_query_progress", new scheduled_query_progress());
+      processMap.put("get_scheduled_query", new get_scheduled_query());
       return processMap;
     }
 
@@ -21281,6 +21542,112 @@ import org.slf4j.LoggerFactory;
       }
     }
 
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class scheduled_query_poll<I extends Iface> extends org.apache.thrift.ProcessFunction<I, scheduled_query_poll_args> {
+      public scheduled_query_poll() {
+        super("scheduled_query_poll");
+      }
+
+      public scheduled_query_poll_args getEmptyArgsInstance() {
+        return new scheduled_query_poll_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public scheduled_query_poll_result getResult(I iface, scheduled_query_poll_args args) throws org.apache.thrift.TException {
+        scheduled_query_poll_result result = new scheduled_query_poll_result();
+        try {
+          result.success = iface.scheduled_query_poll(args.request);
+        } catch (MetaException o1) {
+          result.o1 = o1;
+        }
+        return result;
+      }
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class scheduled_query_maintenance<I extends Iface> extends org.apache.thrift.ProcessFunction<I, scheduled_query_maintenance_args> {
+      public scheduled_query_maintenance() {
+        super("scheduled_query_maintenance");
+      }
+
+      public scheduled_query_maintenance_args getEmptyArgsInstance() {
+        return new scheduled_query_maintenance_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public scheduled_query_maintenance_result getResult(I iface, scheduled_query_maintenance_args args) throws org.apache.thrift.TException {
+        scheduled_query_maintenance_result result = new scheduled_query_maintenance_result();
+        try {
+          iface.scheduled_query_maintenance(args.request);
+        } catch (MetaException o1) {
+          result.o1 = o1;
+        } catch (NoSuchObjectException o2) {
+          result.o2 = o2;
+        } catch (AlreadyExistsException o3) {
+          result.o3 = o3;
+        } catch (InvalidInputException o4) {
+          result.o4 = o4;
+        }
+        return result;
+      }
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class scheduled_query_progress<I extends Iface> extends org.apache.thrift.ProcessFunction<I, scheduled_query_progress_args> {
+      public scheduled_query_progress() {
+        super("scheduled_query_progress");
+      }
+
+      public scheduled_query_progress_args getEmptyArgsInstance() {
+        return new scheduled_query_progress_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public scheduled_query_progress_result getResult(I iface, scheduled_query_progress_args args) throws org.apache.thrift.TException {
+        scheduled_query_progress_result result = new scheduled_query_progress_result();
+        try {
+          iface.scheduled_query_progress(args.info);
+        } catch (MetaException o1) {
+          result.o1 = o1;
+        } catch (InvalidOperationException o2) {
+          result.o2 = o2;
+        }
+        return result;
+      }
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_scheduled_query<I extends Iface> extends org.apache.thrift.ProcessFunction<I, get_scheduled_query_args> {
+      public get_scheduled_query() {
+        super("get_scheduled_query");
+      }
+
+      public get_scheduled_query_args getEmptyArgsInstance() {
+        return new get_scheduled_query_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public get_scheduled_query_result getResult(I iface, get_scheduled_query_args args) throws org.apache.thrift.TException {
+        get_scheduled_query_result result = new get_scheduled_query_result();
+        try {
+          result.success = iface.get_scheduled_query(args.scheduleKey);
+        } catch (MetaException o1) {
+          result.o1 = o1;
+        } catch (NoSuchObjectException o2) {
+          result.o2 = o2;
+        }
+        return result;
+      }
+    }
+
   }
 
   @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class AsyncProcessor<I extends AsyncIface> extends com.facebook.fb303.FacebookService.AsyncProcessor<I> {
@@ -21521,6 +21888,10 @@ import org.slf4j.LoggerFactory;
       processMap.put("add_runtime_stats", new add_runtime_stats());
       processMap.put("get_runtime_stats", new get_runtime_stats());
       processMap.put("get_partitions_with_specs", new get_partitions_with_specs());
+      processMap.put("scheduled_query_poll", new scheduled_query_poll());
+      processMap.put("scheduled_query_maintenance", new scheduled_query_maintenance());
+      processMap.put("scheduled_query_progress", new scheduled_query_progress());
+      processMap.put("get_scheduled_query", new get_scheduled_query());
       return processMap;
     }
 
@@ -35372,6 +35743,257 @@ import org.slf4j.LoggerFactory;
 
       public void start(I iface, get_partitions_with_specs_args args, org.apache.thrift.async.AsyncMethodCallback<GetPartitionsResponse> resultHandler) throws TException {
         iface.get_partitions_with_specs(args.request,resultHandler);
+      }
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class scheduled_query_poll<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, scheduled_query_poll_args, ScheduledQueryPollResponse> {
+      public scheduled_query_poll() {
+        super("scheduled_query_poll");
+      }
+
+      public scheduled_query_poll_args getEmptyArgsInstance() {
+        return new scheduled_query_poll_args();
+      }
+
+      public AsyncMethodCallback<ScheduledQueryPollResponse> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new AsyncMethodCallback<ScheduledQueryPollResponse>() { 
+          public void onComplete(ScheduledQueryPollResponse o) {
+            scheduled_query_poll_result result = new scheduled_query_poll_result();
+            result.success = o;
+            try {
+              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+              return;
+            } catch (Exception e) {
+              LOGGER.error("Exception writing to internal frame buffer", e);
+            }
+            fb.close();
+          }
+          public void onError(Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TBase msg;
+            scheduled_query_poll_result result = new scheduled_query_poll_result();
+            if (e instanceof MetaException) {
+                        result.o1 = (MetaException) e;
+                        result.setO1IsSet(true);
+                        msg = result;
+            }
+             else 
+            {
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+              return;
+            } catch (Exception ex) {
+              LOGGER.error("Exception writing to internal frame buffer", ex);
+            }
+            fb.close();
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, scheduled_query_poll_args args, org.apache.thrift.async.AsyncMethodCallback<ScheduledQueryPollResponse> resultHandler) throws TException {
+        iface.scheduled_query_poll(args.request,resultHandler);
+      }
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class scheduled_query_maintenance<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, scheduled_query_maintenance_args, Void> {
+      public scheduled_query_maintenance() {
+        super("scheduled_query_maintenance");
+      }
+
+      public scheduled_query_maintenance_args getEmptyArgsInstance() {
+        return new scheduled_query_maintenance_args();
+      }
+
+      public AsyncMethodCallback<Void> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new AsyncMethodCallback<Void>() { 
+          public void onComplete(Void o) {
+            scheduled_query_maintenance_result result = new scheduled_query_maintenance_result();
+            try {
+              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+              return;
+            } catch (Exception e) {
+              LOGGER.error("Exception writing to internal frame buffer", e);
+            }
+            fb.close();
+          }
+          public void onError(Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TBase msg;
+            scheduled_query_maintenance_result result = new scheduled_query_maintenance_result();
+            if (e instanceof MetaException) {
+                        result.o1 = (MetaException) e;
+                        result.setO1IsSet(true);
+                        msg = result;
+            }
+            else             if (e instanceof NoSuchObjectException) {
+                        result.o2 = (NoSuchObjectException) e;
+                        result.setO2IsSet(true);
+                        msg = result;
+            }
+            else             if (e instanceof AlreadyExistsException) {
+                        result.o3 = (AlreadyExistsException) e;
+                        result.setO3IsSet(true);
+                        msg = result;
+            }
+            else             if (e instanceof InvalidInputException) {
+                        result.o4 = (InvalidInputException) e;
+                        result.setO4IsSet(true);
+                        msg = result;
+            }
+             else 
+            {
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+              return;
+            } catch (Exception ex) {
+              LOGGER.error("Exception writing to internal frame buffer", ex);
+            }
+            fb.close();
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, scheduled_query_maintenance_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws TException {
+        iface.scheduled_query_maintenance(args.request,resultHandler);
+      }
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class scheduled_query_progress<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, scheduled_query_progress_args, Void> {
+      public scheduled_query_progress() {
+        super("scheduled_query_progress");
+      }
+
+      public scheduled_query_progress_args getEmptyArgsInstance() {
+        return new scheduled_query_progress_args();
+      }
+
+      public AsyncMethodCallback<Void> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new AsyncMethodCallback<Void>() { 
+          public void onComplete(Void o) {
+            scheduled_query_progress_result result = new scheduled_query_progress_result();
+            try {
+              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+              return;
+            } catch (Exception e) {
+              LOGGER.error("Exception writing to internal frame buffer", e);
+            }
+            fb.close();
+          }
+          public void onError(Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TBase msg;
+            scheduled_query_progress_result result = new scheduled_query_progress_result();
+            if (e instanceof MetaException) {
+                        result.o1 = (MetaException) e;
+                        result.setO1IsSet(true);
+                        msg = result;
+            }
+            else             if (e instanceof InvalidOperationException) {
+                        result.o2 = (InvalidOperationException) e;
+                        result.setO2IsSet(true);
+                        msg = result;
+            }
+             else 
+            {
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+              return;
+            } catch (Exception ex) {
+              LOGGER.error("Exception writing to internal frame buffer", ex);
+            }
+            fb.close();
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, scheduled_query_progress_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws TException {
+        iface.scheduled_query_progress(args.info,resultHandler);
+      }
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_scheduled_query<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, get_scheduled_query_args, ScheduledQuery> {
+      public get_scheduled_query() {
+        super("get_scheduled_query");
+      }
+
+      public get_scheduled_query_args getEmptyArgsInstance() {
+        return new get_scheduled_query_args();
+      }
+
+      public AsyncMethodCallback<ScheduledQuery> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new AsyncMethodCallback<ScheduledQuery>() { 
+          public void onComplete(ScheduledQuery o) {
+            get_scheduled_query_result result = new get_scheduled_query_result();
+            result.success = o;
+            try {
+              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+              return;
+            } catch (Exception e) {
+              LOGGER.error("Exception writing to internal frame buffer", e);
+            }
+            fb.close();
+          }
+          public void onError(Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TBase msg;
+            get_scheduled_query_result result = new get_scheduled_query_result();
+            if (e instanceof MetaException) {
+                        result.o1 = (MetaException) e;
+                        result.setO1IsSet(true);
+                        msg = result;
+            }
+            else             if (e instanceof NoSuchObjectException) {
+                        result.o2 = (NoSuchObjectException) e;
+                        result.setO2IsSet(true);
+                        msg = result;
+            }
+             else 
+            {
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+              return;
+            } catch (Exception ex) {
+              LOGGER.error("Exception writing to internal frame buffer", ex);
+            }
+            fb.close();
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, get_scheduled_query_args args, org.apache.thrift.async.AsyncMethodCallback<ScheduledQuery> resultHandler) throws TException {
+        iface.get_scheduled_query(args.scheduleKey,resultHandler);
       }
     }
 
@@ -258750,6 +259372,3646 @@ import org.slf4j.LoggerFactory;
           struct.o1 = new MetaException();
           struct.o1.read(iprot);
           struct.setO1IsSet(true);
+        }
+      }
+    }
+
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class scheduled_query_poll_args implements org.apache.thrift.TBase<scheduled_query_poll_args, scheduled_query_poll_args._Fields>, java.io.Serializable, Cloneable, Comparable<scheduled_query_poll_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("scheduled_query_poll_args");
+
+    private static final org.apache.thrift.protocol.TField REQUEST_FIELD_DESC = new org.apache.thrift.protocol.TField("request", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new scheduled_query_poll_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new scheduled_query_poll_argsTupleSchemeFactory());
+    }
+
+    private ScheduledQueryPollRequest request; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      REQUEST((short)1, "request");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // REQUEST
+            return REQUEST;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.REQUEST, new org.apache.thrift.meta_data.FieldMetaData("request", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, ScheduledQueryPollRequest.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(scheduled_query_poll_args.class, metaDataMap);
+    }
+
+    public scheduled_query_poll_args() {
+    }
+
+    public scheduled_query_poll_args(
+      ScheduledQueryPollRequest request)
+    {
+      this();
+      this.request = request;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public scheduled_query_poll_args(scheduled_query_poll_args other) {
+      if (other.isSetRequest()) {
+        this.request = new ScheduledQueryPollRequest(other.request);
+      }
+    }
+
+    public scheduled_query_poll_args deepCopy() {
+      return new scheduled_query_poll_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.request = null;
+    }
+
+    public ScheduledQueryPollRequest getRequest() {
+      return this.request;
+    }
+
+    public void setRequest(ScheduledQueryPollRequest request) {
+      this.request = request;
+    }
+
+    public void unsetRequest() {
+      this.request = null;
+    }
+
+    /** Returns true if field request is set (has been assigned a value) and false otherwise */
+    public boolean isSetRequest() {
+      return this.request != null;
+    }
+
+    public void setRequestIsSet(boolean value) {
+      if (!value) {
+        this.request = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case REQUEST:
+        if (value == null) {
+          unsetRequest();
+        } else {
+          setRequest((ScheduledQueryPollRequest)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case REQUEST:
+        return getRequest();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case REQUEST:
+        return isSetRequest();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof scheduled_query_poll_args)
+        return this.equals((scheduled_query_poll_args)that);
+      return false;
+    }
+
+    public boolean equals(scheduled_query_poll_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_request = true && this.isSetRequest();
+      boolean that_present_request = true && that.isSetRequest();
+      if (this_present_request || that_present_request) {
+        if (!(this_present_request && that_present_request))
+          return false;
+        if (!this.request.equals(that.request))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_request = true && (isSetRequest());
+      list.add(present_request);
+      if (present_request)
+        list.add(request);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(scheduled_query_poll_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetRequest()).compareTo(other.isSetRequest());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetRequest()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.request, other.request);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("scheduled_query_poll_args(");
+      boolean first = true;
+
+      sb.append("request:");
+      if (this.request == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.request);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (request != null) {
+        request.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class scheduled_query_poll_argsStandardSchemeFactory implements SchemeFactory {
+      public scheduled_query_poll_argsStandardScheme getScheme() {
+        return new scheduled_query_poll_argsStandardScheme();
+      }
+    }
+
+    private static class scheduled_query_poll_argsStandardScheme extends StandardScheme<scheduled_query_poll_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, scheduled_query_poll_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // REQUEST
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.request = new ScheduledQueryPollRequest();
+                struct.request.read(iprot);
+                struct.setRequestIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, scheduled_query_poll_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.request != null) {
+          oprot.writeFieldBegin(REQUEST_FIELD_DESC);
+          struct.request.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class scheduled_query_poll_argsTupleSchemeFactory implements SchemeFactory {
+      public scheduled_query_poll_argsTupleScheme getScheme() {
+        return new scheduled_query_poll_argsTupleScheme();
+      }
+    }
+
+    private static class scheduled_query_poll_argsTupleScheme extends TupleScheme<scheduled_query_poll_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, scheduled_query_poll_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetRequest()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetRequest()) {
+          struct.request.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, scheduled_query_poll_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.request = new ScheduledQueryPollRequest();
+          struct.request.read(iprot);
+          struct.setRequestIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class scheduled_query_poll_result implements org.apache.thrift.TBase<scheduled_query_poll_result, scheduled_query_poll_result._Fields>, java.io.Serializable, Cloneable, Comparable<scheduled_query_poll_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("scheduled_query_poll_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
+    private static final org.apache.thrift.protocol.TField O1_FIELD_DESC = new org.apache.thrift.protocol.TField("o1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new scheduled_query_poll_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new scheduled_query_poll_resultTupleSchemeFactory());
+    }
+
+    private ScheduledQueryPollResponse success; // required
+    private MetaException o1; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success"),
+      O1((short)1, "o1");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          case 1: // O1
+            return O1;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, ScheduledQueryPollResponse.class)));
+      tmpMap.put(_Fields.O1, new org.apache.thrift.meta_data.FieldMetaData("o1", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(scheduled_query_poll_result.class, metaDataMap);
+    }
+
+    public scheduled_query_poll_result() {
+    }
+
+    public scheduled_query_poll_result(
+      ScheduledQueryPollResponse success,
+      MetaException o1)
+    {
+      this();
+      this.success = success;
+      this.o1 = o1;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public scheduled_query_poll_result(scheduled_query_poll_result other) {
+      if (other.isSetSuccess()) {
+        this.success = new ScheduledQueryPollResponse(other.success);
+      }
+      if (other.isSetO1()) {
+        this.o1 = new MetaException(other.o1);
+      }
+    }
+
+    public scheduled_query_poll_result deepCopy() {
+      return new scheduled_query_poll_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+      this.o1 = null;
+    }
+
+    public ScheduledQueryPollResponse getSuccess() {
+      return this.success;
+    }
+
+    public void setSuccess(ScheduledQueryPollResponse success) {
+      this.success = success;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public MetaException getO1() {
+      return this.o1;
+    }
+
+    public void setO1(MetaException o1) {
+      this.o1 = o1;
+    }
+
+    public void unsetO1() {
+      this.o1 = null;
+    }
+
+    /** Returns true if field o1 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO1() {
+      return this.o1 != null;
+    }
+
+    public void setO1IsSet(boolean value) {
+      if (!value) {
+        this.o1 = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((ScheduledQueryPollResponse)value);
+        }
+        break;
+
+      case O1:
+        if (value == null) {
+          unsetO1();
+        } else {
+          setO1((MetaException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      case O1:
+        return getO1();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      case O1:
+        return isSetO1();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof scheduled_query_poll_result)
+        return this.equals((scheduled_query_poll_result)that);
+      return false;
+    }
+
+    public boolean equals(scheduled_query_poll_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      boolean this_present_o1 = true && this.isSetO1();
+      boolean that_present_o1 = true && that.isSetO1();
+      if (this_present_o1 || that_present_o1) {
+        if (!(this_present_o1 && that_present_o1))
+          return false;
+        if (!this.o1.equals(that.o1))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_success = true && (isSetSuccess());
+      list.add(present_success);
+      if (present_success)
+        list.add(success);
+
+      boolean present_o1 = true && (isSetO1());
+      list.add(present_o1);
+      if (present_o1)
+        list.add(o1);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(scheduled_query_poll_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(other.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetO1()).compareTo(other.isSetO1());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO1()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o1, other.o1);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("scheduled_query_poll_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("o1:");
+      if (this.o1 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o1);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (success != null) {
+        success.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class scheduled_query_poll_resultStandardSchemeFactory implements SchemeFactory {
+      public scheduled_query_poll_resultStandardScheme getScheme() {
+        return new scheduled_query_poll_resultStandardScheme();
+      }
+    }
+
+    private static class scheduled_query_poll_resultStandardScheme extends StandardScheme<scheduled_query_poll_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, scheduled_query_poll_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.success = new ScheduledQueryPollResponse();
+                struct.success.read(iprot);
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 1: // O1
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o1 = new MetaException();
+                struct.o1.read(iprot);
+                struct.setO1IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, scheduled_query_poll_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.success != null) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          struct.success.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.o1 != null) {
+          oprot.writeFieldBegin(O1_FIELD_DESC);
+          struct.o1.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class scheduled_query_poll_resultTupleSchemeFactory implements SchemeFactory {
+      public scheduled_query_poll_resultTupleScheme getScheme() {
+        return new scheduled_query_poll_resultTupleScheme();
+      }
+    }
+
+    private static class scheduled_query_poll_resultTupleScheme extends TupleScheme<scheduled_query_poll_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, scheduled_query_poll_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        if (struct.isSetO1()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetSuccess()) {
+          struct.success.write(oprot);
+        }
+        if (struct.isSetO1()) {
+          struct.o1.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, scheduled_query_poll_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.success = new ScheduledQueryPollResponse();
+          struct.success.read(iprot);
+          struct.setSuccessIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.o1 = new MetaException();
+          struct.o1.read(iprot);
+          struct.setO1IsSet(true);
+        }
+      }
+    }
+
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class scheduled_query_maintenance_args implements org.apache.thrift.TBase<scheduled_query_maintenance_args, scheduled_query_maintenance_args._Fields>, java.io.Serializable, Cloneable, Comparable<scheduled_query_maintenance_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("scheduled_query_maintenance_args");
+
+    private static final org.apache.thrift.protocol.TField REQUEST_FIELD_DESC = new org.apache.thrift.protocol.TField("request", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new scheduled_query_maintenance_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new scheduled_query_maintenance_argsTupleSchemeFactory());
+    }
+
+    private ScheduledQueryMaintenanceRequest request; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      REQUEST((short)1, "request");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // REQUEST
+            return REQUEST;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.REQUEST, new org.apache.thrift.meta_data.FieldMetaData("request", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, ScheduledQueryMaintenanceRequest.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(scheduled_query_maintenance_args.class, metaDataMap);
+    }
+
+    public scheduled_query_maintenance_args() {
+    }
+
+    public scheduled_query_maintenance_args(
+      ScheduledQueryMaintenanceRequest request)
+    {
+      this();
+      this.request = request;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public scheduled_query_maintenance_args(scheduled_query_maintenance_args other) {
+      if (other.isSetRequest()) {
+        this.request = new ScheduledQueryMaintenanceRequest(other.request);
+      }
+    }
+
+    public scheduled_query_maintenance_args deepCopy() {
+      return new scheduled_query_maintenance_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.request = null;
+    }
+
+    public ScheduledQueryMaintenanceRequest getRequest() {
+      return this.request;
+    }
+
+    public void setRequest(ScheduledQueryMaintenanceRequest request) {
+      this.request = request;
+    }
+
+    public void unsetRequest() {
+      this.request = null;
+    }
+
+    /** Returns true if field request is set (has been assigned a value) and false otherwise */
+    public boolean isSetRequest() {
+      return this.request != null;
+    }
+
+    public void setRequestIsSet(boolean value) {
+      if (!value) {
+        this.request = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case REQUEST:
+        if (value == null) {
+          unsetRequest();
+        } else {
+          setRequest((ScheduledQueryMaintenanceRequest)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case REQUEST:
+        return getRequest();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case REQUEST:
+        return isSetRequest();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof scheduled_query_maintenance_args)
+        return this.equals((scheduled_query_maintenance_args)that);
+      return false;
+    }
+
+    public boolean equals(scheduled_query_maintenance_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_request = true && this.isSetRequest();
+      boolean that_present_request = true && that.isSetRequest();
+      if (this_present_request || that_present_request) {
+        if (!(this_present_request && that_present_request))
+          return false;
+        if (!this.request.equals(that.request))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_request = true && (isSetRequest());
+      list.add(present_request);
+      if (present_request)
+        list.add(request);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(scheduled_query_maintenance_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetRequest()).compareTo(other.isSetRequest());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetRequest()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.request, other.request);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("scheduled_query_maintenance_args(");
+      boolean first = true;
+
+      sb.append("request:");
+      if (this.request == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.request);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (request != null) {
+        request.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class scheduled_query_maintenance_argsStandardSchemeFactory implements SchemeFactory {
+      public scheduled_query_maintenance_argsStandardScheme getScheme() {
+        return new scheduled_query_maintenance_argsStandardScheme();
+      }
+    }
+
+    private static class scheduled_query_maintenance_argsStandardScheme extends StandardScheme<scheduled_query_maintenance_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, scheduled_query_maintenance_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // REQUEST
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.request = new ScheduledQueryMaintenanceRequest();
+                struct.request.read(iprot);
+                struct.setRequestIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, scheduled_query_maintenance_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.request != null) {
+          oprot.writeFieldBegin(REQUEST_FIELD_DESC);
+          struct.request.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class scheduled_query_maintenance_argsTupleSchemeFactory implements SchemeFactory {
+      public scheduled_query_maintenance_argsTupleScheme getScheme() {
+        return new scheduled_query_maintenance_argsTupleScheme();
+      }
+    }
+
+    private static class scheduled_query_maintenance_argsTupleScheme extends TupleScheme<scheduled_query_maintenance_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, scheduled_query_maintenance_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetRequest()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetRequest()) {
+          struct.request.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, scheduled_query_maintenance_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.request = new ScheduledQueryMaintenanceRequest();
+          struct.request.read(iprot);
+          struct.setRequestIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class scheduled_query_maintenance_result implements org.apache.thrift.TBase<scheduled_query_maintenance_result, scheduled_query_maintenance_result._Fields>, java.io.Serializable, Cloneable, Comparable<scheduled_query_maintenance_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("scheduled_query_maintenance_result");
+
+    private static final org.apache.thrift.protocol.TField O1_FIELD_DESC = new org.apache.thrift.protocol.TField("o1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+    private static final org.apache.thrift.protocol.TField O2_FIELD_DESC = new org.apache.thrift.protocol.TField("o2", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+    private static final org.apache.thrift.protocol.TField O3_FIELD_DESC = new org.apache.thrift.protocol.TField("o3", org.apache.thrift.protocol.TType.STRUCT, (short)3);
+    private static final org.apache.thrift.protocol.TField O4_FIELD_DESC = new org.apache.thrift.protocol.TField("o4", org.apache.thrift.protocol.TType.STRUCT, (short)4);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new scheduled_query_maintenance_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new scheduled_query_maintenance_resultTupleSchemeFactory());
+    }
+
+    private MetaException o1; // required
+    private NoSuchObjectException o2; // required
+    private AlreadyExistsException o3; // required
+    private InvalidInputException o4; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      O1((short)1, "o1"),
+      O2((short)2, "o2"),
+      O3((short)3, "o3"),
+      O4((short)4, "o4");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // O1
+            return O1;
+          case 2: // O2
+            return O2;
+          case 3: // O3
+            return O3;
+          case 4: // O4
+            return O4;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.O1, new org.apache.thrift.meta_data.FieldMetaData("o1", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      tmpMap.put(_Fields.O2, new org.apache.thrift.meta_data.FieldMetaData("o2", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      tmpMap.put(_Fields.O3, new org.apache.thrift.meta_data.FieldMetaData("o3", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      tmpMap.put(_Fields.O4, new org.apache.thrift.meta_data.FieldMetaData("o4", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(scheduled_query_maintenance_result.class, metaDataMap);
+    }
+
+    public scheduled_query_maintenance_result() {
+    }
+
+    public scheduled_query_maintenance_result(
+      MetaException o1,
+      NoSuchObjectException o2,
+      AlreadyExistsException o3,
+      InvalidInputException o4)
+    {
+      this();
+      this.o1 = o1;
+      this.o2 = o2;
+      this.o3 = o3;
+      this.o4 = o4;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public scheduled_query_maintenance_result(scheduled_query_maintenance_result other) {
+      if (other.isSetO1()) {
+        this.o1 = new MetaException(other.o1);
+      }
+      if (other.isSetO2()) {
+        this.o2 = new NoSuchObjectException(other.o2);
+      }
+      if (other.isSetO3()) {
+        this.o3 = new AlreadyExistsException(other.o3);
+      }
+      if (other.isSetO4()) {
+        this.o4 = new InvalidInputException(other.o4);
+      }
+    }
+
+    public scheduled_query_maintenance_result deepCopy() {
+      return new scheduled_query_maintenance_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.o1 = null;
+      this.o2 = null;
+      this.o3 = null;
+      this.o4 = null;
+    }
+
+    public MetaException getO1() {
+      return this.o1;
+    }
+
+    public void setO1(MetaException o1) {
+      this.o1 = o1;
+    }
+
+    public void unsetO1() {
+      this.o1 = null;
+    }
+
+    /** Returns true if field o1 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO1() {
+      return this.o1 != null;
+    }
+
+    public void setO1IsSet(boolean value) {
+      if (!value) {
+        this.o1 = null;
+      }
+    }
+
+    public NoSuchObjectException getO2() {
+      return this.o2;
+    }
+
+    public void setO2(NoSuchObjectException o2) {
+      this.o2 = o2;
+    }
+
+    public void unsetO2() {
+      this.o2 = null;
+    }
+
+    /** Returns true if field o2 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO2() {
+      return this.o2 != null;
+    }
+
+    public void setO2IsSet(boolean value) {
+      if (!value) {
+        this.o2 = null;
+      }
+    }
+
+    public AlreadyExistsException getO3() {
+      return this.o3;
+    }
+
+    public void setO3(AlreadyExistsException o3) {
+      this.o3 = o3;
+    }
+
+    public void unsetO3() {
+      this.o3 = null;
+    }
+
+    /** Returns true if field o3 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO3() {
+      return this.o3 != null;
+    }
+
+    public void setO3IsSet(boolean value) {
+      if (!value) {
+        this.o3 = null;
+      }
+    }
+
+    public InvalidInputException getO4() {
+      return this.o4;
+    }
+
+    public void setO4(InvalidInputException o4) {
+      this.o4 = o4;
+    }
+
+    public void unsetO4() {
+      this.o4 = null;
+    }
+
+    /** Returns true if field o4 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO4() {
+      return this.o4 != null;
+    }
+
+    public void setO4IsSet(boolean value) {
+      if (!value) {
+        this.o4 = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case O1:
+        if (value == null) {
+          unsetO1();
+        } else {
+          setO1((MetaException)value);
+        }
+        break;
+
+      case O2:
+        if (value == null) {
+          unsetO2();
+        } else {
+          setO2((NoSuchObjectException)value);
+        }
+        break;
+
+      case O3:
+        if (value == null) {
+          unsetO3();
+        } else {
+          setO3((AlreadyExistsException)value);
+        }
+        break;
+
+      case O4:
+        if (value == null) {
+          unsetO4();
+        } else {
+          setO4((InvalidInputException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case O1:
+        return getO1();
+
+      case O2:
+        return getO2();
+
+      case O3:
+        return getO3();
+
+      case O4:
+        return getO4();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case O1:
+        return isSetO1();
+      case O2:
+        return isSetO2();
+      case O3:
+        return isSetO3();
+      case O4:
+        return isSetO4();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof scheduled_query_maintenance_result)
+        return this.equals((scheduled_query_maintenance_result)that);
+      return false;
+    }
+
+    public boolean equals(scheduled_query_maintenance_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_o1 = true && this.isSetO1();
+      boolean that_present_o1 = true && that.isSetO1();
+      if (this_present_o1 || that_present_o1) {
+        if (!(this_present_o1 && that_present_o1))
+          return false;
+        if (!this.o1.equals(that.o1))
+          return false;
+      }
+
+      boolean this_present_o2 = true && this.isSetO2();
+      boolean that_present_o2 = true && that.isSetO2();
+      if (this_present_o2 || that_present_o2) {
+        if (!(this_present_o2 && that_present_o2))
+          return false;
+        if (!this.o2.equals(that.o2))
+          return false;
+      }
+
+      boolean this_present_o3 = true && this.isSetO3();
+      boolean that_present_o3 = true && that.isSetO3();
+      if (this_present_o3 || that_present_o3) {
+        if (!(this_present_o3 && that_present_o3))
+          return false;
+        if (!this.o3.equals(that.o3))
+          return false;
+      }
+
+      boolean this_present_o4 = true && this.isSetO4();
+      boolean that_present_o4 = true && that.isSetO4();
+      if (this_present_o4 || that_present_o4) {
+        if (!(this_present_o4 && that_present_o4))
+          return false;
+        if (!this.o4.equals(that.o4))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_o1 = true && (isSetO1());
+      list.add(present_o1);
+      if (present_o1)
+        list.add(o1);
+
+      boolean present_o2 = true && (isSetO2());
+      list.add(present_o2);
+      if (present_o2)
+        list.add(o2);
+
+      boolean present_o3 = true && (isSetO3());
+      list.add(present_o3);
+      if (present_o3)
+        list.add(o3);
+
+      boolean present_o4 = true && (isSetO4());
+      list.add(present_o4);
+      if (present_o4)
+        list.add(o4);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(scheduled_query_maintenance_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetO1()).compareTo(other.isSetO1());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO1()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o1, other.o1);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetO2()).compareTo(other.isSetO2());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO2()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o2, other.o2);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetO3()).compareTo(other.isSetO3());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO3()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o3, other.o3);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetO4()).compareTo(other.isSetO4());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO4()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o4, other.o4);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("scheduled_query_maintenance_result(");
+      boolean first = true;
+
+      sb.append("o1:");
+      if (this.o1 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o1);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("o2:");
+      if (this.o2 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o2);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("o3:");
+      if (this.o3 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o3);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("o4:");
+      if (this.o4 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o4);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class scheduled_query_maintenance_resultStandardSchemeFactory implements SchemeFactory {
+      public scheduled_query_maintenance_resultStandardScheme getScheme() {
+        return new scheduled_query_maintenance_resultStandardScheme();
+      }
+    }
+
+    private static class scheduled_query_maintenance_resultStandardScheme extends StandardScheme<scheduled_query_maintenance_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, scheduled_query_maintenance_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // O1
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o1 = new MetaException();
+                struct.o1.read(iprot);
+                struct.setO1IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // O2
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o2 = new NoSuchObjectException();
+                struct.o2.read(iprot);
+                struct.setO2IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 3: // O3
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o3 = new AlreadyExistsException();
+                struct.o3.read(iprot);
+                struct.setO3IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 4: // O4
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o4 = new InvalidInputException();
+                struct.o4.read(iprot);
+                struct.setO4IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, scheduled_query_maintenance_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.o1 != null) {
+          oprot.writeFieldBegin(O1_FIELD_DESC);
+          struct.o1.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.o2 != null) {
+          oprot.writeFieldBegin(O2_FIELD_DESC);
+          struct.o2.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.o3 != null) {
+          oprot.writeFieldBegin(O3_FIELD_DESC);
+          struct.o3.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.o4 != null) {
+          oprot.writeFieldBegin(O4_FIELD_DESC);
+          struct.o4.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class scheduled_query_maintenance_resultTupleSchemeFactory implements SchemeFactory {
+      public scheduled_query_maintenance_resultTupleScheme getScheme() {
+        return new scheduled_query_maintenance_resultTupleScheme();
+      }
+    }
+
+    private static class scheduled_query_maintenance_resultTupleScheme extends TupleScheme<scheduled_query_maintenance_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, scheduled_query_maintenance_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetO1()) {
+          optionals.set(0);
+        }
+        if (struct.isSetO2()) {
+          optionals.set(1);
+        }
+        if (struct.isSetO3()) {
+          optionals.set(2);
+        }
+        if (struct.isSetO4()) {
+          optionals.set(3);
+        }
+        oprot.writeBitSet(optionals, 4);
+        if (struct.isSetO1()) {
+          struct.o1.write(oprot);
+        }
+        if (struct.isSetO2()) {
+          struct.o2.write(oprot);
+        }
+        if (struct.isSetO3()) {
+          struct.o3.write(oprot);
+        }
+        if (struct.isSetO4()) {
+          struct.o4.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, scheduled_query_maintenance_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(4);
+        if (incoming.get(0)) {
+          struct.o1 = new MetaException();
+          struct.o1.read(iprot);
+          struct.setO1IsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.o2 = new NoSuchObjectException();
+          struct.o2.read(iprot);
+          struct.setO2IsSet(true);
+        }
+        if (incoming.get(2)) {
+          struct.o3 = new AlreadyExistsException();
+          struct.o3.read(iprot);
+          struct.setO3IsSet(true);
+        }
+        if (incoming.get(3)) {
+          struct.o4 = new InvalidInputException();
+          struct.o4.read(iprot);
+          struct.setO4IsSet(true);
+        }
+      }
+    }
+
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class scheduled_query_progress_args implements org.apache.thrift.TBase<scheduled_query_progress_args, scheduled_query_progress_args._Fields>, java.io.Serializable, Cloneable, Comparable<scheduled_query_progress_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("scheduled_query_progress_args");
+
+    private static final org.apache.thrift.protocol.TField INFO_FIELD_DESC = new org.apache.thrift.protocol.TField("info", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new scheduled_query_progress_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new scheduled_query_progress_argsTupleSchemeFactory());
+    }
+
+    private ScheduledQueryProgressInfo info; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      INFO((short)1, "info");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // INFO
+            return INFO;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.INFO, new org.apache.thrift.meta_data.FieldMetaData("info", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, ScheduledQueryProgressInfo.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(scheduled_query_progress_args.class, metaDataMap);
+    }
+
+    public scheduled_query_progress_args() {
+    }
+
+    public scheduled_query_progress_args(
+      ScheduledQueryProgressInfo info)
+    {
+      this();
+      this.info = info;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public scheduled_query_progress_args(scheduled_query_progress_args other) {
+      if (other.isSetInfo()) {
+        this.info = new ScheduledQueryProgressInfo(other.info);
+      }
+    }
+
+    public scheduled_query_progress_args deepCopy() {
+      return new scheduled_query_progress_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.info = null;
+    }
+
+    public ScheduledQueryProgressInfo getInfo() {
+      return this.info;
+    }
+
+    public void setInfo(ScheduledQueryProgressInfo info) {
+      this.info = info;
+    }
+
+    public void unsetInfo() {
+      this.info = null;
+    }
+
+    /** Returns true if field info is set (has been assigned a value) and false otherwise */
+    public boolean isSetInfo() {
+      return this.info != null;
+    }
+
+    public void setInfoIsSet(boolean value) {
+      if (!value) {
+        this.info = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case INFO:
+        if (value == null) {
+          unsetInfo();
+        } else {
+          setInfo((ScheduledQueryProgressInfo)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case INFO:
+        return getInfo();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case INFO:
+        return isSetInfo();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof scheduled_query_progress_args)
+        return this.equals((scheduled_query_progress_args)that);
+      return false;
+    }
+
+    public boolean equals(scheduled_query_progress_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_info = true && this.isSetInfo();
+      boolean that_present_info = true && that.isSetInfo();
+      if (this_present_info || that_present_info) {
+        if (!(this_present_info && that_present_info))
+          return false;
+        if (!this.info.equals(that.info))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_info = true && (isSetInfo());
+      list.add(present_info);
+      if (present_info)
+        list.add(info);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(scheduled_query_progress_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetInfo()).compareTo(other.isSetInfo());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetInfo()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.info, other.info);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("scheduled_query_progress_args(");
+      boolean first = true;
+
+      sb.append("info:");
+      if (this.info == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.info);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (info != null) {
+        info.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class scheduled_query_progress_argsStandardSchemeFactory implements SchemeFactory {
+      public scheduled_query_progress_argsStandardScheme getScheme() {
+        return new scheduled_query_progress_argsStandardScheme();
+      }
+    }
+
+    private static class scheduled_query_progress_argsStandardScheme extends StandardScheme<scheduled_query_progress_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, scheduled_query_progress_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // INFO
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.info = new ScheduledQueryProgressInfo();
+                struct.info.read(iprot);
+                struct.setInfoIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, scheduled_query_progress_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.info != null) {
+          oprot.writeFieldBegin(INFO_FIELD_DESC);
+          struct.info.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class scheduled_query_progress_argsTupleSchemeFactory implements SchemeFactory {
+      public scheduled_query_progress_argsTupleScheme getScheme() {
+        return new scheduled_query_progress_argsTupleScheme();
+      }
+    }
+
+    private static class scheduled_query_progress_argsTupleScheme extends TupleScheme<scheduled_query_progress_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, scheduled_query_progress_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetInfo()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetInfo()) {
+          struct.info.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, scheduled_query_progress_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.info = new ScheduledQueryProgressInfo();
+          struct.info.read(iprot);
+          struct.setInfoIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class scheduled_query_progress_result implements org.apache.thrift.TBase<scheduled_query_progress_result, scheduled_query_progress_result._Fields>, java.io.Serializable, Cloneable, Comparable<scheduled_query_progress_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("scheduled_query_progress_result");
+
+    private static final org.apache.thrift.protocol.TField O1_FIELD_DESC = new org.apache.thrift.protocol.TField("o1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+    private static final org.apache.thrift.protocol.TField O2_FIELD_DESC = new org.apache.thrift.protocol.TField("o2", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new scheduled_query_progress_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new scheduled_query_progress_resultTupleSchemeFactory());
+    }
+
+    private MetaException o1; // required
+    private InvalidOperationException o2; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      O1((short)1, "o1"),
+      O2((short)2, "o2");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // O1
+            return O1;
+          case 2: // O2
+            return O2;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.O1, new org.apache.thrift.meta_data.FieldMetaData("o1", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      tmpMap.put(_Fields.O2, new org.apache.thrift.meta_data.FieldMetaData("o2", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(scheduled_query_progress_result.class, metaDataMap);
+    }
+
+    public scheduled_query_progress_result() {
+    }
+
+    public scheduled_query_progress_result(
+      MetaException o1,
+      InvalidOperationException o2)
+    {
+      this();
+      this.o1 = o1;
+      this.o2 = o2;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public scheduled_query_progress_result(scheduled_query_progress_result other) {
+      if (other.isSetO1()) {
+        this.o1 = new MetaException(other.o1);
+      }
+      if (other.isSetO2()) {
+        this.o2 = new InvalidOperationException(other.o2);
+      }
+    }
+
+    public scheduled_query_progress_result deepCopy() {
+      return new scheduled_query_progress_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.o1 = null;
+      this.o2 = null;
+    }
+
+    public MetaException getO1() {
+      return this.o1;
+    }
+
+    public void setO1(MetaException o1) {
+      this.o1 = o1;
+    }
+
+    public void unsetO1() {
+      this.o1 = null;
+    }
+
+    /** Returns true if field o1 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO1() {
+      return this.o1 != null;
+    }
+
+    public void setO1IsSet(boolean value) {
+      if (!value) {
+        this.o1 = null;
+      }
+    }
+
+    public InvalidOperationException getO2() {
+      return this.o2;
+    }
+
+    public void setO2(InvalidOperationException o2) {
+      this.o2 = o2;
+    }
+
+    public void unsetO2() {
+      this.o2 = null;
+    }
+
+    /** Returns true if field o2 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO2() {
+      return this.o2 != null;
+    }
+
+    public void setO2IsSet(boolean value) {
+      if (!value) {
+        this.o2 = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case O1:
+        if (value == null) {
+          unsetO1();
+        } else {
+          setO1((MetaException)value);
+        }
+        break;
+
+      case O2:
+        if (value == null) {
+          unsetO2();
+        } else {
+          setO2((InvalidOperationException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case O1:
+        return getO1();
+
+      case O2:
+        return getO2();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case O1:
+        return isSetO1();
+      case O2:
+        return isSetO2();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof scheduled_query_progress_result)
+        return this.equals((scheduled_query_progress_result)that);
+      return false;
+    }
+
+    public boolean equals(scheduled_query_progress_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_o1 = true && this.isSetO1();
+      boolean that_present_o1 = true && that.isSetO1();
+      if (this_present_o1 || that_present_o1) {
+        if (!(this_present_o1 && that_present_o1))
+          return false;
+        if (!this.o1.equals(that.o1))
+          return false;
+      }
+
+      boolean this_present_o2 = true && this.isSetO2();
+      boolean that_present_o2 = true && that.isSetO2();
+      if (this_present_o2 || that_present_o2) {
+        if (!(this_present_o2 && that_present_o2))
+          return false;
+        if (!this.o2.equals(that.o2))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_o1 = true && (isSetO1());
+      list.add(present_o1);
+      if (present_o1)
+        list.add(o1);
+
+      boolean present_o2 = true && (isSetO2());
+      list.add(present_o2);
+      if (present_o2)
+        list.add(o2);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(scheduled_query_progress_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetO1()).compareTo(other.isSetO1());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO1()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o1, other.o1);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetO2()).compareTo(other.isSetO2());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO2()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o2, other.o2);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("scheduled_query_progress_result(");
+      boolean first = true;
+
+      sb.append("o1:");
+      if (this.o1 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o1);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("o2:");
+      if (this.o2 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o2);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class scheduled_query_progress_resultStandardSchemeFactory implements SchemeFactory {
+      public scheduled_query_progress_resultStandardScheme getScheme() {
+        return new scheduled_query_progress_resultStandardScheme();
+      }
+    }
+
+    private static class scheduled_query_progress_resultStandardScheme extends StandardScheme<scheduled_query_progress_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, scheduled_query_progress_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // O1
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o1 = new MetaException();
+                struct.o1.read(iprot);
+                struct.setO1IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // O2
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o2 = new InvalidOperationException();
+                struct.o2.read(iprot);
+                struct.setO2IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, scheduled_query_progress_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.o1 != null) {
+          oprot.writeFieldBegin(O1_FIELD_DESC);
+          struct.o1.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.o2 != null) {
+          oprot.writeFieldBegin(O2_FIELD_DESC);
+          struct.o2.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class scheduled_query_progress_resultTupleSchemeFactory implements SchemeFactory {
+      public scheduled_query_progress_resultTupleScheme getScheme() {
+        return new scheduled_query_progress_resultTupleScheme();
+      }
+    }
+
+    private static class scheduled_query_progress_resultTupleScheme extends TupleScheme<scheduled_query_progress_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, scheduled_query_progress_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetO1()) {
+          optionals.set(0);
+        }
+        if (struct.isSetO2()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetO1()) {
+          struct.o1.write(oprot);
+        }
+        if (struct.isSetO2()) {
+          struct.o2.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, scheduled_query_progress_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.o1 = new MetaException();
+          struct.o1.read(iprot);
+          struct.setO1IsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.o2 = new InvalidOperationException();
+          struct.o2.read(iprot);
+          struct.setO2IsSet(true);
+        }
+      }
+    }
+
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_scheduled_query_args implements org.apache.thrift.TBase<get_scheduled_query_args, get_scheduled_query_args._Fields>, java.io.Serializable, Cloneable, Comparable<get_scheduled_query_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("get_scheduled_query_args");
+
+    private static final org.apache.thrift.protocol.TField SCHEDULE_KEY_FIELD_DESC = new org.apache.thrift.protocol.TField("scheduleKey", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new get_scheduled_query_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new get_scheduled_query_argsTupleSchemeFactory());
+    }
+
+    private ScheduledQueryKey scheduleKey; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SCHEDULE_KEY((short)1, "scheduleKey");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // SCHEDULE_KEY
+            return SCHEDULE_KEY;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SCHEDULE_KEY, new org.apache.thrift.meta_data.FieldMetaData("scheduleKey", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, ScheduledQueryKey.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(get_scheduled_query_args.class, metaDataMap);
+    }
+
+    public get_scheduled_query_args() {
+    }
+
+    public get_scheduled_query_args(
+      ScheduledQueryKey scheduleKey)
+    {
+      this();
+      this.scheduleKey = scheduleKey;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public get_scheduled_query_args(get_scheduled_query_args other) {
+      if (other.isSetScheduleKey()) {
+        this.scheduleKey = new ScheduledQueryKey(other.scheduleKey);
+      }
+    }
+
+    public get_scheduled_query_args deepCopy() {
+      return new get_scheduled_query_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.scheduleKey = null;
+    }
+
+    public ScheduledQueryKey getScheduleKey() {
+      return this.scheduleKey;
+    }
+
+    public void setScheduleKey(ScheduledQueryKey scheduleKey) {
+      this.scheduleKey = scheduleKey;
+    }
+
+    public void unsetScheduleKey() {
+      this.scheduleKey = null;
+    }
+
+    /** Returns true if field scheduleKey is set (has been assigned a value) and false otherwise */
+    public boolean isSetScheduleKey() {
+      return this.scheduleKey != null;
+    }
+
+    public void setScheduleKeyIsSet(boolean value) {
+      if (!value) {
+        this.scheduleKey = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SCHEDULE_KEY:
+        if (value == null) {
+          unsetScheduleKey();
+        } else {
+          setScheduleKey((ScheduledQueryKey)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SCHEDULE_KEY:
+        return getScheduleKey();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SCHEDULE_KEY:
+        return isSetScheduleKey();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof get_scheduled_query_args)
+        return this.equals((get_scheduled_query_args)that);
+      return false;
+    }
+
+    public boolean equals(get_scheduled_query_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_scheduleKey = true && this.isSetScheduleKey();
+      boolean that_present_scheduleKey = true && that.isSetScheduleKey();
+      if (this_present_scheduleKey || that_present_scheduleKey) {
+        if (!(this_present_scheduleKey && that_present_scheduleKey))
+          return false;
+        if (!this.scheduleKey.equals(that.scheduleKey))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_scheduleKey = true && (isSetScheduleKey());
+      list.add(present_scheduleKey);
+      if (present_scheduleKey)
+        list.add(scheduleKey);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(get_scheduled_query_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetScheduleKey()).compareTo(other.isSetScheduleKey());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetScheduleKey()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.scheduleKey, other.scheduleKey);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("get_scheduled_query_args(");
+      boolean first = true;
+
+      sb.append("scheduleKey:");
+      if (this.scheduleKey == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.scheduleKey);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (scheduleKey != null) {
+        scheduleKey.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class get_scheduled_query_argsStandardSchemeFactory implements SchemeFactory {
+      public get_scheduled_query_argsStandardScheme getScheme() {
+        return new get_scheduled_query_argsStandardScheme();
+      }
+    }
+
+    private static class get_scheduled_query_argsStandardScheme extends StandardScheme<get_scheduled_query_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, get_scheduled_query_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // SCHEDULE_KEY
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.scheduleKey = new ScheduledQueryKey();
+                struct.scheduleKey.read(iprot);
+                struct.setScheduleKeyIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, get_scheduled_query_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.scheduleKey != null) {
+          oprot.writeFieldBegin(SCHEDULE_KEY_FIELD_DESC);
+          struct.scheduleKey.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class get_scheduled_query_argsTupleSchemeFactory implements SchemeFactory {
+      public get_scheduled_query_argsTupleScheme getScheme() {
+        return new get_scheduled_query_argsTupleScheme();
+      }
+    }
+
+    private static class get_scheduled_query_argsTupleScheme extends TupleScheme<get_scheduled_query_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, get_scheduled_query_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetScheduleKey()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetScheduleKey()) {
+          struct.scheduleKey.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, get_scheduled_query_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.scheduleKey = new ScheduledQueryKey();
+          struct.scheduleKey.read(iprot);
+          struct.setScheduleKeyIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_scheduled_query_result implements org.apache.thrift.TBase<get_scheduled_query_result, get_scheduled_query_result._Fields>, java.io.Serializable, Cloneable, Comparable<get_scheduled_query_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("get_scheduled_query_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
+    private static final org.apache.thrift.protocol.TField O1_FIELD_DESC = new org.apache.thrift.protocol.TField("o1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+    private static final org.apache.thrift.protocol.TField O2_FIELD_DESC = new org.apache.thrift.protocol.TField("o2", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new get_scheduled_query_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new get_scheduled_query_resultTupleSchemeFactory());
+    }
+
+    private ScheduledQuery success; // required
+    private MetaException o1; // required
+    private NoSuchObjectException o2; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success"),
+      O1((short)1, "o1"),
+      O2((short)2, "o2");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          case 1: // O1
+            return O1;
+          case 2: // O2
+            return O2;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, ScheduledQuery.class)));
+      tmpMap.put(_Fields.O1, new org.apache.thrift.meta_data.FieldMetaData("o1", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      tmpMap.put(_Fields.O2, new org.apache.thrift.meta_data.FieldMetaData("o2", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(get_scheduled_query_result.class, metaDataMap);
+    }
+
+    public get_scheduled_query_result() {
+    }
+
+    public get_scheduled_query_result(
+      ScheduledQuery success,
+      MetaException o1,
+      NoSuchObjectException o2)
+    {
+      this();
+      this.success = success;
+      this.o1 = o1;
+      this.o2 = o2;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public get_scheduled_query_result(get_scheduled_query_result other) {
+      if (other.isSetSuccess()) {
+        this.success = new ScheduledQuery(other.success);
+      }
+      if (other.isSetO1()) {
+        this.o1 = new MetaException(other.o1);
+      }
+      if (other.isSetO2()) {
+        this.o2 = new NoSuchObjectException(other.o2);
+      }
+    }
+
+    public get_scheduled_query_result deepCopy() {
+      return new get_scheduled_query_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+      this.o1 = null;
+      this.o2 = null;
+    }
+
+    public ScheduledQuery getSuccess() {
+      return this.success;
+    }
+
+    public void setSuccess(ScheduledQuery success) {
+      this.success = success;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public MetaException getO1() {
+      return this.o1;
+    }
+
+    public void setO1(MetaException o1) {
+      this.o1 = o1;
+    }
+
+    public void unsetO1() {
+      this.o1 = null;
+    }
+
+    /** Returns true if field o1 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO1() {
+      return this.o1 != null;
+    }
+
+    public void setO1IsSet(boolean value) {
+      if (!value) {
+        this.o1 = null;
+      }
+    }
+
+    public NoSuchObjectException getO2() {
+      return this.o2;
+    }
+
+    public void setO2(NoSuchObjectException o2) {
+      this.o2 = o2;
+    }
+
+    public void unsetO2() {
+      this.o2 = null;
+    }
+
+    /** Returns true if field o2 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO2() {
+      return this.o2 != null;
+    }
+
+    public void setO2IsSet(boolean value) {
+      if (!value) {
+        this.o2 = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((ScheduledQuery)value);
+        }
+        break;
+
+      case O1:
+        if (value == null) {
+          unsetO1();
+        } else {
+          setO1((MetaException)value);
+        }
+        break;
+
+      case O2:
+        if (value == null) {
+          unsetO2();
+        } else {
+          setO2((NoSuchObjectException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      case O1:
+        return getO1();
+
+      case O2:
+        return getO2();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      case O1:
+        return isSetO1();
+      case O2:
+        return isSetO2();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof get_scheduled_query_result)
+        return this.equals((get_scheduled_query_result)that);
+      return false;
+    }
+
+    public boolean equals(get_scheduled_query_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      boolean this_present_o1 = true && this.isSetO1();
+      boolean that_present_o1 = true && that.isSetO1();
+      if (this_present_o1 || that_present_o1) {
+        if (!(this_present_o1 && that_present_o1))
+          return false;
+        if (!this.o1.equals(that.o1))
+          return false;
+      }
+
+      boolean this_present_o2 = true && this.isSetO2();
+      boolean that_present_o2 = true && that.isSetO2();
+      if (this_present_o2 || that_present_o2) {
+        if (!(this_present_o2 && that_present_o2))
+          return false;
+        if (!this.o2.equals(that.o2))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_success = true && (isSetSuccess());
+      list.add(present_success);
+      if (present_success)
+        list.add(success);
+
+      boolean present_o1 = true && (isSetO1());
+      list.add(present_o1);
+      if (present_o1)
+        list.add(o1);
+
+      boolean present_o2 = true && (isSetO2());
+      list.add(present_o2);
+      if (present_o2)
+        list.add(o2);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(get_scheduled_query_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(other.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetO1()).compareTo(other.isSetO1());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO1()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o1, other.o1);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetO2()).compareTo(other.isSetO2());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO2()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o2, other.o2);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("get_scheduled_query_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("o1:");
+      if (this.o1 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o1);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("o2:");
+      if (this.o2 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o2);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (success != null) {
+        success.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class get_scheduled_query_resultStandardSchemeFactory implements SchemeFactory {
+      public get_scheduled_query_resultStandardScheme getScheme() {
+        return new get_scheduled_query_resultStandardScheme();
+      }
+    }
+
+    private static class get_scheduled_query_resultStandardScheme extends StandardScheme<get_scheduled_query_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, get_scheduled_query_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.success = new ScheduledQuery();
+                struct.success.read(iprot);
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 1: // O1
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o1 = new MetaException();
+                struct.o1.read(iprot);
+                struct.setO1IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // O2
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o2 = new NoSuchObjectException();
+                struct.o2.read(iprot);
+                struct.setO2IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, get_scheduled_query_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.success != null) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          struct.success.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.o1 != null) {
+          oprot.writeFieldBegin(O1_FIELD_DESC);
+          struct.o1.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.o2 != null) {
+          oprot.writeFieldBegin(O2_FIELD_DESC);
+          struct.o2.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class get_scheduled_query_resultTupleSchemeFactory implements SchemeFactory {
+      public get_scheduled_query_resultTupleScheme getScheme() {
+        return new get_scheduled_query_resultTupleScheme();
+      }
+    }
+
+    private static class get_scheduled_query_resultTupleScheme extends TupleScheme<get_scheduled_query_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, get_scheduled_query_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        if (struct.isSetO1()) {
+          optionals.set(1);
+        }
+        if (struct.isSetO2()) {
+          optionals.set(2);
+        }
+        oprot.writeBitSet(optionals, 3);
+        if (struct.isSetSuccess()) {
+          struct.success.write(oprot);
+        }
+        if (struct.isSetO1()) {
+          struct.o1.write(oprot);
+        }
+        if (struct.isSetO2()) {
+          struct.o2.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, get_scheduled_query_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(3);
+        if (incoming.get(0)) {
+          struct.success = new ScheduledQuery();
+          struct.success.read(iprot);
+          struct.setSuccessIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.o1 = new MetaException();
+          struct.o1.read(iprot);
+          struct.setO1IsSet(true);
+        }
+        if (incoming.get(2)) {
+          struct.o2 = new NoSuchObjectException();
+          struct.o2.read(iprot);
+          struct.setO2IsSet(true);
         }
       }
     }
