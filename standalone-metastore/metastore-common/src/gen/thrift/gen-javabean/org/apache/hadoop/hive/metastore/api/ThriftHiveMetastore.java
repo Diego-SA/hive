@@ -349,6 +349,8 @@ package org.apache.hadoop.hive.metastore.api;
 
     public void commit_txn(CommitTxnRequest rqst) throws NoSuchTxnException, TxnAbortedException, org.apache.thrift.TException;
 
+    public long get_latest_txn_in_conflict(long txnId) throws MetaException, org.apache.thrift.TException;
+
     public void repl_tbl_writeid_state(ReplTblWriteIdStateRequest rqst) throws org.apache.thrift.TException;
 
     public GetValidWriteIdsResponse get_valid_write_ids(GetValidWriteIdsRequest rqst) throws NoSuchTxnException, MetaException, org.apache.thrift.TException;
@@ -844,6 +846,8 @@ package org.apache.hadoop.hive.metastore.api;
     public void abort_txns(AbortTxnsRequest rqst, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
 
     public void commit_txn(CommitTxnRequest rqst, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
+
+    public void get_latest_txn_in_conflict(long txnId, org.apache.thrift.async.AsyncMethodCallback<java.lang.Long> resultHandler) throws org.apache.thrift.TException;
 
     public void repl_tbl_writeid_state(ReplTblWriteIdStateRequest rqst, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
 
@@ -5919,6 +5923,32 @@ package org.apache.hadoop.hive.metastore.api;
         throw result.o2;
       }
       return;
+    }
+
+    public long get_latest_txn_in_conflict(long txnId) throws MetaException, org.apache.thrift.TException
+    {
+      send_get_latest_txn_in_conflict(txnId);
+      return recv_get_latest_txn_in_conflict();
+    }
+
+    public void send_get_latest_txn_in_conflict(long txnId) throws org.apache.thrift.TException
+    {
+      get_latest_txn_in_conflict_args args = new get_latest_txn_in_conflict_args();
+      args.setTxnId(txnId);
+      sendBase("get_latest_txn_in_conflict", args);
+    }
+
+    public long recv_get_latest_txn_in_conflict() throws MetaException, org.apache.thrift.TException
+    {
+      get_latest_txn_in_conflict_result result = new get_latest_txn_in_conflict_result();
+      receiveBase(result, "get_latest_txn_in_conflict");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      if (result.o1 != null) {
+        throw result.o1;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "get_latest_txn_in_conflict failed: unknown result");
     }
 
     public void repl_tbl_writeid_state(ReplTblWriteIdStateRequest rqst) throws org.apache.thrift.TException
@@ -13880,6 +13910,38 @@ package org.apache.hadoop.hive.metastore.api;
       }
     }
 
+    public void get_latest_txn_in_conflict(long txnId, org.apache.thrift.async.AsyncMethodCallback<java.lang.Long> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      get_latest_txn_in_conflict_call method_call = new get_latest_txn_in_conflict_call(txnId, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_latest_txn_in_conflict_call extends org.apache.thrift.async.TAsyncMethodCall<java.lang.Long> {
+      private long txnId;
+      public get_latest_txn_in_conflict_call(long txnId, org.apache.thrift.async.AsyncMethodCallback<java.lang.Long> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.txnId = txnId;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("get_latest_txn_in_conflict", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        get_latest_txn_in_conflict_args args = new get_latest_txn_in_conflict_args();
+        args.setTxnId(txnId);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public java.lang.Long getResult() throws MetaException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new java.lang.IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_get_latest_txn_in_conflict();
+      }
+    }
+
     public void repl_tbl_writeid_state(ReplTblWriteIdStateRequest rqst, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
       checkReady();
       repl_tbl_writeid_state_call method_call = new repl_tbl_writeid_state_call(rqst, resultHandler, this, ___protocolFactory, ___transport);
@@ -16597,6 +16659,7 @@ package org.apache.hadoop.hive.metastore.api;
       processMap.put("abort_txn", new abort_txn());
       processMap.put("abort_txns", new abort_txns());
       processMap.put("commit_txn", new commit_txn());
+      processMap.put("get_latest_txn_in_conflict", new get_latest_txn_in_conflict());
       processMap.put("repl_tbl_writeid_state", new repl_tbl_writeid_state());
       processMap.put("get_valid_write_ids", new get_valid_write_ids());
       processMap.put("allocate_table_write_ids", new allocate_table_write_ids());
@@ -21867,6 +21930,36 @@ package org.apache.hadoop.hive.metastore.api;
       }
     }
 
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_latest_txn_in_conflict<I extends Iface> extends org.apache.thrift.ProcessFunction<I, get_latest_txn_in_conflict_args> {
+      public get_latest_txn_in_conflict() {
+        super("get_latest_txn_in_conflict");
+      }
+
+      public get_latest_txn_in_conflict_args getEmptyArgsInstance() {
+        return new get_latest_txn_in_conflict_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      @Override
+      protected boolean rethrowUnhandledExceptions() {
+        return false;
+      }
+
+      public get_latest_txn_in_conflict_result getResult(I iface, get_latest_txn_in_conflict_args args) throws org.apache.thrift.TException {
+        get_latest_txn_in_conflict_result result = new get_latest_txn_in_conflict_result();
+        try {
+          result.success = iface.get_latest_txn_in_conflict(args.txnId);
+          result.setSuccessIsSet(true);
+        } catch (MetaException o1) {
+          result.o1 = o1;
+        }
+        return result;
+      }
+    }
+
     @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class repl_tbl_writeid_state<I extends Iface> extends org.apache.thrift.ProcessFunction<I, repl_tbl_writeid_state_args> {
       public repl_tbl_writeid_state() {
         super("repl_tbl_writeid_state");
@@ -24375,6 +24468,7 @@ package org.apache.hadoop.hive.metastore.api;
       processMap.put("abort_txn", new abort_txn());
       processMap.put("abort_txns", new abort_txns());
       processMap.put("commit_txn", new commit_txn());
+      processMap.put("get_latest_txn_in_conflict", new get_latest_txn_in_conflict());
       processMap.put("repl_tbl_writeid_state", new repl_tbl_writeid_state());
       processMap.put("get_valid_write_ids", new get_valid_write_ids());
       processMap.put("allocate_table_write_ids", new allocate_table_write_ids());
@@ -35973,6 +36067,72 @@ package org.apache.hadoop.hive.metastore.api;
 
       public void start(I iface, commit_txn_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
         iface.commit_txn(args.rqst,resultHandler);
+      }
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_latest_txn_in_conflict<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, get_latest_txn_in_conflict_args, java.lang.Long> {
+      public get_latest_txn_in_conflict() {
+        super("get_latest_txn_in_conflict");
+      }
+
+      public get_latest_txn_in_conflict_args getEmptyArgsInstance() {
+        return new get_latest_txn_in_conflict_args();
+      }
+
+      public org.apache.thrift.async.AsyncMethodCallback<java.lang.Long> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new org.apache.thrift.async.AsyncMethodCallback<java.lang.Long>() { 
+          public void onComplete(java.lang.Long o) {
+            get_latest_txn_in_conflict_result result = new get_latest_txn_in_conflict_result();
+            result.success = o;
+            result.setSuccessIsSet(true);
+            try {
+              fcall.sendResponse(fb, result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+            } catch (org.apache.thrift.transport.TTransportException e) {
+              _LOGGER.error("TTransportException writing to internal frame buffer", e);
+              fb.close();
+            } catch (java.lang.Exception e) {
+              _LOGGER.error("Exception writing to internal frame buffer", e);
+              onError(e);
+            }
+          }
+          public void onError(java.lang.Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TSerializable msg;
+            get_latest_txn_in_conflict_result result = new get_latest_txn_in_conflict_result();
+            if (e instanceof MetaException) {
+              result.o1 = (MetaException) e;
+              result.setO1IsSet(true);
+              msg = result;
+            } else if (e instanceof org.apache.thrift.transport.TTransportException) {
+              _LOGGER.error("TTransportException inside handler", e);
+              fb.close();
+              return;
+            } else if (e instanceof org.apache.thrift.TApplicationException) {
+              _LOGGER.error("TApplicationException inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TApplicationException)e;
+            } else {
+              _LOGGER.error("Exception inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+            } catch (java.lang.Exception ex) {
+              _LOGGER.error("Exception writing to internal frame buffer", ex);
+              fb.close();
+            }
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, get_latest_txn_in_conflict_args args, org.apache.thrift.async.AsyncMethodCallback<java.lang.Long> resultHandler) throws org.apache.thrift.TException {
+        iface.get_latest_txn_in_conflict(args.txnId,resultHandler);
       }
     }
 
@@ -215753,6 +215913,832 @@ package org.apache.hadoop.hive.metastore.api;
           struct.o2 = new TxnAbortedException();
           struct.o2.read(iprot);
           struct.setO2IsSet(true);
+        }
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_latest_txn_in_conflict_args implements org.apache.thrift.TBase<get_latest_txn_in_conflict_args, get_latest_txn_in_conflict_args._Fields>, java.io.Serializable, Cloneable, Comparable<get_latest_txn_in_conflict_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("get_latest_txn_in_conflict_args");
+
+    private static final org.apache.thrift.protocol.TField TXN_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("txnId", org.apache.thrift.protocol.TType.I64, (short)1);
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new get_latest_txn_in_conflict_argsStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new get_latest_txn_in_conflict_argsTupleSchemeFactory();
+
+    private long txnId; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      TXN_ID((short)1, "txnId");
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // TXN_ID
+            return TXN_ID;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    private static final int __TXNID_ISSET_ID = 0;
+    private byte __isset_bitfield = 0;
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.TXN_ID, new org.apache.thrift.meta_data.FieldMetaData("txnId", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64)));
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(get_latest_txn_in_conflict_args.class, metaDataMap);
+    }
+
+    public get_latest_txn_in_conflict_args() {
+    }
+
+    public get_latest_txn_in_conflict_args(
+      long txnId)
+    {
+      this();
+      this.txnId = txnId;
+      setTxnIdIsSet(true);
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public get_latest_txn_in_conflict_args(get_latest_txn_in_conflict_args other) {
+      __isset_bitfield = other.__isset_bitfield;
+      this.txnId = other.txnId;
+    }
+
+    public get_latest_txn_in_conflict_args deepCopy() {
+      return new get_latest_txn_in_conflict_args(this);
+    }
+
+    @Override
+    public void clear() {
+      setTxnIdIsSet(false);
+      this.txnId = 0;
+    }
+
+    public long getTxnId() {
+      return this.txnId;
+    }
+
+    public void setTxnId(long txnId) {
+      this.txnId = txnId;
+      setTxnIdIsSet(true);
+    }
+
+    public void unsetTxnId() {
+      __isset_bitfield = org.apache.thrift.EncodingUtils.clearBit(__isset_bitfield, __TXNID_ISSET_ID);
+    }
+
+    /** Returns true if field txnId is set (has been assigned a value) and false otherwise */
+    public boolean isSetTxnId() {
+      return org.apache.thrift.EncodingUtils.testBit(__isset_bitfield, __TXNID_ISSET_ID);
+    }
+
+    public void setTxnIdIsSet(boolean value) {
+      __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __TXNID_ISSET_ID, value);
+    }
+
+    public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
+      switch (field) {
+      case TXN_ID:
+        if (value == null) {
+          unsetTxnId();
+        } else {
+          setTxnId((java.lang.Long)value);
+        }
+        break;
+
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      case TXN_ID:
+        return getTxnId();
+
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      case TXN_ID:
+        return isSetTxnId();
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof get_latest_txn_in_conflict_args)
+        return this.equals((get_latest_txn_in_conflict_args)that);
+      return false;
+    }
+
+    public boolean equals(get_latest_txn_in_conflict_args that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      boolean this_present_txnId = true;
+      boolean that_present_txnId = true;
+      if (this_present_txnId || that_present_txnId) {
+        if (!(this_present_txnId && that_present_txnId))
+          return false;
+        if (this.txnId != that.txnId)
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(txnId);
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(get_latest_txn_in_conflict_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = java.lang.Boolean.valueOf(isSetTxnId()).compareTo(other.isSetTxnId());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetTxnId()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.txnId, other.txnId);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+    }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("get_latest_txn_in_conflict_args(");
+      boolean first = true;
+
+      sb.append("txnId:");
+      sb.append(this.txnId);
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+        __isset_bitfield = 0;
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class get_latest_txn_in_conflict_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public get_latest_txn_in_conflict_argsStandardScheme getScheme() {
+        return new get_latest_txn_in_conflict_argsStandardScheme();
+      }
+    }
+
+    private static class get_latest_txn_in_conflict_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<get_latest_txn_in_conflict_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, get_latest_txn_in_conflict_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // TXN_ID
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.txnId = iprot.readI64();
+                struct.setTxnIdIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, get_latest_txn_in_conflict_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        oprot.writeFieldBegin(TXN_ID_FIELD_DESC);
+        oprot.writeI64(struct.txnId);
+        oprot.writeFieldEnd();
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class get_latest_txn_in_conflict_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public get_latest_txn_in_conflict_argsTupleScheme getScheme() {
+        return new get_latest_txn_in_conflict_argsTupleScheme();
+      }
+    }
+
+    private static class get_latest_txn_in_conflict_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<get_latest_txn_in_conflict_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, get_latest_txn_in_conflict_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet optionals = new java.util.BitSet();
+        if (struct.isSetTxnId()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetTxnId()) {
+          oprot.writeI64(struct.txnId);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, get_latest_txn_in_conflict_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.txnId = iprot.readI64();
+          struct.setTxnIdIsSet(true);
+        }
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_latest_txn_in_conflict_result implements org.apache.thrift.TBase<get_latest_txn_in_conflict_result, get_latest_txn_in_conflict_result._Fields>, java.io.Serializable, Cloneable, Comparable<get_latest_txn_in_conflict_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("get_latest_txn_in_conflict_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.I64, (short)0);
+    private static final org.apache.thrift.protocol.TField O1_FIELD_DESC = new org.apache.thrift.protocol.TField("o1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new get_latest_txn_in_conflict_resultStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new get_latest_txn_in_conflict_resultTupleSchemeFactory();
+
+    private long success; // required
+    private @org.apache.thrift.annotation.Nullable MetaException o1; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success"),
+      O1((short)1, "o1");
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          case 1: // O1
+            return O1;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    private static final int __SUCCESS_ISSET_ID = 0;
+    private byte __isset_bitfield = 0;
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64)));
+      tmpMap.put(_Fields.O1, new org.apache.thrift.meta_data.FieldMetaData("o1", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, MetaException.class)));
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(get_latest_txn_in_conflict_result.class, metaDataMap);
+    }
+
+    public get_latest_txn_in_conflict_result() {
+    }
+
+    public get_latest_txn_in_conflict_result(
+      long success,
+      MetaException o1)
+    {
+      this();
+      this.success = success;
+      setSuccessIsSet(true);
+      this.o1 = o1;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public get_latest_txn_in_conflict_result(get_latest_txn_in_conflict_result other) {
+      __isset_bitfield = other.__isset_bitfield;
+      this.success = other.success;
+      if (other.isSetO1()) {
+        this.o1 = new MetaException(other.o1);
+      }
+    }
+
+    public get_latest_txn_in_conflict_result deepCopy() {
+      return new get_latest_txn_in_conflict_result(this);
+    }
+
+    @Override
+    public void clear() {
+      setSuccessIsSet(false);
+      this.success = 0;
+      this.o1 = null;
+    }
+
+    public long getSuccess() {
+      return this.success;
+    }
+
+    public void setSuccess(long success) {
+      this.success = success;
+      setSuccessIsSet(true);
+    }
+
+    public void unsetSuccess() {
+      __isset_bitfield = org.apache.thrift.EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return org.apache.thrift.EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __SUCCESS_ISSET_ID, value);
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public MetaException getO1() {
+      return this.o1;
+    }
+
+    public void setO1(@org.apache.thrift.annotation.Nullable MetaException o1) {
+      this.o1 = o1;
+    }
+
+    public void unsetO1() {
+      this.o1 = null;
+    }
+
+    /** Returns true if field o1 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO1() {
+      return this.o1 != null;
+    }
+
+    public void setO1IsSet(boolean value) {
+      if (!value) {
+        this.o1 = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((java.lang.Long)value);
+        }
+        break;
+
+      case O1:
+        if (value == null) {
+          unsetO1();
+        } else {
+          setO1((MetaException)value);
+        }
+        break;
+
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      case O1:
+        return getO1();
+
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      case O1:
+        return isSetO1();
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof get_latest_txn_in_conflict_result)
+        return this.equals((get_latest_txn_in_conflict_result)that);
+      return false;
+    }
+
+    public boolean equals(get_latest_txn_in_conflict_result that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      boolean this_present_success = true;
+      boolean that_present_success = true;
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (this.success != that.success)
+          return false;
+      }
+
+      boolean this_present_o1 = true && this.isSetO1();
+      boolean that_present_o1 = true && that.isSetO1();
+      if (this_present_o1 || that_present_o1) {
+        if (!(this_present_o1 && that_present_o1))
+          return false;
+        if (!this.o1.equals(that.o1))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(success);
+
+      hashCode = hashCode * 8191 + ((isSetO1()) ? 131071 : 524287);
+      if (isSetO1())
+        hashCode = hashCode * 8191 + o1.hashCode();
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(get_latest_txn_in_conflict_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = java.lang.Boolean.valueOf(isSetSuccess()).compareTo(other.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.valueOf(isSetO1()).compareTo(other.isSetO1());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO1()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o1, other.o1);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+      }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("get_latest_txn_in_conflict_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      sb.append(this.success);
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("o1:");
+      if (this.o1 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o1);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+        __isset_bitfield = 0;
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class get_latest_txn_in_conflict_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public get_latest_txn_in_conflict_resultStandardScheme getScheme() {
+        return new get_latest_txn_in_conflict_resultStandardScheme();
+      }
+    }
+
+    private static class get_latest_txn_in_conflict_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<get_latest_txn_in_conflict_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, get_latest_txn_in_conflict_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.success = iprot.readI64();
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 1: // O1
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o1 = new MetaException();
+                struct.o1.read(iprot);
+                struct.setO1IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, get_latest_txn_in_conflict_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.isSetSuccess()) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          oprot.writeI64(struct.success);
+          oprot.writeFieldEnd();
+        }
+        if (struct.o1 != null) {
+          oprot.writeFieldBegin(O1_FIELD_DESC);
+          struct.o1.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class get_latest_txn_in_conflict_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public get_latest_txn_in_conflict_resultTupleScheme getScheme() {
+        return new get_latest_txn_in_conflict_resultTupleScheme();
+      }
+    }
+
+    private static class get_latest_txn_in_conflict_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<get_latest_txn_in_conflict_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, get_latest_txn_in_conflict_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet optionals = new java.util.BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        if (struct.isSetO1()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetSuccess()) {
+          oprot.writeI64(struct.success);
+        }
+        if (struct.isSetO1()) {
+          struct.o1.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, get_latest_txn_in_conflict_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.success = iprot.readI64();
+          struct.setSuccessIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.o1 = new MetaException();
+          struct.o1.read(iprot);
+          struct.setO1IsSet(true);
         }
       }
     }
