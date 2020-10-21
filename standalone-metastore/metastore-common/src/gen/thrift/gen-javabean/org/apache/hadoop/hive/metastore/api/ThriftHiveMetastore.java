@@ -349,7 +349,7 @@ package org.apache.hadoop.hive.metastore.api;
 
     public void commit_txn(CommitTxnRequest rqst) throws NoSuchTxnException, TxnAbortedException, org.apache.thrift.TException;
 
-    public long get_latest_txnid_in_conflict(long txnId) throws MetaException, org.apache.thrift.TException;
+    public long get_latest_txn_in_conflict(long txnId) throws MetaException, org.apache.thrift.TException;
 
     public void repl_tbl_writeid_state(ReplTblWriteIdStateRequest rqst) throws org.apache.thrift.TException;
 
@@ -847,7 +847,7 @@ package org.apache.hadoop.hive.metastore.api;
 
     public void commit_txn(CommitTxnRequest rqst, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
 
-    public void get_latest_txnid_in_conflict(long txnId, org.apache.thrift.async.AsyncMethodCallback<java.lang.Long> resultHandler) throws org.apache.thrift.TException;
+    public void get_latest_txn_in_conflict(long txnId, org.apache.thrift.async.AsyncMethodCallback<java.lang.Long> resultHandler) throws org.apache.thrift.TException;
 
     public void repl_tbl_writeid_state(ReplTblWriteIdStateRequest rqst, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
 
@@ -5925,30 +5925,30 @@ package org.apache.hadoop.hive.metastore.api;
       return;
     }
 
-    public long get_latest_txnid_in_conflict(long txnId) throws MetaException, org.apache.thrift.TException
+    public long get_latest_txn_in_conflict(long txnId) throws MetaException, org.apache.thrift.TException
     {
-      send_get_latest_txnid_in_conflict(txnId);
-      return recv_get_latest_txnid_in_conflict();
+      send_get_latest_txn_in_conflict(txnId);
+      return recv_get_latest_txn_in_conflict();
     }
 
-    public void send_get_latest_txnid_in_conflict(long txnId) throws org.apache.thrift.TException
+    public void send_get_latest_txn_in_conflict(long txnId) throws org.apache.thrift.TException
     {
-      get_latest_txnid_in_conflict_args args = new get_latest_txnid_in_conflict_args();
+      get_latest_txn_in_conflict_args args = new get_latest_txn_in_conflict_args();
       args.setTxnId(txnId);
-      sendBase("get_latest_txnid_in_conflict", args);
+      sendBase("get_latest_txn_in_conflict", args);
     }
 
-    public long recv_get_latest_txnid_in_conflict() throws MetaException, org.apache.thrift.TException
+    public long recv_get_latest_txn_in_conflict() throws MetaException, org.apache.thrift.TException
     {
-      get_latest_txnid_in_conflict_result result = new get_latest_txnid_in_conflict_result();
-      receiveBase(result, "get_latest_txnid_in_conflict");
+      get_latest_txn_in_conflict_result result = new get_latest_txn_in_conflict_result();
+      receiveBase(result, "get_latest_txn_in_conflict");
       if (result.isSetSuccess()) {
         return result.success;
       }
       if (result.o1 != null) {
         throw result.o1;
       }
-      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "get_latest_txnid_in_conflict failed: unknown result");
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "get_latest_txn_in_conflict failed: unknown result");
     }
 
     public void repl_tbl_writeid_state(ReplTblWriteIdStateRequest rqst) throws org.apache.thrift.TException
@@ -13910,23 +13910,23 @@ package org.apache.hadoop.hive.metastore.api;
       }
     }
 
-    public void get_latest_txnid_in_conflict(long txnId, org.apache.thrift.async.AsyncMethodCallback<java.lang.Long> resultHandler) throws org.apache.thrift.TException {
+    public void get_latest_txn_in_conflict(long txnId, org.apache.thrift.async.AsyncMethodCallback<java.lang.Long> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      get_latest_txnid_in_conflict_call method_call = new get_latest_txnid_in_conflict_call(txnId, resultHandler, this, ___protocolFactory, ___transport);
+      get_latest_txn_in_conflict_call method_call = new get_latest_txn_in_conflict_call(txnId, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
-    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_latest_txnid_in_conflict_call extends org.apache.thrift.async.TAsyncMethodCall<java.lang.Long> {
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_latest_txn_in_conflict_call extends org.apache.thrift.async.TAsyncMethodCall<java.lang.Long> {
       private long txnId;
-      public get_latest_txnid_in_conflict_call(long txnId, org.apache.thrift.async.AsyncMethodCallback<java.lang.Long> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      public get_latest_txn_in_conflict_call(long txnId, org.apache.thrift.async.AsyncMethodCallback<java.lang.Long> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.txnId = txnId;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
-        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("get_latest_txnid_in_conflict", org.apache.thrift.protocol.TMessageType.CALL, 0));
-        get_latest_txnid_in_conflict_args args = new get_latest_txnid_in_conflict_args();
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("get_latest_txn_in_conflict", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        get_latest_txn_in_conflict_args args = new get_latest_txn_in_conflict_args();
         args.setTxnId(txnId);
         args.write(prot);
         prot.writeMessageEnd();
@@ -13938,7 +13938,7 @@ package org.apache.hadoop.hive.metastore.api;
         }
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_get_latest_txnid_in_conflict();
+        return (new Client(prot)).recv_get_latest_txn_in_conflict();
       }
     }
 
@@ -16659,7 +16659,7 @@ package org.apache.hadoop.hive.metastore.api;
       processMap.put("abort_txn", new abort_txn());
       processMap.put("abort_txns", new abort_txns());
       processMap.put("commit_txn", new commit_txn());
-      processMap.put("get_latest_txnid_in_conflict", new get_latest_txnid_in_conflict());
+      processMap.put("get_latest_txn_in_conflict", new get_latest_txn_in_conflict());
       processMap.put("repl_tbl_writeid_state", new repl_tbl_writeid_state());
       processMap.put("get_valid_write_ids", new get_valid_write_ids());
       processMap.put("allocate_table_write_ids", new allocate_table_write_ids());
@@ -21930,13 +21930,13 @@ package org.apache.hadoop.hive.metastore.api;
       }
     }
 
-    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_latest_txnid_in_conflict<I extends Iface> extends org.apache.thrift.ProcessFunction<I, get_latest_txnid_in_conflict_args> {
-      public get_latest_txnid_in_conflict() {
-        super("get_latest_txnid_in_conflict");
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_latest_txn_in_conflict<I extends Iface> extends org.apache.thrift.ProcessFunction<I, get_latest_txn_in_conflict_args> {
+      public get_latest_txn_in_conflict() {
+        super("get_latest_txn_in_conflict");
       }
 
-      public get_latest_txnid_in_conflict_args getEmptyArgsInstance() {
-        return new get_latest_txnid_in_conflict_args();
+      public get_latest_txn_in_conflict_args getEmptyArgsInstance() {
+        return new get_latest_txn_in_conflict_args();
       }
 
       protected boolean isOneway() {
@@ -21948,10 +21948,10 @@ package org.apache.hadoop.hive.metastore.api;
         return false;
       }
 
-      public get_latest_txnid_in_conflict_result getResult(I iface, get_latest_txnid_in_conflict_args args) throws org.apache.thrift.TException {
-        get_latest_txnid_in_conflict_result result = new get_latest_txnid_in_conflict_result();
+      public get_latest_txn_in_conflict_result getResult(I iface, get_latest_txn_in_conflict_args args) throws org.apache.thrift.TException {
+        get_latest_txn_in_conflict_result result = new get_latest_txn_in_conflict_result();
         try {
-          result.success = iface.get_latest_txnid_in_conflict(args.txnId);
+          result.success = iface.get_latest_txn_in_conflict(args.txnId);
           result.setSuccessIsSet(true);
         } catch (MetaException o1) {
           result.o1 = o1;
@@ -24468,7 +24468,7 @@ package org.apache.hadoop.hive.metastore.api;
       processMap.put("abort_txn", new abort_txn());
       processMap.put("abort_txns", new abort_txns());
       processMap.put("commit_txn", new commit_txn());
-      processMap.put("get_latest_txnid_in_conflict", new get_latest_txnid_in_conflict());
+      processMap.put("get_latest_txn_in_conflict", new get_latest_txn_in_conflict());
       processMap.put("repl_tbl_writeid_state", new repl_tbl_writeid_state());
       processMap.put("get_valid_write_ids", new get_valid_write_ids());
       processMap.put("allocate_table_write_ids", new allocate_table_write_ids());
@@ -36070,20 +36070,20 @@ package org.apache.hadoop.hive.metastore.api;
       }
     }
 
-    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_latest_txnid_in_conflict<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, get_latest_txnid_in_conflict_args, java.lang.Long> {
-      public get_latest_txnid_in_conflict() {
-        super("get_latest_txnid_in_conflict");
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_latest_txn_in_conflict<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, get_latest_txn_in_conflict_args, java.lang.Long> {
+      public get_latest_txn_in_conflict() {
+        super("get_latest_txn_in_conflict");
       }
 
-      public get_latest_txnid_in_conflict_args getEmptyArgsInstance() {
-        return new get_latest_txnid_in_conflict_args();
+      public get_latest_txn_in_conflict_args getEmptyArgsInstance() {
+        return new get_latest_txn_in_conflict_args();
       }
 
       public org.apache.thrift.async.AsyncMethodCallback<java.lang.Long> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
         final org.apache.thrift.AsyncProcessFunction fcall = this;
         return new org.apache.thrift.async.AsyncMethodCallback<java.lang.Long>() { 
           public void onComplete(java.lang.Long o) {
-            get_latest_txnid_in_conflict_result result = new get_latest_txnid_in_conflict_result();
+            get_latest_txn_in_conflict_result result = new get_latest_txn_in_conflict_result();
             result.success = o;
             result.setSuccessIsSet(true);
             try {
@@ -36099,7 +36099,7 @@ package org.apache.hadoop.hive.metastore.api;
           public void onError(java.lang.Exception e) {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TSerializable msg;
-            get_latest_txnid_in_conflict_result result = new get_latest_txnid_in_conflict_result();
+            get_latest_txn_in_conflict_result result = new get_latest_txn_in_conflict_result();
             if (e instanceof MetaException) {
               result.o1 = (MetaException) e;
               result.setO1IsSet(true);
@@ -36131,8 +36131,8 @@ package org.apache.hadoop.hive.metastore.api;
         return false;
       }
 
-      public void start(I iface, get_latest_txnid_in_conflict_args args, org.apache.thrift.async.AsyncMethodCallback<java.lang.Long> resultHandler) throws org.apache.thrift.TException {
-        iface.get_latest_txnid_in_conflict(args.txnId,resultHandler);
+      public void start(I iface, get_latest_txn_in_conflict_args args, org.apache.thrift.async.AsyncMethodCallback<java.lang.Long> resultHandler) throws org.apache.thrift.TException {
+        iface.get_latest_txn_in_conflict(args.txnId,resultHandler);
       }
     }
 
@@ -215922,13 +215922,13 @@ package org.apache.hadoop.hive.metastore.api;
     }
   }
 
-  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_latest_txnid_in_conflict_args implements org.apache.thrift.TBase<get_latest_txnid_in_conflict_args, get_latest_txnid_in_conflict_args._Fields>, java.io.Serializable, Cloneable, Comparable<get_latest_txnid_in_conflict_args>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("get_latest_txnid_in_conflict_args");
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_latest_txn_in_conflict_args implements org.apache.thrift.TBase<get_latest_txn_in_conflict_args, get_latest_txn_in_conflict_args._Fields>, java.io.Serializable, Cloneable, Comparable<get_latest_txn_in_conflict_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("get_latest_txn_in_conflict_args");
 
     private static final org.apache.thrift.protocol.TField TXN_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("txnId", org.apache.thrift.protocol.TType.I64, (short)1);
 
-    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new get_latest_txnid_in_conflict_argsStandardSchemeFactory();
-    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new get_latest_txnid_in_conflict_argsTupleSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new get_latest_txn_in_conflict_argsStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new get_latest_txn_in_conflict_argsTupleSchemeFactory();
 
     private long txnId; // required
 
@@ -216001,13 +216001,13 @@ package org.apache.hadoop.hive.metastore.api;
       tmpMap.put(_Fields.TXN_ID, new org.apache.thrift.meta_data.FieldMetaData("txnId", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(get_latest_txnid_in_conflict_args.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(get_latest_txn_in_conflict_args.class, metaDataMap);
     }
 
-    public get_latest_txnid_in_conflict_args() {
+    public get_latest_txn_in_conflict_args() {
     }
 
-    public get_latest_txnid_in_conflict_args(
+    public get_latest_txn_in_conflict_args(
       long txnId)
     {
       this();
@@ -216018,13 +216018,13 @@ package org.apache.hadoop.hive.metastore.api;
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public get_latest_txnid_in_conflict_args(get_latest_txnid_in_conflict_args other) {
+    public get_latest_txn_in_conflict_args(get_latest_txn_in_conflict_args other) {
       __isset_bitfield = other.__isset_bitfield;
       this.txnId = other.txnId;
     }
 
-    public get_latest_txnid_in_conflict_args deepCopy() {
-      return new get_latest_txnid_in_conflict_args(this);
+    public get_latest_txn_in_conflict_args deepCopy() {
+      return new get_latest_txn_in_conflict_args(this);
     }
 
     @Override
@@ -216095,12 +216095,12 @@ package org.apache.hadoop.hive.metastore.api;
     public boolean equals(java.lang.Object that) {
       if (that == null)
         return false;
-      if (that instanceof get_latest_txnid_in_conflict_args)
-        return this.equals((get_latest_txnid_in_conflict_args)that);
+      if (that instanceof get_latest_txn_in_conflict_args)
+        return this.equals((get_latest_txn_in_conflict_args)that);
       return false;
     }
 
-    public boolean equals(get_latest_txnid_in_conflict_args that) {
+    public boolean equals(get_latest_txn_in_conflict_args that) {
       if (that == null)
         return false;
       if (this == that)
@@ -216128,7 +216128,7 @@ package org.apache.hadoop.hive.metastore.api;
     }
 
     @Override
-    public int compareTo(get_latest_txnid_in_conflict_args other) {
+    public int compareTo(get_latest_txn_in_conflict_args other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
@@ -216163,7 +216163,7 @@ package org.apache.hadoop.hive.metastore.api;
 
     @Override
     public java.lang.String toString() {
-      java.lang.StringBuilder sb = new java.lang.StringBuilder("get_latest_txnid_in_conflict_args(");
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("get_latest_txn_in_conflict_args(");
       boolean first = true;
 
       sb.append("txnId:");
@@ -216196,15 +216196,15 @@ package org.apache.hadoop.hive.metastore.api;
       }
     }
 
-    private static class get_latest_txnid_in_conflict_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public get_latest_txnid_in_conflict_argsStandardScheme getScheme() {
-        return new get_latest_txnid_in_conflict_argsStandardScheme();
+    private static class get_latest_txn_in_conflict_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public get_latest_txn_in_conflict_argsStandardScheme getScheme() {
+        return new get_latest_txn_in_conflict_argsStandardScheme();
       }
     }
 
-    private static class get_latest_txnid_in_conflict_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<get_latest_txnid_in_conflict_args> {
+    private static class get_latest_txn_in_conflict_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<get_latest_txn_in_conflict_args> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, get_latest_txnid_in_conflict_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, get_latest_txn_in_conflict_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -216231,7 +216231,7 @@ package org.apache.hadoop.hive.metastore.api;
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, get_latest_txnid_in_conflict_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, get_latest_txn_in_conflict_args struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -216244,16 +216244,16 @@ package org.apache.hadoop.hive.metastore.api;
 
     }
 
-    private static class get_latest_txnid_in_conflict_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public get_latest_txnid_in_conflict_argsTupleScheme getScheme() {
-        return new get_latest_txnid_in_conflict_argsTupleScheme();
+    private static class get_latest_txn_in_conflict_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public get_latest_txn_in_conflict_argsTupleScheme getScheme() {
+        return new get_latest_txn_in_conflict_argsTupleScheme();
       }
     }
 
-    private static class get_latest_txnid_in_conflict_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<get_latest_txnid_in_conflict_args> {
+    private static class get_latest_txn_in_conflict_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<get_latest_txn_in_conflict_args> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, get_latest_txnid_in_conflict_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, get_latest_txn_in_conflict_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
         java.util.BitSet optionals = new java.util.BitSet();
         if (struct.isSetTxnId()) {
@@ -216266,7 +216266,7 @@ package org.apache.hadoop.hive.metastore.api;
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, get_latest_txnid_in_conflict_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, get_latest_txn_in_conflict_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
         java.util.BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
@@ -216281,14 +216281,14 @@ package org.apache.hadoop.hive.metastore.api;
     }
   }
 
-  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_latest_txnid_in_conflict_result implements org.apache.thrift.TBase<get_latest_txnid_in_conflict_result, get_latest_txnid_in_conflict_result._Fields>, java.io.Serializable, Cloneable, Comparable<get_latest_txnid_in_conflict_result>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("get_latest_txnid_in_conflict_result");
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class get_latest_txn_in_conflict_result implements org.apache.thrift.TBase<get_latest_txn_in_conflict_result, get_latest_txn_in_conflict_result._Fields>, java.io.Serializable, Cloneable, Comparable<get_latest_txn_in_conflict_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("get_latest_txn_in_conflict_result");
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.I64, (short)0);
     private static final org.apache.thrift.protocol.TField O1_FIELD_DESC = new org.apache.thrift.protocol.TField("o1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
 
-    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new get_latest_txnid_in_conflict_resultStandardSchemeFactory();
-    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new get_latest_txnid_in_conflict_resultTupleSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new get_latest_txn_in_conflict_resultStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new get_latest_txn_in_conflict_resultTupleSchemeFactory();
 
     private long success; // required
     private @org.apache.thrift.annotation.Nullable MetaException o1; // required
@@ -216367,13 +216367,13 @@ package org.apache.hadoop.hive.metastore.api;
       tmpMap.put(_Fields.O1, new org.apache.thrift.meta_data.FieldMetaData("o1", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, MetaException.class)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(get_latest_txnid_in_conflict_result.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(get_latest_txn_in_conflict_result.class, metaDataMap);
     }
 
-    public get_latest_txnid_in_conflict_result() {
+    public get_latest_txn_in_conflict_result() {
     }
 
-    public get_latest_txnid_in_conflict_result(
+    public get_latest_txn_in_conflict_result(
       long success,
       MetaException o1)
     {
@@ -216386,7 +216386,7 @@ package org.apache.hadoop.hive.metastore.api;
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public get_latest_txnid_in_conflict_result(get_latest_txnid_in_conflict_result other) {
+    public get_latest_txn_in_conflict_result(get_latest_txn_in_conflict_result other) {
       __isset_bitfield = other.__isset_bitfield;
       this.success = other.success;
       if (other.isSetO1()) {
@@ -216394,8 +216394,8 @@ package org.apache.hadoop.hive.metastore.api;
       }
     }
 
-    public get_latest_txnid_in_conflict_result deepCopy() {
-      return new get_latest_txnid_in_conflict_result(this);
+    public get_latest_txn_in_conflict_result deepCopy() {
+      return new get_latest_txn_in_conflict_result(this);
     }
 
     @Override
@@ -216504,12 +216504,12 @@ package org.apache.hadoop.hive.metastore.api;
     public boolean equals(java.lang.Object that) {
       if (that == null)
         return false;
-      if (that instanceof get_latest_txnid_in_conflict_result)
-        return this.equals((get_latest_txnid_in_conflict_result)that);
+      if (that instanceof get_latest_txn_in_conflict_result)
+        return this.equals((get_latest_txn_in_conflict_result)that);
       return false;
     }
 
-    public boolean equals(get_latest_txnid_in_conflict_result that) {
+    public boolean equals(get_latest_txn_in_conflict_result that) {
       if (that == null)
         return false;
       if (this == that)
@@ -216550,7 +216550,7 @@ package org.apache.hadoop.hive.metastore.api;
     }
 
     @Override
-    public int compareTo(get_latest_txnid_in_conflict_result other) {
+    public int compareTo(get_latest_txn_in_conflict_result other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
@@ -216595,7 +216595,7 @@ package org.apache.hadoop.hive.metastore.api;
 
     @Override
     public java.lang.String toString() {
-      java.lang.StringBuilder sb = new java.lang.StringBuilder("get_latest_txnid_in_conflict_result(");
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("get_latest_txn_in_conflict_result(");
       boolean first = true;
 
       sb.append("success:");
@@ -216636,15 +216636,15 @@ package org.apache.hadoop.hive.metastore.api;
       }
     }
 
-    private static class get_latest_txnid_in_conflict_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public get_latest_txnid_in_conflict_resultStandardScheme getScheme() {
-        return new get_latest_txnid_in_conflict_resultStandardScheme();
+    private static class get_latest_txn_in_conflict_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public get_latest_txn_in_conflict_resultStandardScheme getScheme() {
+        return new get_latest_txn_in_conflict_resultStandardScheme();
       }
     }
 
-    private static class get_latest_txnid_in_conflict_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<get_latest_txnid_in_conflict_result> {
+    private static class get_latest_txn_in_conflict_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<get_latest_txn_in_conflict_result> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, get_latest_txnid_in_conflict_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, get_latest_txn_in_conflict_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -216680,7 +216680,7 @@ package org.apache.hadoop.hive.metastore.api;
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, get_latest_txnid_in_conflict_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, get_latest_txn_in_conflict_result struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -216700,16 +216700,16 @@ package org.apache.hadoop.hive.metastore.api;
 
     }
 
-    private static class get_latest_txnid_in_conflict_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public get_latest_txnid_in_conflict_resultTupleScheme getScheme() {
-        return new get_latest_txnid_in_conflict_resultTupleScheme();
+    private static class get_latest_txn_in_conflict_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public get_latest_txn_in_conflict_resultTupleScheme getScheme() {
+        return new get_latest_txn_in_conflict_resultTupleScheme();
       }
     }
 
-    private static class get_latest_txnid_in_conflict_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<get_latest_txnid_in_conflict_result> {
+    private static class get_latest_txn_in_conflict_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<get_latest_txn_in_conflict_result> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, get_latest_txnid_in_conflict_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, get_latest_txn_in_conflict_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
         java.util.BitSet optionals = new java.util.BitSet();
         if (struct.isSetSuccess()) {
@@ -216728,7 +216728,7 @@ package org.apache.hadoop.hive.metastore.api;
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, get_latest_txnid_in_conflict_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, get_latest_txn_in_conflict_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
         java.util.BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
