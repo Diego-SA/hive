@@ -383,7 +383,7 @@ package org.apache.hadoop.hive.metastore.api;
 
     public void add_dynamic_partitions(AddDynamicPartitions rqst) throws NoSuchTxnException, TxnAbortedException, org.apache.thrift.TException;
 
-    public OptionalCompactionInfoStruct find_next_compact(java.lang.String workerId) throws MetaException, org.apache.thrift.TException;
+    public OptionalCompactionInfoStruct find_next_compact(java.lang.String workerId, java.lang.String workerVersion) throws MetaException, org.apache.thrift.TException;
 
     public void update_compactor_state(CompactionInfoStruct cr, long txn_id) throws org.apache.thrift.TException;
 
@@ -897,7 +897,7 @@ package org.apache.hadoop.hive.metastore.api;
 
     public void add_dynamic_partitions(AddDynamicPartitions rqst, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
 
-    public void find_next_compact(java.lang.String workerId, org.apache.thrift.async.AsyncMethodCallback<OptionalCompactionInfoStruct> resultHandler) throws org.apache.thrift.TException;
+    public void find_next_compact(java.lang.String workerId, java.lang.String workerVersion, org.apache.thrift.async.AsyncMethodCallback<OptionalCompactionInfoStruct> resultHandler) throws org.apache.thrift.TException;
 
     public void update_compactor_state(CompactionInfoStruct cr, long txn_id, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
 
@@ -6390,16 +6390,17 @@ package org.apache.hadoop.hive.metastore.api;
       return;
     }
 
-    public OptionalCompactionInfoStruct find_next_compact(java.lang.String workerId) throws MetaException, org.apache.thrift.TException
+    public OptionalCompactionInfoStruct find_next_compact(java.lang.String workerId, java.lang.String workerVersion) throws MetaException, org.apache.thrift.TException
     {
-      send_find_next_compact(workerId);
+      send_find_next_compact(workerId, workerVersion);
       return recv_find_next_compact();
     }
 
-    public void send_find_next_compact(java.lang.String workerId) throws org.apache.thrift.TException
+    public void send_find_next_compact(java.lang.String workerId, java.lang.String workerVersion) throws org.apache.thrift.TException
     {
       find_next_compact_args args = new find_next_compact_args();
       args.setWorkerId(workerId);
+      args.setWorkerVersion(workerVersion);
       sendBase("find_next_compact", args);
     }
 
@@ -14691,24 +14692,27 @@ package org.apache.hadoop.hive.metastore.api;
       }
     }
 
-    public void find_next_compact(java.lang.String workerId, org.apache.thrift.async.AsyncMethodCallback<OptionalCompactionInfoStruct> resultHandler) throws org.apache.thrift.TException {
+    public void find_next_compact(java.lang.String workerId, java.lang.String workerVersion, org.apache.thrift.async.AsyncMethodCallback<OptionalCompactionInfoStruct> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      find_next_compact_call method_call = new find_next_compact_call(workerId, resultHandler, this, ___protocolFactory, ___transport);
+      find_next_compact_call method_call = new find_next_compact_call(workerId, workerVersion, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
     @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class find_next_compact_call extends org.apache.thrift.async.TAsyncMethodCall<OptionalCompactionInfoStruct> {
       private java.lang.String workerId;
-      public find_next_compact_call(java.lang.String workerId, org.apache.thrift.async.AsyncMethodCallback<OptionalCompactionInfoStruct> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private java.lang.String workerVersion;
+      public find_next_compact_call(java.lang.String workerId, java.lang.String workerVersion, org.apache.thrift.async.AsyncMethodCallback<OptionalCompactionInfoStruct> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.workerId = workerId;
+        this.workerVersion = workerVersion;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
         prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("find_next_compact", org.apache.thrift.protocol.TMessageType.CALL, 0));
         find_next_compact_args args = new find_next_compact_args();
         args.setWorkerId(workerId);
+        args.setWorkerVersion(workerVersion);
         args.write(prot);
         prot.writeMessageEnd();
       }
@@ -22942,7 +22946,7 @@ package org.apache.hadoop.hive.metastore.api;
       public find_next_compact_result getResult(I iface, find_next_compact_args args) throws org.apache.thrift.TException {
         find_next_compact_result result = new find_next_compact_result();
         try {
-          result.success = iface.find_next_compact(args.workerId);
+          result.success = iface.find_next_compact(args.workerId, args.workerVersion);
         } catch (MetaException o1) {
           result.o1 = o1;
         }
@@ -37993,7 +37997,7 @@ package org.apache.hadoop.hive.metastore.api;
       }
 
       public void start(I iface, find_next_compact_args args, org.apache.thrift.async.AsyncMethodCallback<OptionalCompactionInfoStruct> resultHandler) throws org.apache.thrift.TException {
-        iface.find_next_compact(args.workerId,resultHandler);
+        iface.find_next_compact(args.workerId, args.workerVersion,resultHandler);
       }
     }
 
@@ -231176,15 +231180,18 @@ package org.apache.hadoop.hive.metastore.api;
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("find_next_compact_args");
 
     private static final org.apache.thrift.protocol.TField WORKER_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("workerId", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField WORKER_VERSION_FIELD_DESC = new org.apache.thrift.protocol.TField("workerVersion", org.apache.thrift.protocol.TType.STRING, (short)2);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new find_next_compact_argsStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new find_next_compact_argsTupleSchemeFactory();
 
     private @org.apache.thrift.annotation.Nullable java.lang.String workerId; // required
+    private @org.apache.thrift.annotation.Nullable java.lang.String workerVersion; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      WORKER_ID((short)1, "workerId");
+      WORKER_ID((short)1, "workerId"),
+      WORKER_VERSION((short)2, "workerVersion");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -231202,6 +231209,8 @@ package org.apache.hadoop.hive.metastore.api;
         switch(fieldId) {
           case 1: // WORKER_ID
             return WORKER_ID;
+          case 2: // WORKER_VERSION
+            return WORKER_VERSION;
           default:
             return null;
         }
@@ -231248,6 +231257,8 @@ package org.apache.hadoop.hive.metastore.api;
       java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.WORKER_ID, new org.apache.thrift.meta_data.FieldMetaData("workerId", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.WORKER_VERSION, new org.apache.thrift.meta_data.FieldMetaData("workerVersion", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(find_next_compact_args.class, metaDataMap);
     }
@@ -231256,10 +231267,12 @@ package org.apache.hadoop.hive.metastore.api;
     }
 
     public find_next_compact_args(
-      java.lang.String workerId)
+      java.lang.String workerId,
+      java.lang.String workerVersion)
     {
       this();
       this.workerId = workerId;
+      this.workerVersion = workerVersion;
     }
 
     /**
@@ -231268,6 +231281,9 @@ package org.apache.hadoop.hive.metastore.api;
     public find_next_compact_args(find_next_compact_args other) {
       if (other.isSetWorkerId()) {
         this.workerId = other.workerId;
+      }
+      if (other.isSetWorkerVersion()) {
+        this.workerVersion = other.workerVersion;
       }
     }
 
@@ -231278,6 +231294,7 @@ package org.apache.hadoop.hive.metastore.api;
     @Override
     public void clear() {
       this.workerId = null;
+      this.workerVersion = null;
     }
 
     @org.apache.thrift.annotation.Nullable
@@ -231304,6 +231321,30 @@ package org.apache.hadoop.hive.metastore.api;
       }
     }
 
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.String getWorkerVersion() {
+      return this.workerVersion;
+    }
+
+    public void setWorkerVersion(@org.apache.thrift.annotation.Nullable java.lang.String workerVersion) {
+      this.workerVersion = workerVersion;
+    }
+
+    public void unsetWorkerVersion() {
+      this.workerVersion = null;
+    }
+
+    /** Returns true if field workerVersion is set (has been assigned a value) and false otherwise */
+    public boolean isSetWorkerVersion() {
+      return this.workerVersion != null;
+    }
+
+    public void setWorkerVersionIsSet(boolean value) {
+      if (!value) {
+        this.workerVersion = null;
+      }
+    }
+
     public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
       switch (field) {
       case WORKER_ID:
@@ -231311,6 +231352,14 @@ package org.apache.hadoop.hive.metastore.api;
           unsetWorkerId();
         } else {
           setWorkerId((java.lang.String)value);
+        }
+        break;
+
+      case WORKER_VERSION:
+        if (value == null) {
+          unsetWorkerVersion();
+        } else {
+          setWorkerVersion((java.lang.String)value);
         }
         break;
 
@@ -231322,6 +231371,9 @@ package org.apache.hadoop.hive.metastore.api;
       switch (field) {
       case WORKER_ID:
         return getWorkerId();
+
+      case WORKER_VERSION:
+        return getWorkerVersion();
 
       }
       throw new java.lang.IllegalStateException();
@@ -231336,6 +231388,8 @@ package org.apache.hadoop.hive.metastore.api;
       switch (field) {
       case WORKER_ID:
         return isSetWorkerId();
+      case WORKER_VERSION:
+        return isSetWorkerVersion();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -231364,6 +231418,15 @@ package org.apache.hadoop.hive.metastore.api;
           return false;
       }
 
+      boolean this_present_workerVersion = true && this.isSetWorkerVersion();
+      boolean that_present_workerVersion = true && that.isSetWorkerVersion();
+      if (this_present_workerVersion || that_present_workerVersion) {
+        if (!(this_present_workerVersion && that_present_workerVersion))
+          return false;
+        if (!this.workerVersion.equals(that.workerVersion))
+          return false;
+      }
+
       return true;
     }
 
@@ -231374,6 +231437,10 @@ package org.apache.hadoop.hive.metastore.api;
       hashCode = hashCode * 8191 + ((isSetWorkerId()) ? 131071 : 524287);
       if (isSetWorkerId())
         hashCode = hashCode * 8191 + workerId.hashCode();
+
+      hashCode = hashCode * 8191 + ((isSetWorkerVersion()) ? 131071 : 524287);
+      if (isSetWorkerVersion())
+        hashCode = hashCode * 8191 + workerVersion.hashCode();
 
       return hashCode;
     }
@@ -231392,6 +231459,16 @@ package org.apache.hadoop.hive.metastore.api;
       }
       if (isSetWorkerId()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.workerId, other.workerId);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.valueOf(isSetWorkerVersion()).compareTo(other.isSetWorkerVersion());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetWorkerVersion()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.workerVersion, other.workerVersion);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -231422,6 +231499,14 @@ package org.apache.hadoop.hive.metastore.api;
         sb.append("null");
       } else {
         sb.append(this.workerId);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("workerVersion:");
+      if (this.workerVersion == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.workerVersion);
       }
       first = false;
       sb.append(")");
@@ -231475,6 +231560,14 @@ package org.apache.hadoop.hive.metastore.api;
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 2: // WORKER_VERSION
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.workerVersion = iprot.readString();
+                struct.setWorkerVersionIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -231491,6 +231584,11 @@ package org.apache.hadoop.hive.metastore.api;
         if (struct.workerId != null) {
           oprot.writeFieldBegin(WORKER_ID_FIELD_DESC);
           oprot.writeString(struct.workerId);
+          oprot.writeFieldEnd();
+        }
+        if (struct.workerVersion != null) {
+          oprot.writeFieldBegin(WORKER_VERSION_FIELD_DESC);
+          oprot.writeString(struct.workerVersion);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -231514,19 +231612,29 @@ package org.apache.hadoop.hive.metastore.api;
         if (struct.isSetWorkerId()) {
           optionals.set(0);
         }
-        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetWorkerVersion()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
         if (struct.isSetWorkerId()) {
           oprot.writeString(struct.workerId);
+        }
+        if (struct.isSetWorkerVersion()) {
+          oprot.writeString(struct.workerVersion);
         }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, find_next_compact_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(1);
+        java.util.BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           struct.workerId = iprot.readString();
           struct.setWorkerIdIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.workerVersion = iprot.readString();
+          struct.setWorkerVersionIsSet(true);
         }
       }
     }
