@@ -511,9 +511,9 @@ package org.apache.hadoop.hive.metastore.api;
 
     public void create_stored_procedure(StoredProcedure proc) throws NoSuchObjectException, MetaException, org.apache.thrift.TException;
 
-    public StoredProcedure get_stored_procedure(StoredProcedureRequest request) throws MetaException, NoSuchObjectException, org.apache.thrift.TException;
+    public StoredProcedure get_stored_procedure(StoredProcedureRequest request) throws MetaException, org.apache.thrift.TException;
 
-    public void drop_stored_procedure(StoredProcedureRequest request) throws MetaException, NoSuchObjectException, org.apache.thrift.TException;
+    public void drop_stored_procedure(StoredProcedureRequest request) throws MetaException, org.apache.thrift.TException;
 
     public java.util.List<java.lang.String> get_all_stored_procedures(ListStoredProcedureRequest request) throws MetaException, org.apache.thrift.TException;
 
@@ -8115,7 +8115,7 @@ package org.apache.hadoop.hive.metastore.api;
       return;
     }
 
-    public StoredProcedure get_stored_procedure(StoredProcedureRequest request) throws MetaException, NoSuchObjectException, org.apache.thrift.TException
+    public StoredProcedure get_stored_procedure(StoredProcedureRequest request) throws MetaException, org.apache.thrift.TException
     {
       send_get_stored_procedure(request);
       return recv_get_stored_procedure();
@@ -8128,7 +8128,7 @@ package org.apache.hadoop.hive.metastore.api;
       sendBase("get_stored_procedure", args);
     }
 
-    public StoredProcedure recv_get_stored_procedure() throws MetaException, NoSuchObjectException, org.apache.thrift.TException
+    public StoredProcedure recv_get_stored_procedure() throws MetaException, org.apache.thrift.TException
     {
       get_stored_procedure_result result = new get_stored_procedure_result();
       receiveBase(result, "get_stored_procedure");
@@ -8138,13 +8138,10 @@ package org.apache.hadoop.hive.metastore.api;
       if (result.o1 != null) {
         throw result.o1;
       }
-      if (result.o2 != null) {
-        throw result.o2;
-      }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "get_stored_procedure failed: unknown result");
     }
 
-    public void drop_stored_procedure(StoredProcedureRequest request) throws MetaException, NoSuchObjectException, org.apache.thrift.TException
+    public void drop_stored_procedure(StoredProcedureRequest request) throws MetaException, org.apache.thrift.TException
     {
       send_drop_stored_procedure(request);
       recv_drop_stored_procedure();
@@ -8157,15 +8154,12 @@ package org.apache.hadoop.hive.metastore.api;
       sendBase("drop_stored_procedure", args);
     }
 
-    public void recv_drop_stored_procedure() throws MetaException, NoSuchObjectException, org.apache.thrift.TException
+    public void recv_drop_stored_procedure() throws MetaException, org.apache.thrift.TException
     {
       drop_stored_procedure_result result = new drop_stored_procedure_result();
       receiveBase(result, "drop_stored_procedure");
       if (result.o1 != null) {
         throw result.o1;
-      }
-      if (result.o2 != null) {
-        throw result.o2;
       }
       return;
     }
@@ -16774,7 +16768,7 @@ package org.apache.hadoop.hive.metastore.api;
         prot.writeMessageEnd();
       }
 
-      public StoredProcedure getResult() throws MetaException, NoSuchObjectException, org.apache.thrift.TException {
+      public StoredProcedure getResult() throws MetaException, org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new java.lang.IllegalStateException("Method call not finished!");
         }
@@ -16806,7 +16800,7 @@ package org.apache.hadoop.hive.metastore.api;
         prot.writeMessageEnd();
       }
 
-      public Void getResult() throws MetaException, NoSuchObjectException, org.apache.thrift.TException {
+      public Void getResult() throws MetaException, org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new java.lang.IllegalStateException("Method call not finished!");
         }
@@ -24848,8 +24842,6 @@ package org.apache.hadoop.hive.metastore.api;
           result.success = iface.get_stored_procedure(args.request);
         } catch (MetaException o1) {
           result.o1 = o1;
-        } catch (NoSuchObjectException o2) {
-          result.o2 = o2;
         }
         return result;
       }
@@ -24879,8 +24871,6 @@ package org.apache.hadoop.hive.metastore.api;
           iface.drop_stored_procedure(args.request);
         } catch (MetaException o1) {
           result.o1 = o1;
-        } catch (NoSuchObjectException o2) {
-          result.o2 = o2;
         }
         return result;
       }
@@ -42263,10 +42253,6 @@ package org.apache.hadoop.hive.metastore.api;
               result.o1 = (MetaException) e;
               result.setO1IsSet(true);
               msg = result;
-            } else if (e instanceof NoSuchObjectException) {
-              result.o2 = (NoSuchObjectException) e;
-              result.setO2IsSet(true);
-              msg = result;
             } else if (e instanceof org.apache.thrift.transport.TTransportException) {
               _LOGGER.error("TTransportException inside handler", e);
               fb.close();
@@ -42330,10 +42316,6 @@ package org.apache.hadoop.hive.metastore.api;
             if (e instanceof MetaException) {
               result.o1 = (MetaException) e;
               result.setO1IsSet(true);
-              msg = result;
-            } else if (e instanceof NoSuchObjectException) {
-              result.o2 = (NoSuchObjectException) e;
-              result.setO2IsSet(true);
               msg = result;
             } else if (e instanceof org.apache.thrift.transport.TTransportException) {
               _LOGGER.error("TTransportException inside handler", e);
@@ -287968,20 +287950,17 @@ package org.apache.hadoop.hive.metastore.api;
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
     private static final org.apache.thrift.protocol.TField O1_FIELD_DESC = new org.apache.thrift.protocol.TField("o1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
-    private static final org.apache.thrift.protocol.TField O2_FIELD_DESC = new org.apache.thrift.protocol.TField("o2", org.apache.thrift.protocol.TType.STRUCT, (short)2);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new get_stored_procedure_resultStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new get_stored_procedure_resultTupleSchemeFactory();
 
     private @org.apache.thrift.annotation.Nullable StoredProcedure success; // required
     private @org.apache.thrift.annotation.Nullable MetaException o1; // required
-    private @org.apache.thrift.annotation.Nullable NoSuchObjectException o2; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       SUCCESS((short)0, "success"),
-      O1((short)1, "o1"),
-      O2((short)2, "o2");
+      O1((short)1, "o1");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -288001,8 +287980,6 @@ package org.apache.hadoop.hive.metastore.api;
             return SUCCESS;
           case 1: // O1
             return O1;
-          case 2: // O2
-            return O2;
           default:
             return null;
         }
@@ -288051,8 +288028,6 @@ package org.apache.hadoop.hive.metastore.api;
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, StoredProcedure.class)));
       tmpMap.put(_Fields.O1, new org.apache.thrift.meta_data.FieldMetaData("o1", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, MetaException.class)));
-      tmpMap.put(_Fields.O2, new org.apache.thrift.meta_data.FieldMetaData("o2", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, NoSuchObjectException.class)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(get_stored_procedure_result.class, metaDataMap);
     }
@@ -288062,13 +288037,11 @@ package org.apache.hadoop.hive.metastore.api;
 
     public get_stored_procedure_result(
       StoredProcedure success,
-      MetaException o1,
-      NoSuchObjectException o2)
+      MetaException o1)
     {
       this();
       this.success = success;
       this.o1 = o1;
-      this.o2 = o2;
     }
 
     /**
@@ -288081,9 +288054,6 @@ package org.apache.hadoop.hive.metastore.api;
       if (other.isSetO1()) {
         this.o1 = new MetaException(other.o1);
       }
-      if (other.isSetO2()) {
-        this.o2 = new NoSuchObjectException(other.o2);
-      }
     }
 
     public get_stored_procedure_result deepCopy() {
@@ -288094,7 +288064,6 @@ package org.apache.hadoop.hive.metastore.api;
     public void clear() {
       this.success = null;
       this.o1 = null;
-      this.o2 = null;
     }
 
     @org.apache.thrift.annotation.Nullable
@@ -288145,30 +288114,6 @@ package org.apache.hadoop.hive.metastore.api;
       }
     }
 
-    @org.apache.thrift.annotation.Nullable
-    public NoSuchObjectException getO2() {
-      return this.o2;
-    }
-
-    public void setO2(@org.apache.thrift.annotation.Nullable NoSuchObjectException o2) {
-      this.o2 = o2;
-    }
-
-    public void unsetO2() {
-      this.o2 = null;
-    }
-
-    /** Returns true if field o2 is set (has been assigned a value) and false otherwise */
-    public boolean isSetO2() {
-      return this.o2 != null;
-    }
-
-    public void setO2IsSet(boolean value) {
-      if (!value) {
-        this.o2 = null;
-      }
-    }
-
     public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
       switch (field) {
       case SUCCESS:
@@ -288187,14 +288132,6 @@ package org.apache.hadoop.hive.metastore.api;
         }
         break;
 
-      case O2:
-        if (value == null) {
-          unsetO2();
-        } else {
-          setO2((NoSuchObjectException)value);
-        }
-        break;
-
       }
     }
 
@@ -288206,9 +288143,6 @@ package org.apache.hadoop.hive.metastore.api;
 
       case O1:
         return getO1();
-
-      case O2:
-        return getO2();
 
       }
       throw new java.lang.IllegalStateException();
@@ -288225,8 +288159,6 @@ package org.apache.hadoop.hive.metastore.api;
         return isSetSuccess();
       case O1:
         return isSetO1();
-      case O2:
-        return isSetO2();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -288264,15 +288196,6 @@ package org.apache.hadoop.hive.metastore.api;
           return false;
       }
 
-      boolean this_present_o2 = true && this.isSetO2();
-      boolean that_present_o2 = true && that.isSetO2();
-      if (this_present_o2 || that_present_o2) {
-        if (!(this_present_o2 && that_present_o2))
-          return false;
-        if (!this.o2.equals(that.o2))
-          return false;
-      }
-
       return true;
     }
 
@@ -288287,10 +288210,6 @@ package org.apache.hadoop.hive.metastore.api;
       hashCode = hashCode * 8191 + ((isSetO1()) ? 131071 : 524287);
       if (isSetO1())
         hashCode = hashCode * 8191 + o1.hashCode();
-
-      hashCode = hashCode * 8191 + ((isSetO2()) ? 131071 : 524287);
-      if (isSetO2())
-        hashCode = hashCode * 8191 + o2.hashCode();
 
       return hashCode;
     }
@@ -288319,16 +288238,6 @@ package org.apache.hadoop.hive.metastore.api;
       }
       if (isSetO1()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o1, other.o1);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      lastComparison = java.lang.Boolean.valueOf(isSetO2()).compareTo(other.isSetO2());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetO2()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o2, other.o2);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -288367,14 +288276,6 @@ package org.apache.hadoop.hive.metastore.api;
         sb.append("null");
       } else {
         sb.append(this.o1);
-      }
-      first = false;
-      if (!first) sb.append(", ");
-      sb.append("o2:");
-      if (this.o2 == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.o2);
       }
       first = false;
       sb.append(")");
@@ -288441,15 +288342,6 @@ package org.apache.hadoop.hive.metastore.api;
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
-            case 2: // O2
-              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.o2 = new NoSuchObjectException();
-                struct.o2.read(iprot);
-                struct.setO2IsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -288471,11 +288363,6 @@ package org.apache.hadoop.hive.metastore.api;
         if (struct.o1 != null) {
           oprot.writeFieldBegin(O1_FIELD_DESC);
           struct.o1.write(oprot);
-          oprot.writeFieldEnd();
-        }
-        if (struct.o2 != null) {
-          oprot.writeFieldBegin(O2_FIELD_DESC);
-          struct.o2.write(oprot);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -288502,25 +288389,19 @@ package org.apache.hadoop.hive.metastore.api;
         if (struct.isSetO1()) {
           optionals.set(1);
         }
-        if (struct.isSetO2()) {
-          optionals.set(2);
-        }
-        oprot.writeBitSet(optionals, 3);
+        oprot.writeBitSet(optionals, 2);
         if (struct.isSetSuccess()) {
           struct.success.write(oprot);
         }
         if (struct.isSetO1()) {
           struct.o1.write(oprot);
         }
-        if (struct.isSetO2()) {
-          struct.o2.write(oprot);
-        }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, get_stored_procedure_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(3);
+        java.util.BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           struct.success = new StoredProcedure();
           struct.success.read(iprot);
@@ -288530,11 +288411,6 @@ package org.apache.hadoop.hive.metastore.api;
           struct.o1 = new MetaException();
           struct.o1.read(iprot);
           struct.setO1IsSet(true);
-        }
-        if (incoming.get(2)) {
-          struct.o2 = new NoSuchObjectException();
-          struct.o2.read(iprot);
-          struct.setO2IsSet(true);
         }
       }
     }
@@ -288917,18 +288793,15 @@ package org.apache.hadoop.hive.metastore.api;
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("drop_stored_procedure_result");
 
     private static final org.apache.thrift.protocol.TField O1_FIELD_DESC = new org.apache.thrift.protocol.TField("o1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
-    private static final org.apache.thrift.protocol.TField O2_FIELD_DESC = new org.apache.thrift.protocol.TField("o2", org.apache.thrift.protocol.TType.STRUCT, (short)2);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new drop_stored_procedure_resultStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new drop_stored_procedure_resultTupleSchemeFactory();
 
     private @org.apache.thrift.annotation.Nullable MetaException o1; // required
-    private @org.apache.thrift.annotation.Nullable NoSuchObjectException o2; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      O1((short)1, "o1"),
-      O2((short)2, "o2");
+      O1((short)1, "o1");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -288946,8 +288819,6 @@ package org.apache.hadoop.hive.metastore.api;
         switch(fieldId) {
           case 1: // O1
             return O1;
-          case 2: // O2
-            return O2;
           default:
             return null;
         }
@@ -288994,8 +288865,6 @@ package org.apache.hadoop.hive.metastore.api;
       java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.O1, new org.apache.thrift.meta_data.FieldMetaData("o1", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, MetaException.class)));
-      tmpMap.put(_Fields.O2, new org.apache.thrift.meta_data.FieldMetaData("o2", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, NoSuchObjectException.class)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(drop_stored_procedure_result.class, metaDataMap);
     }
@@ -289004,12 +288873,10 @@ package org.apache.hadoop.hive.metastore.api;
     }
 
     public drop_stored_procedure_result(
-      MetaException o1,
-      NoSuchObjectException o2)
+      MetaException o1)
     {
       this();
       this.o1 = o1;
-      this.o2 = o2;
     }
 
     /**
@@ -289018,9 +288885,6 @@ package org.apache.hadoop.hive.metastore.api;
     public drop_stored_procedure_result(drop_stored_procedure_result other) {
       if (other.isSetO1()) {
         this.o1 = new MetaException(other.o1);
-      }
-      if (other.isSetO2()) {
-        this.o2 = new NoSuchObjectException(other.o2);
       }
     }
 
@@ -289031,7 +288895,6 @@ package org.apache.hadoop.hive.metastore.api;
     @Override
     public void clear() {
       this.o1 = null;
-      this.o2 = null;
     }
 
     @org.apache.thrift.annotation.Nullable
@@ -289058,30 +288921,6 @@ package org.apache.hadoop.hive.metastore.api;
       }
     }
 
-    @org.apache.thrift.annotation.Nullable
-    public NoSuchObjectException getO2() {
-      return this.o2;
-    }
-
-    public void setO2(@org.apache.thrift.annotation.Nullable NoSuchObjectException o2) {
-      this.o2 = o2;
-    }
-
-    public void unsetO2() {
-      this.o2 = null;
-    }
-
-    /** Returns true if field o2 is set (has been assigned a value) and false otherwise */
-    public boolean isSetO2() {
-      return this.o2 != null;
-    }
-
-    public void setO2IsSet(boolean value) {
-      if (!value) {
-        this.o2 = null;
-      }
-    }
-
     public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
       switch (field) {
       case O1:
@@ -289089,14 +288928,6 @@ package org.apache.hadoop.hive.metastore.api;
           unsetO1();
         } else {
           setO1((MetaException)value);
-        }
-        break;
-
-      case O2:
-        if (value == null) {
-          unsetO2();
-        } else {
-          setO2((NoSuchObjectException)value);
         }
         break;
 
@@ -289108,9 +288939,6 @@ package org.apache.hadoop.hive.metastore.api;
       switch (field) {
       case O1:
         return getO1();
-
-      case O2:
-        return getO2();
 
       }
       throw new java.lang.IllegalStateException();
@@ -289125,8 +288953,6 @@ package org.apache.hadoop.hive.metastore.api;
       switch (field) {
       case O1:
         return isSetO1();
-      case O2:
-        return isSetO2();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -289155,15 +288981,6 @@ package org.apache.hadoop.hive.metastore.api;
           return false;
       }
 
-      boolean this_present_o2 = true && this.isSetO2();
-      boolean that_present_o2 = true && that.isSetO2();
-      if (this_present_o2 || that_present_o2) {
-        if (!(this_present_o2 && that_present_o2))
-          return false;
-        if (!this.o2.equals(that.o2))
-          return false;
-      }
-
       return true;
     }
 
@@ -289174,10 +288991,6 @@ package org.apache.hadoop.hive.metastore.api;
       hashCode = hashCode * 8191 + ((isSetO1()) ? 131071 : 524287);
       if (isSetO1())
         hashCode = hashCode * 8191 + o1.hashCode();
-
-      hashCode = hashCode * 8191 + ((isSetO2()) ? 131071 : 524287);
-      if (isSetO2())
-        hashCode = hashCode * 8191 + o2.hashCode();
 
       return hashCode;
     }
@@ -289196,16 +289009,6 @@ package org.apache.hadoop.hive.metastore.api;
       }
       if (isSetO1()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o1, other.o1);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      lastComparison = java.lang.Boolean.valueOf(isSetO2()).compareTo(other.isSetO2());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetO2()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o2, other.o2);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -289236,14 +289039,6 @@ package org.apache.hadoop.hive.metastore.api;
         sb.append("null");
       } else {
         sb.append(this.o1);
-      }
-      first = false;
-      if (!first) sb.append(", ");
-      sb.append("o2:");
-      if (this.o2 == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.o2);
       }
       first = false;
       sb.append(")");
@@ -289298,15 +289093,6 @@ package org.apache.hadoop.hive.metastore.api;
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
-            case 2: // O2
-              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.o2 = new NoSuchObjectException();
-                struct.o2.read(iprot);
-                struct.setO2IsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -289323,11 +289109,6 @@ package org.apache.hadoop.hive.metastore.api;
         if (struct.o1 != null) {
           oprot.writeFieldBegin(O1_FIELD_DESC);
           struct.o1.write(oprot);
-          oprot.writeFieldEnd();
-        }
-        if (struct.o2 != null) {
-          oprot.writeFieldBegin(O2_FIELD_DESC);
-          struct.o2.write(oprot);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -289351,31 +289132,20 @@ package org.apache.hadoop.hive.metastore.api;
         if (struct.isSetO1()) {
           optionals.set(0);
         }
-        if (struct.isSetO2()) {
-          optionals.set(1);
-        }
-        oprot.writeBitSet(optionals, 2);
+        oprot.writeBitSet(optionals, 1);
         if (struct.isSetO1()) {
           struct.o1.write(oprot);
-        }
-        if (struct.isSetO2()) {
-          struct.o2.write(oprot);
         }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, drop_stored_procedure_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(2);
+        java.util.BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           struct.o1 = new MetaException();
           struct.o1.read(iprot);
           struct.setO1IsSet(true);
-        }
-        if (incoming.get(1)) {
-          struct.o2 = new NoSuchObjectException();
-          struct.o2.read(iprot);
-          struct.setO2IsSet(true);
         }
       }
     }
