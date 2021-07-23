@@ -393,7 +393,9 @@ package org.apache.hadoop.hive.metastore.api;
 
     public void add_dynamic_partitions(AddDynamicPartitions rqst) throws NoSuchTxnException, TxnAbortedException, org.apache.thrift.TException;
 
-    public OptionalCompactionInfoStruct find_next_compact(java.lang.String workerId, java.lang.String workerVersion) throws MetaException, org.apache.thrift.TException;
+    public OptionalCompactionInfoStruct find_next_compact(java.lang.String workerId) throws MetaException, org.apache.thrift.TException;
+
+    public OptionalCompactionInfoStruct find_next_compact2(FindNextCompactRequest rqst) throws MetaException, org.apache.thrift.TException;
 
     public void update_compactor_state(CompactionInfoStruct cr, long txn_id) throws org.apache.thrift.TException;
 
@@ -919,7 +921,9 @@ package org.apache.hadoop.hive.metastore.api;
 
     public void add_dynamic_partitions(AddDynamicPartitions rqst, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
 
-    public void find_next_compact(java.lang.String workerId, java.lang.String workerVersion, org.apache.thrift.async.AsyncMethodCallback<OptionalCompactionInfoStruct> resultHandler) throws org.apache.thrift.TException;
+    public void find_next_compact(java.lang.String workerId, org.apache.thrift.async.AsyncMethodCallback<OptionalCompactionInfoStruct> resultHandler) throws org.apache.thrift.TException;
+
+    public void find_next_compact2(FindNextCompactRequest rqst, org.apache.thrift.async.AsyncMethodCallback<OptionalCompactionInfoStruct> resultHandler) throws org.apache.thrift.TException;
 
     public void update_compactor_state(CompactionInfoStruct cr, long txn_id, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
 
@@ -6555,17 +6559,16 @@ package org.apache.hadoop.hive.metastore.api;
       return;
     }
 
-    public OptionalCompactionInfoStruct find_next_compact(java.lang.String workerId, java.lang.String workerVersion) throws MetaException, org.apache.thrift.TException
+    public OptionalCompactionInfoStruct find_next_compact(java.lang.String workerId) throws MetaException, org.apache.thrift.TException
     {
-      send_find_next_compact(workerId, workerVersion);
+      send_find_next_compact(workerId);
       return recv_find_next_compact();
     }
 
-    public void send_find_next_compact(java.lang.String workerId, java.lang.String workerVersion) throws org.apache.thrift.TException
+    public void send_find_next_compact(java.lang.String workerId) throws org.apache.thrift.TException
     {
       find_next_compact_args args = new find_next_compact_args();
       args.setWorkerId(workerId);
-      args.setWorkerVersion(workerVersion);
       sendBase("find_next_compact", args);
     }
 
@@ -6580,6 +6583,32 @@ package org.apache.hadoop.hive.metastore.api;
         throw result.o1;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "find_next_compact failed: unknown result");
+    }
+
+    public OptionalCompactionInfoStruct find_next_compact2(FindNextCompactRequest rqst) throws MetaException, org.apache.thrift.TException
+    {
+      send_find_next_compact2(rqst);
+      return recv_find_next_compact2();
+    }
+
+    public void send_find_next_compact2(FindNextCompactRequest rqst) throws org.apache.thrift.TException
+    {
+      find_next_compact2_args args = new find_next_compact2_args();
+      args.setRqst(rqst);
+      sendBase("find_next_compact2", args);
+    }
+
+    public OptionalCompactionInfoStruct recv_find_next_compact2() throws MetaException, org.apache.thrift.TException
+    {
+      find_next_compact2_result result = new find_next_compact2_result();
+      receiveBase(result, "find_next_compact2");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      if (result.o1 != null) {
+        throw result.o1;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "find_next_compact2 failed: unknown result");
     }
 
     public void update_compactor_state(CompactionInfoStruct cr, long txn_id) throws org.apache.thrift.TException
@@ -15046,27 +15075,24 @@ package org.apache.hadoop.hive.metastore.api;
       }
     }
 
-    public void find_next_compact(java.lang.String workerId, java.lang.String workerVersion, org.apache.thrift.async.AsyncMethodCallback<OptionalCompactionInfoStruct> resultHandler) throws org.apache.thrift.TException {
+    public void find_next_compact(java.lang.String workerId, org.apache.thrift.async.AsyncMethodCallback<OptionalCompactionInfoStruct> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      find_next_compact_call method_call = new find_next_compact_call(workerId, workerVersion, resultHandler, this, ___protocolFactory, ___transport);
+      find_next_compact_call method_call = new find_next_compact_call(workerId, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
     @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class find_next_compact_call extends org.apache.thrift.async.TAsyncMethodCall<OptionalCompactionInfoStruct> {
       private java.lang.String workerId;
-      private java.lang.String workerVersion;
-      public find_next_compact_call(java.lang.String workerId, java.lang.String workerVersion, org.apache.thrift.async.AsyncMethodCallback<OptionalCompactionInfoStruct> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      public find_next_compact_call(java.lang.String workerId, org.apache.thrift.async.AsyncMethodCallback<OptionalCompactionInfoStruct> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.workerId = workerId;
-        this.workerVersion = workerVersion;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
         prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("find_next_compact", org.apache.thrift.protocol.TMessageType.CALL, 0));
         find_next_compact_args args = new find_next_compact_args();
         args.setWorkerId(workerId);
-        args.setWorkerVersion(workerVersion);
         args.write(prot);
         prot.writeMessageEnd();
       }
@@ -15078,6 +15104,38 @@ package org.apache.hadoop.hive.metastore.api;
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
         return (new Client(prot)).recv_find_next_compact();
+      }
+    }
+
+    public void find_next_compact2(FindNextCompactRequest rqst, org.apache.thrift.async.AsyncMethodCallback<OptionalCompactionInfoStruct> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      find_next_compact2_call method_call = new find_next_compact2_call(rqst, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class find_next_compact2_call extends org.apache.thrift.async.TAsyncMethodCall<OptionalCompactionInfoStruct> {
+      private FindNextCompactRequest rqst;
+      public find_next_compact2_call(FindNextCompactRequest rqst, org.apache.thrift.async.AsyncMethodCallback<OptionalCompactionInfoStruct> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.rqst = rqst;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("find_next_compact2", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        find_next_compact2_args args = new find_next_compact2_args();
+        args.setRqst(rqst);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public OptionalCompactionInfoStruct getResult() throws MetaException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new java.lang.IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_find_next_compact2();
       }
     }
 
@@ -17565,6 +17623,7 @@ package org.apache.hadoop.hive.metastore.api;
       processMap.put("show_compact", new show_compact());
       processMap.put("add_dynamic_partitions", new add_dynamic_partitions());
       processMap.put("find_next_compact", new find_next_compact());
+      processMap.put("find_next_compact2", new find_next_compact2());
       processMap.put("update_compactor_state", new update_compactor_state());
       processMap.put("find_columns_with_stats", new find_columns_with_stats());
       processMap.put("mark_cleaned", new mark_cleaned());
@@ -23495,7 +23554,36 @@ package org.apache.hadoop.hive.metastore.api;
       public find_next_compact_result getResult(I iface, find_next_compact_args args) throws org.apache.thrift.TException {
         find_next_compact_result result = new find_next_compact_result();
         try {
-          result.success = iface.find_next_compact(args.workerId, args.workerVersion);
+          result.success = iface.find_next_compact(args.workerId);
+        } catch (MetaException o1) {
+          result.o1 = o1;
+        }
+        return result;
+      }
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class find_next_compact2<I extends Iface> extends org.apache.thrift.ProcessFunction<I, find_next_compact2_args> {
+      public find_next_compact2() {
+        super("find_next_compact2");
+      }
+
+      public find_next_compact2_args getEmptyArgsInstance() {
+        return new find_next_compact2_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      @Override
+      protected boolean rethrowUnhandledExceptions() {
+        return false;
+      }
+
+      public find_next_compact2_result getResult(I iface, find_next_compact2_args args) throws org.apache.thrift.TException {
+        find_next_compact2_result result = new find_next_compact2_result();
+        try {
+          result.success = iface.find_next_compact2(args.rqst);
         } catch (MetaException o1) {
           result.o1 = o1;
         }
@@ -25808,6 +25896,7 @@ package org.apache.hadoop.hive.metastore.api;
       processMap.put("show_compact", new show_compact());
       processMap.put("add_dynamic_partitions", new add_dynamic_partitions());
       processMap.put("find_next_compact", new find_next_compact());
+      processMap.put("find_next_compact2", new find_next_compact2());
       processMap.put("update_compactor_state", new update_compactor_state());
       processMap.put("find_columns_with_stats", new find_columns_with_stats());
       processMap.put("mark_cleaned", new mark_cleaned());
@@ -38923,7 +39012,72 @@ package org.apache.hadoop.hive.metastore.api;
       }
 
       public void start(I iface, find_next_compact_args args, org.apache.thrift.async.AsyncMethodCallback<OptionalCompactionInfoStruct> resultHandler) throws org.apache.thrift.TException {
-        iface.find_next_compact(args.workerId, args.workerVersion,resultHandler);
+        iface.find_next_compact(args.workerId,resultHandler);
+      }
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class find_next_compact2<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, find_next_compact2_args, OptionalCompactionInfoStruct> {
+      public find_next_compact2() {
+        super("find_next_compact2");
+      }
+
+      public find_next_compact2_args getEmptyArgsInstance() {
+        return new find_next_compact2_args();
+      }
+
+      public org.apache.thrift.async.AsyncMethodCallback<OptionalCompactionInfoStruct> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new org.apache.thrift.async.AsyncMethodCallback<OptionalCompactionInfoStruct>() { 
+          public void onComplete(OptionalCompactionInfoStruct o) {
+            find_next_compact2_result result = new find_next_compact2_result();
+            result.success = o;
+            try {
+              fcall.sendResponse(fb, result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+            } catch (org.apache.thrift.transport.TTransportException e) {
+              _LOGGER.error("TTransportException writing to internal frame buffer", e);
+              fb.close();
+            } catch (java.lang.Exception e) {
+              _LOGGER.error("Exception writing to internal frame buffer", e);
+              onError(e);
+            }
+          }
+          public void onError(java.lang.Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TSerializable msg;
+            find_next_compact2_result result = new find_next_compact2_result();
+            if (e instanceof MetaException) {
+              result.o1 = (MetaException) e;
+              result.setO1IsSet(true);
+              msg = result;
+            } else if (e instanceof org.apache.thrift.transport.TTransportException) {
+              _LOGGER.error("TTransportException inside handler", e);
+              fb.close();
+              return;
+            } else if (e instanceof org.apache.thrift.TApplicationException) {
+              _LOGGER.error("TApplicationException inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TApplicationException)e;
+            } else {
+              _LOGGER.error("Exception inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+            } catch (java.lang.Exception ex) {
+              _LOGGER.error("Exception writing to internal frame buffer", ex);
+              fb.close();
+            }
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, find_next_compact2_args args, org.apache.thrift.async.AsyncMethodCallback<OptionalCompactionInfoStruct> resultHandler) throws org.apache.thrift.TException {
+        iface.find_next_compact2(args.rqst,resultHandler);
       }
     }
 
@@ -236161,18 +236315,15 @@ package org.apache.hadoop.hive.metastore.api;
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("find_next_compact_args");
 
     private static final org.apache.thrift.protocol.TField WORKER_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("workerId", org.apache.thrift.protocol.TType.STRING, (short)1);
-    private static final org.apache.thrift.protocol.TField WORKER_VERSION_FIELD_DESC = new org.apache.thrift.protocol.TField("workerVersion", org.apache.thrift.protocol.TType.STRING, (short)2);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new find_next_compact_argsStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new find_next_compact_argsTupleSchemeFactory();
 
     private @org.apache.thrift.annotation.Nullable java.lang.String workerId; // required
-    private @org.apache.thrift.annotation.Nullable java.lang.String workerVersion; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      WORKER_ID((short)1, "workerId"),
-      WORKER_VERSION((short)2, "workerVersion");
+      WORKER_ID((short)1, "workerId");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -236190,8 +236341,6 @@ package org.apache.hadoop.hive.metastore.api;
         switch(fieldId) {
           case 1: // WORKER_ID
             return WORKER_ID;
-          case 2: // WORKER_VERSION
-            return WORKER_VERSION;
           default:
             return null;
         }
@@ -236238,8 +236387,6 @@ package org.apache.hadoop.hive.metastore.api;
       java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.WORKER_ID, new org.apache.thrift.meta_data.FieldMetaData("workerId", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-      tmpMap.put(_Fields.WORKER_VERSION, new org.apache.thrift.meta_data.FieldMetaData("workerVersion", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(find_next_compact_args.class, metaDataMap);
     }
@@ -236248,12 +236395,10 @@ package org.apache.hadoop.hive.metastore.api;
     }
 
     public find_next_compact_args(
-      java.lang.String workerId,
-      java.lang.String workerVersion)
+      java.lang.String workerId)
     {
       this();
       this.workerId = workerId;
-      this.workerVersion = workerVersion;
     }
 
     /**
@@ -236262,9 +236407,6 @@ package org.apache.hadoop.hive.metastore.api;
     public find_next_compact_args(find_next_compact_args other) {
       if (other.isSetWorkerId()) {
         this.workerId = other.workerId;
-      }
-      if (other.isSetWorkerVersion()) {
-        this.workerVersion = other.workerVersion;
       }
     }
 
@@ -236275,7 +236417,6 @@ package org.apache.hadoop.hive.metastore.api;
     @Override
     public void clear() {
       this.workerId = null;
-      this.workerVersion = null;
     }
 
     @org.apache.thrift.annotation.Nullable
@@ -236302,30 +236443,6 @@ package org.apache.hadoop.hive.metastore.api;
       }
     }
 
-    @org.apache.thrift.annotation.Nullable
-    public java.lang.String getWorkerVersion() {
-      return this.workerVersion;
-    }
-
-    public void setWorkerVersion(@org.apache.thrift.annotation.Nullable java.lang.String workerVersion) {
-      this.workerVersion = workerVersion;
-    }
-
-    public void unsetWorkerVersion() {
-      this.workerVersion = null;
-    }
-
-    /** Returns true if field workerVersion is set (has been assigned a value) and false otherwise */
-    public boolean isSetWorkerVersion() {
-      return this.workerVersion != null;
-    }
-
-    public void setWorkerVersionIsSet(boolean value) {
-      if (!value) {
-        this.workerVersion = null;
-      }
-    }
-
     public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
       switch (field) {
       case WORKER_ID:
@@ -236333,14 +236450,6 @@ package org.apache.hadoop.hive.metastore.api;
           unsetWorkerId();
         } else {
           setWorkerId((java.lang.String)value);
-        }
-        break;
-
-      case WORKER_VERSION:
-        if (value == null) {
-          unsetWorkerVersion();
-        } else {
-          setWorkerVersion((java.lang.String)value);
         }
         break;
 
@@ -236352,9 +236461,6 @@ package org.apache.hadoop.hive.metastore.api;
       switch (field) {
       case WORKER_ID:
         return getWorkerId();
-
-      case WORKER_VERSION:
-        return getWorkerVersion();
 
       }
       throw new java.lang.IllegalStateException();
@@ -236369,8 +236475,6 @@ package org.apache.hadoop.hive.metastore.api;
       switch (field) {
       case WORKER_ID:
         return isSetWorkerId();
-      case WORKER_VERSION:
-        return isSetWorkerVersion();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -236397,15 +236501,6 @@ package org.apache.hadoop.hive.metastore.api;
           return false;
       }
 
-      boolean this_present_workerVersion = true && this.isSetWorkerVersion();
-      boolean that_present_workerVersion = true && that.isSetWorkerVersion();
-      if (this_present_workerVersion || that_present_workerVersion) {
-        if (!(this_present_workerVersion && that_present_workerVersion))
-          return false;
-        if (!this.workerVersion.equals(that.workerVersion))
-          return false;
-      }
-
       return true;
     }
 
@@ -236416,10 +236511,6 @@ package org.apache.hadoop.hive.metastore.api;
       hashCode = hashCode * 8191 + ((isSetWorkerId()) ? 131071 : 524287);
       if (isSetWorkerId())
         hashCode = hashCode * 8191 + workerId.hashCode();
-
-      hashCode = hashCode * 8191 + ((isSetWorkerVersion()) ? 131071 : 524287);
-      if (isSetWorkerVersion())
-        hashCode = hashCode * 8191 + workerVersion.hashCode();
 
       return hashCode;
     }
@@ -236438,16 +236529,6 @@ package org.apache.hadoop.hive.metastore.api;
       }
       if (isSetWorkerId()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.workerId, other.workerId);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      lastComparison = java.lang.Boolean.compare(isSetWorkerVersion(), other.isSetWorkerVersion());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetWorkerVersion()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.workerVersion, other.workerVersion);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -236478,14 +236559,6 @@ package org.apache.hadoop.hive.metastore.api;
         sb.append("null");
       } else {
         sb.append(this.workerId);
-      }
-      first = false;
-      if (!first) sb.append(", ");
-      sb.append("workerVersion:");
-      if (this.workerVersion == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.workerVersion);
       }
       first = false;
       sb.append(")");
@@ -236539,14 +236612,6 @@ package org.apache.hadoop.hive.metastore.api;
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
-            case 2: // WORKER_VERSION
-              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-                struct.workerVersion = iprot.readString();
-                struct.setWorkerVersionIsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -236563,11 +236628,6 @@ package org.apache.hadoop.hive.metastore.api;
         if (struct.workerId != null) {
           oprot.writeFieldBegin(WORKER_ID_FIELD_DESC);
           oprot.writeString(struct.workerId);
-          oprot.writeFieldEnd();
-        }
-        if (struct.workerVersion != null) {
-          oprot.writeFieldBegin(WORKER_VERSION_FIELD_DESC);
-          oprot.writeString(struct.workerVersion);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -236591,29 +236651,19 @@ package org.apache.hadoop.hive.metastore.api;
         if (struct.isSetWorkerId()) {
           optionals.set(0);
         }
-        if (struct.isSetWorkerVersion()) {
-          optionals.set(1);
-        }
-        oprot.writeBitSet(optionals, 2);
+        oprot.writeBitSet(optionals, 1);
         if (struct.isSetWorkerId()) {
           oprot.writeString(struct.workerId);
-        }
-        if (struct.isSetWorkerVersion()) {
-          oprot.writeString(struct.workerVersion);
         }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, find_next_compact_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(2);
+        java.util.BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           struct.workerId = iprot.readString();
           struct.setWorkerIdIsSet(true);
-        }
-        if (incoming.get(1)) {
-          struct.workerVersion = iprot.readString();
-          struct.setWorkerVersionIsSet(true);
         }
       }
     }
@@ -237076,6 +237126,846 @@ package org.apache.hadoop.hive.metastore.api;
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, find_next_compact_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.success = new OptionalCompactionInfoStruct();
+          struct.success.read(iprot);
+          struct.setSuccessIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.o1 = new MetaException();
+          struct.o1.read(iprot);
+          struct.setO1IsSet(true);
+        }
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class find_next_compact2_args implements org.apache.thrift.TBase<find_next_compact2_args, find_next_compact2_args._Fields>, java.io.Serializable, Cloneable, Comparable<find_next_compact2_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("find_next_compact2_args");
+
+    private static final org.apache.thrift.protocol.TField RQST_FIELD_DESC = new org.apache.thrift.protocol.TField("rqst", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new find_next_compact2_argsStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new find_next_compact2_argsTupleSchemeFactory();
+
+    private @org.apache.thrift.annotation.Nullable FindNextCompactRequest rqst; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      RQST((short)1, "rqst");
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // RQST
+            return RQST;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.RQST, new org.apache.thrift.meta_data.FieldMetaData("rqst", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, FindNextCompactRequest.class)));
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(find_next_compact2_args.class, metaDataMap);
+    }
+
+    public find_next_compact2_args() {
+    }
+
+    public find_next_compact2_args(
+      FindNextCompactRequest rqst)
+    {
+      this();
+      this.rqst = rqst;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public find_next_compact2_args(find_next_compact2_args other) {
+      if (other.isSetRqst()) {
+        this.rqst = new FindNextCompactRequest(other.rqst);
+      }
+    }
+
+    public find_next_compact2_args deepCopy() {
+      return new find_next_compact2_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.rqst = null;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public FindNextCompactRequest getRqst() {
+      return this.rqst;
+    }
+
+    public void setRqst(@org.apache.thrift.annotation.Nullable FindNextCompactRequest rqst) {
+      this.rqst = rqst;
+    }
+
+    public void unsetRqst() {
+      this.rqst = null;
+    }
+
+    /** Returns true if field rqst is set (has been assigned a value) and false otherwise */
+    public boolean isSetRqst() {
+      return this.rqst != null;
+    }
+
+    public void setRqstIsSet(boolean value) {
+      if (!value) {
+        this.rqst = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
+      switch (field) {
+      case RQST:
+        if (value == null) {
+          unsetRqst();
+        } else {
+          setRqst((FindNextCompactRequest)value);
+        }
+        break;
+
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      case RQST:
+        return getRqst();
+
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      case RQST:
+        return isSetRqst();
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that instanceof find_next_compact2_args)
+        return this.equals((find_next_compact2_args)that);
+      return false;
+    }
+
+    public boolean equals(find_next_compact2_args that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      boolean this_present_rqst = true && this.isSetRqst();
+      boolean that_present_rqst = true && that.isSetRqst();
+      if (this_present_rqst || that_present_rqst) {
+        if (!(this_present_rqst && that_present_rqst))
+          return false;
+        if (!this.rqst.equals(that.rqst))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      hashCode = hashCode * 8191 + ((isSetRqst()) ? 131071 : 524287);
+      if (isSetRqst())
+        hashCode = hashCode * 8191 + rqst.hashCode();
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(find_next_compact2_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = java.lang.Boolean.compare(isSetRqst(), other.isSetRqst());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetRqst()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.rqst, other.rqst);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+    }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("find_next_compact2_args(");
+      boolean first = true;
+
+      sb.append("rqst:");
+      if (this.rqst == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.rqst);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (rqst != null) {
+        rqst.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class find_next_compact2_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public find_next_compact2_argsStandardScheme getScheme() {
+        return new find_next_compact2_argsStandardScheme();
+      }
+    }
+
+    private static class find_next_compact2_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<find_next_compact2_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, find_next_compact2_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // RQST
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.rqst = new FindNextCompactRequest();
+                struct.rqst.read(iprot);
+                struct.setRqstIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, find_next_compact2_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.rqst != null) {
+          oprot.writeFieldBegin(RQST_FIELD_DESC);
+          struct.rqst.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class find_next_compact2_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public find_next_compact2_argsTupleScheme getScheme() {
+        return new find_next_compact2_argsTupleScheme();
+      }
+    }
+
+    private static class find_next_compact2_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<find_next_compact2_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, find_next_compact2_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet optionals = new java.util.BitSet();
+        if (struct.isSetRqst()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetRqst()) {
+          struct.rqst.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, find_next_compact2_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.rqst = new FindNextCompactRequest();
+          struct.rqst.read(iprot);
+          struct.setRqstIsSet(true);
+        }
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class find_next_compact2_result implements org.apache.thrift.TBase<find_next_compact2_result, find_next_compact2_result._Fields>, java.io.Serializable, Cloneable, Comparable<find_next_compact2_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("find_next_compact2_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
+    private static final org.apache.thrift.protocol.TField O1_FIELD_DESC = new org.apache.thrift.protocol.TField("o1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new find_next_compact2_resultStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new find_next_compact2_resultTupleSchemeFactory();
+
+    private @org.apache.thrift.annotation.Nullable OptionalCompactionInfoStruct success; // required
+    private @org.apache.thrift.annotation.Nullable MetaException o1; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success"),
+      O1((short)1, "o1");
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          case 1: // O1
+            return O1;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, OptionalCompactionInfoStruct.class)));
+      tmpMap.put(_Fields.O1, new org.apache.thrift.meta_data.FieldMetaData("o1", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, MetaException.class)));
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(find_next_compact2_result.class, metaDataMap);
+    }
+
+    public find_next_compact2_result() {
+    }
+
+    public find_next_compact2_result(
+      OptionalCompactionInfoStruct success,
+      MetaException o1)
+    {
+      this();
+      this.success = success;
+      this.o1 = o1;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public find_next_compact2_result(find_next_compact2_result other) {
+      if (other.isSetSuccess()) {
+        this.success = new OptionalCompactionInfoStruct(other.success);
+      }
+      if (other.isSetO1()) {
+        this.o1 = new MetaException(other.o1);
+      }
+    }
+
+    public find_next_compact2_result deepCopy() {
+      return new find_next_compact2_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+      this.o1 = null;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public OptionalCompactionInfoStruct getSuccess() {
+      return this.success;
+    }
+
+    public void setSuccess(@org.apache.thrift.annotation.Nullable OptionalCompactionInfoStruct success) {
+      this.success = success;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public MetaException getO1() {
+      return this.o1;
+    }
+
+    public void setO1(@org.apache.thrift.annotation.Nullable MetaException o1) {
+      this.o1 = o1;
+    }
+
+    public void unsetO1() {
+      this.o1 = null;
+    }
+
+    /** Returns true if field o1 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO1() {
+      return this.o1 != null;
+    }
+
+    public void setO1IsSet(boolean value) {
+      if (!value) {
+        this.o1 = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((OptionalCompactionInfoStruct)value);
+        }
+        break;
+
+      case O1:
+        if (value == null) {
+          unsetO1();
+        } else {
+          setO1((MetaException)value);
+        }
+        break;
+
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      case O1:
+        return getO1();
+
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      case O1:
+        return isSetO1();
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that instanceof find_next_compact2_result)
+        return this.equals((find_next_compact2_result)that);
+      return false;
+    }
+
+    public boolean equals(find_next_compact2_result that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      boolean this_present_o1 = true && this.isSetO1();
+      boolean that_present_o1 = true && that.isSetO1();
+      if (this_present_o1 || that_present_o1) {
+        if (!(this_present_o1 && that_present_o1))
+          return false;
+        if (!this.o1.equals(that.o1))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      hashCode = hashCode * 8191 + ((isSetSuccess()) ? 131071 : 524287);
+      if (isSetSuccess())
+        hashCode = hashCode * 8191 + success.hashCode();
+
+      hashCode = hashCode * 8191 + ((isSetO1()) ? 131071 : 524287);
+      if (isSetO1())
+        hashCode = hashCode * 8191 + o1.hashCode();
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(find_next_compact2_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = java.lang.Boolean.compare(isSetSuccess(), other.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.compare(isSetO1(), other.isSetO1());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO1()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o1, other.o1);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+      }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("find_next_compact2_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("o1:");
+      if (this.o1 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o1);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (success != null) {
+        success.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class find_next_compact2_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public find_next_compact2_resultStandardScheme getScheme() {
+        return new find_next_compact2_resultStandardScheme();
+      }
+    }
+
+    private static class find_next_compact2_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<find_next_compact2_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, find_next_compact2_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.success = new OptionalCompactionInfoStruct();
+                struct.success.read(iprot);
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 1: // O1
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o1 = new MetaException();
+                struct.o1.read(iprot);
+                struct.setO1IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, find_next_compact2_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.success != null) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          struct.success.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.o1 != null) {
+          oprot.writeFieldBegin(O1_FIELD_DESC);
+          struct.o1.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class find_next_compact2_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public find_next_compact2_resultTupleScheme getScheme() {
+        return new find_next_compact2_resultTupleScheme();
+      }
+    }
+
+    private static class find_next_compact2_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<find_next_compact2_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, find_next_compact2_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet optionals = new java.util.BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        if (struct.isSetO1()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetSuccess()) {
+          struct.success.write(oprot);
+        }
+        if (struct.isSetO1()) {
+          struct.o1.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, find_next_compact2_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
         java.util.BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {

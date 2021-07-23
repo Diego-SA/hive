@@ -16,14 +16,19 @@ use Thrift\Protocol\TProtocol;
 use Thrift\Protocol\TBinaryProtocolAccelerated;
 use Thrift\Exception\TApplicationException;
 
-class ThriftHiveMetastore_find_next_compact_args
+class FindNextCompactRequest
 {
     static public $isValidate = false;
 
     static public $_TSPEC = array(
         1 => array(
             'var' => 'workerId',
-            'isRequired' => false,
+            'isRequired' => true,
+            'type' => TType::STRING,
+        ),
+        2 => array(
+            'var' => 'workerVersion',
+            'isRequired' => true,
             'type' => TType::STRING,
         ),
     );
@@ -32,6 +37,10 @@ class ThriftHiveMetastore_find_next_compact_args
      * @var string
      */
     public $workerId = null;
+    /**
+     * @var string
+     */
+    public $workerVersion = null;
 
     public function __construct($vals = null)
     {
@@ -39,12 +48,15 @@ class ThriftHiveMetastore_find_next_compact_args
             if (isset($vals['workerId'])) {
                 $this->workerId = $vals['workerId'];
             }
+            if (isset($vals['workerVersion'])) {
+                $this->workerVersion = $vals['workerVersion'];
+            }
         }
     }
 
     public function getName()
     {
-        return 'ThriftHiveMetastore_find_next_compact_args';
+        return 'FindNextCompactRequest';
     }
 
 
@@ -68,6 +80,13 @@ class ThriftHiveMetastore_find_next_compact_args
                         $xfer += $input->skip($ftype);
                     }
                     break;
+                case 2:
+                    if ($ftype == TType::STRING) {
+                        $xfer += $input->readString($this->workerVersion);
+                    } else {
+                        $xfer += $input->skip($ftype);
+                    }
+                    break;
                 default:
                     $xfer += $input->skip($ftype);
                     break;
@@ -81,10 +100,15 @@ class ThriftHiveMetastore_find_next_compact_args
     public function write($output)
     {
         $xfer = 0;
-        $xfer += $output->writeStructBegin('ThriftHiveMetastore_find_next_compact_args');
+        $xfer += $output->writeStructBegin('FindNextCompactRequest');
         if ($this->workerId !== null) {
             $xfer += $output->writeFieldBegin('workerId', TType::STRING, 1);
             $xfer += $output->writeString($this->workerId);
+            $xfer += $output->writeFieldEnd();
+        }
+        if ($this->workerVersion !== null) {
+            $xfer += $output->writeFieldBegin('workerVersion', TType::STRING, 2);
+            $xfer += $output->writeString($this->workerVersion);
             $xfer += $output->writeFieldEnd();
         }
         $xfer += $output->writeFieldStop();

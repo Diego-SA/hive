@@ -16,35 +16,36 @@ use Thrift\Protocol\TProtocol;
 use Thrift\Protocol\TBinaryProtocolAccelerated;
 use Thrift\Exception\TApplicationException;
 
-class ThriftHiveMetastore_find_next_compact_args
+class ThriftHiveMetastore_find_next_compact2_args
 {
     static public $isValidate = false;
 
     static public $_TSPEC = array(
         1 => array(
-            'var' => 'workerId',
+            'var' => 'rqst',
             'isRequired' => false,
-            'type' => TType::STRING,
+            'type' => TType::STRUCT,
+            'class' => '\metastore\FindNextCompactRequest',
         ),
     );
 
     /**
-     * @var string
+     * @var \metastore\FindNextCompactRequest
      */
-    public $workerId = null;
+    public $rqst = null;
 
     public function __construct($vals = null)
     {
         if (is_array($vals)) {
-            if (isset($vals['workerId'])) {
-                $this->workerId = $vals['workerId'];
+            if (isset($vals['rqst'])) {
+                $this->rqst = $vals['rqst'];
             }
         }
     }
 
     public function getName()
     {
-        return 'ThriftHiveMetastore_find_next_compact_args';
+        return 'ThriftHiveMetastore_find_next_compact2_args';
     }
 
 
@@ -62,8 +63,9 @@ class ThriftHiveMetastore_find_next_compact_args
             }
             switch ($fid) {
                 case 1:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->workerId);
+                    if ($ftype == TType::STRUCT) {
+                        $this->rqst = new \metastore\FindNextCompactRequest();
+                        $xfer += $this->rqst->read($input);
                     } else {
                         $xfer += $input->skip($ftype);
                     }
@@ -81,10 +83,13 @@ class ThriftHiveMetastore_find_next_compact_args
     public function write($output)
     {
         $xfer = 0;
-        $xfer += $output->writeStructBegin('ThriftHiveMetastore_find_next_compact_args');
-        if ($this->workerId !== null) {
-            $xfer += $output->writeFieldBegin('workerId', TType::STRING, 1);
-            $xfer += $output->writeString($this->workerId);
+        $xfer += $output->writeStructBegin('ThriftHiveMetastore_find_next_compact2_args');
+        if ($this->rqst !== null) {
+            if (!is_object($this->rqst)) {
+                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
+            }
+            $xfer += $output->writeFieldBegin('rqst', TType::STRUCT, 1);
+            $xfer += $this->rqst->write($output);
             $xfer += $output->writeFieldEnd();
         }
         $xfer += $output->writeFieldStop();
