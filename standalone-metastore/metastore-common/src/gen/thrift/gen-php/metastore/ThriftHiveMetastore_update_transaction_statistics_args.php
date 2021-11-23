@@ -16,36 +16,36 @@ use Thrift\Protocol\TProtocol;
 use Thrift\Protocol\TBinaryProtocolAccelerated;
 use Thrift\Exception\TApplicationException;
 
-class ThriftHiveMetastore_get_materialization_invalidation_info_args
+class ThriftHiveMetastore_update_transaction_statistics_args
 {
     static public $isValidate = false;
 
     static public $_TSPEC = array(
         1 => array(
-            'var' => 'creation_metadata',
+            'var' => 'req',
             'isRequired' => false,
             'type' => TType::STRUCT,
-            'class' => '\metastore\CreationMetadata',
+            'class' => '\metastore\UpdateTransactionalStatsRequest',
         ),
     );
 
     /**
-     * @var \metastore\CreationMetadata
+     * @var \metastore\UpdateTransactionalStatsRequest
      */
-    public $creation_metadata = null;
+    public $req = null;
 
     public function __construct($vals = null)
     {
         if (is_array($vals)) {
-            if (isset($vals['creation_metadata'])) {
-                $this->creation_metadata = $vals['creation_metadata'];
+            if (isset($vals['req'])) {
+                $this->req = $vals['req'];
             }
         }
     }
 
     public function getName()
     {
-        return 'ThriftHiveMetastore_get_materialization_invalidation_info_args';
+        return 'ThriftHiveMetastore_update_transaction_statistics_args';
     }
 
 
@@ -64,8 +64,8 @@ class ThriftHiveMetastore_get_materialization_invalidation_info_args
             switch ($fid) {
                 case 1:
                     if ($ftype == TType::STRUCT) {
-                        $this->creation_metadata = new \metastore\CreationMetadata();
-                        $xfer += $this->creation_metadata->read($input);
+                        $this->req = new \metastore\UpdateTransactionalStatsRequest();
+                        $xfer += $this->req->read($input);
                     } else {
                         $xfer += $input->skip($ftype);
                     }
@@ -83,13 +83,13 @@ class ThriftHiveMetastore_get_materialization_invalidation_info_args
     public function write($output)
     {
         $xfer = 0;
-        $xfer += $output->writeStructBegin('ThriftHiveMetastore_get_materialization_invalidation_info_args');
-        if ($this->creation_metadata !== null) {
-            if (!is_object($this->creation_metadata)) {
+        $xfer += $output->writeStructBegin('ThriftHiveMetastore_update_transaction_statistics_args');
+        if ($this->req !== null) {
+            if (!is_object($this->req)) {
                 throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
             }
-            $xfer += $output->writeFieldBegin('creation_metadata', TType::STRUCT, 1);
-            $xfer += $this->creation_metadata->write($output);
+            $xfer += $output->writeFieldBegin('req', TType::STRUCT, 1);
+            $xfer += $this->req->write($output);
             $xfer += $output->writeFieldEnd();
         }
         $xfer += $output->writeFieldStop();
