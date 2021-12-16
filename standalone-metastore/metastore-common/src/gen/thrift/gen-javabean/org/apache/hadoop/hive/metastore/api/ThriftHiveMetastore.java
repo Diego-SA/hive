@@ -95,7 +95,7 @@ package org.apache.hadoop.hive.metastore.api;
 
     public void add_check_constraint(AddCheckConstraintRequest req) throws NoSuchObjectException, MetaException, org.apache.thrift.TException;
 
-    public Table translate_table_dryrun(Table tbl) throws AlreadyExistsException, InvalidObjectException, MetaException, NoSuchObjectException, org.apache.thrift.TException;
+    public Table translate_table_dryrun(CreateTableRequest request) throws AlreadyExistsException, InvalidObjectException, MetaException, NoSuchObjectException, org.apache.thrift.TException;
 
     public void drop_table(java.lang.String dbname, java.lang.String name, boolean deleteData) throws NoSuchObjectException, MetaException, org.apache.thrift.TException;
 
@@ -631,7 +631,7 @@ package org.apache.hadoop.hive.metastore.api;
 
     public void add_check_constraint(AddCheckConstraintRequest req, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
 
-    public void translate_table_dryrun(Table tbl, org.apache.thrift.async.AsyncMethodCallback<Table> resultHandler) throws org.apache.thrift.TException;
+    public void translate_table_dryrun(CreateTableRequest request, org.apache.thrift.async.AsyncMethodCallback<Table> resultHandler) throws org.apache.thrift.TException;
 
     public void drop_table(java.lang.String dbname, java.lang.String name, boolean deleteData, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
 
@@ -2264,16 +2264,16 @@ package org.apache.hadoop.hive.metastore.api;
       return;
     }
 
-    public Table translate_table_dryrun(Table tbl) throws AlreadyExistsException, InvalidObjectException, MetaException, NoSuchObjectException, org.apache.thrift.TException
+    public Table translate_table_dryrun(CreateTableRequest request) throws AlreadyExistsException, InvalidObjectException, MetaException, NoSuchObjectException, org.apache.thrift.TException
     {
-      send_translate_table_dryrun(tbl);
+      send_translate_table_dryrun(request);
       return recv_translate_table_dryrun();
     }
 
-    public void send_translate_table_dryrun(Table tbl) throws org.apache.thrift.TException
+    public void send_translate_table_dryrun(CreateTableRequest request) throws org.apache.thrift.TException
     {
       translate_table_dryrun_args args = new translate_table_dryrun_args();
-      args.setTbl(tbl);
+      args.setRequest(request);
       sendBase("translate_table_dryrun", args);
     }
 
@@ -9983,24 +9983,24 @@ package org.apache.hadoop.hive.metastore.api;
       }
     }
 
-    public void translate_table_dryrun(Table tbl, org.apache.thrift.async.AsyncMethodCallback<Table> resultHandler) throws org.apache.thrift.TException {
+    public void translate_table_dryrun(CreateTableRequest request, org.apache.thrift.async.AsyncMethodCallback<Table> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      translate_table_dryrun_call method_call = new translate_table_dryrun_call(tbl, resultHandler, this, ___protocolFactory, ___transport);
+      translate_table_dryrun_call method_call = new translate_table_dryrun_call(request, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
     @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class translate_table_dryrun_call extends org.apache.thrift.async.TAsyncMethodCall<Table> {
-      private Table tbl;
-      public translate_table_dryrun_call(Table tbl, org.apache.thrift.async.AsyncMethodCallback<Table> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private CreateTableRequest request;
+      public translate_table_dryrun_call(CreateTableRequest request, org.apache.thrift.async.AsyncMethodCallback<Table> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
-        this.tbl = tbl;
+        this.request = request;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
         prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("translate_table_dryrun", org.apache.thrift.protocol.TMessageType.CALL, 0));
         translate_table_dryrun_args args = new translate_table_dryrun_args();
-        args.setTbl(tbl);
+        args.setRequest(request);
         args.write(prot);
         prot.writeMessageEnd();
       }
@@ -19246,7 +19246,7 @@ package org.apache.hadoop.hive.metastore.api;
       public translate_table_dryrun_result getResult(I iface, translate_table_dryrun_args args) throws org.apache.thrift.TException {
         translate_table_dryrun_result result = new translate_table_dryrun_result();
         try {
-          result.success = iface.translate_table_dryrun(args.tbl);
+          result.success = iface.translate_table_dryrun(args.request);
         } catch (AlreadyExistsException o1) {
           result.o1 = o1;
         } catch (InvalidObjectException o2) {
@@ -29222,7 +29222,7 @@ package org.apache.hadoop.hive.metastore.api;
       }
 
       public void start(I iface, translate_table_dryrun_args args, org.apache.thrift.async.AsyncMethodCallback<Table> resultHandler) throws org.apache.thrift.TException {
-        iface.translate_table_dryrun(args.tbl,resultHandler);
+        iface.translate_table_dryrun(args.request,resultHandler);
       }
     }
 
@@ -83976,16 +83976,16 @@ package org.apache.hadoop.hive.metastore.api;
   @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class translate_table_dryrun_args implements org.apache.thrift.TBase<translate_table_dryrun_args, translate_table_dryrun_args._Fields>, java.io.Serializable, Cloneable, Comparable<translate_table_dryrun_args>   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("translate_table_dryrun_args");
 
-    private static final org.apache.thrift.protocol.TField TBL_FIELD_DESC = new org.apache.thrift.protocol.TField("tbl", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+    private static final org.apache.thrift.protocol.TField REQUEST_FIELD_DESC = new org.apache.thrift.protocol.TField("request", org.apache.thrift.protocol.TType.STRUCT, (short)1);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new translate_table_dryrun_argsStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new translate_table_dryrun_argsTupleSchemeFactory();
 
-    private @org.apache.thrift.annotation.Nullable Table tbl; // required
+    private @org.apache.thrift.annotation.Nullable CreateTableRequest request; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      TBL((short)1, "tbl");
+      REQUEST((short)1, "request");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -84001,8 +84001,8 @@ package org.apache.hadoop.hive.metastore.api;
       @org.apache.thrift.annotation.Nullable
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
-          case 1: // TBL
-            return TBL;
+          case 1: // REQUEST
+            return REQUEST;
           default:
             return null;
         }
@@ -84047,8 +84047,8 @@ package org.apache.hadoop.hive.metastore.api;
     public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.TBL, new org.apache.thrift.meta_data.FieldMetaData("tbl", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Table.class)));
+      tmpMap.put(_Fields.REQUEST, new org.apache.thrift.meta_data.FieldMetaData("request", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, CreateTableRequest.class)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(translate_table_dryrun_args.class, metaDataMap);
     }
@@ -84057,18 +84057,18 @@ package org.apache.hadoop.hive.metastore.api;
     }
 
     public translate_table_dryrun_args(
-      Table tbl)
+      CreateTableRequest request)
     {
       this();
-      this.tbl = tbl;
+      this.request = request;
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
     public translate_table_dryrun_args(translate_table_dryrun_args other) {
-      if (other.isSetTbl()) {
-        this.tbl = new Table(other.tbl);
+      if (other.isSetRequest()) {
+        this.request = new CreateTableRequest(other.request);
       }
     }
 
@@ -84078,40 +84078,40 @@ package org.apache.hadoop.hive.metastore.api;
 
     @Override
     public void clear() {
-      this.tbl = null;
+      this.request = null;
     }
 
     @org.apache.thrift.annotation.Nullable
-    public Table getTbl() {
-      return this.tbl;
+    public CreateTableRequest getRequest() {
+      return this.request;
     }
 
-    public void setTbl(@org.apache.thrift.annotation.Nullable Table tbl) {
-      this.tbl = tbl;
+    public void setRequest(@org.apache.thrift.annotation.Nullable CreateTableRequest request) {
+      this.request = request;
     }
 
-    public void unsetTbl() {
-      this.tbl = null;
+    public void unsetRequest() {
+      this.request = null;
     }
 
-    /** Returns true if field tbl is set (has been assigned a value) and false otherwise */
-    public boolean isSetTbl() {
-      return this.tbl != null;
+    /** Returns true if field request is set (has been assigned a value) and false otherwise */
+    public boolean isSetRequest() {
+      return this.request != null;
     }
 
-    public void setTblIsSet(boolean value) {
+    public void setRequestIsSet(boolean value) {
       if (!value) {
-        this.tbl = null;
+        this.request = null;
       }
     }
 
     public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
       switch (field) {
-      case TBL:
+      case REQUEST:
         if (value == null) {
-          unsetTbl();
+          unsetRequest();
         } else {
-          setTbl((Table)value);
+          setRequest((CreateTableRequest)value);
         }
         break;
 
@@ -84121,8 +84121,8 @@ package org.apache.hadoop.hive.metastore.api;
     @org.apache.thrift.annotation.Nullable
     public java.lang.Object getFieldValue(_Fields field) {
       switch (field) {
-      case TBL:
-        return getTbl();
+      case REQUEST:
+        return getRequest();
 
       }
       throw new java.lang.IllegalStateException();
@@ -84135,8 +84135,8 @@ package org.apache.hadoop.hive.metastore.api;
       }
 
       switch (field) {
-      case TBL:
-        return isSetTbl();
+      case REQUEST:
+        return isSetRequest();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -84154,12 +84154,12 @@ package org.apache.hadoop.hive.metastore.api;
       if (this == that)
         return true;
 
-      boolean this_present_tbl = true && this.isSetTbl();
-      boolean that_present_tbl = true && that.isSetTbl();
-      if (this_present_tbl || that_present_tbl) {
-        if (!(this_present_tbl && that_present_tbl))
+      boolean this_present_request = true && this.isSetRequest();
+      boolean that_present_request = true && that.isSetRequest();
+      if (this_present_request || that_present_request) {
+        if (!(this_present_request && that_present_request))
           return false;
-        if (!this.tbl.equals(that.tbl))
+        if (!this.request.equals(that.request))
           return false;
       }
 
@@ -84170,9 +84170,9 @@ package org.apache.hadoop.hive.metastore.api;
     public int hashCode() {
       int hashCode = 1;
 
-      hashCode = hashCode * 8191 + ((isSetTbl()) ? 131071 : 524287);
-      if (isSetTbl())
-        hashCode = hashCode * 8191 + tbl.hashCode();
+      hashCode = hashCode * 8191 + ((isSetRequest()) ? 131071 : 524287);
+      if (isSetRequest())
+        hashCode = hashCode * 8191 + request.hashCode();
 
       return hashCode;
     }
@@ -84185,12 +84185,12 @@ package org.apache.hadoop.hive.metastore.api;
 
       int lastComparison = 0;
 
-      lastComparison = java.lang.Boolean.compare(isSetTbl(), other.isSetTbl());
+      lastComparison = java.lang.Boolean.compare(isSetRequest(), other.isSetRequest());
       if (lastComparison != 0) {
         return lastComparison;
       }
-      if (isSetTbl()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.tbl, other.tbl);
+      if (isSetRequest()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.request, other.request);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -84216,11 +84216,11 @@ package org.apache.hadoop.hive.metastore.api;
       java.lang.StringBuilder sb = new java.lang.StringBuilder("translate_table_dryrun_args(");
       boolean first = true;
 
-      sb.append("tbl:");
-      if (this.tbl == null) {
+      sb.append("request:");
+      if (this.request == null) {
         sb.append("null");
       } else {
-        sb.append(this.tbl);
+        sb.append(this.request);
       }
       first = false;
       sb.append(")");
@@ -84230,8 +84230,8 @@ package org.apache.hadoop.hive.metastore.api;
     public void validate() throws org.apache.thrift.TException {
       // check for required fields
       // check for sub-struct validity
-      if (tbl != null) {
-        tbl.validate();
+      if (request != null) {
+        request.validate();
       }
     }
 
@@ -84269,11 +84269,11 @@ package org.apache.hadoop.hive.metastore.api;
             break;
           }
           switch (schemeField.id) {
-            case 1: // TBL
+            case 1: // REQUEST
               if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.tbl = new Table();
-                struct.tbl.read(iprot);
-                struct.setTblIsSet(true);
+                struct.request = new CreateTableRequest();
+                struct.request.read(iprot);
+                struct.setRequestIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
@@ -84291,9 +84291,9 @@ package org.apache.hadoop.hive.metastore.api;
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
-        if (struct.tbl != null) {
-          oprot.writeFieldBegin(TBL_FIELD_DESC);
-          struct.tbl.write(oprot);
+        if (struct.request != null) {
+          oprot.writeFieldBegin(REQUEST_FIELD_DESC);
+          struct.request.write(oprot);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -84314,12 +84314,12 @@ package org.apache.hadoop.hive.metastore.api;
       public void write(org.apache.thrift.protocol.TProtocol prot, translate_table_dryrun_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
         java.util.BitSet optionals = new java.util.BitSet();
-        if (struct.isSetTbl()) {
+        if (struct.isSetRequest()) {
           optionals.set(0);
         }
         oprot.writeBitSet(optionals, 1);
-        if (struct.isSetTbl()) {
-          struct.tbl.write(oprot);
+        if (struct.isSetRequest()) {
+          struct.request.write(oprot);
         }
       }
 
@@ -84328,9 +84328,9 @@ package org.apache.hadoop.hive.metastore.api;
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
         java.util.BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
-          struct.tbl = new Table();
-          struct.tbl.read(iprot);
-          struct.setTblIsSet(true);
+          struct.request = new CreateTableRequest();
+          struct.request.read(iprot);
+          struct.setRequestIsSet(true);
         }
       }
     }
