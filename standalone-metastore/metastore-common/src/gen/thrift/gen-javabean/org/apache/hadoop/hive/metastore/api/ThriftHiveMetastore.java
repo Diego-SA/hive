@@ -411,6 +411,8 @@ package org.apache.hadoop.hive.metastore.api;
 
     public void mark_failed(CompactionInfoStruct cr) throws MetaException, org.apache.thrift.TException;
 
+    public void mark_refused(CompactionInfoStruct cr) throws MetaException, org.apache.thrift.TException;
+
     public boolean update_compaction_metrics_data(CompactionMetricsDataStruct data) throws MetaException, org.apache.thrift.TException;
 
     public void remove_compaction_metrics_data(CompactionMetricsDataRequest request) throws MetaException, org.apache.thrift.TException;
@@ -950,6 +952,8 @@ package org.apache.hadoop.hive.metastore.api;
     public void mark_compacted(CompactionInfoStruct cr, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
 
     public void mark_failed(CompactionInfoStruct cr, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
+
+    public void mark_refused(CompactionInfoStruct cr, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
 
     public void update_compaction_metrics_data(CompactionMetricsDataStruct data, org.apache.thrift.async.AsyncMethodCallback<java.lang.Boolean> resultHandler) throws org.apache.thrift.TException;
 
@@ -6800,6 +6804,29 @@ package org.apache.hadoop.hive.metastore.api;
     {
       mark_failed_result result = new mark_failed_result();
       receiveBase(result, "mark_failed");
+      if (result.o1 != null) {
+        throw result.o1;
+      }
+      return;
+    }
+
+    public void mark_refused(CompactionInfoStruct cr) throws MetaException, org.apache.thrift.TException
+    {
+      send_mark_refused(cr);
+      recv_mark_refused();
+    }
+
+    public void send_mark_refused(CompactionInfoStruct cr) throws org.apache.thrift.TException
+    {
+      mark_refused_args args = new mark_refused_args();
+      args.setCr(cr);
+      sendBase("mark_refused", args);
+    }
+
+    public void recv_mark_refused() throws MetaException, org.apache.thrift.TException
+    {
+      mark_refused_result result = new mark_refused_result();
+      receiveBase(result, "mark_refused");
       if (result.o1 != null) {
         throw result.o1;
       }
@@ -15546,6 +15573,38 @@ package org.apache.hadoop.hive.metastore.api;
       }
     }
 
+    public void mark_refused(CompactionInfoStruct cr, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      mark_refused_call method_call = new mark_refused_call(cr, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class mark_refused_call extends org.apache.thrift.async.TAsyncMethodCall<Void> {
+      private CompactionInfoStruct cr;
+      public mark_refused_call(CompactionInfoStruct cr, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.cr = cr;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("mark_refused", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        mark_refused_args args = new mark_refused_args();
+        args.setCr(cr);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public Void getResult() throws MetaException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new java.lang.IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return null;
+      }
+    }
+
     public void update_compaction_metrics_data(CompactionMetricsDataStruct data, org.apache.thrift.async.AsyncMethodCallback<java.lang.Boolean> resultHandler) throws org.apache.thrift.TException {
       checkReady();
       update_compaction_metrics_data_call method_call = new update_compaction_metrics_data_call(data, resultHandler, this, ___protocolFactory, ___transport);
@@ -18003,6 +18062,7 @@ package org.apache.hadoop.hive.metastore.api;
       processMap.put("mark_cleaned", new mark_cleaned());
       processMap.put("mark_compacted", new mark_compacted());
       processMap.put("mark_failed", new mark_failed());
+      processMap.put("mark_refused", new mark_refused());
       processMap.put("update_compaction_metrics_data", new update_compaction_metrics_data());
       processMap.put("remove_compaction_metrics_data", new remove_compaction_metrics_data());
       processMap.put("set_hadoop_jobid", new set_hadoop_jobid());
@@ -24170,6 +24230,35 @@ package org.apache.hadoop.hive.metastore.api;
       }
     }
 
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class mark_refused<I extends Iface> extends org.apache.thrift.ProcessFunction<I, mark_refused_args> {
+      public mark_refused() {
+        super("mark_refused");
+      }
+
+      public mark_refused_args getEmptyArgsInstance() {
+        return new mark_refused_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      @Override
+      protected boolean rethrowUnhandledExceptions() {
+        return false;
+      }
+
+      public mark_refused_result getResult(I iface, mark_refused_args args) throws org.apache.thrift.TException {
+        mark_refused_result result = new mark_refused_result();
+        try {
+          iface.mark_refused(args.cr);
+        } catch (MetaException o1) {
+          result.o1 = o1;
+        }
+        return result;
+      }
+    }
+
     @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class update_compaction_metrics_data<I extends Iface> extends org.apache.thrift.ProcessFunction<I, update_compaction_metrics_data_args> {
       public update_compaction_metrics_data() {
         super("update_compaction_metrics_data");
@@ -26459,6 +26548,7 @@ package org.apache.hadoop.hive.metastore.api;
       processMap.put("mark_cleaned", new mark_cleaned());
       processMap.put("mark_compacted", new mark_compacted());
       processMap.put("mark_failed", new mark_failed());
+      processMap.put("mark_refused", new mark_refused());
       processMap.put("update_compaction_metrics_data", new update_compaction_metrics_data());
       processMap.put("remove_compaction_metrics_data", new remove_compaction_metrics_data());
       processMap.put("set_hadoop_jobid", new set_hadoop_jobid());
@@ -40093,6 +40183,70 @@ package org.apache.hadoop.hive.metastore.api;
 
       public void start(I iface, mark_failed_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
         iface.mark_failed(args.cr,resultHandler);
+      }
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class mark_refused<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, mark_refused_args, Void> {
+      public mark_refused() {
+        super("mark_refused");
+      }
+
+      public mark_refused_args getEmptyArgsInstance() {
+        return new mark_refused_args();
+      }
+
+      public org.apache.thrift.async.AsyncMethodCallback<Void> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new org.apache.thrift.async.AsyncMethodCallback<Void>() { 
+          public void onComplete(Void o) {
+            mark_refused_result result = new mark_refused_result();
+            try {
+              fcall.sendResponse(fb, result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+            } catch (org.apache.thrift.transport.TTransportException e) {
+              _LOGGER.error("TTransportException writing to internal frame buffer", e);
+              fb.close();
+            } catch (java.lang.Exception e) {
+              _LOGGER.error("Exception writing to internal frame buffer", e);
+              onError(e);
+            }
+          }
+          public void onError(java.lang.Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TSerializable msg;
+            mark_refused_result result = new mark_refused_result();
+            if (e instanceof MetaException) {
+              result.o1 = (MetaException) e;
+              result.setO1IsSet(true);
+              msg = result;
+            } else if (e instanceof org.apache.thrift.transport.TTransportException) {
+              _LOGGER.error("TTransportException inside handler", e);
+              fb.close();
+              return;
+            } else if (e instanceof org.apache.thrift.TApplicationException) {
+              _LOGGER.error("TApplicationException inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TApplicationException)e;
+            } else {
+              _LOGGER.error("Exception inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+            } catch (java.lang.Exception ex) {
+              _LOGGER.error("Exception writing to internal frame buffer", ex);
+              fb.close();
+            }
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, mark_refused_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
+        iface.mark_refused(args.cr,resultHandler);
       }
     }
 
@@ -244506,6 +244660,737 @@ package org.apache.hadoop.hive.metastore.api;
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, mark_failed_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.o1 = new MetaException();
+          struct.o1.read(iprot);
+          struct.setO1IsSet(true);
+        }
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class mark_refused_args implements org.apache.thrift.TBase<mark_refused_args, mark_refused_args._Fields>, java.io.Serializable, Cloneable, Comparable<mark_refused_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("mark_refused_args");
+
+    private static final org.apache.thrift.protocol.TField CR_FIELD_DESC = new org.apache.thrift.protocol.TField("cr", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new mark_refused_argsStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new mark_refused_argsTupleSchemeFactory();
+
+    private @org.apache.thrift.annotation.Nullable CompactionInfoStruct cr; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      CR((short)1, "cr");
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // CR
+            return CR;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.CR, new org.apache.thrift.meta_data.FieldMetaData("cr", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, CompactionInfoStruct.class)));
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(mark_refused_args.class, metaDataMap);
+    }
+
+    public mark_refused_args() {
+    }
+
+    public mark_refused_args(
+      CompactionInfoStruct cr)
+    {
+      this();
+      this.cr = cr;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public mark_refused_args(mark_refused_args other) {
+      if (other.isSetCr()) {
+        this.cr = new CompactionInfoStruct(other.cr);
+      }
+    }
+
+    public mark_refused_args deepCopy() {
+      return new mark_refused_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.cr = null;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public CompactionInfoStruct getCr() {
+      return this.cr;
+    }
+
+    public void setCr(@org.apache.thrift.annotation.Nullable CompactionInfoStruct cr) {
+      this.cr = cr;
+    }
+
+    public void unsetCr() {
+      this.cr = null;
+    }
+
+    /** Returns true if field cr is set (has been assigned a value) and false otherwise */
+    public boolean isSetCr() {
+      return this.cr != null;
+    }
+
+    public void setCrIsSet(boolean value) {
+      if (!value) {
+        this.cr = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
+      switch (field) {
+      case CR:
+        if (value == null) {
+          unsetCr();
+        } else {
+          setCr((CompactionInfoStruct)value);
+        }
+        break;
+
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      case CR:
+        return getCr();
+
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      case CR:
+        return isSetCr();
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that instanceof mark_refused_args)
+        return this.equals((mark_refused_args)that);
+      return false;
+    }
+
+    public boolean equals(mark_refused_args that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      boolean this_present_cr = true && this.isSetCr();
+      boolean that_present_cr = true && that.isSetCr();
+      if (this_present_cr || that_present_cr) {
+        if (!(this_present_cr && that_present_cr))
+          return false;
+        if (!this.cr.equals(that.cr))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      hashCode = hashCode * 8191 + ((isSetCr()) ? 131071 : 524287);
+      if (isSetCr())
+        hashCode = hashCode * 8191 + cr.hashCode();
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(mark_refused_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = java.lang.Boolean.compare(isSetCr(), other.isSetCr());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetCr()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.cr, other.cr);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+    }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("mark_refused_args(");
+      boolean first = true;
+
+      sb.append("cr:");
+      if (this.cr == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.cr);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (cr != null) {
+        cr.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class mark_refused_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public mark_refused_argsStandardScheme getScheme() {
+        return new mark_refused_argsStandardScheme();
+      }
+    }
+
+    private static class mark_refused_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<mark_refused_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, mark_refused_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // CR
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.cr = new CompactionInfoStruct();
+                struct.cr.read(iprot);
+                struct.setCrIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, mark_refused_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.cr != null) {
+          oprot.writeFieldBegin(CR_FIELD_DESC);
+          struct.cr.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class mark_refused_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public mark_refused_argsTupleScheme getScheme() {
+        return new mark_refused_argsTupleScheme();
+      }
+    }
+
+    private static class mark_refused_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<mark_refused_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, mark_refused_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet optionals = new java.util.BitSet();
+        if (struct.isSetCr()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetCr()) {
+          struct.cr.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, mark_refused_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.cr = new CompactionInfoStruct();
+          struct.cr.read(iprot);
+          struct.setCrIsSet(true);
+        }
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class mark_refused_result implements org.apache.thrift.TBase<mark_refused_result, mark_refused_result._Fields>, java.io.Serializable, Cloneable, Comparable<mark_refused_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("mark_refused_result");
+
+    private static final org.apache.thrift.protocol.TField O1_FIELD_DESC = new org.apache.thrift.protocol.TField("o1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new mark_refused_resultStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new mark_refused_resultTupleSchemeFactory();
+
+    private @org.apache.thrift.annotation.Nullable MetaException o1; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      O1((short)1, "o1");
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // O1
+            return O1;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.O1, new org.apache.thrift.meta_data.FieldMetaData("o1", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, MetaException.class)));
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(mark_refused_result.class, metaDataMap);
+    }
+
+    public mark_refused_result() {
+    }
+
+    public mark_refused_result(
+      MetaException o1)
+    {
+      this();
+      this.o1 = o1;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public mark_refused_result(mark_refused_result other) {
+      if (other.isSetO1()) {
+        this.o1 = new MetaException(other.o1);
+      }
+    }
+
+    public mark_refused_result deepCopy() {
+      return new mark_refused_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.o1 = null;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public MetaException getO1() {
+      return this.o1;
+    }
+
+    public void setO1(@org.apache.thrift.annotation.Nullable MetaException o1) {
+      this.o1 = o1;
+    }
+
+    public void unsetO1() {
+      this.o1 = null;
+    }
+
+    /** Returns true if field o1 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO1() {
+      return this.o1 != null;
+    }
+
+    public void setO1IsSet(boolean value) {
+      if (!value) {
+        this.o1 = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
+      switch (field) {
+      case O1:
+        if (value == null) {
+          unsetO1();
+        } else {
+          setO1((MetaException)value);
+        }
+        break;
+
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      case O1:
+        return getO1();
+
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      case O1:
+        return isSetO1();
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that instanceof mark_refused_result)
+        return this.equals((mark_refused_result)that);
+      return false;
+    }
+
+    public boolean equals(mark_refused_result that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      boolean this_present_o1 = true && this.isSetO1();
+      boolean that_present_o1 = true && that.isSetO1();
+      if (this_present_o1 || that_present_o1) {
+        if (!(this_present_o1 && that_present_o1))
+          return false;
+        if (!this.o1.equals(that.o1))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      hashCode = hashCode * 8191 + ((isSetO1()) ? 131071 : 524287);
+      if (isSetO1())
+        hashCode = hashCode * 8191 + o1.hashCode();
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(mark_refused_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = java.lang.Boolean.compare(isSetO1(), other.isSetO1());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO1()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o1, other.o1);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+      }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("mark_refused_result(");
+      boolean first = true;
+
+      sb.append("o1:");
+      if (this.o1 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o1);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class mark_refused_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public mark_refused_resultStandardScheme getScheme() {
+        return new mark_refused_resultStandardScheme();
+      }
+    }
+
+    private static class mark_refused_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<mark_refused_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, mark_refused_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // O1
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o1 = new MetaException();
+                struct.o1.read(iprot);
+                struct.setO1IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, mark_refused_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.o1 != null) {
+          oprot.writeFieldBegin(O1_FIELD_DESC);
+          struct.o1.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class mark_refused_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public mark_refused_resultTupleScheme getScheme() {
+        return new mark_refused_resultTupleScheme();
+      }
+    }
+
+    private static class mark_refused_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<mark_refused_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, mark_refused_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet optionals = new java.util.BitSet();
+        if (struct.isSetO1()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetO1()) {
+          struct.o1.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, mark_refused_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
         java.util.BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
