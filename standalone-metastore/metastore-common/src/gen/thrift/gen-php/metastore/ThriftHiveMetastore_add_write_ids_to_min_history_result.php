@@ -16,39 +16,36 @@ use Thrift\Protocol\TProtocol;
 use Thrift\Protocol\TBinaryProtocolAccelerated;
 use Thrift\Exception\TApplicationException;
 
-class ThriftHiveMetastore_find_columns_with_stats_result
+class ThriftHiveMetastore_add_write_ids_to_min_history_result
 {
     static public $isValidate = false;
 
     static public $_TSPEC = array(
-        0 => array(
-            'var' => 'success',
+        1 => array(
+            'var' => 'o2',
             'isRequired' => false,
-            'type' => TType::LST,
-            'etype' => TType::STRING,
-            'elem' => array(
-                'type' => TType::STRING,
-                ),
+            'type' => TType::STRUCT,
+            'class' => '\metastore\MetaException',
         ),
     );
 
     /**
-     * @var string[]
+     * @var \metastore\MetaException
      */
-    public $success = null;
+    public $o2 = null;
 
     public function __construct($vals = null)
     {
         if (is_array($vals)) {
-            if (isset($vals['success'])) {
-                $this->success = $vals['success'];
+            if (isset($vals['o2'])) {
+                $this->o2 = $vals['o2'];
             }
         }
     }
 
     public function getName()
     {
-        return 'ThriftHiveMetastore_find_columns_with_stats_result';
+        return 'ThriftHiveMetastore_add_write_ids_to_min_history_result';
     }
 
 
@@ -65,18 +62,10 @@ class ThriftHiveMetastore_find_columns_with_stats_result
                 break;
             }
             switch ($fid) {
-                case 0:
-                    if ($ftype == TType::LST) {
-                        $this->success = array();
-                        $_size1793 = 0;
-                        $_etype1796 = 0;
-                        $xfer += $input->readListBegin($_etype1796, $_size1793);
-                        for ($_i1797 = 0; $_i1797 < $_size1793; ++$_i1797) {
-                            $elem1798 = null;
-                            $xfer += $input->readString($elem1798);
-                            $this->success []= $elem1798;
-                        }
-                        $xfer += $input->readListEnd();
+                case 1:
+                    if ($ftype == TType::STRUCT) {
+                        $this->o2 = new \metastore\MetaException();
+                        $xfer += $this->o2->read($input);
                     } else {
                         $xfer += $input->skip($ftype);
                     }
@@ -94,17 +83,10 @@ class ThriftHiveMetastore_find_columns_with_stats_result
     public function write($output)
     {
         $xfer = 0;
-        $xfer += $output->writeStructBegin('ThriftHiveMetastore_find_columns_with_stats_result');
-        if ($this->success !== null) {
-            if (!is_array($this->success)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('success', TType::LST, 0);
-            $output->writeListBegin(TType::STRING, count($this->success));
-            foreach ($this->success as $iter1799) {
-                $xfer += $output->writeString($iter1799);
-            }
-            $output->writeListEnd();
+        $xfer += $output->writeStructBegin('ThriftHiveMetastore_add_write_ids_to_min_history_result');
+        if ($this->o2 !== null) {
+            $xfer += $output->writeFieldBegin('o2', TType::STRUCT, 1);
+            $xfer += $this->o2->write($output);
             $xfer += $output->writeFieldEnd();
         }
         $xfer += $output->writeFieldStop();

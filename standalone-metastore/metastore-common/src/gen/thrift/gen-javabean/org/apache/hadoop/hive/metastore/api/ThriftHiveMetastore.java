@@ -373,6 +373,8 @@ package org.apache.hadoop.hive.metastore.api;
 
     public GetValidWriteIdsResponse get_valid_write_ids(GetValidWriteIdsRequest rqst) throws NoSuchTxnException, MetaException, org.apache.thrift.TException;
 
+    public void add_write_ids_to_min_history(long txnId, java.util.Map<java.lang.String,java.lang.Long> writeIds) throws MetaException, org.apache.thrift.TException;
+
     public AllocateTableWriteIdsResponse allocate_table_write_ids(AllocateTableWriteIdsRequest rqst) throws NoSuchTxnException, TxnAbortedException, MetaException, org.apache.thrift.TException;
 
     public MaxAllocatedTableWriteIdResponse get_max_allocated_table_write_id(MaxAllocatedTableWriteIdRequest rqst) throws MetaException, org.apache.thrift.TException;
@@ -920,6 +922,8 @@ package org.apache.hadoop.hive.metastore.api;
     public void repl_tbl_writeid_state(ReplTblWriteIdStateRequest rqst, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
 
     public void get_valid_write_ids(GetValidWriteIdsRequest rqst, org.apache.thrift.async.AsyncMethodCallback<GetValidWriteIdsResponse> resultHandler) throws org.apache.thrift.TException;
+
+    public void add_write_ids_to_min_history(long txnId, java.util.Map<java.lang.String,java.lang.Long> writeIds, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
 
     public void allocate_table_write_ids(AllocateTableWriteIdsRequest rqst, org.apache.thrift.async.AsyncMethodCallback<AllocateTableWriteIdsResponse> resultHandler) throws org.apache.thrift.TException;
 
@@ -6349,6 +6353,30 @@ package org.apache.hadoop.hive.metastore.api;
         throw result.o2;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "get_valid_write_ids failed: unknown result");
+    }
+
+    public void add_write_ids_to_min_history(long txnId, java.util.Map<java.lang.String,java.lang.Long> writeIds) throws MetaException, org.apache.thrift.TException
+    {
+      send_add_write_ids_to_min_history(txnId, writeIds);
+      recv_add_write_ids_to_min_history();
+    }
+
+    public void send_add_write_ids_to_min_history(long txnId, java.util.Map<java.lang.String,java.lang.Long> writeIds) throws org.apache.thrift.TException
+    {
+      add_write_ids_to_min_history_args args = new add_write_ids_to_min_history_args();
+      args.setTxnId(txnId);
+      args.setWriteIds(writeIds);
+      sendBase("add_write_ids_to_min_history", args);
+    }
+
+    public void recv_add_write_ids_to_min_history() throws MetaException, org.apache.thrift.TException
+    {
+      add_write_ids_to_min_history_result result = new add_write_ids_to_min_history_result();
+      receiveBase(result, "add_write_ids_to_min_history");
+      if (result.o2 != null) {
+        throw result.o2;
+      }
+      return;
     }
 
     public AllocateTableWriteIdsResponse allocate_table_write_ids(AllocateTableWriteIdsRequest rqst) throws NoSuchTxnException, TxnAbortedException, MetaException, org.apache.thrift.TException
@@ -15054,6 +15082,41 @@ package org.apache.hadoop.hive.metastore.api;
       }
     }
 
+    public void add_write_ids_to_min_history(long txnId, java.util.Map<java.lang.String,java.lang.Long> writeIds, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      add_write_ids_to_min_history_call method_call = new add_write_ids_to_min_history_call(txnId, writeIds, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class add_write_ids_to_min_history_call extends org.apache.thrift.async.TAsyncMethodCall<Void> {
+      private long txnId;
+      private java.util.Map<java.lang.String,java.lang.Long> writeIds;
+      public add_write_ids_to_min_history_call(long txnId, java.util.Map<java.lang.String,java.lang.Long> writeIds, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.txnId = txnId;
+        this.writeIds = writeIds;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("add_write_ids_to_min_history", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        add_write_ids_to_min_history_args args = new add_write_ids_to_min_history_args();
+        args.setTxnId(txnId);
+        args.setWriteIds(writeIds);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public Void getResult() throws MetaException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new java.lang.IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return null;
+      }
+    }
+
     public void allocate_table_write_ids(AllocateTableWriteIdsRequest rqst, org.apache.thrift.async.AsyncMethodCallback<AllocateTableWriteIdsResponse> resultHandler) throws org.apache.thrift.TException {
       checkReady();
       allocate_table_write_ids_call method_call = new allocate_table_write_ids_call(rqst, resultHandler, this, ___protocolFactory, ___transport);
@@ -18237,6 +18300,7 @@ package org.apache.hadoop.hive.metastore.api;
       processMap.put("get_latest_txnid_in_conflict", new get_latest_txnid_in_conflict());
       processMap.put("repl_tbl_writeid_state", new repl_tbl_writeid_state());
       processMap.put("get_valid_write_ids", new get_valid_write_ids());
+      processMap.put("add_write_ids_to_min_history", new add_write_ids_to_min_history());
       processMap.put("allocate_table_write_ids", new allocate_table_write_ids());
       processMap.put("get_max_allocated_table_write_id", new get_max_allocated_table_write_id());
       processMap.put("seed_write_id", new seed_write_id());
@@ -23886,6 +23950,35 @@ package org.apache.hadoop.hive.metastore.api;
       }
     }
 
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class add_write_ids_to_min_history<I extends Iface> extends org.apache.thrift.ProcessFunction<I, add_write_ids_to_min_history_args> {
+      public add_write_ids_to_min_history() {
+        super("add_write_ids_to_min_history");
+      }
+
+      public add_write_ids_to_min_history_args getEmptyArgsInstance() {
+        return new add_write_ids_to_min_history_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      @Override
+      protected boolean rethrowUnhandledExceptions() {
+        return false;
+      }
+
+      public add_write_ids_to_min_history_result getResult(I iface, add_write_ids_to_min_history_args args) throws org.apache.thrift.TException {
+        add_write_ids_to_min_history_result result = new add_write_ids_to_min_history_result();
+        try {
+          iface.add_write_ids_to_min_history(args.txnId, args.writeIds);
+        } catch (MetaException o2) {
+          result.o2 = o2;
+        }
+        return result;
+      }
+    }
+
     @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class allocate_table_write_ids<I extends Iface> extends org.apache.thrift.ProcessFunction<I, allocate_table_write_ids_args> {
       public allocate_table_write_ids() {
         super("allocate_table_write_ids");
@@ -26814,6 +26907,7 @@ package org.apache.hadoop.hive.metastore.api;
       processMap.put("get_latest_txnid_in_conflict", new get_latest_txnid_in_conflict());
       processMap.put("repl_tbl_writeid_state", new repl_tbl_writeid_state());
       processMap.put("get_valid_write_ids", new get_valid_write_ids());
+      processMap.put("add_write_ids_to_min_history", new add_write_ids_to_min_history());
       processMap.put("allocate_table_write_ids", new allocate_table_write_ids());
       processMap.put("get_max_allocated_table_write_id", new get_max_allocated_table_write_id());
       processMap.put("seed_write_id", new seed_write_id());
@@ -39241,6 +39335,70 @@ package org.apache.hadoop.hive.metastore.api;
 
       public void start(I iface, get_valid_write_ids_args args, org.apache.thrift.async.AsyncMethodCallback<GetValidWriteIdsResponse> resultHandler) throws org.apache.thrift.TException {
         iface.get_valid_write_ids(args.rqst,resultHandler);
+      }
+    }
+
+    @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class add_write_ids_to_min_history<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, add_write_ids_to_min_history_args, Void> {
+      public add_write_ids_to_min_history() {
+        super("add_write_ids_to_min_history");
+      }
+
+      public add_write_ids_to_min_history_args getEmptyArgsInstance() {
+        return new add_write_ids_to_min_history_args();
+      }
+
+      public org.apache.thrift.async.AsyncMethodCallback<Void> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new org.apache.thrift.async.AsyncMethodCallback<Void>() { 
+          public void onComplete(Void o) {
+            add_write_ids_to_min_history_result result = new add_write_ids_to_min_history_result();
+            try {
+              fcall.sendResponse(fb, result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+            } catch (org.apache.thrift.transport.TTransportException e) {
+              _LOGGER.error("TTransportException writing to internal frame buffer", e);
+              fb.close();
+            } catch (java.lang.Exception e) {
+              _LOGGER.error("Exception writing to internal frame buffer", e);
+              onError(e);
+            }
+          }
+          public void onError(java.lang.Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TSerializable msg;
+            add_write_ids_to_min_history_result result = new add_write_ids_to_min_history_result();
+            if (e instanceof MetaException) {
+              result.o2 = (MetaException) e;
+              result.setO2IsSet(true);
+              msg = result;
+            } else if (e instanceof org.apache.thrift.transport.TTransportException) {
+              _LOGGER.error("TTransportException inside handler", e);
+              fb.close();
+              return;
+            } else if (e instanceof org.apache.thrift.TApplicationException) {
+              _LOGGER.error("TApplicationException inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TApplicationException)e;
+            } else {
+              _LOGGER.error("Exception inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+            } catch (java.lang.Exception ex) {
+              _LOGGER.error("Exception writing to internal frame buffer", ex);
+              fb.close();
+            }
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, add_write_ids_to_min_history_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
+        iface.add_write_ids_to_min_history(args.txnId, args.writeIds,resultHandler);
       }
     }
 
@@ -229954,6 +230112,883 @@ package org.apache.hadoop.hive.metastore.api;
     }
   }
 
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class add_write_ids_to_min_history_args implements org.apache.thrift.TBase<add_write_ids_to_min_history_args, add_write_ids_to_min_history_args._Fields>, java.io.Serializable, Cloneable, Comparable<add_write_ids_to_min_history_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("add_write_ids_to_min_history_args");
+
+    private static final org.apache.thrift.protocol.TField TXN_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("txnId", org.apache.thrift.protocol.TType.I64, (short)1);
+    private static final org.apache.thrift.protocol.TField WRITE_IDS_FIELD_DESC = new org.apache.thrift.protocol.TField("writeIds", org.apache.thrift.protocol.TType.MAP, (short)2);
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new add_write_ids_to_min_history_argsStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new add_write_ids_to_min_history_argsTupleSchemeFactory();
+
+    private long txnId; // required
+    private @org.apache.thrift.annotation.Nullable java.util.Map<java.lang.String,java.lang.Long> writeIds; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      TXN_ID((short)1, "txnId"),
+      WRITE_IDS((short)2, "writeIds");
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // TXN_ID
+            return TXN_ID;
+          case 2: // WRITE_IDS
+            return WRITE_IDS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    private static final int __TXNID_ISSET_ID = 0;
+    private byte __isset_bitfield = 0;
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.TXN_ID, new org.apache.thrift.meta_data.FieldMetaData("txnId", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64)));
+      tmpMap.put(_Fields.WRITE_IDS, new org.apache.thrift.meta_data.FieldMetaData("writeIds", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.MapMetaData(org.apache.thrift.protocol.TType.MAP, 
+              new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING), 
+              new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64))));
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(add_write_ids_to_min_history_args.class, metaDataMap);
+    }
+
+    public add_write_ids_to_min_history_args() {
+    }
+
+    public add_write_ids_to_min_history_args(
+      long txnId,
+      java.util.Map<java.lang.String,java.lang.Long> writeIds)
+    {
+      this();
+      this.txnId = txnId;
+      setTxnIdIsSet(true);
+      this.writeIds = writeIds;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public add_write_ids_to_min_history_args(add_write_ids_to_min_history_args other) {
+      __isset_bitfield = other.__isset_bitfield;
+      this.txnId = other.txnId;
+      if (other.isSetWriteIds()) {
+        java.util.Map<java.lang.String,java.lang.Long> __this__writeIds = new java.util.HashMap<java.lang.String,java.lang.Long>(other.writeIds);
+        this.writeIds = __this__writeIds;
+      }
+    }
+
+    public add_write_ids_to_min_history_args deepCopy() {
+      return new add_write_ids_to_min_history_args(this);
+    }
+
+    @Override
+    public void clear() {
+      setTxnIdIsSet(false);
+      this.txnId = 0;
+      this.writeIds = null;
+    }
+
+    public long getTxnId() {
+      return this.txnId;
+    }
+
+    public void setTxnId(long txnId) {
+      this.txnId = txnId;
+      setTxnIdIsSet(true);
+    }
+
+    public void unsetTxnId() {
+      __isset_bitfield = org.apache.thrift.EncodingUtils.clearBit(__isset_bitfield, __TXNID_ISSET_ID);
+    }
+
+    /** Returns true if field txnId is set (has been assigned a value) and false otherwise */
+    public boolean isSetTxnId() {
+      return org.apache.thrift.EncodingUtils.testBit(__isset_bitfield, __TXNID_ISSET_ID);
+    }
+
+    public void setTxnIdIsSet(boolean value) {
+      __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __TXNID_ISSET_ID, value);
+    }
+
+    public int getWriteIdsSize() {
+      return (this.writeIds == null) ? 0 : this.writeIds.size();
+    }
+
+    public void putToWriteIds(java.lang.String key, long val) {
+      if (this.writeIds == null) {
+        this.writeIds = new java.util.HashMap<java.lang.String,java.lang.Long>();
+      }
+      this.writeIds.put(key, val);
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.util.Map<java.lang.String,java.lang.Long> getWriteIds() {
+      return this.writeIds;
+    }
+
+    public void setWriteIds(@org.apache.thrift.annotation.Nullable java.util.Map<java.lang.String,java.lang.Long> writeIds) {
+      this.writeIds = writeIds;
+    }
+
+    public void unsetWriteIds() {
+      this.writeIds = null;
+    }
+
+    /** Returns true if field writeIds is set (has been assigned a value) and false otherwise */
+    public boolean isSetWriteIds() {
+      return this.writeIds != null;
+    }
+
+    public void setWriteIdsIsSet(boolean value) {
+      if (!value) {
+        this.writeIds = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
+      switch (field) {
+      case TXN_ID:
+        if (value == null) {
+          unsetTxnId();
+        } else {
+          setTxnId((java.lang.Long)value);
+        }
+        break;
+
+      case WRITE_IDS:
+        if (value == null) {
+          unsetWriteIds();
+        } else {
+          setWriteIds((java.util.Map<java.lang.String,java.lang.Long>)value);
+        }
+        break;
+
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      case TXN_ID:
+        return getTxnId();
+
+      case WRITE_IDS:
+        return getWriteIds();
+
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      case TXN_ID:
+        return isSetTxnId();
+      case WRITE_IDS:
+        return isSetWriteIds();
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that instanceof add_write_ids_to_min_history_args)
+        return this.equals((add_write_ids_to_min_history_args)that);
+      return false;
+    }
+
+    public boolean equals(add_write_ids_to_min_history_args that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      boolean this_present_txnId = true;
+      boolean that_present_txnId = true;
+      if (this_present_txnId || that_present_txnId) {
+        if (!(this_present_txnId && that_present_txnId))
+          return false;
+        if (this.txnId != that.txnId)
+          return false;
+      }
+
+      boolean this_present_writeIds = true && this.isSetWriteIds();
+      boolean that_present_writeIds = true && that.isSetWriteIds();
+      if (this_present_writeIds || that_present_writeIds) {
+        if (!(this_present_writeIds && that_present_writeIds))
+          return false;
+        if (!this.writeIds.equals(that.writeIds))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(txnId);
+
+      hashCode = hashCode * 8191 + ((isSetWriteIds()) ? 131071 : 524287);
+      if (isSetWriteIds())
+        hashCode = hashCode * 8191 + writeIds.hashCode();
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(add_write_ids_to_min_history_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = java.lang.Boolean.compare(isSetTxnId(), other.isSetTxnId());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetTxnId()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.txnId, other.txnId);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.compare(isSetWriteIds(), other.isSetWriteIds());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetWriteIds()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.writeIds, other.writeIds);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+    }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("add_write_ids_to_min_history_args(");
+      boolean first = true;
+
+      sb.append("txnId:");
+      sb.append(this.txnId);
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("writeIds:");
+      if (this.writeIds == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.writeIds);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+        __isset_bitfield = 0;
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class add_write_ids_to_min_history_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public add_write_ids_to_min_history_argsStandardScheme getScheme() {
+        return new add_write_ids_to_min_history_argsStandardScheme();
+      }
+    }
+
+    private static class add_write_ids_to_min_history_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<add_write_ids_to_min_history_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, add_write_ids_to_min_history_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // TXN_ID
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.txnId = iprot.readI64();
+                struct.setTxnIdIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // WRITE_IDS
+              if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
+                {
+                  org.apache.thrift.protocol.TMap _map2028 = iprot.readMapBegin();
+                  struct.writeIds = new java.util.HashMap<java.lang.String,java.lang.Long>(2*_map2028.size);
+                  @org.apache.thrift.annotation.Nullable java.lang.String _key2029;
+                  long _val2030;
+                  for (int _i2031 = 0; _i2031 < _map2028.size; ++_i2031)
+                  {
+                    _key2029 = iprot.readString();
+                    _val2030 = iprot.readI64();
+                    struct.writeIds.put(_key2029, _val2030);
+                  }
+                  iprot.readMapEnd();
+                }
+                struct.setWriteIdsIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, add_write_ids_to_min_history_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        oprot.writeFieldBegin(TXN_ID_FIELD_DESC);
+        oprot.writeI64(struct.txnId);
+        oprot.writeFieldEnd();
+        if (struct.writeIds != null) {
+          oprot.writeFieldBegin(WRITE_IDS_FIELD_DESC);
+          {
+            oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.I64, struct.writeIds.size()));
+            for (java.util.Map.Entry<java.lang.String, java.lang.Long> _iter2032 : struct.writeIds.entrySet())
+            {
+              oprot.writeString(_iter2032.getKey());
+              oprot.writeI64(_iter2032.getValue());
+            }
+            oprot.writeMapEnd();
+          }
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class add_write_ids_to_min_history_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public add_write_ids_to_min_history_argsTupleScheme getScheme() {
+        return new add_write_ids_to_min_history_argsTupleScheme();
+      }
+    }
+
+    private static class add_write_ids_to_min_history_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<add_write_ids_to_min_history_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, add_write_ids_to_min_history_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet optionals = new java.util.BitSet();
+        if (struct.isSetTxnId()) {
+          optionals.set(0);
+        }
+        if (struct.isSetWriteIds()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetTxnId()) {
+          oprot.writeI64(struct.txnId);
+        }
+        if (struct.isSetWriteIds()) {
+          {
+            oprot.writeI32(struct.writeIds.size());
+            for (java.util.Map.Entry<java.lang.String, java.lang.Long> _iter2033 : struct.writeIds.entrySet())
+            {
+              oprot.writeString(_iter2033.getKey());
+              oprot.writeI64(_iter2033.getValue());
+            }
+          }
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, add_write_ids_to_min_history_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.txnId = iprot.readI64();
+          struct.setTxnIdIsSet(true);
+        }
+        if (incoming.get(1)) {
+          {
+            org.apache.thrift.protocol.TMap _map2034 = iprot.readMapBegin(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.I64); 
+            struct.writeIds = new java.util.HashMap<java.lang.String,java.lang.Long>(2*_map2034.size);
+            @org.apache.thrift.annotation.Nullable java.lang.String _key2035;
+            long _val2036;
+            for (int _i2037 = 0; _i2037 < _map2034.size; ++_i2037)
+            {
+              _key2035 = iprot.readString();
+              _val2036 = iprot.readI64();
+              struct.writeIds.put(_key2035, _val2036);
+            }
+          }
+          struct.setWriteIdsIsSet(true);
+        }
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class add_write_ids_to_min_history_result implements org.apache.thrift.TBase<add_write_ids_to_min_history_result, add_write_ids_to_min_history_result._Fields>, java.io.Serializable, Cloneable, Comparable<add_write_ids_to_min_history_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("add_write_ids_to_min_history_result");
+
+    private static final org.apache.thrift.protocol.TField O2_FIELD_DESC = new org.apache.thrift.protocol.TField("o2", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new add_write_ids_to_min_history_resultStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new add_write_ids_to_min_history_resultTupleSchemeFactory();
+
+    private @org.apache.thrift.annotation.Nullable MetaException o2; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      O2((short)1, "o2");
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // O2
+            return O2;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.O2, new org.apache.thrift.meta_data.FieldMetaData("o2", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, MetaException.class)));
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(add_write_ids_to_min_history_result.class, metaDataMap);
+    }
+
+    public add_write_ids_to_min_history_result() {
+    }
+
+    public add_write_ids_to_min_history_result(
+      MetaException o2)
+    {
+      this();
+      this.o2 = o2;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public add_write_ids_to_min_history_result(add_write_ids_to_min_history_result other) {
+      if (other.isSetO2()) {
+        this.o2 = new MetaException(other.o2);
+      }
+    }
+
+    public add_write_ids_to_min_history_result deepCopy() {
+      return new add_write_ids_to_min_history_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.o2 = null;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public MetaException getO2() {
+      return this.o2;
+    }
+
+    public void setO2(@org.apache.thrift.annotation.Nullable MetaException o2) {
+      this.o2 = o2;
+    }
+
+    public void unsetO2() {
+      this.o2 = null;
+    }
+
+    /** Returns true if field o2 is set (has been assigned a value) and false otherwise */
+    public boolean isSetO2() {
+      return this.o2 != null;
+    }
+
+    public void setO2IsSet(boolean value) {
+      if (!value) {
+        this.o2 = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
+      switch (field) {
+      case O2:
+        if (value == null) {
+          unsetO2();
+        } else {
+          setO2((MetaException)value);
+        }
+        break;
+
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      case O2:
+        return getO2();
+
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      case O2:
+        return isSetO2();
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that instanceof add_write_ids_to_min_history_result)
+        return this.equals((add_write_ids_to_min_history_result)that);
+      return false;
+    }
+
+    public boolean equals(add_write_ids_to_min_history_result that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      boolean this_present_o2 = true && this.isSetO2();
+      boolean that_present_o2 = true && that.isSetO2();
+      if (this_present_o2 || that_present_o2) {
+        if (!(this_present_o2 && that_present_o2))
+          return false;
+        if (!this.o2.equals(that.o2))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      hashCode = hashCode * 8191 + ((isSetO2()) ? 131071 : 524287);
+      if (isSetO2())
+        hashCode = hashCode * 8191 + o2.hashCode();
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(add_write_ids_to_min_history_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = java.lang.Boolean.compare(isSetO2(), other.isSetO2());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetO2()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.o2, other.o2);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+      }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("add_write_ids_to_min_history_result(");
+      boolean first = true;
+
+      sb.append("o2:");
+      if (this.o2 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.o2);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class add_write_ids_to_min_history_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public add_write_ids_to_min_history_resultStandardScheme getScheme() {
+        return new add_write_ids_to_min_history_resultStandardScheme();
+      }
+    }
+
+    private static class add_write_ids_to_min_history_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<add_write_ids_to_min_history_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, add_write_ids_to_min_history_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // O2
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.o2 = new MetaException();
+                struct.o2.read(iprot);
+                struct.setO2IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, add_write_ids_to_min_history_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.o2 != null) {
+          oprot.writeFieldBegin(O2_FIELD_DESC);
+          struct.o2.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class add_write_ids_to_min_history_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public add_write_ids_to_min_history_resultTupleScheme getScheme() {
+        return new add_write_ids_to_min_history_resultTupleScheme();
+      }
+    }
+
+    private static class add_write_ids_to_min_history_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<add_write_ids_to_min_history_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, add_write_ids_to_min_history_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet optionals = new java.util.BitSet();
+        if (struct.isSetO2()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetO2()) {
+          struct.o2.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, add_write_ids_to_min_history_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.o2 = new MetaException();
+          struct.o2.read(iprot);
+          struct.setO2IsSet(true);
+        }
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
   @org.apache.hadoop.classification.InterfaceAudience.Public @org.apache.hadoop.classification.InterfaceStability.Stable public static class allocate_table_write_ids_args implements org.apache.thrift.TBase<allocate_table_write_ids_args, allocate_table_write_ids_args._Fields>, java.io.Serializable, Cloneable, Comparable<allocate_table_write_ids_args>   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("allocate_table_write_ids_args");
 
@@ -245574,13 +246609,13 @@ package org.apache.hadoop.hive.metastore.api;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list2028 = iprot.readListBegin();
-                  struct.success = new java.util.ArrayList<java.lang.String>(_list2028.size);
-                  @org.apache.thrift.annotation.Nullable java.lang.String _elem2029;
-                  for (int _i2030 = 0; _i2030 < _list2028.size; ++_i2030)
+                  org.apache.thrift.protocol.TList _list2038 = iprot.readListBegin();
+                  struct.success = new java.util.ArrayList<java.lang.String>(_list2038.size);
+                  @org.apache.thrift.annotation.Nullable java.lang.String _elem2039;
+                  for (int _i2040 = 0; _i2040 < _list2038.size; ++_i2040)
                   {
-                    _elem2029 = iprot.readString();
-                    struct.success.add(_elem2029);
+                    _elem2039 = iprot.readString();
+                    struct.success.add(_elem2039);
                   }
                   iprot.readListEnd();
                 }
@@ -245606,9 +246641,9 @@ package org.apache.hadoop.hive.metastore.api;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (java.lang.String _iter2031 : struct.success)
+            for (java.lang.String _iter2041 : struct.success)
             {
-              oprot.writeString(_iter2031);
+              oprot.writeString(_iter2041);
             }
             oprot.writeListEnd();
           }
@@ -245639,9 +246674,9 @@ package org.apache.hadoop.hive.metastore.api;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (java.lang.String _iter2032 : struct.success)
+            for (java.lang.String _iter2042 : struct.success)
             {
-              oprot.writeString(_iter2032);
+              oprot.writeString(_iter2042);
             }
           }
         }
@@ -245653,13 +246688,13 @@ package org.apache.hadoop.hive.metastore.api;
         java.util.BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list2033 = iprot.readListBegin(org.apache.thrift.protocol.TType.STRING);
-            struct.success = new java.util.ArrayList<java.lang.String>(_list2033.size);
-            @org.apache.thrift.annotation.Nullable java.lang.String _elem2034;
-            for (int _i2035 = 0; _i2035 < _list2033.size; ++_i2035)
+            org.apache.thrift.protocol.TList _list2043 = iprot.readListBegin(org.apache.thrift.protocol.TType.STRING);
+            struct.success = new java.util.ArrayList<java.lang.String>(_list2043.size);
+            @org.apache.thrift.annotation.Nullable java.lang.String _elem2044;
+            for (int _i2045 = 0; _i2045 < _list2043.size; ++_i2045)
             {
-              _elem2034 = iprot.readString();
-              struct.success.add(_elem2034);
+              _elem2044 = iprot.readString();
+              struct.success.add(_elem2044);
             }
           }
           struct.setSuccessIsSet(true);
@@ -286641,14 +287676,14 @@ package org.apache.hadoop.hive.metastore.api;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list2036 = iprot.readListBegin();
-                  struct.success = new java.util.ArrayList<SchemaVersion>(_list2036.size);
-                  @org.apache.thrift.annotation.Nullable SchemaVersion _elem2037;
-                  for (int _i2038 = 0; _i2038 < _list2036.size; ++_i2038)
+                  org.apache.thrift.protocol.TList _list2046 = iprot.readListBegin();
+                  struct.success = new java.util.ArrayList<SchemaVersion>(_list2046.size);
+                  @org.apache.thrift.annotation.Nullable SchemaVersion _elem2047;
+                  for (int _i2048 = 0; _i2048 < _list2046.size; ++_i2048)
                   {
-                    _elem2037 = new SchemaVersion();
-                    _elem2037.read(iprot);
-                    struct.success.add(_elem2037);
+                    _elem2047 = new SchemaVersion();
+                    _elem2047.read(iprot);
+                    struct.success.add(_elem2047);
                   }
                   iprot.readListEnd();
                 }
@@ -286692,9 +287727,9 @@ package org.apache.hadoop.hive.metastore.api;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (SchemaVersion _iter2039 : struct.success)
+            for (SchemaVersion _iter2049 : struct.success)
             {
-              _iter2039.write(oprot);
+              _iter2049.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -286741,9 +287776,9 @@ package org.apache.hadoop.hive.metastore.api;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (SchemaVersion _iter2040 : struct.success)
+            for (SchemaVersion _iter2050 : struct.success)
             {
-              _iter2040.write(oprot);
+              _iter2050.write(oprot);
             }
           }
         }
@@ -286761,14 +287796,14 @@ package org.apache.hadoop.hive.metastore.api;
         java.util.BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list2041 = iprot.readListBegin(org.apache.thrift.protocol.TType.STRUCT);
-            struct.success = new java.util.ArrayList<SchemaVersion>(_list2041.size);
-            @org.apache.thrift.annotation.Nullable SchemaVersion _elem2042;
-            for (int _i2043 = 0; _i2043 < _list2041.size; ++_i2043)
+            org.apache.thrift.protocol.TList _list2051 = iprot.readListBegin(org.apache.thrift.protocol.TType.STRUCT);
+            struct.success = new java.util.ArrayList<SchemaVersion>(_list2051.size);
+            @org.apache.thrift.annotation.Nullable SchemaVersion _elem2052;
+            for (int _i2053 = 0; _i2053 < _list2051.size; ++_i2053)
             {
-              _elem2042 = new SchemaVersion();
-              _elem2042.read(iprot);
-              struct.success.add(_elem2042);
+              _elem2052 = new SchemaVersion();
+              _elem2052.read(iprot);
+              struct.success.add(_elem2052);
             }
           }
           struct.setSuccessIsSet(true);
@@ -295383,14 +296418,14 @@ package org.apache.hadoop.hive.metastore.api;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list2044 = iprot.readListBegin();
-                  struct.success = new java.util.ArrayList<RuntimeStat>(_list2044.size);
-                  @org.apache.thrift.annotation.Nullable RuntimeStat _elem2045;
-                  for (int _i2046 = 0; _i2046 < _list2044.size; ++_i2046)
+                  org.apache.thrift.protocol.TList _list2054 = iprot.readListBegin();
+                  struct.success = new java.util.ArrayList<RuntimeStat>(_list2054.size);
+                  @org.apache.thrift.annotation.Nullable RuntimeStat _elem2055;
+                  for (int _i2056 = 0; _i2056 < _list2054.size; ++_i2056)
                   {
-                    _elem2045 = new RuntimeStat();
-                    _elem2045.read(iprot);
-                    struct.success.add(_elem2045);
+                    _elem2055 = new RuntimeStat();
+                    _elem2055.read(iprot);
+                    struct.success.add(_elem2055);
                   }
                   iprot.readListEnd();
                 }
@@ -295425,9 +296460,9 @@ package org.apache.hadoop.hive.metastore.api;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (RuntimeStat _iter2047 : struct.success)
+            for (RuntimeStat _iter2057 : struct.success)
             {
-              _iter2047.write(oprot);
+              _iter2057.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -295466,9 +296501,9 @@ package org.apache.hadoop.hive.metastore.api;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (RuntimeStat _iter2048 : struct.success)
+            for (RuntimeStat _iter2058 : struct.success)
             {
-              _iter2048.write(oprot);
+              _iter2058.write(oprot);
             }
           }
         }
@@ -295483,14 +296518,14 @@ package org.apache.hadoop.hive.metastore.api;
         java.util.BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list2049 = iprot.readListBegin(org.apache.thrift.protocol.TType.STRUCT);
-            struct.success = new java.util.ArrayList<RuntimeStat>(_list2049.size);
-            @org.apache.thrift.annotation.Nullable RuntimeStat _elem2050;
-            for (int _i2051 = 0; _i2051 < _list2049.size; ++_i2051)
+            org.apache.thrift.protocol.TList _list2059 = iprot.readListBegin(org.apache.thrift.protocol.TType.STRUCT);
+            struct.success = new java.util.ArrayList<RuntimeStat>(_list2059.size);
+            @org.apache.thrift.annotation.Nullable RuntimeStat _elem2060;
+            for (int _i2061 = 0; _i2061 < _list2059.size; ++_i2061)
             {
-              _elem2050 = new RuntimeStat();
-              _elem2050.read(iprot);
-              struct.success.add(_elem2050);
+              _elem2060 = new RuntimeStat();
+              _elem2060.read(iprot);
+              struct.success.add(_elem2060);
             }
           }
           struct.setSuccessIsSet(true);
@@ -305601,13 +306636,13 @@ package org.apache.hadoop.hive.metastore.api;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list2052 = iprot.readListBegin();
-                  struct.success = new java.util.ArrayList<java.lang.String>(_list2052.size);
-                  @org.apache.thrift.annotation.Nullable java.lang.String _elem2053;
-                  for (int _i2054 = 0; _i2054 < _list2052.size; ++_i2054)
+                  org.apache.thrift.protocol.TList _list2062 = iprot.readListBegin();
+                  struct.success = new java.util.ArrayList<java.lang.String>(_list2062.size);
+                  @org.apache.thrift.annotation.Nullable java.lang.String _elem2063;
+                  for (int _i2064 = 0; _i2064 < _list2062.size; ++_i2064)
                   {
-                    _elem2053 = iprot.readString();
-                    struct.success.add(_elem2053);
+                    _elem2063 = iprot.readString();
+                    struct.success.add(_elem2063);
                   }
                   iprot.readListEnd();
                 }
@@ -305642,9 +306677,9 @@ package org.apache.hadoop.hive.metastore.api;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (java.lang.String _iter2055 : struct.success)
+            for (java.lang.String _iter2065 : struct.success)
             {
-              oprot.writeString(_iter2055);
+              oprot.writeString(_iter2065);
             }
             oprot.writeListEnd();
           }
@@ -305683,9 +306718,9 @@ package org.apache.hadoop.hive.metastore.api;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (java.lang.String _iter2056 : struct.success)
+            for (java.lang.String _iter2066 : struct.success)
             {
-              oprot.writeString(_iter2056);
+              oprot.writeString(_iter2066);
             }
           }
         }
@@ -305700,13 +306735,13 @@ package org.apache.hadoop.hive.metastore.api;
         java.util.BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list2057 = iprot.readListBegin(org.apache.thrift.protocol.TType.STRING);
-            struct.success = new java.util.ArrayList<java.lang.String>(_list2057.size);
-            @org.apache.thrift.annotation.Nullable java.lang.String _elem2058;
-            for (int _i2059 = 0; _i2059 < _list2057.size; ++_i2059)
+            org.apache.thrift.protocol.TList _list2067 = iprot.readListBegin(org.apache.thrift.protocol.TType.STRING);
+            struct.success = new java.util.ArrayList<java.lang.String>(_list2067.size);
+            @org.apache.thrift.annotation.Nullable java.lang.String _elem2068;
+            for (int _i2069 = 0; _i2069 < _list2067.size; ++_i2069)
             {
-              _elem2058 = iprot.readString();
-              struct.success.add(_elem2058);
+              _elem2068 = iprot.readString();
+              struct.success.add(_elem2068);
             }
           }
           struct.setSuccessIsSet(true);
@@ -308163,13 +309198,13 @@ package org.apache.hadoop.hive.metastore.api;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list2060 = iprot.readListBegin();
-                  struct.success = new java.util.ArrayList<java.lang.String>(_list2060.size);
-                  @org.apache.thrift.annotation.Nullable java.lang.String _elem2061;
-                  for (int _i2062 = 0; _i2062 < _list2060.size; ++_i2062)
+                  org.apache.thrift.protocol.TList _list2070 = iprot.readListBegin();
+                  struct.success = new java.util.ArrayList<java.lang.String>(_list2070.size);
+                  @org.apache.thrift.annotation.Nullable java.lang.String _elem2071;
+                  for (int _i2072 = 0; _i2072 < _list2070.size; ++_i2072)
                   {
-                    _elem2061 = iprot.readString();
-                    struct.success.add(_elem2061);
+                    _elem2071 = iprot.readString();
+                    struct.success.add(_elem2071);
                   }
                   iprot.readListEnd();
                 }
@@ -308204,9 +309239,9 @@ package org.apache.hadoop.hive.metastore.api;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (java.lang.String _iter2063 : struct.success)
+            for (java.lang.String _iter2073 : struct.success)
             {
-              oprot.writeString(_iter2063);
+              oprot.writeString(_iter2073);
             }
             oprot.writeListEnd();
           }
@@ -308245,9 +309280,9 @@ package org.apache.hadoop.hive.metastore.api;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (java.lang.String _iter2064 : struct.success)
+            for (java.lang.String _iter2074 : struct.success)
             {
-              oprot.writeString(_iter2064);
+              oprot.writeString(_iter2074);
             }
           }
         }
@@ -308262,13 +309297,13 @@ package org.apache.hadoop.hive.metastore.api;
         java.util.BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list2065 = iprot.readListBegin(org.apache.thrift.protocol.TType.STRING);
-            struct.success = new java.util.ArrayList<java.lang.String>(_list2065.size);
-            @org.apache.thrift.annotation.Nullable java.lang.String _elem2066;
-            for (int _i2067 = 0; _i2067 < _list2065.size; ++_i2067)
+            org.apache.thrift.protocol.TList _list2075 = iprot.readListBegin(org.apache.thrift.protocol.TType.STRING);
+            struct.success = new java.util.ArrayList<java.lang.String>(_list2075.size);
+            @org.apache.thrift.annotation.Nullable java.lang.String _elem2076;
+            for (int _i2077 = 0; _i2077 < _list2075.size; ++_i2077)
             {
-              _elem2066 = iprot.readString();
-              struct.success.add(_elem2066);
+              _elem2076 = iprot.readString();
+              struct.success.add(_elem2076);
             }
           }
           struct.setSuccessIsSet(true);
@@ -309782,14 +310817,14 @@ package org.apache.hadoop.hive.metastore.api;
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list2068 = iprot.readListBegin();
-                  struct.success = new java.util.ArrayList<WriteEventInfo>(_list2068.size);
-                  @org.apache.thrift.annotation.Nullable WriteEventInfo _elem2069;
-                  for (int _i2070 = 0; _i2070 < _list2068.size; ++_i2070)
+                  org.apache.thrift.protocol.TList _list2078 = iprot.readListBegin();
+                  struct.success = new java.util.ArrayList<WriteEventInfo>(_list2078.size);
+                  @org.apache.thrift.annotation.Nullable WriteEventInfo _elem2079;
+                  for (int _i2080 = 0; _i2080 < _list2078.size; ++_i2080)
                   {
-                    _elem2069 = new WriteEventInfo();
-                    _elem2069.read(iprot);
-                    struct.success.add(_elem2069);
+                    _elem2079 = new WriteEventInfo();
+                    _elem2079.read(iprot);
+                    struct.success.add(_elem2079);
                   }
                   iprot.readListEnd();
                 }
@@ -309824,9 +310859,9 @@ package org.apache.hadoop.hive.metastore.api;
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (WriteEventInfo _iter2071 : struct.success)
+            for (WriteEventInfo _iter2081 : struct.success)
             {
-              _iter2071.write(oprot);
+              _iter2081.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -309865,9 +310900,9 @@ package org.apache.hadoop.hive.metastore.api;
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (WriteEventInfo _iter2072 : struct.success)
+            for (WriteEventInfo _iter2082 : struct.success)
             {
-              _iter2072.write(oprot);
+              _iter2082.write(oprot);
             }
           }
         }
@@ -309882,14 +310917,14 @@ package org.apache.hadoop.hive.metastore.api;
         java.util.BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list2073 = iprot.readListBegin(org.apache.thrift.protocol.TType.STRUCT);
-            struct.success = new java.util.ArrayList<WriteEventInfo>(_list2073.size);
-            @org.apache.thrift.annotation.Nullable WriteEventInfo _elem2074;
-            for (int _i2075 = 0; _i2075 < _list2073.size; ++_i2075)
+            org.apache.thrift.protocol.TList _list2083 = iprot.readListBegin(org.apache.thrift.protocol.TType.STRUCT);
+            struct.success = new java.util.ArrayList<WriteEventInfo>(_list2083.size);
+            @org.apache.thrift.annotation.Nullable WriteEventInfo _elem2084;
+            for (int _i2085 = 0; _i2085 < _list2083.size; ++_i2085)
             {
-              _elem2074 = new WriteEventInfo();
-              _elem2074.read(iprot);
-              struct.success.add(_elem2074);
+              _elem2084 = new WriteEventInfo();
+              _elem2084.read(iprot);
+              struct.success.add(_elem2084);
             }
           }
           struct.setSuccessIsSet(true);
