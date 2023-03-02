@@ -61711,8 +61711,8 @@ package org.apache.hadoop.hive.metastore.api;
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("drop_dataconnector_args");
 
     private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)1);
-    private static final org.apache.thrift.protocol.TField IF_NOT_EXISTS_FIELD_DESC = new org.apache.thrift.protocol.TField("ifNotExists", org.apache.thrift.protocol.TType.BOOL, (short)-1);
-    private static final org.apache.thrift.protocol.TField CHECK_REFERENCES_FIELD_DESC = new org.apache.thrift.protocol.TField("checkReferences", org.apache.thrift.protocol.TType.BOOL, (short)-2);
+    private static final org.apache.thrift.protocol.TField IF_NOT_EXISTS_FIELD_DESC = new org.apache.thrift.protocol.TField("ifNotExists", org.apache.thrift.protocol.TType.BOOL, (short)2);
+    private static final org.apache.thrift.protocol.TField CHECK_REFERENCES_FIELD_DESC = new org.apache.thrift.protocol.TField("checkReferences", org.apache.thrift.protocol.TType.BOOL, (short)3);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new drop_dataconnector_argsStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new drop_dataconnector_argsTupleSchemeFactory();
@@ -61724,8 +61724,8 @@ package org.apache.hadoop.hive.metastore.api;
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       NAME((short)1, "name"),
-      IF_NOT_EXISTS((short)-1, "ifNotExists"),
-      CHECK_REFERENCES((short)-2, "checkReferences");
+      IF_NOT_EXISTS((short)2, "ifNotExists"),
+      CHECK_REFERENCES((short)3, "checkReferences");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -61743,9 +61743,9 @@ package org.apache.hadoop.hive.metastore.api;
         switch(fieldId) {
           case 1: // NAME
             return NAME;
-          case -1: // IF_NOT_EXISTS
+          case 2: // IF_NOT_EXISTS
             return IF_NOT_EXISTS;
-          case -2: // CHECK_REFERENCES
+          case 3: // CHECK_REFERENCES
             return CHECK_REFERENCES;
           default:
             return null;
@@ -62160,7 +62160,7 @@ package org.apache.hadoop.hive.metastore.api;
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
-            case -1: // IF_NOT_EXISTS
+            case 2: // IF_NOT_EXISTS
               if (schemeField.type == org.apache.thrift.protocol.TType.BOOL) {
                 struct.ifNotExists = iprot.readBool();
                 struct.setIfNotExistsIsSet(true);
@@ -62168,7 +62168,7 @@ package org.apache.hadoop.hive.metastore.api;
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
-            case -2: // CHECK_REFERENCES
+            case 3: // CHECK_REFERENCES
               if (schemeField.type == org.apache.thrift.protocol.TType.BOOL) {
                 struct.checkReferences = iprot.readBool();
                 struct.setCheckReferencesIsSet(true);
@@ -62189,17 +62189,17 @@ package org.apache.hadoop.hive.metastore.api;
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
-        oprot.writeFieldBegin(CHECK_REFERENCES_FIELD_DESC);
-        oprot.writeBool(struct.checkReferences);
-        oprot.writeFieldEnd();
-        oprot.writeFieldBegin(IF_NOT_EXISTS_FIELD_DESC);
-        oprot.writeBool(struct.ifNotExists);
-        oprot.writeFieldEnd();
         if (struct.name != null) {
           oprot.writeFieldBegin(NAME_FIELD_DESC);
           oprot.writeString(struct.name);
           oprot.writeFieldEnd();
         }
+        oprot.writeFieldBegin(IF_NOT_EXISTS_FIELD_DESC);
+        oprot.writeBool(struct.ifNotExists);
+        oprot.writeFieldEnd();
+        oprot.writeFieldBegin(CHECK_REFERENCES_FIELD_DESC);
+        oprot.writeBool(struct.checkReferences);
+        oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
