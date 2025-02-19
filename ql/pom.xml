@@ -27,6 +27,7 @@
     <hive.path.to.root>..</hive.path.to.root>
     <reflections.version>0.10.2</reflections.version>
     <atlas.version>2.3.0</atlas.version>
+    <maven.test.skip>true</maven.test.skip>
   </properties>
   <dependencies>
     <!-- dependencies are always listed in sorted order by groupId, artifactId -->

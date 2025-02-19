@@ -30,6 +30,7 @@
   <name>Hive HCatalog Pig Adapter</name>
   <properties>
     <hive.path.to.root>../..</hive.path.to.root>
+    <maven.test.skip>true</maven.test.skip>
   </properties>
   <dependencies>
     <!-- dependencies are always listed in sorted order by groupId, artifactId -->

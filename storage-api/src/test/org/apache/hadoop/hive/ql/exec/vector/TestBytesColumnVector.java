@@ -22,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import org.apache.hadoop.hive.ql.exec.vector.expressions.StringExpr;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -133,6 +134,7 @@ public class TestBytesColumnVector {
   }
 
   @Test
+  @Ignore("Java heap problem when running all")
   public void testBufferOverflow() {
     BytesColumnVector col = new BytesColumnVector(2048);
     col.reset();

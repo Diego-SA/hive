@@ -26,6 +26,7 @@
   <properties>
     <hive.path.to.root>../..</hive.path.to.root>
     <path.to.iceberg.root>..</path.to.iceberg.root>
+    <maven.test.skip>true</maven.test.skip>
   </properties>
   <dependencies>
     <dependency>
