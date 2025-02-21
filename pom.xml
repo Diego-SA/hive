@@ -111,8 +111,8 @@
     <!-- Include arrow for LlapOutputFormatService -->
     <arrow.version>12.0.0</arrow.version>
     <avatica.version>1.23.0</avatica.version>
-    <avro.version>1.11.3</avro.version>
-    <bcprov-jdk18on.version>1.77</bcprov-jdk18on.version>
+    <avro.version>1.11.4</avro.version>
+    <bcprov-jdk18on.version>1.78</bcprov-jdk18on.version>
     <calcite.version>1.25.0</calcite.version>
     <datanucleus-api-jdo.version>5.2.8</datanucleus-api-jdo.version>
     <datanucleus-core.version>5.2.10</datanucleus-core.version>
@@ -187,7 +187,7 @@
     <mockito-core.version>3.4.4</mockito-core.version>
     <mockito-inline.version>4.11.0</mockito-inline.version>
     <mina.version>2.0.0-M5</mina.version>
-    <netty.version>4.1.77.Final</netty.version>
+    <netty.version>4.1.100.Final</netty.version>
     <netty3.version>3.10.5.Final</netty3.version>
     <!-- used by druid storage handler -->
     <pac4j-saml.version>4.5.5</pac4j-saml.version>
@@ -206,7 +206,7 @@
     <tempus-fugit.version>1.1</tempus-fugit.version>
     <snappy.version>1.1.10.4</snappy.version>
     <wadl-resourcedoc-doclet.version>1.4</wadl-resourcedoc-doclet.version>
-    <velocity.version>2.3</velocity.version>
+    <velocity.version>2.4.1</velocity.version>
     <xerces.version>2.12.2</xerces.version>
     <xmlsec.version>2.3.4</xmlsec.version>
     <zookeeper.version>3.8.3</zookeeper.version>
@@ -1879,6 +1879,7 @@
             <exclude>**/PriorityBlockingDeque.java</exclude>
             <exclude>**/StringToDouble.java</exclude>
             <exclude>LICENSE-binary</exclude>
+            <exclude>deployment/**</exclude>
           </excludes>
         </configuration>
       </plugin>

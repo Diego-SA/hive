@@ -77,6 +77,7 @@ public class TestHiveIcebergTruncateTable extends HiveIcebergStorageHandlerWithE
     validateBasicStats(icebergTable, databaseName, tableName);
   }
 
+  // -rf :hive-iceberg-handler
   @Test
   public void testMultipleTruncateTable() throws IOException, TException, InterruptedException {
     // Create an Iceberg table with come records in it, then execute a truncate table command

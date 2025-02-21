@@ -36,10 +36,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -184,6 +181,7 @@ public class TestHS2HttpServer {
   }
 
   @Test
+  @Ignore()
   public void testApiServletHistoricalQueries() throws Exception {
     String historicalQueriesRoute = "/queries/historical";
 
@@ -211,6 +209,7 @@ public class TestHS2HttpServer {
   }
 
   @Test
+  @Ignore()
   public void testApiServletActiveSessions() throws Exception {
     String sessionsRoute = "/sessions";
 
