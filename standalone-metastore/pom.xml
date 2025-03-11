@@ -77,7 +77,7 @@
     <dropwizard-metrics-hadoop-metrics2-reporter.version>0.1.2
     </dropwizard-metrics-hadoop-metrics2-reporter.version>
     <dropwizard.version>3.1.0</dropwizard.version>
-    <guava.version>22.0</guava.version>
+    <guava.version>33.4.0-jre</guava.version>
     <hadoop.version>3.3.6</hadoop.version>
     <hikaricp.version>4.0.3</hikaricp.version>
     <jackson.version>2.16.1</jackson.version>
@@ -90,7 +90,7 @@
     <libthrift.version>0.16.0</libthrift.version>
     <log4j2.version>2.18.0</log4j2.version>
     <mockito-core.version>3.3.3</mockito-core.version>
-    <orc.version>1.8.5</orc.version>
+    <orc.version>1.9.5</orc.version>
     <protobuf.version>3.24.4</protobuf.version>
     <io.grpc.version>1.53.0</io.grpc.version>
     <sqlline.version>1.9.0</sqlline.version>
