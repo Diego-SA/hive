@@ -26,6 +26,7 @@
   <properties>
     <hive.path.to.root>..</hive.path.to.root>
     <hive.jdbc.driver.jar>apache-hive-${project.version}-jdbc.jar</hive.jdbc.driver.jar>
+    <hive.exec.jar>hive-exec-${project.version}.jar</hive.exec.jar>
   </properties>
   <profiles>
     <profile>
@@ -90,6 +91,15 @@
                       <overWrite>true</overWrite>
                       <outputDirectory>${project.build.directory}</outputDirectory>
                       <destFileName>${hive.jdbc.driver.jar}</destFileName>
+                    </artifactItem>
+                    <artifactItem>
+                      <groupId>${project.groupId}</groupId>
+                      <artifactId>hive-exec</artifactId>
+                      <version>${project.version}</version>
+                      <type>jar</type>
+                      <overWrite>true</overWrite>
+                      <outputDirectory>${project.build.directory}</outputDirectory>
+                      <destFileName>${hive.exec.jar}</destFileName>
                     </artifactItem>
                   </artifactItems>
                 </configuration>
