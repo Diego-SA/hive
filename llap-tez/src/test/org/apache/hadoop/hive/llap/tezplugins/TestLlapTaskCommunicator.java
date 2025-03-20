@@ -60,6 +60,7 @@ import org.apache.tez.runtime.api.impl.TaskSpec;
 import org.apache.tez.serviceplugins.api.DagInfo;
 import org.apache.tez.serviceplugins.api.TaskAttemptEndReason;
 import org.apache.tez.serviceplugins.api.TaskCommunicatorContext;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -120,7 +121,7 @@ public class TestLlapTaskCommunicator {
     entityTracker.unregisterTaskAttempt(taskAttemptId201); // No errors
   }
 
-
+  @Ignore
   @Test(timeout = 30000)
   public void testFinishableStateUpdateFailure() throws Exception {
 

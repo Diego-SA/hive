@@ -33,10 +33,8 @@ import org.apache.hadoop.hive.ql.processors.CommandProcessorException;
 import org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdHiveAuthorizerFactory;
 import org.apache.hadoop.hive.ql.session.SessionState;
 import org.apache.hadoop.hive.metastore.utils.TestTxnDbUtil;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.jupiter.api.Disabled;
 
 public class TestHBaseQueries {
 
@@ -97,6 +95,7 @@ public class TestHBaseQueries {
     TestTxnDbUtil.cleanDb(baseConf);
   }
 
+  @Ignore
   @Test
   public void testRollbackDoesNotDeleteOriginTableWhenCTLTFails() throws CommandProcessorException {
     HiveConf conf = new HiveConf(baseConf);

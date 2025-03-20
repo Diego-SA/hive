@@ -41,8 +41,8 @@
     <caffeine.version>2.9.3</caffeine.version>
   </properties>
   <modules>
-    <module>patched-iceberg-api</module>
-    <module>patched-iceberg-core</module>
+    <!-- <module>patched-iceberg-api</module>
+    <module>patched-iceberg-core</module> -->
     <module>iceberg-shading</module>
     <module>iceberg-catalog</module>
     <module>iceberg-handler</module>
@@ -56,7 +56,7 @@
   </dependencies>
   <dependencyManagement>
     <dependencies>
-      <dependency>
+      <!-- dependency>
         <groupId>org.apache.hive</groupId>
         <artifactId>patched-iceberg-api</artifactId>
         <version>patched-${iceberg.version}-${project.parent.version}</version>
@@ -65,7 +65,7 @@
         <groupId>org.apache.hive</groupId>
         <artifactId>patched-iceberg-core</artifactId>
         <version>patched-${iceberg.version}-${project.parent.version}</version>
-      </dependency>
+      </dependency> -->
       <dependency>
         <groupId>org.apache.iceberg</groupId>
         <artifactId>iceberg-api</artifactId>

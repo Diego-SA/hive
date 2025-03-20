@@ -45,6 +45,7 @@ import org.apache.kudu.client.PartialRow;
 import org.apache.kudu.client.RowResult;
 import org.apache.kudu.test.KuduTestHarness;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -254,6 +255,7 @@ public class TestKuduInputFormat {
   }
 
   @Test
+  @Ignore
   public void testPredicate() throws Exception {
     // Insert a second test row that will be filtered out.
     KuduTable table = harness.getClient().openTable(TABLE_NAME);

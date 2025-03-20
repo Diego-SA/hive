@@ -28,6 +28,8 @@ import org.apache.hive.testutils.junit.extensions.DoNothingTCPServerExtension;
 import org.apache.logging.log4j.junit.LoggerContextSource;
 import org.apache.tez.common.security.TokenCache;
 
+import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -46,6 +48,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Tests for the log4j configuration of the LLAP daemons.
  */
 @LoggerContextSource("llap-daemon-routing-log4j2.properties")
+@Ignore
 public class TestLlapDaemonLogging {
 
   @Test

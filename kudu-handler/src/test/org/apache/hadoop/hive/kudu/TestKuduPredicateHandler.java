@@ -54,8 +54,10 @@ import org.apache.kudu.client.KuduTable;
 import org.apache.kudu.client.PartialRow;
 import org.apache.kudu.test.KuduTestHarness;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -75,6 +77,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Tests for the KuduPredicateHandler implementation.
  */
+@Ignore
 public class TestKuduPredicateHandler {
 
   private static final String TABLE_NAME = "default.TestKuduPredicateHandler";

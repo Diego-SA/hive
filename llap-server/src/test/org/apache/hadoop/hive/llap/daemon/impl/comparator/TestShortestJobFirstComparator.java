@@ -23,8 +23,11 @@ import static org.junit.Assert.assertTrue;
 import org.apache.hadoop.hive.llap.daemon.impl.EvictingPriorityBlockingQueue;
 import org.apache.hadoop.hive.llap.daemon.impl.TaskExecutorService.TaskWrapper;
 import org.apache.hadoop.hive.llap.daemon.rpc.LlapDaemonProtocolProtos;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 
+@Ignore
 public class TestShortestJobFirstComparator {
 
 

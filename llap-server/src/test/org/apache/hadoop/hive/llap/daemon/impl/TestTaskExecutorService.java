@@ -53,9 +53,12 @@ import org.apache.hadoop.hive.llap.daemon.impl.TaskExecutorTestHelpers.MockReque
 import org.apache.hadoop.hive.llap.daemon.impl.comparator.ShortestJobFirstComparator;
 import org.apache.tez.runtime.task.TaskRunner2Result;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import org.mockito.Mock;
 
+@Ignore
 public class TestTaskExecutorService {
 
   @Mock

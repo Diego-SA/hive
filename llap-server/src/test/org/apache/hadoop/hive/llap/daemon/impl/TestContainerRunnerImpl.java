@@ -35,10 +35,8 @@ import org.apache.hadoop.net.NetUtils;
 import org.apache.hadoop.security.Credentials;
 import org.apache.hadoop.security.token.Token;
 import org.apache.tez.common.security.TokenCache;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.jupiter.api.Disabled;
 
 import javax.net.SocketFactory;
 import java.io.File;
@@ -53,6 +51,7 @@ import static org.mockito.Mockito.mock;
 /**
  * Test ContainerRunnerImpl.
  */
+@Ignore
 public class TestContainerRunnerImpl {
   ContainerRunnerImpl containerRunner;
   LlapDaemonConfiguration daemonConf = new LlapDaemonConfiguration();

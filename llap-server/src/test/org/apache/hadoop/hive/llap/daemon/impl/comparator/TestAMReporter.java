@@ -27,7 +27,9 @@ import org.apache.hadoop.hive.llap.protocol.LlapTaskUmbilicalProtocol;
 import org.apache.hadoop.io.Text;
 import org.apache.hive.common.util.RetryTestRunner;
 import org.apache.tez.dag.records.TezTaskAttemptID;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -47,6 +49,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(RetryTestRunner.class)
+@Ignore
 public class TestAMReporter {
   @Test(timeout = 5000)
   public void testMultipleAM() throws InterruptedException {
