@@ -49,6 +49,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 @LoggerContextSource("llap-daemon-routing-log4j2.properties")
 @Ignore
+@Disabled
 public class TestLlapDaemonLogging {
 
   @Test

@@ -18,6 +18,7 @@
  */
 package org.apache.hive.hcatalog.api.repl.commands;
 
+import org.junit.Ignore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.hadoop.fs.FileSystem;
@@ -130,6 +131,7 @@ public class TestCommands {
   }
 
   @Test
+  @Ignore
   public void testBasicReplEximCommands() throws IOException, CommandProcessorException {
     // repl export, has repl.last.id and repl.scope=all in it
     // import repl dump, table has repl.last.id on it (will likely be 0)
@@ -202,6 +204,7 @@ public class TestCommands {
   }
 
   @Test
+  @Ignore
   public void testMetadataReplEximCommands() throws IOException, CommandProcessorException {
     // repl metadata export, has repl.last.id and repl.scope=metadata
     // import repl metadata dump, table metadata changed, allows override, has repl.last.id

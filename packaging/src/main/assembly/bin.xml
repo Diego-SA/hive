@@ -48,7 +48,6 @@
         <exclude>junit:*</exclude>
         <exclude>commons-configuration:commons-configuration</exclude>
         <exclude>org.apache.hive:hive-jdbc:*:standalone</exclude>
-        <exclude>org.apache.hive:hive-contrib</exclude>
       </excludes>
     </dependencySet>
     <dependencySet>
@@ -58,15 +57,6 @@
       <useStrictFiltering>true</useStrictFiltering>
       <includes>
         <include>org.apache.hive:hive-jdbc:*:standalone</include>
-      </includes>
-    </dependencySet>
-    <dependencySet>
-      <outputDirectory>contrib/</outputDirectory>
-      <unpack>false</unpack>
-      <useProjectArtifact>false</useProjectArtifact>
-      <useStrictFiltering>true</useStrictFiltering>
-      <includes>
-        <include>org.apache.hive:hive-contrib</include>
       </includes>
     </dependencySet>
     <dependencySet>
@@ -423,11 +413,6 @@
       <source>${project.parent.basedir}/ql/src/main/resources/hive-exec-log4j2.properties</source>
       <outputDirectory>conf</outputDirectory>
       <destName>hive-exec-log4j2.properties.template</destName>
-    </file>
-    <file>
-      <source>${project.parent.basedir}/beeline/src/main/resources/beeline-log4j2.properties</source>
-      <outputDirectory>conf</outputDirectory>
-      <destName>beeline-log4j2.properties.template</destName>
     </file>
     <file>
       <source>${project.parent.basedir}/llap-server/src/main/resources/llap-daemon-log4j2.properties</source>
