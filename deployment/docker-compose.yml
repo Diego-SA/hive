@@ -31,7 +31,7 @@ services:
       - hive-db:/var/lib/postgresql
 
   metastore:
-    image: apache/hive:${HIVE_VERSION}
+    image: apache/hive:local
     depends_on:
       - postgres
     restart: unless-stopped
@@ -53,7 +53,7 @@ services:
           target: /opt/hive/lib/postgres.jar
 
   hiveserver2:
-    image: apache/hive:${HIVE_VERSION}
+    image: apache/hive:4.0.1
     depends_on:
       - metastore
     restart: unless-stopped
@@ -68,6 +68,7 @@ services:
       - '10002:10002'
     volumes:
       - warehouse:/opt/hive/data/warehouse
+
 
 volumes:
   hive-db:
