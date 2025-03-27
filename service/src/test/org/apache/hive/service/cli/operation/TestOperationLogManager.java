@@ -93,7 +93,7 @@ public class TestOperationLogManager {
 
     String logLocation = operation1.getOperationLog().toString();
 
-    //assertEquals(logLocation, ((STestQueryShutdownHooksQLOperation)operation1).getQueryInfo().getOperationLogLocation());
+    assertEquals(logLocation, ((SQLOperation)operation1).getQueryInfo().getOperationLogLocation());
 
     File operationLogFile = new File(operation1.getOperationLog().toString());
     assertTrue(operationLogFile.exists());
