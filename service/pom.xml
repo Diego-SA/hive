@@ -184,7 +184,7 @@
     </dependency>
     <dependency>
       <groupId>org.pac4j</groupId>
-      <artifactId>pac4j-saml-opensamlv3</artifactId>
+      <artifactId>pac4j-saml</artifactId>
       <exclusions>
         <exclusion>
           <groupId>org.bouncycastle</groupId>
@@ -192,6 +192,12 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <!-- TODO QUitar y ver si compila -->
+    <!--<dependency>
+      <groupId>org.pac4j</groupId>
+      <artifactId>pac4j-core</artifactId>
+      <version>${pac4j-saml.version}</version>
+    </dependency>-->
     <dependency>
       <groupId>org.bouncycastle</groupId>
       <artifactId>bcprov-jdk18on</artifactId>

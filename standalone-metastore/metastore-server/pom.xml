@@ -404,6 +404,12 @@
       <artifactId>pac4j-core</artifactId>
       <version>${pac4j-core.version}</version>
     </dependency>
+    <!-- TODO Quitar y ver si compila -->
+    <dependency>
+      <groupId>org.pac4j</groupId>
+      <artifactId>pac4j-jee</artifactId>
+      <version>${pac4j-core.version}</version>
+    </dependency>
     <dependency>
       <groupId>com.github.tomakehurst</groupId>
       <artifactId>wiremock-jre8-standalone</artifactId>

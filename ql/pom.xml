@@ -26,7 +26,7 @@
   <properties>
     <hive.path.to.root>..</hive.path.to.root>
     <reflections.version>0.10.2</reflections.version>
-    <atlas.version>2.3.0</atlas.version>
+    <atlas.version>2.4.0</atlas.version>
     <maven.test.skip>true</maven.test.skip>
   </properties>
   <dependencies>
@@ -858,6 +858,16 @@
     <dependency>
       <groupId>com.jayway.jsonpath</groupId>
       <artifactId>json-path</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>net.minidev</groupId>
+          <artifactId>json-smart</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>net.minidev</groupId>
+      <artifactId>json-smart</artifactId>
     </dependency>
     <dependency>
       <groupId>org.codehaus.janino</groupId>
