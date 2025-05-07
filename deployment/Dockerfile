@@ -43,12 +43,12 @@ ARG TEZ_VERSION
 
 RUN ls -lh /opt/
 
-RUN tar -xzvf /opt/hadoop-$HADOOP_VERSION.tar.gz -C /opt/ && \
-    rm -rf /opt/hadoop-$HADOOP_VERSION/share/doc/* && \
-    tar -xzvf /opt/apache-hive-$HIVE_VERSION-bin.tar.gz -C /opt/ && \
-    rm -rf /opt/apache-hive-$HIVE_VERSION-bin/jdbc/* && \
-    tar -xzvf /opt/apache-tez-$TEZ_VERSION-bin.tar.gz -C /opt && \
-    rm -rf /opt/apache-tez-$TEZ_VERSION-bin/share/*
+RUN tar -xzvf /opt/hadoop-$HADOOP_VERSION.tar.gz -C /opt/
+RUN rm -rf /opt/hadoop-$HADOOP_VERSION/share/doc/*
+RUN tar -xzvf /opt/apache-hive-$HIVE_VERSION-bin.tar.gz -C /opt/
+RUN rm -rf /opt/apache-hive-$HIVE_VERSION-bin/jdbc/*
+RUN tar -xzvf /opt/apache-tez-$TEZ_VERSION-bin.tar.gz -C /opt
+RUN rm -rf /opt/apache-tez-$TEZ_VERSION-bin/share/*
 
 FROM ubuntu:$UBUNTU_VERSION
 
@@ -106,6 +106,15 @@ RUN adduser --no-create-home --disabled-login --gecos "" --uid $UID hive && \
 
 
 RUN echo $JAVA_HOME
+
+#RUN find /opt/hive/lib -name '*.jar' -exec jar tf {} \; | grep InternalFutureFailureAccess
+
+#RUN find /opt/hive/lib -name '*.jar' -exec sh -c 'for jar in "$@"; do \
+#  if jar tf "$jar" | grep -q InternalFutureFailureAccess; then \
+#    echo ">> $jar"; \
+#    jar tf "$jar" | grep InternalFutureFailureAccess; \
+#  fi; \
+#done' sh {} +
 
 USER hive
 WORKDIR /opt/hive

@@ -1,0 +1,29 @@
+usuario@L2111029:~/Escritorio/Workspace/hive/deployment$ docker logs hiveserver2
++ : derby
++ SKIP_SCHEMA_INIT=true
++ [[ '' = \t\r\u\e ]]
++ VERBOSE_MODE=
++ export HIVE_CONF_DIR=/opt/hive/conf
++ HIVE_CONF_DIR=/opt/hive/conf
++ '[' -d '' ']'
++ export 'HADOOP_CLIENT_OPTS= -Xmx1G -Xmx1G -Dhive.metastore.uris=thrift://metastore:9083 -Dhive.execution.engine=tez'
++ HADOOP_CLIENT_OPTS=' -Xmx1G -Xmx1G -Dhive.metastore.uris=thrift://metastore:9083 -Dhive.execution.engine=tez'
++ [[ true == \f\a\l\s\e ]]
++ '[' hiveserver2 == hiveserver2 ']'
++ export 'HADOOP_CLASSPATH=/opt/tez/*:/opt/tez/lib/*:'
++ HADOOP_CLASSPATH='/opt/tez/*:/opt/tez/lib/*:'
++ exec /opt/hive/bin/hive --skiphadoopversion --skiphbasecp --service hiveserver2
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/opt/hive/lib/log4j-slf4j-impl-2.18.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/opt/tez/lib/slf4j-reload4j-1.7.36.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/opt/hadoop/share/hadoop/common/lib/slf4j-reload4j-1.7.36.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.apache.logging.slf4j.Log4jLoggerFactory]
+2025-05-07 07:55:33: Starting HiveServer2
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/opt/hive/lib/log4j-slf4j-impl-2.18.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/opt/tez/lib/slf4j-reload4j-1.7.36.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/opt/hadoop/share/hadoop/common/lib/slf4j-reload4j-1.7.36.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.apache.logging.slf4j.Log4jLoggerFactory]
+Hive Session ID = f6716224-6535-4790-861c-1ab05454caa6

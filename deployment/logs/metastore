@@ -1,0 +1,94 @@
+usuario@L2111029:~/Escritorio/Workspace/hive/deployment$ docker logs metastore
++ : postgres
++ SKIP_SCHEMA_INIT=false
++ [[ '' = \t\r\u\e ]]
++ VERBOSE_MODE=
++ export HIVE_CONF_DIR=/opt/hive/conf
++ HIVE_CONF_DIR=/opt/hive/conf
++ '[' -d '' ']'
++ export 'HADOOP_CLIENT_OPTS= -Xmx1G '
++ HADOOP_CLIENT_OPTS=' -Xmx1G '
++ [[ false == \f\a\l\s\e ]]
++ initialize_hive
++ COMMAND=-initOrUpgradeSchema
+++ echo 4.0.2-SNAPSHOT
+++ cut -d . -f1
++ '[' 4 -lt 4 ']'
++ /opt/hive/bin/schematool -dbType postgres -initOrUpgradeSchema
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/opt/hive/lib/log4j-slf4j-impl-2.18.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/opt/hadoop/share/hadoop/common/lib/slf4j-reload4j-1.7.36.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.apache.logging.slf4j.Log4jLoggerFactory]
+Metastore connection URL:        jdbc:postgresql://postgres:5432/metastore_db
+Metastore connection Driver :    org.postgresql.Driver
+Metastore connection User:       hive
+Metastore connection Password:   password
+Initializing the schema to: 4.0.0
+Metastore connection URL:        jdbc:postgresql://postgres:5432/metastore_db
+Metastore connection Driver :    org.postgresql.Driver
+Metastore connection User:       hive
+Metastore connection Password:   password
+07:55:33.421 [main] ERROR org.apache.hadoop.hive.metastore.tools.schematool.MetastoreSchemaTool - Failed to get schema version.
+Failed to get schema version.
+07:55:33.430 [main] ERROR org.apache.hadoop.hive.metastore.tools.schematool.MetastoreSchemaTool - Underlying cause: org.postgresql.util.PSQLException : Connection to postgres:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+Underlying cause: org.postgresql.util.PSQLException : Connection to postgres:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+SQL Error code: 0
+Use --verbose for detailed stacktrace.
+07:55:33.430 [main] ERROR org.apache.hadoop.hive.metastore.tools.schematool.MetastoreSchemaTool - SQL Error code: 0
+07:55:33.430 [main] ERROR org.apache.hadoop.hive.metastore.tools.schematool.MetastoreSchemaTool - Use --verbose for detailed stacktrace.
+07:55:33.430 [main] ERROR org.apache.hadoop.hive.metastore.tools.schematool.MetastoreSchemaTool - *** schemaTool failed ***
+*** schemaTool failed ***
+Schema initialization failed!
++ '[' 1 -eq 0 ']'
++ echo 'Schema initialization failed!'
++ exit 1
++ : postgres
++ SKIP_SCHEMA_INIT=false
++ [[ '' = \t\r\u\e ]]
++ VERBOSE_MODE=
++ export HIVE_CONF_DIR=/opt/hive/conf
++ HIVE_CONF_DIR=/opt/hive/conf
++ '[' -d '' ']'
++ export 'HADOOP_CLIENT_OPTS= -Xmx1G '
++ HADOOP_CLIENT_OPTS=' -Xmx1G '
++ [[ false == \f\a\l\s\e ]]
++ initialize_hive
++ COMMAND=-initOrUpgradeSchema
+++ echo 4.0.2-SNAPSHOT
+++ cut -d . -f1
++ '[' 4 -lt 4 ']'
++ /opt/hive/bin/schematool -dbType postgres -initOrUpgradeSchema
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/opt/hive/lib/log4j-slf4j-impl-2.18.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/opt/hadoop/share/hadoop/common/lib/slf4j-reload4j-1.7.36.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.apache.logging.slf4j.Log4jLoggerFactory]
+Metastore connection URL:        jdbc:postgresql://postgres:5432/metastore_db
+Metastore connection Driver :    org.postgresql.Driver
+Metastore connection User:       hive
+Metastore connection Password:   password
+Initializing the schema to: 4.0.0
+Metastore connection URL:        jdbc:postgresql://postgres:5432/metastore_db
+Metastore connection Driver :    org.postgresql.Driver
+Metastore connection User:       hive
+Metastore connection Password:   password
+Starting metastore schema initialization to 4.0.0
+Initialization script hive-schema-4.0.0.postgres.sql
+
+
+Initialization script completed
+Initialized schema successfully..
++ '[' 0 -eq 0 ']'
++ echo 'Initialized schema successfully..'
++ '[' metastore == hiveserver2 ']'
++ '[' metastore == metastore ']'
++ export METASTORE_PORT=9083
++ METASTORE_PORT=9083
++ exec /opt/hive/bin/hive --skiphadoopversion --skiphbasecp --service metastore
+2025-05-07 07:55:37: Starting Hive Metastore Server
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/opt/hive/lib/log4j-slf4j-impl-2.18.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/opt/hadoop/share/hadoop/common/lib/slf4j-reload4j-1.7.36.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.apache.logging.slf4j.Log4jLoggerFactory]

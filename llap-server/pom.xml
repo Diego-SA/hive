@@ -17,7 +17,7 @@
   <parent>
     <groupId>org.apache.hive</groupId>
     <artifactId>hive</artifactId>
-    <version>4.0.1</version>
+    <version>4.0.2-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <artifactId>hive-llap-server</artifactId>
@@ -270,35 +270,35 @@
     <dependency>
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-common</artifactId>
-      <version>${project.version}</version>
+      <version>${hive.version.for.tests}</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-exec</artifactId>
-      <version>${project.version}</version>
+      <version>${hive.version.for.tests}</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-standalone-metastore-common</artifactId>
-      <version>${standalone-metastore.version}</version>
+      <version>${hive.version.for.tests}</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-standalone-metastore-server</artifactId>
-      <version>${standalone-metastore.version}</version>
+      <version>${hive.version.for.tests}</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-testutils</artifactId>
-      <version>${project.version}</version>
+      <version>${hive.version.for.tests}</version>
       <scope>test</scope>
     </dependency>
     <!-- test inter-project -->
@@ -345,7 +345,7 @@
     <dependency>
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-llap-common</artifactId>
-      <version>${project.version}</version>
+      <version>${hive.version.for.tests}</version>
       <classifier>tests</classifier>
     </dependency>
     <dependency>

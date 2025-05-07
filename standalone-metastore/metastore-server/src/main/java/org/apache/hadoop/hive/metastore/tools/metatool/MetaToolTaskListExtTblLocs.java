@@ -367,7 +367,12 @@ public class MetaToolTaskListExtTblLocs extends MetaToolTask {
       listEntities.add(out);
     }
     Collections.sort(listEntities);
-    return new JSONArray(listEntities);
+    try{
+      return new JSONArray(listEntities);
+    } catch (JSONException e) {
+      return null;
+    }
+
   }
 
   private ExternalTableGraphNode constructTree(Set<String> locations) {

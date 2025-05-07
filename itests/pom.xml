@@ -17,7 +17,7 @@
   <parent>
     <groupId>org.apache.hive</groupId>
     <artifactId>hive</artifactId>
-    <version>4.0.1</version>
+    <version>4.0.2-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <artifactId>hive-it</artifactId>
@@ -53,7 +53,7 @@
       <dependency>
         <groupId>org.apache.hive</groupId>
         <artifactId>hive-common</artifactId>
-        <version>${project.version}</version>
+        <version>${hive.version.for.tests}</version>
         <classifier>tests</classifier>
       </dependency>
       <dependency>
@@ -64,23 +64,23 @@
       <dependency>
         <groupId>org.apache.hive</groupId>
         <artifactId>hive-standalone-metastore-common</artifactId>
-        <version>${standalone-metastore.version}</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.hive</groupId>
         <artifactId>hive-standalone-metastore-common</artifactId>
-        <version>${standalone-metastore.version}</version>
+        <version>${hive.version.for.tests}</version>
         <classifier>tests</classifier>
       </dependency>
       <dependency>
         <groupId>org.apache.hive</groupId>
         <artifactId>hive-standalone-metastore-server</artifactId>
-        <version>${standalone-metastore.version}</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.hive</groupId>
         <artifactId>hive-standalone-metastore-server</artifactId>
-        <version>${standalone-metastore.version}</version>
+        <version>${hive.version.for.tests}</version>
         <classifier>tests</classifier>
       </dependency>
       <dependency>
@@ -133,7 +133,7 @@
       <dependency>
         <groupId>org.apache.hive</groupId>
         <artifactId>hive-it-unit</artifactId>
-        <version>${project.version}</version>
+        <version>${hive.version.for.tests}</version>
         <classifier>tests</classifier>
       </dependency>
       <dependency>
@@ -154,7 +154,7 @@
       <dependency>
         <groupId>org.apache.hive</groupId>
         <artifactId>hive-udf</artifactId>
-        <version>${project.version}</version>
+        <version>${hive.version.for.tests}</version>
         <classifier>tests</classifier>
       </dependency>
       <dependency>
@@ -165,7 +165,7 @@
       <dependency>
         <groupId>org.apache.hive</groupId>
         <artifactId>hive-exec</artifactId>
-        <version>${project.version}</version>
+        <version>${hive.version.for.tests}</version>
         <classifier>tests</classifier>
       </dependency>
       <dependency>

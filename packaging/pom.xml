@@ -17,7 +17,7 @@
   <parent>
     <groupId>org.apache.hive</groupId>
     <artifactId>hive</artifactId>
-    <version>4.0.1</version>
+    <version>4.0.2-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <artifactId>hive-packaging</artifactId>
@@ -66,7 +66,7 @@
                 </goals>
                 <configuration>
                   <artifactItems>
-                    <artifactItem>
+                    <!--<artifactItem>
                       <groupId>${project.groupId}</groupId>
                       <artifactId>hive-jdbc</artifactId>
                       <version>${project.version}</version>
@@ -75,7 +75,7 @@
                       <overWrite>true</overWrite>
                       <outputDirectory>${project.build.directory}</outputDirectory>
                       <destFileName>${hive.jdbc.driver.jar}</destFileName>
-                    </artifactItem>
+                    </artifactItem>-->
                     <artifactItem>
                       <groupId>${project.groupId}</groupId>
                       <artifactId>hive-exec</artifactId>
@@ -314,12 +314,12 @@
       <artifactId>hive-jdbc</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <dependency>
+    <!-- Quit for comile problems <dependency>
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-jdbc</artifactId>
       <version>${project.version}</version>
       <classifier>${hive.jdbc.driver.classifier}</classifier>
-    </dependency>
+    </dependency>-->
     <dependency>
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-beeline</artifactId>

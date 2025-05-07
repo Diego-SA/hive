@@ -306,7 +306,7 @@ public class Main {
   // Configure the AuthFilter with the Kerberos params iff security
   // is enabled.
   public FilterHolder makeAuthFilter() throws IOException {
-    FilterHolder authFilter = new FilterHolder(AuthFilter.class);
+    FilterHolder authFilter = new FilterHolder();
     UserNameHandler.allowAnonymous(authFilter);
   
     String confPrefix = "dfs.web.authentication";

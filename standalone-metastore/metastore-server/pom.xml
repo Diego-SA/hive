@@ -16,7 +16,7 @@
   <parent>
     <artifactId>hive-standalone-metastore</artifactId>
     <groupId>org.apache.hive</groupId>
-    <version>4.0.1</version>
+    <version>4.0.2-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>hive-standalone-metastore-server</artifactId>
@@ -28,12 +28,12 @@
     <dependency>
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-standalone-metastore-common</artifactId>
-      <version>4.0.1</version>
+      <version>4.0.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-metastore</artifactId>
-      <version>4.0.1</version>
+      <version>4.0.2-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -246,7 +246,7 @@
     <dependency>
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-storage-api</artifactId>
-      <version>${storage-api.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
@@ -566,7 +566,7 @@
         <executions>
           <execution>
             <id>setup-test-dirs</id>
-            <phase>process-test-resources</phase>
+            <phase>none</phase>
             <goals>
               <goal>run</goal>
             </goals>
@@ -746,7 +746,7 @@
       <plugin>
         <groupId>org.antlr</groupId>
         <artifactId>antlr4-maven-plugin</artifactId>
-        <version>${antlr.version}</version>
+        <version>${antlr4.version}</version>
         <executions>
           <execution>
             <goals>

@@ -32,6 +32,11 @@
         <name>javax.jdo.option.ConnectionPassword</name>
         <value>password</value>
     </property>
+    <!-- Con esta property te pinta la contraseña que usa en los logs -->
+    <property>
+        <name>hive.in.test</name>
+        <value>true</value>
+    </property>
     <property>
         <name>hive.server2.enable.doAs</name>
         <value>false</value>
